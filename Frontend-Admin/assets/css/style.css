@@ -1536,3 +1536,8 @@ table th {
   margin-right: 2%;
   margin-left: 5%;
 }
+
+/* -----------------------------------Thuộc tính sản phẩm------------------------------------- */
+.trang-thai-thuoc-tinh input {
+  margin-left: 5px;
+}
