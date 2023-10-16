@@ -1562,3 +1562,21 @@ table th {
   margin: 20px 10px;
   display: inline-block;
 }
+
+.line {
+  border-bottom: 1px solid black;
+  /* Một đường gạch ngang 1px đậm, có thể thay đổi màu sắc và độ dày theo ý muốn */
+  margin-bottom: 2%;
+}
+
+.thong-tin-tai-khoan {
+  font-family: Arial, sans-serif;
+  /* Font-family chọn */
+  font-size: 15px;
+  /* Kích thước font */
+  font-weight: 100;
+  /* Độ đậm của font */
+  color: black;
+  /* Màu chữ */
+  margin-left: 20%;
+}

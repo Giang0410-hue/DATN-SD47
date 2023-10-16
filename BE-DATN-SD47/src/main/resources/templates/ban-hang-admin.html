@@ -355,11 +355,19 @@
                                     </table>
                                     <nav aria-label="Page navigation example">
                                       <ul class="pagination">
-                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                        <li class="page-item">
+                                          <a class="page-link" href="#">
+                                            <i class="bi bi-chevron-left"></i>
+                                          </a>
+                                        </li>
                                         <li class="page-item"><a class="page-link" href="#">1</a></li>
                                         <li class="page-item"><a class="page-link" href="#">2</a></li>
                                         <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                        <li class="page-item">
+                                          <a class="page-link" href="#">
+                                            <i class="bi bi-chevron-right"></i>
+                                          </a>
+                                        </li>
                                       </ul>
                                     </nav>
                                   </div>
@@ -487,31 +495,315 @@
                             </table>
                           </div>
 
+                          <div class="line"></div>
+
+                          <div class="tai-khoan-ban-hang">
+                            <div class="row mb-3">
+                              <h4 class="col-sm-2" style="font-family: Arial, sans-serif;font-size: 15;
+                                font-weight: bold;
+                                color: black;">Tài khoản</h4>
+
+                              <!-- Button trigger modal -->
+                              <div class="col-sm-10">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                  style="float: right;" data-bs-target="#chonKhachHangModal">
+                                  Chọn tài khoản
+                                </button>
+                              </div>
+
+                              <!-- Modal -->
+                              <div class="modal fade" id="chonKhachHangModal" tabindex="-1"
+                                aria-labelledby="chonKhachHangModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h1 class="modal-title fs-5" id="chonKhachHangModalLabel">Danh sách khách hàng
+                                      </h1>
+                                    </div>
+                                    <div class="modal-body">
+
+                                      <!-- form tìm kiếm khách hàng -->
+                                      <form action="">
+                                        <div class="row mb-3" style="margin-top: 2%;">
+                                          <label for="inputEmail3" class="col-sm-2 col-form-label">Tìm kiếm</label>
+                                          <div class="col-sm-6">
+                                            <input type="email" class="form-control" placeholder="Nhập tên tài khoản">
+                                          </div>
+                                          <div class="col-sm-2">
+                                            <button type="submit" class="btn btn-primary" style="float: right;">Tìm
+                                              kiếm</button>
+                                          </div>
+                                          <div class="col-sm-2">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                              style="margin-left: 25%;" data-bs-target="#khachhang">
+                                              Thêm
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </form>
+
+                                      <!-- table khách hàng -->
+                                      <table>
+                                        <thead>
+                                          <tr>
+                                            <th>STT</th>
+                                            <th>Tên Khách Hàng</th>
+                                            <th>Số Điện Thoại</th>
+                                            <th>Email</th>
+                                            <th>Hành Động</th>
+                                          </tr>
+                                          <thead>
+                                          <tbody>
+                                            <tr>
+                                              <td>1</td>
+                                              <td>SP01</td>
+                                              <td>Nike</td>
+                                              <td>aaaa</td>
+                                              <td>
+                                                <button class="btn btn-primary">Chọn</i></button>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td>1</td>
+                                              <td>SP01</td>
+                                              <td>Nike</td>
+                                              <td>aaaa</td>
+                                              <td>
+                                                <button class="btn btn-primary">Chọn</i></button>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td>1</td>
+                                              <td>SP01</td>
+                                              <td>Nike</td>
+                                              <td>aaaa</td>
+                                              <td>
+                                                <button class="btn btn-primary">Chọn</i></button>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                      </table>
+                                      <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                          <li class="page-item">
+                                            <a class="page-link" href="#">
+                                              <i class="bi bi-chevron-left"></i>
+                                            </a>
+                                          </li>
+                                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                          <li class="page-item">
+                                            <a class="page-link" href="#">
+                                              <i class="bi bi-chevron-right"></i>
+                                            </a>
+                                          </li>
+                                        </ul>
+                                      </nav>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Đóng</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- Modal thêm mới khách hàng -->
+                              <div class="modal fade" id="khachhang" tabindex="-1" aria-labelledby="khachhangLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="them-kh-tabs">
+                                    <div class="modal-content">
+
+                                      <!-- form thêm mới khách hàng nhanh -->
+
+                                      <form action="">
+                                        <div class="modal-header">
+                                          <h1 class="modal-title fs-5" id="khachhangLabel">
+                                            Thêm mới khách hàng</h1>
+                                        </div>
+                                        <div class="modal-body">
+                                          <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Tên khách
+                                              hàng</label>
+                                            <div class="col-sm-10">
+                                              <input type="email" class="form-control" id="inputEmail3">
+                                            </div>
+                                          </div>
+                                          <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">SĐT</label>
+                                            <div class="col-sm-10">
+                                              <input type="email" class="form-control" id="inputEmail3">
+                                            </div>
+                                          </div>
+                                          <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                                            <div class="col-sm-10">
+                                              <input type="email" class="form-control" id="inputEmail3">
+                                            </div>
+                                          </div>
+                                          <div class="row mb-3">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Giới
+                                              tính</label>
+                                            <div class="col-sm-10">
+                                              <input class="form-check-input" type="radio" name="gridRadios"
+                                                id="gridRadios2" value="Nam">
+                                              <label class="form-check-label" for="gridRadios2">
+                                                Nam
+                                              </label>
+                                              <input class="form-check-input" type="radio" name="gridRadios"
+                                                id="gridRadios3" value="Nữ">
+                                              <label class="form-check-label" for="gridRadios3">
+                                                Nữ
+                                              </label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Đóng</button>
+                                          <button type="submit" class="btn btn-primary">Thêm mới</button>
+                                        </div>
+                                      </form>
+
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+
+                            </div>
+
+                            <!-- Thông tin khách hàng -->
+                            <div class="row mb-3">
+                              <label for="inputEmail3" class="col-sm-2 ">Tên khách hàng:</label>
+                              <div class="col-sm-6">
+                                <label for="inputEmail3" class="thong-tin-tai-khoan">Khách lẻ</label>
+                              </div>
+                            </div>
+
+                            <div class="row mb-3">
+                              <label for="inputEmail3" class="col-sm-2">Số điện thoại:</label>
+                              <div class="col-sm-6">
+                                <label for="inputEmail3" class="thong-tin-tai-khoan">0377463664</label>
+                              </div>
+                            </div>
+
+                            <div class="row mb-3">
+                              <label for="inputEmail3" class="col-sm-2">Email:</label>
+                              <div class="col-sm-6">
+                                <label for="inputEmail3" class="thong-tin-tai-khoan">anhntph27418@fpt.edu.vn</label>
+                              </div>
+                            </div>
+
+                          </div>
+
+                          <div class="line"></div>
+
+                          <!------------------ model chọn địa chỉ ------------------>
+                          <div class="row g-3" style=" margin-bottom: 2%;">
+
+                            <!-- Button trigger modal -->
+                            <div class="col-sm-12">
+                              <button type="button" class="btn btn-primary" data-bs-toggle="modal" style="float: right;"
+                                data-bs-target="#chonDiaChiModal">
+                                Chọn địa chỉ
+                              </button>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="chonDiaChiModal" tabindex="-1"
+                              aria-labelledby="chonDiaChiModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="chonDiaChiModalLabel">Danh sách địa chỉ
+                                    </h1>
+                                  </div>
+                                  <div class="modal-body">
+
+                                    <!-- form tìm kiếm khách hàng -->
+                                    <form action="">
+                                      <div class="row mb-3" style="margin-top: 2%;">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Tìm kiếm</label>
+                                        <div class="col-sm-8">
+                                          <input type="email" class="form-control" placeholder="Nhập tên địa chỉ">
+                                        </div>
+                                        <div class="col-sm-2">
+                                          <button type="submit" class="btn btn-primary" style="float: right;">Tìm
+                                            kiếm</button>
+                                        </div>
+
+                                      </div>
+                                    </form>
+
+                                    <!-- table khách hàng -->
+                                    <table>
+                                      <thead>
+                                        <tr>
+                                          <th>STT</th>
+                                          <th>Họ Tên</th>
+                                          <th>Số Điện Thoại</th>
+                                          <th>Địa Chỉ</th>
+                                          <th>Trạng Thái</th>
+                                          <th>Hành Động</th>
+                                        </tr>
+                                        <thead>
+                                        <tbody>
+                                          <tr>
+                                            <td>1</td>
+                                            <td>SP01</td>
+                                            <td>Nike</td>
+                                            <td>aaaa</td>
+                                            <td class="trangthaidkd">Mặc định</td>
+                                            <!-- <td class="trangthainkd">Phụ</td> -->
+                                            <td>
+                                              <button class="btn btn-primary">Chọn</i></button>
+                                            </td>
+                                          </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <nav aria-label="Page navigation example">
+                                      <ul class="pagination">
+                                        <li class="page-item">
+                                          <a class="page-link" href="#">
+                                            <i class="bi bi-chevron-left"></i>
+                                          </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                          <a class="page-link" href="#">
+                                            <i class="bi bi-chevron-right"></i>
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    </nav>
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                      data-bs-dismiss="modal">Đóng</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
                           <form action="" class="row g-3">
                             <div class="col">
                               <div class="thong-tin-kh">
                                 <div class="row g-3">
-                                  <h4>Thông tin khách hàng</h4>
-                                  <div class="col-md-6">
-                                    <label for="inputEmail4" class="form-label">Mã HĐ:</label>
-                                    <input type="text" class="form-control" id="inputEmail4">
-                                  </div>
-                                  <div class="col-md-6">
-                                    <div class="input-group">
-                                      <label for="inputPassword1" class="form-label">Khách hàng:</label>
-                                      <select name="cars" class="input-khachhang" style="border-radius: 5px;">
-                                        <option value="Khách lẻ">Khách lẻ</option>
-                                        <option value="Nguyễn Tuấn Anh">Nguyễn Tuấn Anh</option>
-                                      </select>
-                                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#khachhang">
-                                        +
-                                      </button>
+                                  <h4 style="font-family: Arial, sans-serif;font-size: 15;
+                                  font-weight: bold;
+                                  color: black;">Thông tin khách hàng</h4>
 
-                                    </div>
-                                  </div>
                                   <div class="col-md-6">
-                                    <label for="inputEmail2" class="form-label">Người bán:</label>
+                                    <label for="inputEmail2" class="form-label">Tên khác hàng:</label>
                                     <input type="text" class="form-control" id="inputEmail2">
                                   </div>
                                   <div class="col-md-6">
@@ -543,7 +835,9 @@
 
                             <div class="col">
                               <div class="thong-tin-tt">
-                                <h4>Thông tin thanh toán</h4>
+                                <h4 style="font-family: Arial, sans-serif;font-size: 15;
+                                font-weight: bold;
+                                color: black;">Thông tin thanh toán</h4>
                                 <div class="thong-tin-tt-2">
                                   <div class="row">
                                     <div class="col">
@@ -609,70 +903,10 @@
                             </div>
                           </form>
 
-                          <!-- Modal -->
-                          <div class="modal fade" id="khachhang" tabindex="-1" aria-labelledby="khachhangLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                              <div class="them-kh-tabs">
-                                <div class="modal-content">
 
-                                  <!-- form thêm mới khách hàng nhanh -->
-
-                                  <form action="">
-                                    <div class="modal-header">
-                                      <h1 class="modal-title fs-5" id="khachhangLabel">Thêm mới khách hàng</h1>
-                                    </div>
-                                    <div class="modal-body">
-                                      <div class="row mb-3">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Tên khách
-                                          hàng</label>
-                                        <div class="col-sm-10">
-                                          <input type="email" class="form-control" id="inputEmail3">
-                                        </div>
-                                      </div>
-                                      <div class="row mb-3">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">SĐT</label>
-                                        <div class="col-sm-10">
-                                          <input type="email" class="form-control" id="inputEmail3">
-                                        </div>
-                                      </div>
-                                      <div class="row mb-3">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-                                        <div class="col-sm-10">
-                                          <input type="email" class="form-control" id="inputEmail3">
-                                        </div>
-                                      </div>
-                                      <div class="row mb-3">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Giới
-                                          tính</label>
-                                        <div class="col-sm-10">
-                                          <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridRadios2" value="Nam">
-                                          <label class="form-check-label" for="gridRadios2">
-                                            Nam
-                                          </label>
-                                          <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridRadios3" value="Nữ">
-                                          <label class="form-check-label" for="gridRadios3">
-                                            Nữ
-                                          </label>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Đóng</button>
-                                      <button type="submit" class="btn btn-primary">Thêm mới</button>
-                                    </div>
-                                  </form>
-
-                                </div>
-                              </div>
-
-                            </div>
-                          </div>
 
                         </div>
+
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                           Hóa đơn2
                         </div>
