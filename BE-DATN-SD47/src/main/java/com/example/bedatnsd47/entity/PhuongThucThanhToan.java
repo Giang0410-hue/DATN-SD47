@@ -19,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "phuong_thuc_thanh_toan")
-public class PhuongThucThanhToan    {
+public class PhuongThucThanhToan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

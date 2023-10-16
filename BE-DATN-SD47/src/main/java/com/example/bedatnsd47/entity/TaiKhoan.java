@@ -14,15 +14,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "tai_khoan")
+
 public class TaiKhoan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "ho_va_ten", length = 100)
@@ -56,11 +59,9 @@ public class TaiKhoan {
     private String matKhau;
 
     @Column(name = "ngay_tao")
-//    @Temporal(TemporalType.TIMESTAMP)
     private Date ngayTao;
 
     @Column(name = "ngay_sua")
-//    @Temporal(TemporalType.TIMESTAMP)
     private Date ngaySua;
 
     @Column(name = "trang_thai")
