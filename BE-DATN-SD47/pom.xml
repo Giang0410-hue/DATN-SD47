@@ -38,53 +38,39 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<<<<<<< HEAD
 
-=======
         <!--        JPA-->
->>>>>>> develop
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-<<<<<<< HEAD
 
-=======
         <!--        Spring Validator-->
->>>>>>> develop
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-<<<<<<< HEAD
 
         <!--SQL SERVER-->
-=======
         <!--        MSSQL JDBC-->
->>>>>>> develop
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
             <version>9.4.1.jre16</version>
         </dependency>
-<<<<<<< HEAD
         <!-- JPA-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-=======
->>>>>>> develop
+
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
-<<<<<<< HEAD
 
-=======
         <!--        JSTL-->
->>>>>>> develop
         <dependency>
             <groupId>jakarta.servlet.jsp.jstl</groupId>
             <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
