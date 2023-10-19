@@ -1561,6 +1561,17 @@ table th {
   margin-left: 5px;
 }
 
+.trangthaisdr {
+  border: 2px solid #d0ff00;
+  border-radius: 50px;
+  color: black;
+  background-color: #fffd83;
+
+  padding: 3px 10px;
+  margin: 20px 10px;
+  display: inline-block;
+}
+
 .trangthaidhd {
   border: 2px solid #008f3e;
   border-radius: 50px;
