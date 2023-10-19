@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+
 import java.util.Date;
 
 @Entity
@@ -35,6 +36,7 @@ public class ThuongHieu {
 
     @Column(name = "trang_thai")
     private Integer trangThai;
+
 
 
 }

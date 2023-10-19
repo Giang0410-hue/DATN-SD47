@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,14 @@ import lombok.Setter;
 
 import java.util.Date;
 
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "tai_khoan")
+
 
 public class TaiKhoan {
     @Id
@@ -31,16 +34,19 @@ public class TaiKhoan {
     @Column(name = "ho_va_ten", length = 100)
     private String hoVaTen;
 
+
     @Column(name = "ngay_sinh")
     private Date ngaySinh;
 
     @Column(name = "gioi_tinh")
     private Integer gioiTinh;
 
+
     @Column(name = "so_dien_thoai", length = 15)
     private String soDienThoai;
 
     @Column(name = "email", length = 255)
+
     private String email;
 
     @Column(name = "thanh_pho", length = 50)
@@ -61,6 +67,7 @@ public class TaiKhoan {
     @Column(name = "ngay_tao")
     private Date ngayTao;
 
+
     @Column(name = "ngay_sua")
     private Date ngaySua;
 
@@ -70,5 +77,6 @@ public class TaiKhoan {
     @ManyToOne
     @JoinColumn(name = "vai_tro_id")
     private VaiTro vaiTro;
+
 
 }

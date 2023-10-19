@@ -17,6 +17,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 @Entity
 @Table(name = "phuong_thuc_thanh_toan")
 public class PhuongThucThanhToan {
@@ -31,6 +32,7 @@ public class PhuongThucThanhToan {
     private String ten;
 
     @Column(name = "ghi_chu", length = 255)
+
     private String ghiChu;
 
     @Column(name = "trang_thai")
@@ -39,5 +41,6 @@ public class PhuongThucThanhToan {
     @ManyToOne
     @JoinColumn(name = "hoa_don_id")
     private HoaDon hoaDon;
+
 
 }

@@ -66,6 +66,7 @@
             <version>9.4.1.jre16</version>
         </dependency>
 
+
         <!--        JSTL-->
         <dependency>
             <groupId>jakarta.servlet.jsp.jstl</groupId>
@@ -82,6 +83,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+
         </dependency>
 
     </dependencies>

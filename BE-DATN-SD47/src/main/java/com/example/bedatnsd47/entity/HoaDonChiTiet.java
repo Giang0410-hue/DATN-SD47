@@ -19,10 +19,12 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 
+
 @Entity
 @Table(name = "hoa_don_chi_tiet")
 public class HoaDonChiTiet {
     @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -33,6 +35,7 @@ public class HoaDonChiTiet {
     private Double donGia;
 
     @Column(name = "ghi_chu", length = 255)
+
     private String ghiChu;
 
     @Column(name = "ngay_tao")
@@ -45,6 +48,7 @@ public class HoaDonChiTiet {
     private String nguoiTao;
 
     @Column(name = "nguoi_sua", length = 100)
+
     private String nguoiSua;
 
     @ManyToOne
@@ -54,4 +58,5 @@ public class HoaDonChiTiet {
     @ManyToOne
     @JoinColumn(name = "chi_tiet_san_pham_id")
     private ChiTietSanPham chiTietSanPham;
+
 }

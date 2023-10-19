@@ -1,5 +1,6 @@
 package com.example.bedatnsd47.entity;
 
+
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -42,5 +43,6 @@ public class HinhAnhSanPham {
     @ManyToOne
     @JoinColumn(name = "san_pham_id")
     private SanPham sanPham;
+
 
 }

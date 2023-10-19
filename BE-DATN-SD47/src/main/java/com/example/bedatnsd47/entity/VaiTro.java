@@ -1,6 +1,7 @@
 package com.example.bedatnsd47.entity;
 
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "vai_tro")
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,6 +30,7 @@ public class VaiTro {
 
     @Column(name = "ten", length = 100)
     private String ten;
+
 
 
 }
