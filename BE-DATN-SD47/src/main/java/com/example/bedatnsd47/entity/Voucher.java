@@ -17,6 +17,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 @Entity
 @Table(name = "voucher")
 public class Voucher {
@@ -28,6 +29,7 @@ public class Voucher {
     private String maVoucher;
 
     @Column(name = "ten_voucher", length = 50)
+
     private String tenVoucher;
 
     @Column(name = "ngay_bat_dau")
@@ -50,9 +52,11 @@ public class Voucher {
     @Column(name = "gia_tri_giam_toi_da")
     private Double giaTriGiamToiDa;
 
+
     @Column(name = "hinh_thuc_giam")
     private Integer hinhThucGiam;
 
     @Column(name = "trang_thai")
     private Integer trangThai;
+
 }

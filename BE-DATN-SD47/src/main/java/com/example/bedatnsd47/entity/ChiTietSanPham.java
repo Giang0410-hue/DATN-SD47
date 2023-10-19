@@ -1,5 +1,6 @@
 package com.example.bedatnsd47.entity;
 
+
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class ChiTietSanPham {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+
     private Long id;
 
     @Column(name = "so_luong")
@@ -33,6 +35,7 @@ public class ChiTietSanPham {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
+
     @ManyToOne
     @JoinColumn(name = "san_pham_id")
     private SanPham sanPham;
@@ -40,4 +43,5 @@ public class ChiTietSanPham {
     @ManyToOne
     @JoinColumn(name = "kich_co_id")
     private KichCo kichCo;
+
 }

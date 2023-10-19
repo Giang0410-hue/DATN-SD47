@@ -2,6 +2,7 @@ package com.example.bedatnsd47.entity;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "san_pham")
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,6 +27,7 @@ public class SanPham {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+
     private Long id;
 
     @Column(name = "ma", length = 50, nullable = false)
@@ -44,6 +47,7 @@ public class SanPham {
 
     @Column(name = "ngay_sua")
     private Date ngaySua;
+
 
     @Column(name = "nguoi_tao", length = 100)
     private String nguoiTao;
@@ -65,4 +69,5 @@ public class SanPham {
     @ManyToOne
     @JoinColumn(name = "thuong_hieu_id")
     private ThuongHieu thuongHieu;
+
 }

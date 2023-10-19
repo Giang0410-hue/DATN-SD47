@@ -1,33 +1,22 @@
-package com.example.bedatnsd47.entity;
+package com.example.bedatnsd47.common;
 
-
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "mau_sac")
+@MappedSuperclass
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MauSac {
+public class BaseEntity<M>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "ma_mau", length = 30)
-    private String maMau;
 
     @Column(name = "ten", length = 100)
     private String ten;
@@ -39,7 +28,5 @@ public class MauSac {
     private Date ngaySua;
 
     @Column(name = "trang_thai")
-    private Integer trangThai;
-
-
+    private int trangThai;
 }
