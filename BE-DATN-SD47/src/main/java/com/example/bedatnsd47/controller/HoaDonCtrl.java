@@ -8,6 +8,6 @@ public class HoaDonCtrl {
     @GetMapping("/index1")
     public String index(){
         System.out.println("23");
-        return "index.html";
+        return "ban-hang-customer.html";
     }
 }
