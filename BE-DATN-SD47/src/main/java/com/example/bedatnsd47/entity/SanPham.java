@@ -1,21 +1,33 @@
 package com.example.bedatnsd47.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+import java.util.Date;
+
+@Entity
+@Table(name = "san_pham")
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "san_pham")
 public class SanPham {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+
     private Long id;
 
     @Column(name = "ma", length = 50, nullable = false)
@@ -31,10 +43,11 @@ public class SanPham {
     private Double giaHienHanh;
 
     @Column(name = "ngay_tao")
-    private java.sql.Timestamp ngayTao;
+    private Date ngayTao;
 
     @Column(name = "ngay_sua")
-    private java.sql.Timestamp ngaySua;
+    private Date ngaySua;
+
 
     @Column(name = "nguoi_tao", length = 100)
     private String nguoiTao;
@@ -45,26 +58,16 @@ public class SanPham {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name = "mau_sac_id")
     private MauSac mauSac;
 
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name = "loai_de_id")
     private LoaiDe loaiDe;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name = "thuong_hieu_id")
     private ThuongHieu thuongHieu;
-
-    //    @ManyToOne
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "nha_san_xuat_id")
-    private NhaSanXuat nhaSanXuat;
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "hinh_anh_san_pham_id")
-    private HinhAnhSanPham hinhAnhSanPham;
 
 }

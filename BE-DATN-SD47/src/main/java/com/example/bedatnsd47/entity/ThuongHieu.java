@@ -1,11 +1,15 @@
 package com.example.bedatnsd47.entity;
-
-import com.example.bedatnsd47.common.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 
 import java.util.Date;
 
@@ -14,8 +18,25 @@ import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ThuongHieu extends BaseEntity<ThuongHieu> {
-    public ThuongHieu(Long id, String ten, Date ngayTao, Date ngaySua, int trangThai) {
-        super(id, ten, ngayTao, ngaySua, trangThai);
-    }
+@NoArgsConstructor
+public class ThuongHieu {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "ten", length = 100)
+    private String ten;
+
+    @Column(name = "ngay_tao")
+    private Date ngayTao;
+
+    @Column(name = "ngay_sua")
+    private Date ngaySua;
+
+    @Column(name = "trang_thai")
+    private Integer trangThai;
+
+
+
 }

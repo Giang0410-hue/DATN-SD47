@@ -1,23 +1,35 @@
 package com.example.bedatnsd47.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+
 @Entity
 @Table(name = "voucher")
 public class Voucher {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ma_voucher")
+    @Column(name = "ma_voucher", length = 50)
     private String maVoucher;
 
-    @Column(name = "ten_voucher")
+    @Column(name = "ten_voucher", length = 50)
+
     private String tenVoucher;
 
     @Column(name = "ngay_bat_dau")
@@ -27,24 +39,24 @@ public class Voucher {
     private Date ngayKetThuc;
 
     @Column(name = "ngay_tao")
+//    @Temporal(TemporalType.TIMESTAMP)
     private Date ngayTao;
 
     @Column(name = "ngay_sua")
+//    @Temporal(TemporalType.TIMESTAMP)
     private Date ngaySua;
 
     @Column(name = "gia_tri_giam")
-    private Long giaTriGiam;
+    private Double giaTriGiam;
 
     @Column(name = "gia_tri_giam_toi_da")
-    private Long giaTriGiamToiDa;
+    private Double giaTriGiamToiDa;
+
 
     @Column(name = "hinh_thuc_giam")
     private Integer hinhThucGiam;
 
     @Column(name = "trang_thai")
     private Integer trangThai;
-
-//    @OneToMany(mappedBy = "hoa_don_id")
-//    private List<HoaDon> hoaDons;
 
 }

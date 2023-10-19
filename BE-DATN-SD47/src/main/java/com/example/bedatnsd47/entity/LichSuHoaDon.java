@@ -1,16 +1,24 @@
 package com.example.bedatnsd47.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Data
+
 @Entity
 @Table(name = "lich_su_hoa_don")
 public class LichSuHoaDon {
     @Id
-    @Column(name = "id")
+
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -20,10 +28,12 @@ public class LichSuHoaDon {
     @Column(name = "ngay_sua")
     private Date ngaySua;
 
-    @Column(name = "ghi_chu")
+
+    @Column(name = "ghi_chu", length = 255)
     private String ghiChu;
 
-    @Column(name="trangThai")
+    @Column(name = "trang_thai")
+
     private Integer trangThai;
 
     @ManyToOne

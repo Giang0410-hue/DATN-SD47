@@ -1,30 +1,37 @@
 package com.example.bedatnsd47.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-@Entity
-@Table(name = "tai_khoan")
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "tai_khoan")
+
 
 public class TaiKhoan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "ho_va_ten", length = 100, unique = true, nullable = false)
+    @Column(name = "ho_va_ten", length = 100)
     private String hoVaTen;
 
 
@@ -32,12 +39,14 @@ public class TaiKhoan {
     private Date ngaySinh;
 
     @Column(name = "gioi_tinh")
-    private boolean gioiTinh;
+    private Integer gioiTinh;
+
 
     @Column(name = "so_dien_thoai", length = 15)
     private String soDienThoai;
 
-    @Column(name = "email", length = 255,unique = true, nullable = false)
+    @Column(name = "email", length = 255)
+
     private String email;
 
     @Column(name = "thanh_pho", length = 50)
@@ -52,28 +61,22 @@ public class TaiKhoan {
     @Column(name = "dia_chi_cu_the", length = 100)
     private String diaChiCuThe;
 
-    @Column(name = "anh_dai_dien", length = 255)
-    private String anhDaiDien;
-
-    @Column(name = "mat_khau", length = 30, unique = true, nullable = false)
-    @JsonIgnore
+    @Column(name = "mat_khau", length = 30)
     private String matKhau;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "ngay_tao")
     private Date ngayTao;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+
     @Column(name = "ngay_sua")
     private Date ngaySua;
 
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "vai_tro_id")
-    @JoinTable(name = "taikhoan_vaitro",joinColumns = @JoinColumn(name = "id_taikhoan"),
-    inverseJoinColumns =  @JoinColumn(name = "id_vaitro")
-    )
-    private Set<VaiTro> vaiTro = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "vai_tro_id")
+    private VaiTro vaiTro;
+
+
 }

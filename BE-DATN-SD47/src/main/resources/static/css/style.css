@@ -1357,6 +1357,7 @@ table th {
 }
 
 .info-price h6 {
+  margin-bottom: -2px;
   font-family: Arial, sans-serif;
   /* Font-family chọn */
   font-size: 15px;
@@ -1367,15 +1368,24 @@ table th {
   /* Màu chữ */
 }
 
-.info-price span {
+.info-price .gia {
   font-family: Arial, sans-serif;
   /* Font-family chọn */
-  font-size: 13px;
+  /* font-size: 13px; */
   /* Kích thước font */
   font-weight: bold;
   /* Độ đậm của font */
   color: red;
   /* Màu chữ */
+}
+
+.info-price span {
+  font-family: Arial, sans-serif;
+  /* Font-family chọn */
+  font-size: 13px;
+  /* Kích thước font */
+  /* font-weight: bold; */
+  /* Độ đậm của font */
 }
 
 .info-price p {
@@ -1385,6 +1395,24 @@ table th {
   /* Kích thước font */
   /* font-weight: bold; */
   /* Độ đậm của font */
+}
+
+
+.info-price-sp {
+  margin-top: 6%;
+  text-align: left;
+}
+
+.info-price-sp h6 {
+  margin-bottom: -2px;
+  font-family: Arial, sans-serif;
+  /* Font-family chọn */
+  font-size: 18px;
+  /* Kích thước font */
+  font-weight: bold;
+  /* Độ đậm của font */
+  color: black;
+  /* Màu chữ */
 }
 
 .fixed-image {
@@ -1522,15 +1550,6 @@ table th {
   margin-right: 17.6px;
 }
 
-.ctsp-bh select {
-  border-radius: 10px;
-  font-size: 13px;
-  background: #ffffff;
-  text-align: center;
-  width: 30%;
-  color: black;
-  height: 60%;
-}
 
 .select-ctsp {
   margin-right: 2%;
@@ -1540,4 +1559,98 @@ table th {
 /* -----------------------------------Thuộc tính sản phẩm------------------------------------- */
 .trang-thai-thuoc-tinh input {
   margin-left: 5px;
+}
+
+.trangthaisdr {
+  border: 2px solid #d0ff00;
+  border-radius: 50px;
+  color: black;
+  background-color: #fffd83;
+
+  padding: 3px 10px;
+  margin: 20px 10px;
+  display: inline-block;
+}
+
+.trangthaidhd {
+  border: 2px solid #008f3e;
+  border-radius: 50px;
+  color: black;
+  background-color: #68ffa7;
+
+  padding: 3px 10px;
+  margin: 20px 10px;
+  display: inline-block;
+}
+
+.trangthainhd {
+  border: 2px solid red;
+  border-radius: 50px;
+  color: black;
+  background-color: #ffb9b9;
+  padding: 3px 10px;
+  margin: 20px 10px;
+  display: inline-block;
+}
+
+.line {
+  border-bottom: 1px solid black;
+  /* Một đường gạch ngang 1px đậm, có thể thay đổi màu sắc và độ dày theo ý muốn */
+  margin-bottom: 2%;
+}
+
+.thong-tin-tai-khoan {
+  font-family: Arial, sans-serif;
+  /* Font-family chọn */
+  font-size: 15px;
+  /* Kích thước font */
+  font-weight: 100;
+  /* Độ đậm của font */
+  color: black;
+  /* Màu chữ */
+  margin-left: 20%;
+}
+
+.dau-sao {
+  color: red;
+}
+
+.danh-sach-cac-sp button {
+  width: 100%;
+  width: 100%;
+  position: relative;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: left;
+}
+
+.danh-sach-cac-sp button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  /* Adjust the position as needed */
+  border: solid;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: translateY(-50%) rotate(45deg);
+  border-color: #000;
+}
+
+.thanh-tren {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  /* Thay thế 'Arial' bằng font mà bạn muốn sử dụng */
+  font-size: 17px;
+  /* Kích thước font */
+  font-weight: bold;
+  /* Độ đậm của font */
+  color: black;
+  background-color: #cbcbcb;
+  /* Màu chữ, bạn có thể thay đổi thành màu bạn muốn */
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
