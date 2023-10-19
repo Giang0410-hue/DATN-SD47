@@ -137,92 +137,253 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Contact</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="ban-hang-admin.html">Home</a></li>
-          <li class="breadcrumb-item">Pages</li>
-          <li class="breadcrumb-item active">Contact</li>
-        </ol>
-      </nav>
+      <h1>Quản Lý Voucher</h1>
     </div><!-- End Page Title -->
 
-    <section class="section contact">
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
 
-      <div class="row gy-4">
+          <div class="card">
+            <div class="card-body">
+              <form action="" style="margin-top: 5%;">
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Nhập mã, tên Voucher:</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="Tìm kiếm theo tên sản phẩm">
+                  </div>
+                  <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary" style="margin-left:35%;">Tìm kiếm</button>
+                  </div>
+                  <div class="col-sm-2">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" style="float: right; "
+                      data-bs-target="#them-san-pham">
+                      Thêm mới
+                    </button>
+                  </div>
+                </div>
+                <div class="search-trang-thai" style="margin-top: 4%;">
+                  <label for="inputEmail3" style="margin-left:17%;">Trạng thái:</label>
+                  <input class="form-check-input" type="radio" name="gridRadios" value="option1"
+                    style="margin-left:10%;" checked>
+                  <label class="form-check-label">
+                    Tất cả
+                  </label>
 
-        <div class="col-xl-6">
+                  <input class="form-check-input" type="radio" name="gridRadios" value="option1" style="margin-left:5%;"
+                    checked>
+                  <label class="form-check-label">
+                    Sắp diễn ra
+                  </label>
 
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="info-box card">
-                <i class="bi bi-geo-alt"></i>
-                <h3>Address</h3>
-                <p>A108 Adam Street,<br>New York, NY 535022</p>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="info-box card">
-                <i class="bi bi-telephone"></i>
-                <h3>Call Us</h3>
-                <p>+1 5589 55488 55<br>+1 6678 254445 41</p>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="info-box card">
-                <i class="bi bi-envelope"></i>
-                <h3>Email Us</h3>
-                <p>info@example.com<br>contact@example.com</p>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="info-box card">
-                <i class="bi bi-clock"></i>
-                <h3>Open Hours</h3>
-                <p>Monday - Friday<br>9:00AM - 05:00PM</p>
-              </div>
+                  <input class="form-check-input" type="radio" name="gridRadios" value="option1" style="margin-left:5%;"
+                    checked>
+                  <label class="form-check-label">
+                    Đang diễn ra
+                  </label>
+
+                  <input class="form-check-input" type="radio" name="gridRadios" value="option1" style="margin-left:5%;"
+                    checked>
+                  <label class="form-check-label">
+                    Đã kết thúc
+                  </label>
+                </div>
+              </form>
+
+              <!-- Table with stripped rows -->
+              <table class="sanpham-table" style="margin-top: 4%;">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>Mã Voucher</th>
+                    <th>Tên Voucher</th>
+                    <th>Đơn Tối Thiểu</th>
+                    <th>Giảm</th>
+                    <th>Số Lượng</th>
+                    <th>Trạng Thái</th>
+                    <th>Hành Động</th>
+                  </tr>
+                  <thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>VIPVOUCHER</td>
+                      <td>Vip Voucher</td>
+                      <td>1.000.000VND</td>
+                      <td>5%</td>
+                      <td>150</td>
+                      <td class="trangthaisdr">Sắp diễn ra</td>
+                      <!-- <td class="trangthaidhd">Đang hoạt động</td>
+                      <td class="trangthainkd">Đã kết thúc</td> -->
+                      <td>
+                        <!-- button và model -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                          data-bs-target="#exampleModal2">
+                          <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <!-- model-xem-sửa-ctsp -->
+                        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+                          aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                  Thông tin sản phẩm
+                                </h1>
+                                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button> -->
+                              </div>
+                              <div class="modal-body">
+                                <form class="row g-3">
+                                  <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label"><span
+                                        class="dausao">*</span>Tên sản phẩm</label>
+                                    <div class="col-sm-10">
+                                      <input type="email" class="form-control" id="inputEmail3">
+                                    </div>
+                                  </div>
+                                  <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label"><span
+                                        class="dausao">*</span>Mô tả</label>
+                                    <div class="col-sm-10">
+                                      <textarea class="form-control" id="exampleFormControlTextarea1"
+                                        rows="3"></textarea>
+                                    </div>
+                                  </div>
+                                  <div class="row mb-3">
+                                    <label for="inputEmail3" class="col col-form-label"><span
+                                        class="dausao">*</span>Thương hiệu</label>
+                                    <div class="col-sm-4">
+                                      <div class="input-group">
+                                        <select name="cars" class="form-control" id="specificSizeInputGroupUsername">
+                                          <option value="volvo">Volvo</option>
+                                          <option value="saab">Saab</option>
+                                          <option value="mercedes">Mercedes</option>
+                                          <option value="audi">Audi</option>
+                                        </select>
+                                        <button type="button" class="btn btn-primary">
+                                          <i class="bi bi-plus"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <label for="inputEmail3" class="col col-form-label"><span
+                                        class="dausao">*</span>Trạng thái</label>
+                                    <div class="col-sm-4">
+                                      <div class="input-group">
+                                        <select name="cars" class="form-control" id="specificSizeInputGroupUsername">
+                                          <option value="volvo">Volvo</option>
+                                          <option value="saab">Saab</option>
+                                          <option value="mercedes">Mercedes</option>
+                                          <option value="audi">Audi</option>
+                                        </select>
+                                        <button type="button" class="btn btn-primary">
+                                          <i class="bi bi-plus"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row mb-3">
+                                    <label for="inputEmail3" class="col col-form-label"><span
+                                        class="dausao">*</span>Thương hiệu</label>
+                                    <div class="col-sm-4">
+                                      <div class="input-group">
+                                        <select name="cars" class="form-control" id="specificSizeInputGroupUsername">
+                                          <option value="volvo">Volvo</option>
+                                          <option value="saab">Saab</option>
+                                          <option value="mercedes">Mercedes</option>
+                                          <option value="audi">Audi</option>
+                                        </select>
+                                        <button type="button" class="btn btn-primary">
+                                          <i class="bi bi-plus"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <label for="inputEmail3" class="col col-form-label"><span
+                                        class="dausao">*</span>Trạng thái</label>
+                                    <div class="col-sm-4">
+                                      <div class="input-group">
+                                        <select name="cars" class="form-control" id="specificSizeInputGroupUsername">
+                                          <option value="volvo">Volvo</option>
+                                          <option value="saab">Saab</option>
+                                          <option value="mercedes">Mercedes</option>
+                                          <option value="audi">Audi</option>
+                                        </select>
+                                        <button type="button" class="btn btn-primary">
+                                          <i class="bi bi-plus"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row mb-3">
+                                    <label for="inputEmail3" class="col col-form-label"><span
+                                        class="dausao">*</span>Thương hiệu</label>
+                                    <div class="col-sm-4">
+                                      <div class="input-group">
+                                        <select name="cars" class="form-control" id="specificSizeInputGroupUsername">
+                                          <option value="volvo">Volvo</option>
+                                          <option value="saab">Saab</option>
+                                          <option value="mercedes">Mercedes</option>
+                                          <option value="audi">Audi</option>
+                                        </select>
+                                        <button type="button" class="btn btn-primary">
+                                          <i class="bi bi-plus"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <label for="inputEmail3" class="col col-form-label"><span
+                                        class="dausao">*</span>Trạng thái</label>
+                                    <div class="col-sm-4">
+                                      <div class="input-group">
+                                        <select name="cars" class="form-control" id="specificSizeInputGroupUsername">
+                                          <option value="volvo">Volvo</option>
+                                          <option value="saab">Saab</option>
+                                          <option value="mercedes">Mercedes</option>
+                                          <option value="audi">Audi</option>
+                                        </select>
+                                        <button type="button" class="btn btn-primary">
+                                          <i class="bi bi-plus"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn btn-primary">Chỉnh sửa</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+              </table>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      <i class="bi bi-chevron-left"></i>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      <i class="bi bi-chevron-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+              <!-- End Table with stripped rows -->
+
             </div>
           </div>
 
         </div>
-
-        <div class="col-xl-6">
-          <div class="card p-4">
-            <form action="forms/contact.php" method="post" class="php-email-form">
-              <div class="row gy-4">
-
-                <div class="col-md-6">
-                  <input type="text" name="name" class="form-control" placeholder="Your Name" required>
-                </div>
-
-                <div class="col-md-6 ">
-                  <input type="email" class="form-control" name="email" placeholder="Your Email" required>
-                </div>
-
-                <div class="col-md-12">
-                  <input type="text" class="form-control" name="subject" placeholder="Subject" required>
-                </div>
-
-                <div class="col-md-12">
-                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                  <button type="submit">Send Message</button>
-                </div>
-
-              </div>
-            </form>
-          </div>
-
-        </div>
-
       </div>
-
     </section>
 
   </main><!-- End #main -->
