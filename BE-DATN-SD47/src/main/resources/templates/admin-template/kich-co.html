@@ -144,78 +144,89 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <form action="" class="row g-3" style="margin-top: 1%;">
-                                <div class="col-md-6">
-                                    <label for="validationDefault03" class="form-label">Tìm kiếm</label>
-                                    <input type="text" class="form-control" id="validationDefault03"
-                                        placeholder="Nhập kích cỡ">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="validationDefault04" class="form-label">Trạng thái</label>
-                                    <div class="trang-thai-thuoc-tinh">
-                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                            value="option1" checked>
-                                        <label class="form-check-label" for="gridRadios1">
-                                            Tất cả
-                                        </label>
-
-                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                            value="option1" checked>
-                                        <label class="form-check-label" for="gridRadios1">
-                                            Hoạt động
-                                        </label>
-
-                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                            value="option1" checked>
-                                        <label class="form-check-label" for="gridRadios1">
-                                            Ngừng hoạt động
-                                        </label>
+                            <!-- form tìm kiếm -->
+                            <form action="" style="margin-top: 2%;">
+                                <label class="col-sm-2 col-form-label">Nhập tên kích cỡ:</label>
+                                <div class="row mb-3">
+                                    <div class="col-sm-8">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Tìm kiếm theo kích cỡ">
+                                            <button type="submit" class="btn btn-primary"><i
+                                                    class="bi bi-arrow-clockwise"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="submit" class="btn btn-primary" style="margin-left:35%;">Tìm
+                                            kiếm</button>
+                                    </div>
+                                    <div class="col-sm-2">
                                         <!-- Button trigger modal -->
-                                        <button type="button" style="float: right;" class="btn btn-primary"
-                                            data-bs-toggle="modal" data-bs-target="#them-kich-co">
-                                            Thêm kích cỡ
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            style="float: right; " data-bs-target="#them-kich-co">
+                                            Thêm mới
                                         </button>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="them-kich-co" tabindex="-1"
-                                            aria-labelledby="them-kich-coLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content"
-                                                    style="width: 100%;margin: auto;margin-top: 40%;">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="them-kich-coLabel">Thêm Kích
-                                                            Cỡ</h1>
+                                    </div>
+                                </div>
+                                <div class="search-trang-thai" style="margin-top: 4%; margin-bottom: 4%;">
+                                    <label for="inputEmail3" style="margin-left:20%;">Trạng thái:</label>
+                                    <input class="form-check-input" type="radio" name="gridRadios" value="option1"
+                                        style="margin-left:5%;" checked>
+                                    <label class="form-check-label">
+                                        Tất cả
+                                    </label>
+
+                                    <input class="form-check-input" type="radio" name="gridRadios" value="option1"
+                                        style="margin-left:5%;" checked>
+                                    <label class="form-check-label">
+                                        Đang hoạt động
+                                    </label>
+
+                                    <input class="form-check-input" type="radio" name="gridRadios" value="option1"
+                                        style="margin-left:5%;" checked>
+                                    <label class="form-check-label">
+                                        Dừng hoạt động
+                                    </label>
+                                </div>
+                            </form>
+                            <!-- form tìm kiếm end -->
+
+
+                            <!-- Modal thêm thuộc tính -->
+                            <div class="modal fade" id="them-kich-co" tabindex="-1" aria-labelledby="them-kich-coLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="width: 100%;margin: auto;margin-top: 40%;">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="them-kich-coLabel">Thêm Kích
+                                                Cỡ</h1>
+                                        </div>
+
+                                        <!-- form thêm thuộc tính -->
+                                        <form action="">
+
+                                            <div class="modal-body">
+                                                <div class="row mb-3" style="margin-top: 3%;">
+                                                    <label for="themKichCo" class="col-sm-4 col-form-label"><span
+                                                            style="color: red;">*</span>Kích Cỡ</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" id="themKichCo"
+                                                            placeholder="Nhập kích cỡ">
                                                     </div>
-
-                                                    <!-- form thêm thuộc tính -->
-                                                    <form action="">
-
-                                                        <div class="modal-body">
-                                                            <div class="row mb-3" style="margin-top: 3%;">
-                                                                <label for="themKichCo"
-                                                                    class="col-sm-4 col-form-label"><span
-                                                                        style="color: red;">*</span>Kích Cỡ</label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="text" class="form-control"
-                                                                        id="themKichCo" placeholder="Nhập kích cỡ">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Đóng
-                                                            </button>
-                                                            <button type="submit" class="btn btn-primary">Thêm</button>
-                                                        </div>
-
-                                                    </form>
-
                                                 </div>
                                             </div>
-                                        </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Đóng
+                                                </button>
+                                                <button type="submit" class="btn btn-success">Thêm</button>
+                                            </div>
+
+                                        </form>
 
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                            <!-- Modal thêm thuộc tính end -->
 
                             <table class="sanpham-table">
                                 <thead>
@@ -250,7 +261,7 @@
                                                             <div class="modal-header">
                                                                 <h1 class="modal-title fs-5"
                                                                     id="chinh-sua-tab-kichcoLabel">Chỉnh
-                                                                    Sửa Kích Cỡ</h1>
+                                                                    Cập Nhật Kích Cỡ</h1>
                                                             </div>
                                                             <!-- form thêm thuộc tính -->
                                                             <form action="">
@@ -298,8 +309,93 @@
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">Đóng
                                                                     </button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-primary">Sửa</button>
+                                                                    <button type="submit" class="btn btn-warning">Cập
+                                                                        nhật</button>
+                                                                </div>
+
+                                                            </form>
+                                                            <!-- form thêm thuộc tính end -->
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Nike</td>
+                                            <td>
+                                                <div class="trangthaidhd">Đang hoạt động</div>
+                                                <!-- <div class="trangthainhd">Ngừng hoạt động</div> -->
+                                            </td>
+                                            <td>
+
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                                    data-bs-target="#chinh-sua-tab-kichco">
+                                                    <i class="bi bi-pencil-fill"></i>
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="chinh-sua-tab-kichco" tabindex="-1"
+                                                    aria-labelledby="chinh-sua-tab-kichcoLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content"
+                                                            style="width: 100%;margin: auto;margin-top: 40%;">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5"
+                                                                    id="chinh-sua-tab-kichcoLabel">Chỉnh
+                                                                    Cập Nhật Kích Cỡ</h1>
+                                                            </div>
+                                                            <!-- form thêm thuộc tính -->
+                                                            <form action="">
+
+                                                                <div class="modal-body">
+                                                                    <div class="row mb-3" style="margin-top: 3%;">
+                                                                        <label class="col-sm-4 col-form-label"
+                                                                            style="float: left;">
+                                                                            <span style="color: red;">*</span>
+                                                                            Kích Cỡ
+                                                                        </label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" class="form-control"
+                                                                                placeholder="Nhập kích cỡ">
+                                                                        </div>
+                                                                    </div>
+                                                                    <fieldset class="row mb-3">
+                                                                        <legend class="col-form-label col-sm-4 pt-0">
+                                                                            <span style="color: red;">*</span>
+                                                                            Trạng Thái
+                                                                        </legend>
+                                                                        <div class="col-sm-8">
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input"
+                                                                                    type="radio" name="gridRadios"
+                                                                                    value="option1" checked>
+                                                                                <label class="form-check-label"
+                                                                                    style="float: left;">
+                                                                                    Đang hoạt động
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input"
+                                                                                    type="radio" name="gridRadios"
+                                                                                    value="option2">
+                                                                                <label class="form-check-label"
+                                                                                    style="float: left;">
+                                                                                    Ngừng hoạt động
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Đóng
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-primary">Cập
+                                                                        nhật</button>
                                                                 </div>
 
                                                             </form>
@@ -333,7 +429,7 @@
                                                             <div class="modal-header">
                                                                 <h1 class="modal-title fs-5"
                                                                     id="chinh-sua-tab-kichcoLabel">Chỉnh
-                                                                    Sửa Kích Cỡ</h1>
+                                                                    Cập Nhật Kích Cỡ</h1>
                                                             </div>
                                                             <!-- form thêm thuộc tính -->
                                                             <form action="">
@@ -381,91 +477,8 @@
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">Đóng
                                                                     </button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-primary">Sửa</button>
-                                                                </div>
-
-                                                            </form>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Nike</td>
-                                            <td>
-                                                <div class="trangthaidhd">Đang hoạt động</div>
-                                                <!-- <div class="trangthainhd">Ngừng hoạt động</div> -->
-                                            </td>
-                                            <td>
-
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                    data-bs-target="#chinh-sua-tab-kichco">
-                                                    <i class="bi bi-pencil-fill"></i>
-                                                </button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="chinh-sua-tab-kichco" tabindex="-1"
-                                                    aria-labelledby="chinh-sua-tab-kichcoLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content"
-                                                            style="width: 100%;margin: auto;margin-top: 40%;">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5"
-                                                                    id="chinh-sua-tab-kichcoLabel">Chỉnh
-                                                                    Sửa Kích Cỡ</h1>
-                                                            </div>
-                                                            <!-- form thêm thuộc tính -->
-                                                            <form action="">
-
-                                                                <div class="modal-body">
-                                                                    <div class="row mb-3" style="margin-top: 3%;">
-                                                                        <label class="col-sm-4 col-form-label"
-                                                                            style="float: left;">
-                                                                            <span style="color: red;">*</span>
-                                                                            Kích Cỡ
-                                                                        </label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" class="form-control"
-                                                                                placeholder="Nhập kích cỡ">
-                                                                        </div>
-                                                                    </div>
-                                                                    <fieldset class="row mb-3">
-                                                                        <legend class="col-form-label col-sm-4 pt-0">
-                                                                            <span style="color: red;">*</span>
-                                                                            Trạng Thái
-                                                                        </legend>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input"
-                                                                                    type="radio" name="gridRadios"
-                                                                                    value="option1" checked>
-                                                                                <label class="form-check-label"
-                                                                                    style="float: left;">
-                                                                                    Đang hoạt động
-                                                                                </label>
-                                                                            </div>
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input"
-                                                                                    type="radio" name="gridRadios"
-                                                                                    value="option2">
-                                                                                <label class="form-check-label"
-                                                                                    style="float: left;">
-                                                                                    Ngừng hoạt động
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </fieldset>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Đóng
-                                                                    </button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-primary">Sửa</button>
+                                                                    <button type="submit" class="btn btn-primary">Cập
+                                                                        nhật</button>
                                                                 </div>
 
                                                             </form>
@@ -499,7 +512,7 @@
                                                             <div class="modal-header">
                                                                 <h1 class="modal-title fs-5"
                                                                     id="chinh-sua-tab-kichcoLabel">Chỉnh
-                                                                    Sửa Kích Cỡ</h1>
+                                                                    Cập Nhật Kích Cỡ</h1>
                                                             </div>
                                                             <!-- form thêm thuộc tính -->
                                                             <form action="">
@@ -547,8 +560,8 @@
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">Đóng
                                                                     </button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-primary">Sửa</button>
+                                                                    <button type="submit" class="btn btn-primary">Cập
+                                                                        nhật</button>
                                                                 </div>
 
                                                             </form>
