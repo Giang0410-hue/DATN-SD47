@@ -1,5 +1,6 @@
 package com.example.bedatnsd47.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,5 +40,6 @@ public class MauSac {
 
     @Column(name = "trang_thai")
     private Integer trangThai;
+
 
 }

@@ -1,10 +1,6 @@
 package com.example.bedatnsd47.common;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +13,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseEntity <M>{
+public class BaseEntity<M>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
