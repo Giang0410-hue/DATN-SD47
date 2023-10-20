@@ -137,7 +137,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Quản Lý Nhân Viên</h1>
+      <h1>Quản Lý Khách Hàng</h1>
     </div><!-- End Page Title -->
 
     <section class="section">
@@ -146,61 +146,332 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Datatables</h5>
-              <p>Add lightweight datatables to your project with using the <a
-                  href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library.
-                Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>
+              <form action="" style="margin-top: 5%;">
+                <label class="col-sm-3 col-form-label">Nhập tên, số điện thoại, email:</label>
+                <div class="row mb-3">
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control"
+                      placeholder="Tìm kiếm khách hàng theo tên, số điện thoại, email">
+                  </div>
+                  <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary" style="margin-left:35%;">Tìm kiếm</button>
+                  </div>
+                  <div class="col-sm-2">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" style="float: right; "
+                      data-bs-target="#them-khach-hang">
+                      Thêm mới
+                    </button>
+                  </div>
+                </div>
+                <div class="search-trang-thai" style="margin-top: 4%;">
+                  <label for="inputEmail3" style="margin-left:20%;">Trạng thái:</label>
+                  <input class="form-check-input" type="radio" name="gridRadios" value="option1"
+                    style="margin-left:10%;" checked>
+                  <label class="form-check-label">
+                    Tất cả
+                  </label>
+
+                  <input class="form-check-input" type="radio" name="gridRadios" value="option1" style="margin-left:5%;"
+                    checked>
+                  <label class="form-check-label">
+                    Kích hoạt
+                  </label>
+
+                  <input class="form-check-input" type="radio" name="gridRadios" value="option1" style="margin-left:5%;"
+                    checked>
+                  <label class="form-check-label">
+                    Dừng kích hoạt
+                  </label>
+                </div>
+              </form>
+
+              <!-- Modal -->
+              <div class="modal fade" id="them-khach-hang" tabindex="-1" aria-labelledby="them-khach-hangLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="them-khach-hangLabel">Thêm Khách Hàng</h1>
+                    </div>
+                    <div class="modal-body">
+
+                      <!-- form thêm khách hàng -->
+                      <form class="row g-3" style="margin-top: 1%;margin-bottom: 5%;">
+                        <div class="col-md-6">
+                          <label for="inputEmail4" class="form-label">
+                            <span class="dau-sao">*</span>Tên tài khoản:</label>
+                          <input type="text" class="form-control" placeholder="Nhập tên tài khoản">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="inputPassword4" class="form-label">
+                            <span class="dau-sao">*</span>Tên khách hàng:</label>
+                          <input type="text" class="form-control" placeholder="Nhập khách hàng">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="inputEmail4" class="form-label">
+                            <span class="dau-sao">*</span>Ngày sinh:</label>
+                          <input type="date" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                          <label for=" inputPassword4" class="form-label">
+                            <span class="dau-sao">*</span>Giới tính:</label>
+                          <div style="margin-top: 1%;">
+                            <input class="form-check-input" type="radio" name="gridRadios" value="option1"
+                              style="margin-left:5%;" checked>
+                            <label class="form-check-label">
+                              Nam
+                            </label>
+
+                            <input class="form-check-input" type="radio" name="gridRadios" value="option1"
+                              style="margin-left:5%;" checked>
+                            <label class="form-check-label">
+                              Nữ
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="inputEmail4" class="form-label">
+                            <span class="dau-sao">*</span>Số điện thoại:</label>
+                          <input type="text" class="form-control" placeholder="Nhập số điện thoại">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="inputPassword4" class="form-label">
+                            <span class="dau-sao">*</span>Email:</label>
+                          <input type="text" class="form-control" placeholder="Nhập email">
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-label"><span class="dau-sao">*</span>Xã/phường</label>
+                          <input type="text" class="form-control" placeholder="Nhập xã/phường">
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-label"><span class="dau-sao">*</span>Quận/huyện</label>
+                          <input type="text" class="form-control" placeholder="Nhập quận/ huyện">
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-label"><span class="dau-sao">*</span>Tỉnh/thành phố</label>
+                          <input type="text" class="form-control" placeholder="Nhập tỉnh thành phố">
+                        </div>
+                        <div class="col-12">
+                          <label class="form-label"><span class="dau-sao">*</span>Địa chỉ cụ thể:</label>
+                          <input type="text" class="form-control" placeholder="Nhập địa chỉ cụ thể"
+                            placeholder="Nhập địa chỉ cụ thể">
+                        </div>
+                      </form>
+                      <!-- form thêm khách hàng end-->
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                      <button type="button" class="btn btn-primary">Thêm</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Modal end-->
+
+
 
               <!-- Table with stripped rows -->
-              <table class="table datatable">
+              <table class="sanpham-table" style="margin-top: 4%;">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
+                    <th>STT</th>
+                    <th>Họ Và Tên</th>
+                    <th>Email</th>
+                    <th>Số Điện Thoại</th>
+                    <th>Ngày tham gia</th>
+                    <th>Trạng Thái</th>
+                    <th>Hành Động</th>
                   </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                  </tr>
-                </tbody>
+                  <thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Nguyễn Tuấn Anh</td>
+                      <td>anhntph27418@fpt.edu.vn</td>
+                      <td>0377463664</td>
+                      <td>11/01/2003</td>
+                      <td class="trangthaidhd">Kích hoạt</td>
+                      <!-- <td class="trangthainkd">Dừng kích hoạtc</td> -->
+                      <td>
+                        <!-- button và model -->
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                          data-bs-target="#sua-khach-hang">
+                          <i class="bi bi-pencil-fill"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
               </table>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      <i class="bi bi-chevron-left"></i>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      <i class="bi bi-chevron-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
               <!-- End Table with stripped rows -->
+
+
+              <!-- model-xem-sửa-voucher -->
+              <div class="modal fade" id="sua-khach-hang" tabindex="-1" aria-labelledby="sua-khach-hangLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" style="margin-left:21%">
+                  <div class="modal-content" style="width: 270%;">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="sua-khach-hangLabel">Chỉnh Sửa Khách Hàng</h1>
+                    </div>
+                    <div class="modal-body">
+
+                      <div class="row g-3">
+                        <div class="col-md-6">
+                          <!-- form sửa khách hàng -->
+                          <form class="row g-3" style="margin-top: 1%;margin-bottom: 5%;">
+                            <div class="col-md-6">
+                              <label for="inputEmail4" class="form-label">
+                                <span class="dau-sao">*</span>Tên tài khoản:</label>
+                              <input type="text" class="form-control" placeholder="Nhập tên tài khoản">
+                            </div>
+                            <div class="col-md-6">
+                              <label for="inputPassword4" class="form-label">
+                                <span class="dau-sao">*</span>Tên khách hàng:</label>
+                              <input type="text" class="form-control" placeholder="Nhập khách hàng">
+                            </div>
+                            <div class="col-md-6">
+                              <label for="inputEmail4" class="form-label">
+                                <span class="dau-sao">*</span>Ngày sinh:</label>
+                              <input type="date" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                              <label for=" inputPassword4" class="form-label">
+                                <span class="dau-sao">*</span>Giới tính:</label>
+                              <div style="margin-top: 1%;">
+                                <input class="form-check-input" type="radio" name="gridRadios" value="option1"
+                                  style="margin-left:5%;" checked>
+                                <label class="form-check-label">
+                                  Nam
+                                </label>
+
+                                <input class="form-check-input" type="radio" name="gridRadios" value="option1"
+                                  style="margin-left:5%;" checked>
+                                <label class="form-check-label">
+                                  Nữ
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="inputEmail4" class="form-label">
+                                <span class="dau-sao">*</span>Số điện thoại:</label>
+                              <input type="text" class="form-control" placeholder="Nhập số điện thoại">
+                            </div>
+                            <div class="col-md-6">
+                              <label for="inputPassword4" class="form-label">
+                                <span class="dau-sao">*</span>Email:</label>
+                              <input type="text" class="form-control" placeholder="Nhập email">
+                            </div>
+                            <div class="col-md-4">
+                              <label class="form-label"><span class="dau-sao">*</span>Xã/phường</label>
+                              <input type="text" class="form-control" placeholder="Nhập xã/phường">
+                            </div>
+                            <div class="col-md-4">
+                              <label class="form-label"><span class="dau-sao">*</span>Quận/huyện</label>
+                              <input type="text" class="form-control" placeholder="Nhập quận/ huyện">
+                            </div>
+                            <div class="col-md-4">
+                              <label class="form-label"><span class="dau-sao">*</span>Tỉnh/thành phố</label>
+                              <input type="text" class="form-control" placeholder="Nhập tỉnh thành phố">
+                            </div>
+                            <div class="col-12">
+                              <label class="form-label"><span class="dau-sao">*</span>Địa chỉ cụ thể:</label>
+                              <input type="text" class="form-control" placeholder="Nhập địa chỉ cụ thể"
+                                placeholder="Nhập địa chỉ cụ thể">
+                            </div>
+                            <div class="col-12">
+                              <button type="button" class="btn btn-secondary" style="float: right;margin-left: 5%;"
+                                data-bs-dismiss="modal">Đóng</button>
+                              <button type="button" class="btn btn-warning" style="float: right;">Chỉnh sửa</button>
+                            </div>
+                          </form>
+                          <!-- form sửa khách hàng end-->
+
+                        </div>
+                        <div class="col-md-6">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">STT</th>
+                                <th scope="col">Xã/Phường</th>
+                                <th scope="col">Quận/Huyện</th>
+                                <th scope="col">Tỉnh/Thành Phố</th>
+                                <th scope="col">Địa Chỉ Cụ Thể</th>
+                                <th scope="col">Thao Tác</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>1</td>
+                                <td>Dị Nậu</td>
+                                <td>Thạch Thất</td>
+                                <td>Hà Nội</td>
+                                <td>Dị Nậu - Thạch Thất - Hà Nội</td>
+                                <td>Thạch Thất</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="danh-sach-cac-sp" style="margin-top: -5%;">
+                            <p class="d-inline-flex gap-1">
+                            <div class="col-12">
+                              <button class="btn btn-light" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                <span>+ Thêm địa chỉ khác</span>
+                              </button>
+                            </div>
+                            </p>
+                          </div>
+                          <div class="collapse" id="collapseExample">
+                            <!-- form sửa địa chỉ khách hàng -->
+                            <form class="row g-3" style="margin-top: 1%;margin-bottom: 5%;">
+                              <div class="col-md-4">
+                                <label class="form-label"><span class="dau-sao">*</span>Xã/phường</label>
+                                <input type="text" class="form-control" placeholder="Nhập xã/phường">
+                              </div>
+                              <div class="col-md-4">
+                                <label class="form-label"><span class="dau-sao">*</span>Quận/huyện</label>
+                                <input type="text" class="form-control" placeholder="Nhập quận/ huyện">
+                              </div>
+                              <div class="col-md-4">
+                                <label class="form-label"><span class="dau-sao">*</span>Tỉnh/thành phố</label>
+                                <input type="text" class="form-control" placeholder="Nhập tỉnh thành phố">
+                              </div>
+                              <div class="col-12">
+                                <label class="form-label"><span class="dau-sao">*</span>Địa chỉ cụ thể:</label>
+                                <input type="text" class="form-control" placeholder="Nhập địa chỉ cụ thể"
+                                  placeholder="Nhập địa chỉ cụ thể">
+                              </div>
+                            </form>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Modal end-->
 
             </div>
           </div>
