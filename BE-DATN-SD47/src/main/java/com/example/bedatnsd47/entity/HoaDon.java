@@ -1,6 +1,5 @@
 package com.example.bedatnsd47.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -52,11 +51,7 @@ public class HoaDon {
     private String nguoiNhan;
 
     @Column(name = "sdt_nguoi_nhan", length = 15)
-
     private String sdtNguoiNhan;
-
-    @Column(name = "ngay_ship")
-    private Date ngayShip;
 
     @Column(name = "dia_chi_nguoi_nhan", length = 100)
     private String diaChiNguoiNhan;
@@ -66,7 +61,6 @@ public class HoaDon {
 
     @Column(name = "ngay_nhan")
     private Date ngayNhan;
-
 
     @Column(name = "ngay_mong_muon")
     private Date ngayMongMuon;
@@ -83,7 +77,6 @@ public class HoaDon {
     @Column(name = "nguoi_sua", length = 100)
     private String nguoiSua;
 
-
     @Column(name = "trang_thai")
     private Integer trangThai;
 
@@ -94,5 +87,8 @@ public class HoaDon {
     @ManyToOne
     @JoinColumn(name = "tai_khoan_id")
     private TaiKhoan taiKhoan;
-}
 
+    @ManyToOne
+    @JoinColumn(name = "phuong_thuc_thanh_toan_id")
+    private PhuongThucThanhToan phuongThucThanhToan;
+}

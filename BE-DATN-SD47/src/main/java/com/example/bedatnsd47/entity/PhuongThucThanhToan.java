@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +15,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
 @Table(name = "phuong_thuc_thanh_toan")
 public class PhuongThucThanhToan {
@@ -32,15 +29,11 @@ public class PhuongThucThanhToan {
     private String ten;
 
     @Column(name = "ghi_chu", length = 255)
-
     private String ghiChu;
 
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne
-    @JoinColumn(name = "hoa_don_id")
-    private HoaDon hoaDon;
 
 
 }
