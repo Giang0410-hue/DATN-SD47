@@ -1,6 +1,5 @@
 package com.example.bedatnsd47.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,18 +11,15 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import lombok.Setter;
 
 import java.util.Date;
-
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Table(name = "gio_hang_chi_tiet")
 public class GioHangChiTiet {
     @Id
@@ -52,5 +48,4 @@ public class GioHangChiTiet {
     @ManyToOne
     @JoinColumn(name = "chi_tiet_san_pham_id")
     private ChiTietSanPham chiTietSanPham;
-
 }
