@@ -17,7 +17,6 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
 @Table(name = "voucher")
 public class Voucher {
@@ -25,11 +24,10 @@ public class Voucher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ma_voucher", length = 50)
+    @Column(name = "ma_voucher")
     private String maVoucher;
 
-    @Column(name = "ten_voucher", length = 50)
-
+    @Column(name = "ten_voucher")
     private String tenVoucher;
 
     @Column(name = "ngay_bat_dau")
@@ -39,24 +37,20 @@ public class Voucher {
     private Date ngayKetThuc;
 
     @Column(name = "ngay_tao")
-//    @Temporal(TemporalType.TIMESTAMP)
     private Date ngayTao;
 
     @Column(name = "ngay_sua")
-//    @Temporal(TemporalType.TIMESTAMP)
     private Date ngaySua;
 
-    @Column(name = "gia_tri_giam")
-    private Double giaTriGiam;
+    @Column(name = "so_luong")
+    private Integer soLuong;
 
-    @Column(name = "gia_tri_giam_toi_da")
-    private Double giaTriGiamToiDa;
+    @Column(name = "phan_tram_giam")
+    private Integer phanTramGiam;
 
-
-    @Column(name = "hinh_thuc_giam")
-    private Integer hinhThucGiam;
+    @Column(name = "gia_tri_don_toi_thieu")
+    private Double giaTriDonToiThieu;
 
     @Column(name = "trang_thai")
     private Integer trangThai;
-
 }
