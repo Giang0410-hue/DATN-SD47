@@ -31,8 +31,6 @@ public class TaiKhoan {
     @Column(name = "ho_va_ten", length = 100)
     private String hoVaTen;
 
-
-
     @Column(name = "ngay_sinh")
     private Date ngaySinh;
 

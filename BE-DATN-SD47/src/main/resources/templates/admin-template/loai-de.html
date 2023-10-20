@@ -146,70 +146,83 @@
           <div class="card">
             <div class="card-body">
 
-              <form action="" class="row g-3" style="margin-top: 1%;">
-                <div class="col-md-6">
-                  <label for="validationDefault03" class="form-label">Tìm kiếm</label>
-                  <input type="text" class="form-control" id="validationDefault03" placeholder="Nhập loại đế">
-                </div>
-                <div class="col-md-6">
-                  <label for="validationDefault04" class="form-label">Trạng thái</label>
-                  <div class="trang-thai-thuoc-tinh">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"
-                      checked>
-                    <label class="form-check-label" for="gridRadios1">
-                      Tất cả
-                    </label>
-
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"
-                      checked>
-                    <label class="form-check-label" for="gridRadios1">
-                      Hoạt động
-                    </label>
-
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"
-                      checked>
-                    <label class="form-check-label" for="gridRadios1">
-                      Ngừng hoạt động
-                    </label>
-                    <!-- Button trigger modal -->
-                    <button type="button" style="float: right;" class="btn btn-primary" data-bs-toggle="modal"
-                      data-bs-target="#them-loai-de">
-                      Thêm loại đế
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="them-loai-de" tabindex="-1" aria-labelledby="them-loai-deLabel"
-                      aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content" style="width: 100%;margin: auto;margin-top: 40%;">
-                          <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="them-loai-deLabel">Thêm Loại Đế</h1>
-                          </div>
-
-                          <!-- form thêm thuộc tính -->
-                          <form action="">
-
-                            <div class="modal-body">
-                              <div class="row mb-3" style="margin-top: 3%;">
-                                <label for="themLoaiDe" class="col-sm-4 col-form-label"><span
-                                    style="color: red;">*</span>Loại Đế</label>
-                                <div class="col-sm-8">
-                                  <input type="text" class="form-control" id="themLoaiDe" placeholder="Nhập loại đế">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                              <button type="submit" class="btn btn-primary">Thêm</button>
-                            </div>
-
-                          </form>
-
-                        </div>
-                      </div>
+              <!-- form tìm kiếm -->
+              <form action="" style="margin-top: 2%;">
+                <label class="col-sm-2 col-form-label">Nhập tên loại đế:</label>
+                <div class="row mb-3">
+                  <div class="col-sm-8">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Tìm kiếm theo loại đế">
+                      <button type="submit" class="btn btn-primary"><i class="bi bi-arrow-clockwise"></i></button>
                     </div>
                   </div>
+                  <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary" style="margin-left:35%;">Tìm
+                      kiếm</button>
+                  </div>
+                  <div class="col-sm-2">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" style="float: right; "
+                      data-bs-target="#them-loai-de">
+                      Thêm mới
+                    </button>
+                  </div>
+                </div>
+                <div class="search-trang-thai" style="margin-top: 4%; margin-bottom: 4%;">
+                  <label for="inputEmail3" style="margin-left:20%;">Trạng thái:</label>
+                  <input class="form-check-input" type="radio" name="gridRadios" value="option1" style="margin-left:5%;"
+                    checked>
+                  <label class="form-check-label">
+                    Tất cả
+                  </label>
+
+                  <input class="form-check-input" type="radio" name="gridRadios" value="option1" style="margin-left:5%;"
+                    checked>
+                  <label class="form-check-label">
+                    Đang hoạt động
+                  </label>
+
+                  <input class="form-check-input" type="radio" name="gridRadios" value="option1" style="margin-left:5%;"
+                    checked>
+                  <label class="form-check-label">
+                    Dừng hoạt động
+                  </label>
                 </div>
               </form>
+              <!-- form tìm kiếm end -->
+
+              <!-- Modal thêm thuộc tính -->
+              <div class="modal fade" id="them-loai-de" tabindex="-1" aria-labelledby="them-loai-deLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content" style="width: 100%;margin: auto;margin-top: 40%;">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="them-loai-deLabel">Thêm Loại Đế</h1>
+                    </div>
+
+                    <!-- form thêm thuộc tính -->
+                    <form action="">
+
+                      <div class="modal-body">
+                        <div class="row mb-3" style="margin-top: 3%;">
+                          <label for="themLoaiDe" class="col-sm-4 col-form-label"><span style="color: red;">*</span>Loại
+                            Đế</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="themLoaiDe" placeholder="Nhập loại đế">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-success">Thêm</button>
+                      </div>
+
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+              <!-- Modal thêm thuộc tính end -->
 
               <table class="sanpham-table">
                 <thead>
@@ -241,7 +254,7 @@
                           <div class="modal-dialog">
                             <div class="modal-content" style="width: 100%;margin: auto;margin-top: 40%;">
                               <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="chinh-sua-tab-loaideLabel">Chỉnh Sửa Loại Đế</h1>
+                                <h1 class="modal-title fs-5" id="chinh-sua-tab-loaideLabel">Chỉnh Cập Nhật Loại Đế</h1>
                               </div>
                               <!-- form thêm thuộc tính -->
                               <form action="">
@@ -280,7 +293,7 @@
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                  <button type="submit" class="btn btn-primary">Sửa</button>
+                                  <button type="submit" class="btn btn-primary">Cập nhật</button>
                                 </div>
 
                               </form>
@@ -311,7 +324,7 @@
                           <div class="modal-dialog">
                             <div class="modal-content" style="width: 100%;margin: auto;margin-top: 40%;">
                               <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="chinh-sua-tab-loaideLabel">Chỉnh Sửa Loại Đế</h1>
+                                <h1 class="modal-title fs-5" id="chinh-sua-tab-loaideLabel">Chỉnh Cập Nhật Loại Đế</h1>
                               </div>
                               <!-- form thêm thuộc tính -->
                               <form action="">
@@ -350,7 +363,7 @@
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                  <button type="submit" class="btn btn-primary">Sửa</button>
+                                  <button type="submit" class="btn btn-primary">Cập nhật</button>
                                 </div>
 
                               </form>
@@ -381,7 +394,7 @@
                           <div class="modal-dialog">
                             <div class="modal-content" style="width: 100%;margin: auto;margin-top: 40%;">
                               <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="chinh-sua-tab-loaideLabel">Chỉnh Sửa Loại Đế</h1>
+                                <h1 class="modal-title fs-5" id="chinh-sua-tab-loaideLabel">Chỉnh Cập Nhật Loại Đế</h1>
                               </div>
                               <!-- form thêm thuộc tính -->
                               <form action="">
@@ -420,7 +433,7 @@
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                  <button type="submit" class="btn btn-primary">Sửa</button>
+                                  <button type="submit" class="btn btn-primary">Cập nhật</button>
                                 </div>
 
                               </form>
@@ -451,7 +464,7 @@
                           <div class="modal-dialog">
                             <div class="modal-content" style="width: 100%;margin: auto;margin-top: 40%;">
                               <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="chinh-sua-tab-loaideLabel">Chỉnh Sửa Loại Đế</h1>
+                                <h1 class="modal-title fs-5" id="chinh-sua-tab-loaideLabel">Chỉnh Cập Nhật Loại Đế</h1>
                               </div>
                               <!-- form thêm thuộc tính -->
                               <form action="">
@@ -490,7 +503,7 @@
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                  <button type="submit" class="btn btn-primary">Sửa</button>
+                                  <button type="submit" class="btn btn-primary">Cập nhật</button>
                                 </div>
 
                               </form>

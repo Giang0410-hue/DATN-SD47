@@ -150,8 +150,11 @@
                 <label class="col-sm-3 col-form-label">Nhập tên, số điện thoại, email:</label>
                 <div class="row mb-3">
                   <div class="col-sm-8">
-                    <input type="text" class="form-control"
-                      placeholder="Tìm kiếm khách hàng theo tên, số điện thoại, email">
+                    <div class="input-group">
+                      <input type="text" class="form-control"
+                        placeholder="Tìm kiếm khách hàng theo tên, số điện thoại, email">
+                      <button type="submit" class="btn btn-primary"><i class="bi bi-arrow-clockwise"></i></button>
+                    </div>
                   </div>
                   <div class="col-sm-2">
                     <button type="submit" class="btn btn-primary" style="margin-left:35%;">Tìm kiếm</button>
@@ -263,7 +266,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                      <button type="button" class="btn btn-primary">Thêm</button>
+                      <button type="button" class="btn btn-success">Thêm</button>
                     </div>
                   </div>
                 </div>
@@ -330,7 +333,7 @@
                 <div class="modal-dialog" style="margin-left:21%">
                   <div class="modal-content" style="width: 270%;">
                     <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="sua-khach-hangLabel">Chỉnh Sửa Khách Hàng</h1>
+                      <h1 class="modal-title fs-5" id="sua-khach-hangLabel">Cập Nhật Khách Hàng</h1>
                     </div>
                     <div class="modal-body">
 
@@ -398,16 +401,15 @@
                                 placeholder="Nhập địa chỉ cụ thể">
                             </div>
                             <div class="col-12">
-                              <button type="button" class="btn btn-secondary" style="float: right;margin-left: 5%;"
-                                data-bs-dismiss="modal">Đóng</button>
-                              <button type="button" class="btn btn-warning" style="float: right;">Chỉnh sửa</button>
+                              <button type="button" class="btn btn-warning" style="float: right;">Cập nhật</button>
                             </div>
                           </form>
                           <!-- form sửa khách hàng end-->
 
                         </div>
+
                         <div class="col-md-6">
-                          <table class="table">
+                          <table class="sanpham-table">
                             <thead>
                               <tr>
                                 <th scope="col">STT</th>
@@ -425,22 +427,70 @@
                                 <td>Thạch Thất</td>
                                 <td>Hà Nội</td>
                                 <td>Dị Nậu - Thạch Thất - Hà Nội</td>
+                                <td>
+                                  <button type="button" class="btn btn-warning">
+                                    <i class="bi bi-pencil-fill"></i>
+                                  </button>
+
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>1</td>
+                                <td>Dị Nậu</td>
                                 <td>Thạch Thất</td>
+                                <td>Hà Nội</td>
+                                <td>Dị Nậu - Thạch Thất - Hà Nội</td>
+                                <td>
+                                  <button type="button" class="btn btn-warning">
+                                    <i class="bi bi-pencil-fill"></i>
+                                  </button>
+
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>1</td>
+                                <td>Dị Nậu</td>
+                                <td>Thạch Thất</td>
+                                <td>Hà Nội</td>
+                                <td>Dị Nậu - Thạch Thất - Hà Nội</td>
+                                <td>
+                                  <button type="button" class="btn btn-warning">
+                                    <i class="bi bi-pencil-fill"></i>
+                                  </button>
+
+                                </td>
                               </tr>
                             </tbody>
                           </table>
-                          <div class="danh-sach-cac-sp" style="margin-top: -5%;">
+                          <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                              <li class="page-item">
+                                <a class="page-link" href="#">
+                                  <i class="bi bi-chevron-left"></i>
+                                </a>
+                              </li>
+                              <li class="page-item"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                              <li class="page-item">
+                                <a class="page-link" href="#">
+                                  <i class="bi bi-chevron-right"></i>
+                                </a>
+                              </li>
+                            </ul>
+                          </nav>
+                          <div class="danh-sach-cac-sp" style="margin-top: -3%;">
                             <p class="d-inline-flex gap-1">
                             <div class="col-12">
                               <button class="btn btn-light" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                <span>+ Thêm địa chỉ khác</span>
+                                <span style="color: rgb(0, 110, 28);">+ Thêm địa chỉ khác</span>
                               </button>
                             </div>
                             </p>
                           </div>
                           <div class="collapse" id="collapseExample">
-                            <!-- form sửa địa chỉ khách hàng -->
+                            <!-- form thêm và sửa địa chỉ khách hàng -->
                             <form class="row g-3" style="margin-top: 1%;margin-bottom: 5%;">
                               <div class="col-md-4">
                                 <label class="form-label"><span class="dau-sao">*</span>Xã/phường</label>
@@ -459,15 +509,22 @@
                                 <input type="text" class="form-control" placeholder="Nhập địa chỉ cụ thể"
                                   placeholder="Nhập địa chỉ cụ thể">
                               </div>
+                              <div class="col-12">
+                                <button type="button" class="btn btn-warning" style="float: right;margin-left: 5%;">Cập
+                                  nhập</button>
+                                <button type="button" class="btn btn-success" style="float: right;">Thêm</button>
+
+                              </div>
                             </form>
+                            <!-- form thêm và sửa địa chỉ khách hàng end -->
 
                           </div>
+                          <button type="button" class="btn btn-secondary"
+                            style="float: right;margin-left: 5%;margin-top: 12%;" data-bs-dismiss="modal">Đóng</button>
                         </div>
                       </div>
                     </div>
-                    <div class="modal-footer">
 
-                    </div>
                   </div>
                 </div>
               </div>
