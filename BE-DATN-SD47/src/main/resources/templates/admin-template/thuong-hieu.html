@@ -8,10 +8,9 @@
     <title>Glacat</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-
     <!-- Favicons -->
-    <link href="../../static/img/favicon.png" rel="icon">
-    <link href="../../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="/static/img/favicon.png" rel="icon">
+    <link href="/static/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -20,16 +19,16 @@
             rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="../../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="../../static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="../../static/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="../../static/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="../../static/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="../../static/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/static/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="/static/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/static/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/static/vendor/simple-datatables/style.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="../../static/css/style.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
 
 
 </head>
@@ -41,7 +40,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="ban-hang-admin.html" class="logo d-flex align-items-center">
-            <img src="../../static/img/logo.png" alt="">
+            <img src="/static/img/logo.png" alt="">
             <span class="d-none d-lg-block">NiceAdmin</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -145,12 +144,15 @@
                     <div class="card-body">
 
                         <!-- form tìm kiếm -->
-                        <form action="" style="margin-top: 2%;">
+                        <form th:action="@{/ap1/v1/thuong-hieu/tim}" method="post" style="margin-top: 2%;">
+                            <span style="color: red;" th:if="${message}"></span>
                             <label class="col-sm-2 col-form-label">Nhập tên thương hiệu:</label>
                             <div class="row mb-3">
                                 <div class="col-sm-8">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Tìm kiếm theo thương hiệu">
+                                        <input type="text" class="form-control" placeholder="Tìm kiếm theo thương hiệu"
+                                               name="keyword">
+
                                         <button type="submit" class="btn btn-primary"><i
                                                 class="bi bi-arrow-clockwise"></i></button>
                                     </div>
@@ -169,29 +171,29 @@
                                     </button>
                                 </div>
                             </div>
+
                             <div class="search-trang-thai" style="margin-top: 4%; margin-bottom: 4%;">
                                 <label style="margin-left:20%;">Trạng thái:</label>
-                                <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                       style="margin-left:5%;"
-                                       checked>
+
+                                <input class="form-check-input" type="radio" name="trangThai" value="3"
+                                       style="margin-left:5%;" checked>
                                 <label class="form-check-label">
                                     Tất cả
                                 </label>
 
-                                <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                       style="margin-left:5%;"
-                                       checked>
+                                <input class="form-check-input" type="radio" name="trangThai" value="1"
+                                       style="margin-left:5%;">
                                 <label class="form-check-label">
                                     Đang hoạt động
                                 </label>
 
-                                <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                       style="margin-left:5%;"
-                                       checked>
+                                <input class="form-check-input" type="radio" name="trangThai" value="0"
+                                       style="margin-left:5%;">
                                 <label class="form-check-label">
                                     Dừng hoạt động
                                 </label>
                             </div>
+
                         </form>
                         <!-- form tìm kiếm end -->
 
@@ -206,7 +208,7 @@
                                     </div>
 
                                     <!-- form thêm thuộc tính -->
-                                    <form action="">
+                                    <form th:action="@{/ap1/v1/thuong-hieu/add}"  method="post"  th:object="${thuongHieu}" >
 
                                         <div class="modal-body">
                                             <div class="row mb-3" style="margin-top: 3%;">
@@ -215,7 +217,8 @@
                                                     Hiệu</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" id="themThuongHieu"
-                                                           placeholder="Nhập thương hiệu">
+                                                           placeholder="Nhập thương hiệu" name="ten" th:field="*{ten}">
+
                                                 </div>
                                             </div>
                                         </div>
@@ -237,25 +240,28 @@
                             <thead>
                             <tr>
                                 <th>STT</th>
-                                <th>Tên Thương Hiệu</th>
+                                <th>Tên</th>
+
                                 <th>Trạng Thái</th>
-                                <th>Hành Động</th>
                             </tr>
                             <thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Nike</td>
+                            <tr th:each="thuongHieu : ${thuongHieuPage}">
+                                <td th:text="${thuongHieu.ten}"></td>
+                                <!--                                <td th:text="${thuongHieu.ngayTao}"></td>-->
+                                <!--                                <td th:text="${thuongHieu.ngaySua}"></td>-->
                                 <td>
                                     <div class="trangthaidhd">Đang hoạt động</div>
                                     <!-- <div class="trangthainhd">Ngừng hoạt động</div> -->
                                 </td>
                                 <td>
+
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#sua-thuong-hieu">
+                                    <a type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#sua-thuong-hieu" th:href="@{'/ap1/v1/thuong-hieu/getById/' +${thuongHieu.id}}">
                                         <i class="bi bi-pencil-fill"></i>
-                                    </button>
+                                    </a>
+                                    <a th:href="@{'/ap1/v1/thuong-hieu/getById/' +${thuongHieu.id}}">a</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -271,9 +277,10 @@
                                         <h1 class="modal-title fs-5">Chỉnh Cập Nhật Thương Hiệu</h1>
                                     </div>
                                     <!-- form thêm thuộc tính -->
-                                    <form action="">
-
+                                    <form   method="post" >
+<!--                                        <input type="hidden" th:field="*{id}" >-->
                                         <div class="modal-body">
+
                                             <div class="row mb-3" style="margin-top: 3%;">
                                                 <label class="col-sm-4 col-form-label" style="float: left;">
                                                     <span style="color: red;">*</span>
@@ -281,32 +288,33 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control"
-                                                           placeholder="Nhập thương hiệu">
+                                                           placeholder="Nhập thương hiệu" th:value="${thuongHieuDetail.id}" >
+
                                                 </div>
                                             </div>
-                                            <fieldset class="row mb-3">
-                                                <legend class="col-form-label col-sm-4 pt-0">
-                                                    <span style="color: red;">*</span>
-                                                    Trạng Thái
-                                                </legend>
-                                                <div class="col-sm-8">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                                               value="option1"
-                                                               checked>
-                                                        <label class="form-check-label" style="float: left;">
-                                                            Đang hoạt động
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                                               value="option2">
-                                                        <label class="form-check-label" style="float: left;">
-                                                            Ngừng hoạt động
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
+<!--                                            <fieldset class="row mb-3">-->
+<!--                                                <legend class="col-form-label col-sm-4 pt-0">-->
+<!--                                                    <span style="color: red;">*</span>-->
+<!--                                                    Trạng Thái-->
+<!--                                                </legend>-->
+<!--                                                <div class="col-sm-8">-->
+<!--                                                    <div class="form-check">-->
+<!--                                                        <input class="form-check-input" type="radio" name="trangThai"-->
+
+<!--                                                               checked>-->
+<!--                                                        <label class="form-check-label" style="float: left;"  th:field="*{trangThai}" value="1">-->
+<!--                                                            Đang hoạt động-->
+<!--                                                        </label>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-check">-->
+<!--                                                        <input class="form-check-input" type="radio" name="trangThai"-->
+<!--                                                            th:field="*{trangThai}" value="0" >-->
+<!--                                                        <label class="form-check-label" style="float: left;">-->
+<!--                                                            Ngừng hoạt động-->
+<!--                                                        </label>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </fieldset>-->
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -324,16 +332,42 @@
 
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#"><i
-                                        class="bi bi-chevron-left"></i></a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a>
+                                <li class="page-item">
+                                    <a class="page-link" th:if="${thuongHieuPage.hasPrevious()}"
+                                       th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=0)}">
+                                        <i class="bi bi-chevron-left"></i>
+                                    </a>
+                                </li>
+                                <!-- Display page numbers with ellipsis -->
+                                <li class="page-item">
+                                    <a class="page-link" th:if="${thuongHieuPage.number > 2}"
+                                       th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=0)}">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <span class="page-link" th:if="${thuongHieuPage.number > 3}">...</span>
+                                </li>
+                                <li class="page-item"
+                                    th:each="i : ${#numbers.sequence(thuongHieuPage.number - 2, thuongHieuPage.number + 2)}"
+                                    th:unless="${i < 0 or i >= thuongHieuPage.totalPages}">
+                                    <a class="page-link" th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=${i})}"
+                                       th:text="${i + 1}"></a>
+                                </li>
+                                <li class="page-item">
+                                    <span class="page-link"
+                                          th:if="${thuongHieuPage.number < thuongHieuPage.totalPages - 4}">...</span>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       th:if="${thuongHieuPage.number < thuongHieuPage.totalPages - 3}"
+                                       th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=${thuongHieuPage.totalPages - 1})}">
+                                        <i class="bi bi-chevron-right"></i>
+                                    </a>
                                 </li>
                             </ul>
-                        </nav>
 
+                            <p>Trang <span th:text="${thuongHieuPage.number + 1}"></span> / <span
+                                    th:text="${thuongHieuPage.totalPages}"></span></p>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -360,17 +394,17 @@
         class="bi bi-arrow-up-short"></i></a>
 
 <!-- Vendor JS Files -->
-<script src="../../static/vendor/apexcharts/apexcharts.min.js"></script>
-<script src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../../static/vendor/chart.js/chart.umd.js"></script>
-<script src="../../static/vendor/echarts/echarts.min.js"></script>
-<script src="../../static/vendor/quill/quill.min.js"></script>
-<script src="../../static/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="../../static/vendor/tinymce/tinymce.min.js"></script>
-<script src="../../static/vendor/php-email-form/validate.js"></script>
+<script src="/static/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/static/vendor/chart.js/chart.umd.js"></script>
+<script src="/static/vendor/echarts/echarts.min.js"></script>
+<script src="/static/vendor/quill/quill.min.js"></script>
+<script src="/static/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="/static/vendor/tinymce/tinymce.min.js"></script>
+<script src="/static/vendor/php-email-form/validate.js"></script>
 
 <!-- Template Main JS File -->
-<script src="../../static/js/main.js"></script>
+<script src="/static/js/main.js"></script>
 
 </body>
 
