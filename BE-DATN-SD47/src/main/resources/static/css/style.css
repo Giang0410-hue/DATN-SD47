@@ -1654,3 +1654,20 @@ table th {
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+.cart__count {
+  position: absolute;
+  right: -135px;
+  top: -33px;
+  display: inline-block;
+  width: 90%;
+  color: #fff;
+  background-color: crimson;
+  border-radius: 100%;
+}
+
+.cart {
+  position: relative;
+  display: block;
+  width: 30px;
+}
