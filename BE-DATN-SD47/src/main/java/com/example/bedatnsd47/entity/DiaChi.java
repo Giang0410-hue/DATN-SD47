@@ -1,6 +1,5 @@
 package com.example.bedatnsd47.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +19,6 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
 @Table(name = "dia_chi")
 public class DiaChi {
@@ -42,11 +40,9 @@ public class DiaChi {
 
     @Column(name = "ngay_tao")
 
-
     private Date ngayTao;
 
     @Column(name = "ngay_sua")
-
 
     private Date ngaySua;
 
