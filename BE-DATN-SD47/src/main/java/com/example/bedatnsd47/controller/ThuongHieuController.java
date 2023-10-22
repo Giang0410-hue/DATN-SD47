@@ -30,7 +30,7 @@ public class ThuongHieuController {
         Page<ThuongHieu> thuongHieuPage = thuongHieuService.findAll(page, pageSize);
         model.addAttribute("thuongHieuPage", thuongHieuPage);
         model.addAttribute("thuongHieu", new ThuongHieu());
-        return "admin-template/thuong-hieu1";
+        return "admin-template/thuong-hieu";
     }
 
     @GetMapping("/getById/{id}")
