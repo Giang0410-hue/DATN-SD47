@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -155,128 +155,19 @@
                     <!-- Default Tabs -->
                     <div class="hoa-don">
                       <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        
-                        <li th:each=" hoaDon : ${lstHoaDon}"  class="nav-item" role="presentation">
-                          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" th:data-bs-target="${'#'+hoaDon.maHoaDon}" th:text="${hoaDon.maHoaDon}"  type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                            type="button" role="tab" aria-controls="home" aria-selected="true">Hóa Đơn 1</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                            type="button" role="tab" aria-controls="profile" aria-selected="false">Hóa Đơn 2</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                            type="button" role="tab" aria-controls="contact" aria-selected="false">Hóa Đơn 3</button>
                         </li>
                       </ul>
-                      <div class="tab-content" id="myTabContent">
-                        <div  th:each=" hoaDon : ${lstHoaDon}" class="tab-pane fade" th:id="${hoaDon.maHoaDon}" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">[[${hoaDon.maHoaDon}]]
-<!-- bảng sản phẩm -->
-<div class="table-ban-hang">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">STT</th>
-        <th scope="col">Sản phẩm</th>
-        <th scope="col">Số lượng</th>
-        <th scope="col">Tổng tiền</th>
-        <th scope="col">Thao tác</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>
-          <div class="row">
-            <div class="col-4">
-              <img src="../../static/img/card.jpg" class="fixed-image">
-            </div>
-            <div class="col-8">
-              <div class="info-price">
-                <h6>Giày Nike [Xanh - 38]</h6>
-                <span>Đơn giá: <span class="gia"> 2.000.000 VND</span></span>
-                <p>Loại đế: Gỗ</p>
-              </div>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="quantity-table">
-            <input type="number" name="points" min="0" max="100" step="1" value="0">
-          </div>
-        </td>
-        <td>
-          <div class="price-table">20.000.000VND</div>
-        </td>
-        <td>
-          <div class="button-table">
-            <button type="submit" class="btn btn-danger">
-              <i class="bi bi-trash-fill"></i></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">1</th>
-        <td>
-          <div class="row">
-            <div class="col-4">
-              <img src="../../static/img/card.jpg" class="fixed-image">
-            </div>
-            <div class="col-8">
-              <div class="info-price">
-                <h6>Giày Nike [Xanh - 38]</h6>
-                <span>Đơn giá: <span class="gia"> 2.000.000 VND</span></span>
-                <p>Loại đế: Gỗ</p>
-              </div>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="quantity-table">
-            <input type="number" name="points" min="0" max="100" step="1" value="0">
-          </div>
-        </td>
-        <td>
-          <div class="price-table">20.000.000VND</div>
-        </td>
-        <td>
-          <div class="button-table">
-            <button type="submit" class="btn btn-danger">
-              <i class="bi bi-trash-fill"></i></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">1</th>
-        <td>
-          <div class="row">
-            <div class="col-4">
-              <img src="../../static/img/card.jpg" class="fixed-image">
-            </div>
-            <div class="col-8">
-              <div class="info-price">
-                <h6>Giày Nike [Xanh - 38]</h6>
-                <span>Đơn giá: <span class="gia"> 2.000.000 VND</span></span>
-                <p>Loại đế: Gỗ</p>
-              </div>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="quantity-table">
-            <input type="number" name="points" min="0" max="100" step="1" value="0">
-          </div>
-        </td>
-        <td>
-          <div class="price-table">20.000.000VND</div>
-        </td>
-        <td>
-          <div class="button-table">
-            <button type="submit" class="btn btn-danger">
-              <i class="bi bi-trash-fill"></i></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-                        </div>
-
-                      </div>
                       <div class="tab-content pt-2" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                           <div class="them-moi-sp">
@@ -474,7 +365,118 @@
                               <span>Không có sản phẩm nào trong giỏ</span>
                             </div> -->
 
-                          
+                          <!-- bảng sản phẩm -->
+                          <div class="table-ban-hang">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">STT</th>
+                                  <th scope="col">Sản phẩm</th>
+                                  <th scope="col">Số lượng</th>
+                                  <th scope="col">Tổng tiền</th>
+                                  <th scope="col">Thao tác</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <th scope="row">1</th>
+                                  <td>
+                                    <div class="row">
+                                      <div class="col-4">
+                                        <img src="../../static/img/card.jpg" class="fixed-image">
+                                      </div>
+                                      <div class="col-8">
+                                        <div class="info-price">
+                                          <h6>Giày Nike [Xanh - 38]</h6>
+                                          <span>Đơn giá: <span class="gia"> 2.000.000 VND</span></span>
+                                          <p>Loại đế: Gỗ</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="quantity-table">
+                                      <input type="number" name="points" min="0" max="100" step="1" value="0">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="price-table">20.000.000VND</div>
+                                  </td>
+                                  <td>
+                                    <div class="button-table">
+                                      <button type="submit" class="btn btn-danger">
+                                        <i class="bi bi-trash-fill"></i></i>
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">1</th>
+                                  <td>
+                                    <div class="row">
+                                      <div class="col-4">
+                                        <img src="../../static/img/card.jpg" class="fixed-image">
+                                      </div>
+                                      <div class="col-8">
+                                        <div class="info-price">
+                                          <h6>Giày Nike [Xanh - 38]</h6>
+                                          <span>Đơn giá: <span class="gia"> 2.000.000 VND</span></span>
+                                          <p>Loại đế: Gỗ</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="quantity-table">
+                                      <input type="number" name="points" min="0" max="100" step="1" value="0">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="price-table">20.000.000VND</div>
+                                  </td>
+                                  <td>
+                                    <div class="button-table">
+                                      <button type="submit" class="btn btn-danger">
+                                        <i class="bi bi-trash-fill"></i></i>
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">1</th>
+                                  <td>
+                                    <div class="row">
+                                      <div class="col-4">
+                                        <img src="../../static/img/card.jpg" class="fixed-image">
+                                      </div>
+                                      <div class="col-8">
+                                        <div class="info-price">
+                                          <h6>Giày Nike [Xanh - 38]</h6>
+                                          <span>Đơn giá: <span class="gia"> 2.000.000 VND</span></span>
+                                          <p>Loại đế: Gỗ</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="quantity-table">
+                                      <input type="number" name="points" min="0" max="100" step="1" value="0">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="price-table">20.000.000VND</div>
+                                  </td>
+                                  <td>
+                                    <div class="button-table">
+                                      <button type="submit" class="btn btn-danger">
+                                        <i class="bi bi-trash-fill"></i></i>
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
 
                           <div class="line"></div>
 
@@ -993,8 +995,8 @@
 
                         </div>
 
-                        <div class="tab-pane fade" id="HD2" role="tabpanel" aria-labelledby="profile-tab">
-                          Hóa đơn 2
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                          Hóa đơn2
                         </div>
                         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                           Hóa đơn 3

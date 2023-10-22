@@ -14,7 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import java.util.Date;
+// import java.util.Date;
 
 @Entity
 @Table(name = "chi_tiet_san_pham")
