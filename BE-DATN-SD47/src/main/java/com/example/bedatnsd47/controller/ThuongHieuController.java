@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -29,14 +30,14 @@ public class ThuongHieuController {
         Page<ThuongHieu> thuongHieuPage = thuongHieuService.findAll(page, pageSize);
         model.addAttribute("thuongHieuPage", thuongHieuPage);
         model.addAttribute("thuongHieu", new ThuongHieu());
-        return "admin-template/thuong-hieu";
+        return "admin-template/thuong-hieu1";
     }
 
     @GetMapping("/getById/{id}")
-    public  String getId(@PathVariable("id") Long id,Model model){
+    public  String getId(@PathVariable("id") Long id, RedirectAttributes model){
         ThuongHieu thuongHieu = thuongHieuService.findById(id).orElse(null);
         System.out.println(thuongHieu);
-        model.addAttribute("thuongHieuDetail",thuongHieu);
+        model.addFlashAttribute("thuongHieuDetail",thuongHieu);
         return "redirect:/ap1/v1/thuong-hieu/hien-thi";
     }
 
@@ -60,7 +61,7 @@ public class ThuongHieuController {
         } else {
             model.addAttribute("thuongHieuPage", ketQua);
             model.addAttribute("thuongHieu", new ThuongHieu());
-            return "admin-template/thuong-hieu";
+            return "admin-template/thuong-hieu1";
         }
 
 
