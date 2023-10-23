@@ -10,26 +10,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="../../../static/img/favicon.png" rel="icon">
-    <link href="../../../static/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-            rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="../../../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="../../../static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="../../../static/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="../../../static/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="../../../static/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="../../../static/vendor/simple-datatables/style.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="../../../static/css/style.css" rel="stylesheet">
+    <div th:replace="~{admin-template/fragment/header :: header}"></div>
 
 
 </head>
@@ -203,7 +184,8 @@
                                     </div>
 
                                     <!-- form thêm thuộc tính -->
-                                    <form action="">
+                                    <form th:action="@{/ap1/v1/kich-co/add}" method="post"
+                                          th:object="${thuongHieu}">
 
                                         <div class="modal-body">
                                             <div class="row mb-3" style="margin-top: 3%;">
@@ -211,7 +193,7 @@
                                                         style="color: red;">*</span>Kích Cỡ</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" id="themKichCo"
-                                                           placeholder="Nhập kích cỡ">
+                                                           placeholder="Nhập kích cỡ" name="ten">
                                                 </div>
                                             </div>
                                         </div>
@@ -229,19 +211,31 @@
                         </div>
                         <!-- Modal thêm thuộc tính end -->
 
+
                         <table class="sanpham-table">
                             <thead>
                             <tr>
                                 <th>STT</th>
-                                <th>Tên Kích Cỡ</th>
+                                <th>Tên</th>
                                 <th>Trạng Thái</th>
-                                <th>Hành Động</th>
+                                <th>Thao Tác</th>
                             </tr>
                             <thead>
                             <tbody>
+                        <table class="sanpham-table">
+                            <thead>
                             <tr>
-                                <td>1</td>
-                                <td>Nike</td>
+                                <th>STT</th>
+                                <th>Tên</th>
+                                <th>Trạng Thái</th>
+                                <th>Thao Tác</th>
+                            </tr>
+                            <thead>
+                            <tbody>
+                            <tr th:each="thuongHieu : ${thuongHieuPage}">
+                                <td th:text="${thuongHieu.ten}"></td>
+                                <!--                                <td th:text="${thuongHieu.ngayTao}"></td>-->
+                                <!--                                <td th:text="${thuongHieu.ngaySua}"></td>-->
                                 <td>
                                     <div class="trangthaidhd">Đang hoạt động</div>
                                     <!-- <div class="trangthainhd">Ngừng hoạt động</div> -->
@@ -249,11 +243,13 @@
                                 <td>
 
                                     <!-- Button trigger modal -->
-                                    <a type="button" class="btn btn-warning">
+                                    <a type="button" class="btn btn-warning"  th:href="@{'/ap1/v1/kich-co/getById/' + ${thuongHieu.id}}" >
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
                                 </td>
                             </tr>
+                            </tbody>
+                        </table>
                             </tbody>
                         </table>
 
@@ -300,18 +296,7 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 
-<!-- Vendor JS Files -->
-<script src="../../../static/vendor/apexcharts/apexcharts.min.js"></script>
-<script src="../../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../../../static/vendor/chart.js/chart.umd.js"></script>
-<script src="../../../static/vendor/echarts/echarts.min.js"></script>
-<script src="../../../static/vendor/quill/quill.min.js"></script>
-<script src="../../../static/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="../../../static/vendor/tinymce/tinymce.min.js"></script>
-<script src="../../../static/vendor/php-email-form/validate.js"></script>
-
-<!-- Template Main JS File -->
-<script src="../../../static/js/main.js"></script>
+<div th:replace="~{admin-template/fragment/script :: script}"></div>
 
 </body>
 
