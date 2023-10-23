@@ -20,4 +20,8 @@ public interface SanPhamSerivce {
 
     Page<SanPham> getPage(Integer pageNo);
 
+    Integer checkPageNo(Integer pageNo);
+
+    Integer genMaTuDong();
+
 }
