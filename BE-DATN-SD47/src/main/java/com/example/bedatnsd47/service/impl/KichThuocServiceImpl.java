@@ -1,9 +1,9 @@
 package com.example.bedatnsd47.service.impl;
 
+import com.example.bedatnsd47.entity.KichCo;
 import com.example.bedatnsd47.entity.ThuongHieu;
-import com.example.bedatnsd47.repository.ThuongHieuRepository;
-import com.example.bedatnsd47.service.ThuongHieuService;
-import jakarta.transaction.Transactional;
+import com.example.bedatnsd47.repository.KichThuocRepository;
+import com.example.bedatnsd47.service.KichThuocService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,19 +16,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ThuongHieuServiceImpl implements ThuongHieuService {
-
+public class KichThuocServiceImpl implements KichThuocService {
     @Autowired
-    private ThuongHieuRepository thuongHieuRepository;
+    KichThuocRepository kichThuocRepository;
 
     @Override
-    public List<ThuongHieu> findAll() {
-        return thuongHieuRepository.findAll();
+    public List<KichCo> findAll() {
+        return kichThuocRepository.findAll();
     }
 
     @Override
-    public Optional<ThuongHieu> findById(Long id) {
-        return thuongHieuRepository.findById(id);
+    public Optional<KichCo> findById(Long id) {
+        return kichThuocRepository.findById(id);
     }
 
     @Override
@@ -37,14 +36,13 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
     }
 
     @Override
-    @Transactional
-    public void saveOrUpdate(ThuongHieu thuongHieu, String ten) {
+    public void saveOrUpdate(KichCo thuongHieu, Float ten) {
         try {
             thuongHieu.setTen(ten);
             thuongHieu.setNgayTao(new Date());
             thuongHieu.setNgaySua(new Date());
             thuongHieu.setTrangThai(1);
-            thuongHieuRepository.save(thuongHieu);
+            kichThuocRepository.save(thuongHieu);
         } catch (Exception e) {
             // Log the exception
             e.printStackTrace();
@@ -53,11 +51,11 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
     }
 
     @Override
-    public void update(ThuongHieu thuongHieu, Long id, Integer trangThai, String ten,Date ngayTao) {
+    public void update(KichCo thuongHieu, Long id, Integer trangThai, Float ten, Date ngayTao) {
         try {
-            List<ThuongHieu> list = ThuongHieuServiceImpl.this.findAll();
+            List<KichCo> list = KichThuocServiceImpl.this.findAll();
             boolean duplicateFound = false;
-            for (ThuongHieu thuongHieuTim : list
+            for (KichCo thuongHieuTim : list
             ) {
                 if (thuongHieuTim.getId() != id && thuongHieuTim.getTen().equals(ten)) {
                     duplicateFound = true;
@@ -72,7 +70,7 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
                 thuongHieu.setNgayTao(ngayTao);
                 thuongHieu.setNgaySua(new Date());
                 thuongHieu.setTrangThai(trangThai);
-                thuongHieuRepository.save(thuongHieu);
+                kichThuocRepository.save(thuongHieu);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,22 +78,19 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
     }
 
     @Override
-    public ThuongHieu findByTen(String ten) {
-        return thuongHieuRepository.findByTen(ten);
+    public KichCo findByTen(Float ten) {
+        return kichThuocRepository.findByTen(ten);
     }
 
     @Override
-    public Page<ThuongHieu> findAll(int page, int size) {
+    public Page<KichCo> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "ngaySua"));
-        return thuongHieuRepository.findAll(pageable);
+        return kichThuocRepository.findAll(pageable);
 
     }
 
     @Override
-    public Page<ThuongHieu> findByTenContaining(String keyword, Integer trang_thai, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "ngaySua"));
-        return thuongHieuRepository.findByTenContainingAndTrangThai(keyword, trang_thai, pageable);
+    public Page<KichCo> findByTenContaining(String keyword, Integer trang_thai, int page, int size) {
+        return null;
     }
-
-
 }

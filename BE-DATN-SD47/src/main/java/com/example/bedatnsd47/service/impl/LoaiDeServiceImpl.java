@@ -1,9 +1,9 @@
 package com.example.bedatnsd47.service.impl;
 
+import com.example.bedatnsd47.entity.LoaiDe;
 import com.example.bedatnsd47.entity.ThuongHieu;
-import com.example.bedatnsd47.repository.ThuongHieuRepository;
-import com.example.bedatnsd47.service.ThuongHieuService;
-import jakarta.transaction.Transactional;
+import com.example.bedatnsd47.repository.LoaiDeRepository;
+import com.example.bedatnsd47.service.LoaiDeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,19 +16,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ThuongHieuServiceImpl implements ThuongHieuService {
-
+public class LoaiDeServiceImpl  implements LoaiDeService {
     @Autowired
-    private ThuongHieuRepository thuongHieuRepository;
-
+    LoaiDeRepository loaiDeRepository;
     @Override
-    public List<ThuongHieu> findAll() {
-        return thuongHieuRepository.findAll();
+    public List<LoaiDe> findAll() {
+        return loaiDeRepository.findAll();
     }
 
     @Override
-    public Optional<ThuongHieu> findById(Long id) {
-        return thuongHieuRepository.findById(id);
+    public Optional<LoaiDe> findById(Long id) {
+        return loaiDeRepository.findById(id);
     }
 
     @Override
@@ -37,14 +35,13 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
     }
 
     @Override
-    @Transactional
-    public void saveOrUpdate(ThuongHieu thuongHieu, String ten) {
+    public void saveOrUpdate(LoaiDe thuongHieu, String ten) {
         try {
             thuongHieu.setTen(ten);
             thuongHieu.setNgayTao(new Date());
             thuongHieu.setNgaySua(new Date());
             thuongHieu.setTrangThai(1);
-            thuongHieuRepository.save(thuongHieu);
+            loaiDeRepository.save(thuongHieu);
         } catch (Exception e) {
             // Log the exception
             e.printStackTrace();
@@ -53,11 +50,11 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
     }
 
     @Override
-    public void update(ThuongHieu thuongHieu, Long id, Integer trangThai, String ten,Date ngayTao) {
+    public void update(LoaiDe thuongHieu, Long id, Integer trangThai, String ten, Date ngayTao) {
         try {
-            List<ThuongHieu> list = ThuongHieuServiceImpl.this.findAll();
+            List<LoaiDe> list = LoaiDeServiceImpl.this.findAll();
             boolean duplicateFound = false;
-            for (ThuongHieu thuongHieuTim : list
+            for (LoaiDe thuongHieuTim : list
             ) {
                 if (thuongHieuTim.getId() != id && thuongHieuTim.getTen().equals(ten)) {
                     duplicateFound = true;
@@ -72,7 +69,7 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
                 thuongHieu.setNgayTao(ngayTao);
                 thuongHieu.setNgaySua(new Date());
                 thuongHieu.setTrangThai(trangThai);
-                thuongHieuRepository.save(thuongHieu);
+                loaiDeRepository.save(thuongHieu);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,22 +77,18 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
     }
 
     @Override
-    public ThuongHieu findByTen(String ten) {
-        return thuongHieuRepository.findByTen(ten);
+    public LoaiDe findByTen(String ten) {
+        return loaiDeRepository.findByTen(ten);
     }
 
     @Override
-    public Page<ThuongHieu> findAll(int page, int size) {
+    public Page<LoaiDe> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "ngaySua"));
-        return thuongHieuRepository.findAll(pageable);
-
+        return loaiDeRepository.findAll(pageable);
     }
 
     @Override
-    public Page<ThuongHieu> findByTenContaining(String keyword, Integer trang_thai, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "ngaySua"));
-        return thuongHieuRepository.findByTenContainingAndTrangThai(keyword, trang_thai, pageable);
+    public Page<LoaiDe> findByTenContaining(String keyword, Integer trang_thai, int page, int size) {
+        return null;
     }
-
-
 }

@@ -9,27 +9,7 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
 
-    <!-- Favicons -->
-    <link href="../../../static/img/favicon.png" rel="icon">
-    <link href="../../../static/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-            rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="../../../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="../../../static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="../../../static/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="../../../static/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="../../../static/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="../../../static/vendor/simple-datatables/style.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="../../../static/css/style.css" rel="stylesheet">
+    <div th:replace="~{admin-template/fragment/header :: header}"></div>
 
 
 </head>
@@ -205,7 +185,8 @@
                                     </div>
 
                                     <!-- form thêm thuộc tính -->
-                                    <form action="">
+                                    <form th:action="@{/ap1/v1/loai-de/add}" method="post"
+                                          th:object="${thuongHieu}">
 
                                         <div class="modal-body">
                                             <div class="row mb-3" style="margin-top: 3%;">
@@ -214,7 +195,7 @@
                                                     Đế</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" id="themLoaiDe"
-                                                           placeholder="Nhập loại đế">
+                                                           placeholder="Nhập loại đế" name="ten">
                                                 </div>
                                             </div>
                                         </div>
@@ -242,16 +223,19 @@
                             </tr>
                             <thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Nike</td>
+                            <tr th:each="thuongHieu : ${thuongHieuPage}">
+                                <td th:text="${thuongHieu.ten}"></td>
+                                <!--                                <td th:text="${thuongHieu.ngayTao}"></td>-->
+                                <!--                                <td th:text="${thuongHieu.ngaySua}"></td>-->
                                 <td>
                                     <div class="trangthaidhd">Đang hoạt động</div>
                                     <!-- <div class="trangthainhd">Ngừng hoạt động</div> -->
                                 </td>
                                 <td>
+
                                     <!-- Button trigger modal -->
-                                    <a type="button" class="btn btn-warning">
+                                    <a type="button" class="btn btn-warning"
+                                       th:href="@{'/ap1/v1/loai-de/getById/' + ${thuongHieu.id}}">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
                                 </td>
@@ -297,17 +281,7 @@
         class="bi bi-arrow-up-short"></i></a>
 
 <!-- Vendor JS Files -->
-<script src="../../../static/vendor/apexcharts/apexcharts.min.js"></script>
-<script src="../../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../../../static/vendor/chart.js/chart.umd.js"></script>
-<script src="../../../static/vendor/echarts/echarts.min.js"></script>
-<script src="../../../static/vendor/quill/quill.min.js"></script>
-<script src="../../../static/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="../../../static/vendor/tinymce/tinymce.min.js"></script>
-<script src="../../../static/vendor/php-email-form/validate.js"></script>
-
-<!-- Template Main JS File -->
-<script src="../../../static/js/main.js"></script>
+<div th:replace="~{admin-template/fragment/script :: script}"></div>
 
 </body>
 
