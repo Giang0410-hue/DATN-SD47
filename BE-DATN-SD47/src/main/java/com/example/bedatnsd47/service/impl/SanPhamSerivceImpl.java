@@ -18,32 +18,44 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
 
     @Override
     public List<SanPham> getAll() {
+
         return repository.findAll();
+
     }
 
     @Override
     public SanPham add(SanPham sanPham) {
+
         return repository.save(sanPham);
+
     }
 
     @Override
     public SanPham update(SanPham sanPham, Long id) {
+
         return repository.save(sanPham);
+
     }
 
     @Override
     public void remove(Long id) {
+
         repository.deleteById(id);
+
     }
 
     @Override
     public SanPham getById(Long id) {
+
         return repository.findById(id).get();
+
     }
 
     @Override
     public Page<SanPham> getPage(Integer pageNo) {
+
         return repository.findAll(PageRequest.of(pageNo, 5));
+
     }
 
 }
