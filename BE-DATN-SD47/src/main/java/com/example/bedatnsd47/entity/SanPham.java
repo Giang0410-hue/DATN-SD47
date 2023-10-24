@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,9 +32,11 @@ public class SanPham {
     private String ma;
 
     @Column(name = "ten", length = 255)
+    @NotBlank(message = "Tên sản phẩm không được trống")
     private String ten;
 
     @Column(name = "mo_ta", columnDefinition = "NVARCHAR(MAX)")
+    @NotBlank(message = "Mô tả sản phẩm không được trống")
     private String moTa;
 
     @Column(name = "ngay_tao")
