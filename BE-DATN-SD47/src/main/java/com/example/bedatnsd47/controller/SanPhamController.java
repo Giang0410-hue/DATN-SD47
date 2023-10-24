@@ -60,22 +60,26 @@ public class SanPhamController {
     public String add(@Valid
                       @ModelAttribute("sanPham") SanPham sanPham,
                       BindingResult result,
-                      Model model
+                      Model model,
+                      RedirectAttributes redirectAttributes
     ) {
         if (result.hasErrors()) {
             model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
         } else if (!sanPhamSerivce.checkTenTrung(sanPham.getTen())) {
             model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
             model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
         } else {
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
             sanPham.setNgayTao(currentDate);
             sanPham.setTrangThai(1);

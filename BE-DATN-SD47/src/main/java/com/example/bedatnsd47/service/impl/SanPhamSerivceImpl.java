@@ -69,10 +69,12 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
             pageNo = pageCount-1;
         }
         return pageNo;
+
     }
 
     @Override
     public Integer genMaTuDong() {
+
         String maStr = "";
         try {
             if (repository.index() != null) {
@@ -90,16 +92,19 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
         }
         int ma = Integer.parseInt(maStr);
         return ++ma;
+
     }
 
     @Override
     public boolean checkTenTrung(String ten) {
+
         for(SanPham sp : repository.findAll()){
             if(sp.getTen().equalsIgnoreCase(ten)){
                 return false;
             }
         }
         return true;
+
     }
 
 }
