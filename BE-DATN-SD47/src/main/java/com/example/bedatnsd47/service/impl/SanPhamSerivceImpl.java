@@ -31,7 +31,7 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
     }
 
     @Override
-    public SanPham update(SanPham sanPham, Long id) {
+    public SanPham update(SanPham sanPham) {
 
         return repository.save(sanPham);
 
@@ -65,14 +65,16 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
         Integer pageCount = (int) Math.ceil((double) sizeList / 5);
         if (pageNo >= pageCount) {
             pageNo = 0;
-        }else if (pageNo < 0) {
-            pageNo = pageCount-1;
+        } else if (pageNo < 0) {
+            pageNo = pageCount - 1;
         }
         return pageNo;
+
     }
 
     @Override
     public Integer genMaTuDong() {
+
         String maStr = "";
         try {
             if (repository.index() != null) {
@@ -90,16 +92,33 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
         }
         int ma = Integer.parseInt(maStr);
         return ++ma;
+
     }
 
     @Override
     public boolean checkTenTrung(String ten) {
-        for(SanPham sp : repository.findAll()){
-            if(sp.getTen().equalsIgnoreCase(ten)){
+
+        for (SanPham sp : repository.findAll()) {
+            if (sp.getTen().equalsIgnoreCase(ten)) {
                 return false;
             }
         }
         return true;
+
+    }
+
+    @Override
+    public boolean checkTenTrungSua(String ma,String ten) {
+
+        for (SanPham sp : repository.findAll()) {
+            if (sp.getTen().equalsIgnoreCase(ten)) {
+                if (!sp.getMa().equalsIgnoreCase(ma)){
+                    return false;
+                }
+            }
+        }
+        return true;
+
     }
 
 }

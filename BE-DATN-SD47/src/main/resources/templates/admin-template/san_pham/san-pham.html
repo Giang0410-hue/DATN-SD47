@@ -167,7 +167,6 @@
                             <!-- sản phẩm -->
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <br>
-
                                 <form action="">
                                     <label class="col-sm-5 col-form-label">Nhập tên sản phẩm:</label>
                                     <div class="row mb-3">
@@ -257,10 +256,6 @@
                                                                     th:text="${thuongHieu.ten}"></option>
                                                         </select>
                                                     </div>
-
-                                                    <input hidden="hidden" type="text" th:field="*{trangThai}"
-                                                           th:value="${trangThai}"/>
-
                                                     <div class="mb-3">
                                                         <label class="form-label"><span class="dau-sao">*</span>Mô
                                                             Tả</label>
@@ -294,12 +289,12 @@
                                     </tr>
                                     <thead>
                                     <tbody>
-                                    <tr th:each="sanPham,iterStat  : ${listSanPham}">
-                                        <td th:text="${iterStat.count}"></td>
+                                    <tr th:each="sanPham,iterStat : ${listSanPham}">
+                                        <td th:text="${#numbers.sequence(1 + (currentPage * 5), 1 + (currentPage * 5) + 5)[__${iterStat.index}__]}"></td>
                                         <td th:text="${sanPham.ma}"></td>
                                         <td th:text="${sanPham.ten}"></td>
-                                        <td class="trangthainkd" th:if="${sanPham.trangThai==0}">Ngừng kinh doanh</td>
-                                        <td class="trangthaidkd" th:if="${sanPham.trangThai==1}">Đang kinh doanh</td>
+                                        <td class="trangthaidkd" th:if="${sanPham.trangThai==0}">Đang kinh doanh</td>
+                                        <td class="trangthainkd" th:if="${sanPham.trangThai==1}">Ngừng kinh doanh</td>
                                         <td>
                                             <a th:href="@{/admin/san-pham/view-update/{id}(id=${sanPham.id})}"
                                                class="btn btn-warning">
@@ -312,21 +307,20 @@
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         <li class="page-item">
-                                            <a class="page-link" href="#">
+                                            <a class="page-link" th:href="@{/admin/san-pham/pre}">
                                                 <i class="bi bi-chevron-left"></i>
                                             </a>
                                         </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" th:text="${currentPage+1}"></a></li>
                                         <li class="page-item">
-                                            <a class="page-link" href="#">
+                                            <a class="page-link" th:href="@{/admin/san-pham/next}">
                                                 <i class="bi bi-chevron-right"></i>
                                             </a>
                                         </li>
                                     </ul>
                                 </nav>
                             </div>
+
 
                             <!-- Sản phẩm chi tiết -->
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -868,7 +862,7 @@
                                                             <button type="button" class="btn btn-secondary"
                                                                     data-bs-dismiss="modal">Đóng
                                                             </button>
-                                                            <button type="button" class="btn btn-primary">Thêm</button>
+                                                            <button type="submit" class="btn btn-primary">Thêm</button>
                                                         </div>
                                                     </form>
 
@@ -894,6 +888,142 @@
     </section>
 
 </main><!-- End #main -->
+
+<!--Thông báo thành công-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+        <script th:if="${checkThongBao=='thanhCong'}">
+    // <script>
+    //     function showToast() {
+    //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+    //         liveToast.show();
+    //
+    //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+    //         liveToast.show();
+    //
+    //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+    //         liveToast.show();
+    //     }
+    //     // Show the toast when the page loads
+    //     document.addEventListener('DOMContentLoaded', showToast);
+    //
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="  background-color: rgba(62, 189, 97,0.2);border:2px solid #3ebd61;  border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_notification.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #3ebd61;">
+                        Thành công</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo thành công end-->
+
+<!--Thông báo cảnh báo-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='canhBao'}">
+        // <script>
+        //     function showToast() {
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+        //         liveToast.show();
+        //     }
+        //     // Show the toast when the page loads
+        //     document.addEventListener('DOMContentLoaded', showToast);
+        //
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastWarning" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style=" background-color: rgba(239, 148, 0, 0.2);border:2px solid #fcca1b;  border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_warning.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #fcca1b;">
+                        Cảnh báo</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo cảnh báo end-->
+
+<!--Thông báo thất bại-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='thaiBai'}">
+        // <script>
+        //     function showToast() {
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+        //         liveToast.show();
+        //     }
+        //     // Show the toast when the page loads
+        //     document.addEventListener('DOMContentLoaded', showToast);
+        //
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastDanger" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="background-color: rgb(252,134,134);border:2px solid #ff2020;border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_danger.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: white;">
+                        Lỗi</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo thất bại end-->
+
 
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
@@ -930,7 +1060,6 @@
 <script src="../../static/vendor/simple-datatables/simple-datatables.js"></script>
 <script src="../../static/vendor/tinymce/tinymce.min.js"></script>
 <script src="../../static/vendor/php-email-form/validate.js"></script>
-
 <!-- Template Main JS File -->
 <script src="../../static/js/main.js"></script>
 </body>
