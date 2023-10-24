@@ -63,18 +63,24 @@ public class SanPhamController {
                       Model model
     ) {
         if (result.hasErrors()) {
-            model.addAttribute("hasErrors", 1);
+            model.addAttribute("checkModal", "modal");
             model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
+        } else if (!sanPhamSerivce.checkTenTrung(sanPham.getTen())) {
+            model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+            model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
+            model.addAttribute("index", pageNo + 1);
+            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            return "/admin-template/san_pham/san-pham";
+        } else {
+            sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
+            sanPham.setNgayTao(currentDate);
+            sanPham.setTrangThai(1);
+            sanPhamSerivce.add(sanPham);
+            return "redirect:/admin/san-pham";
         }
-
-        sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
-        sanPham.setNgayTao(currentDate);
-        sanPham.setTrangThai(1);
-        sanPhamSerivce.add(sanPham);
-        return "redirect:/admin/san-pham";
     }
-
 }

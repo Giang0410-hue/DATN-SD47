@@ -10,4 +10,5 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Long> {
 
     @Query(value = "SELECT MAX(CONVERT(INT, SUBSTRING(Ma,3,10))) from san_pham",nativeQuery = true)
     Integer index();
+
 }

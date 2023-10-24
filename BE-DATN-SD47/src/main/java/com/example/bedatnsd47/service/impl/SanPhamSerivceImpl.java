@@ -16,8 +16,6 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
     @Autowired
     private SanPhamRepository repository;
 
-    private String ma = "SP";
-
     @Override
     public List<SanPham> getAll() {
 
@@ -77,7 +75,6 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
     public Integer genMaTuDong() {
         String maStr = "";
         try {
-
             if (repository.index() != null) {
                 maStr = repository.index().toString();
             } else {
@@ -93,6 +90,16 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
         }
         int ma = Integer.parseInt(maStr);
         return ++ma;
+    }
+
+    @Override
+    public boolean checkTenTrung(String ten) {
+        for(SanPham sp : repository.findAll()){
+            if(sp.getTen().equalsIgnoreCase(ten)){
+                return false;
+            }
+        }
+        return true;
     }
 
 }
