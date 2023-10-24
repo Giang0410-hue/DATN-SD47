@@ -11,7 +11,7 @@ public interface SanPhamSerivce {
 
     SanPham add(SanPham sanPham);
 
-    SanPham update(SanPham sanPham, Long id);
+    SanPham update(SanPham sanPham);
 
     void remove(Long id);
 
@@ -24,5 +24,8 @@ public interface SanPhamSerivce {
     Integer genMaTuDong();
 
     boolean checkTenTrung(String ten);
+
+    boolean checkTenTrungSua(String ma,String ten);
+
 
 }
