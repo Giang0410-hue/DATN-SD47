@@ -40,10 +40,26 @@ public class SanPhamController {
             Model model
     ) {
         model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
-        model.addAttribute("index", pageNo + 1);
+        model.addAttribute("currentPage", pageNo);
         model.addAttribute("listThuongHieu", thuongHieuService.findAll());
         model.addAttribute("sanPham", new SanPham());
         return "/admin-template/san_pham/san-pham";
+    }
+
+    @GetMapping("/pre")
+    public String hienThiPre(
+    ) {
+        pageNo--;
+        pageNo = sanPhamSerivce.checkPageNo(pageNo);
+        return "redirect:/admin/san-pham";
+    }
+
+    @GetMapping("/next")
+    public String hienThiNext(
+    ) {
+        pageNo++;
+        pageNo = sanPhamSerivce.checkPageNo(pageNo);
+        return "redirect:/admin/san-pham";
     }
 
     @GetMapping("/view-update/{id}")
@@ -51,9 +67,36 @@ public class SanPhamController {
             Model model,
             @PathVariable("id") Long id
     ) {
-//        SanPham sanPham = sanPhamSerivce.getById(id);
-//        model.addAttribute("detailSanPham",sanPham);
+        SanPham sanPham = sanPhamSerivce.getById(id);
+        model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+        model.addAttribute("sanPham", sanPham);
         return "/admin-template/san_pham/sua-san-pham";
+    }
+
+    @PostMapping("/update")
+    public String update(@Valid
+                      @ModelAttribute("sanPham") SanPham sanPham,
+                      BindingResult result,
+                      Model model,
+                      RedirectAttributes redirectAttributes
+    ) {
+        if (result.hasErrors()) {
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            return "/admin-template/san_pham/sua-san-pham";
+        } else if (!sanPhamSerivce.checkTenTrungSua(sanPham.getMa(),sanPham.getTen())) {
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            return "/admin-template/san_pham/sua-san-pham";
+        } else {
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+            SanPham sp = sanPhamSerivce.getById(sanPham.getId());
+            sanPham.setNgayTao(sp.getNgayTao());
+            sanPham.setNgaySua(currentDate);
+            sanPhamSerivce.update(sanPham);
+            return "redirect:/admin/san-pham";
+        }
     }
 
     @PostMapping("/add")
@@ -82,7 +125,7 @@ public class SanPhamController {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
             sanPham.setNgayTao(currentDate);
-            sanPham.setTrangThai(1);
+            sanPham.setTrangThai(0);
             sanPhamSerivce.add(sanPham);
             return "redirect:/admin/san-pham";
         }

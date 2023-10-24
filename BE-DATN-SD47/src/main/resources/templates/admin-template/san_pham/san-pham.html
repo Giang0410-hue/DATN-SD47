@@ -256,10 +256,6 @@
                                                                     th:text="${thuongHieu.ten}"></option>
                                                         </select>
                                                     </div>
-
-                                                    <input hidden="hidden" type="text" th:field="*{trangThai}"
-                                                           th:value="${trangThai}"/>
-
                                                     <div class="mb-3">
                                                         <label class="form-label"><span class="dau-sao">*</span>Mô
                                                             Tả</label>
@@ -293,12 +289,12 @@
                                     </tr>
                                     <thead>
                                     <tbody>
-                                    <tr th:each="sanPham,iterStat  : ${listSanPham}">
-                                        <td th:text="${iterStat.count}"></td>
+                                    <tr th:each="sanPham,iterStat : ${listSanPham}">
+                                        <td th:text="${#numbers.sequence(1 + (currentPage * 5), 1 + (currentPage * 5) + 5)[__${iterStat.index}__]}"></td>
                                         <td th:text="${sanPham.ma}"></td>
                                         <td th:text="${sanPham.ten}"></td>
-                                        <td class="trangthainkd" th:if="${sanPham.trangThai==0}">Ngừng kinh doanh</td>
-                                        <td class="trangthaidkd" th:if="${sanPham.trangThai==1}">Đang kinh doanh</td>
+                                        <td class="trangthaidkd" th:if="${sanPham.trangThai==0}">Đang kinh doanh</td>
+                                        <td class="trangthainkd" th:if="${sanPham.trangThai==1}">Ngừng kinh doanh</td>
                                         <td>
                                             <a th:href="@{/admin/san-pham/view-update/{id}(id=${sanPham.id})}"
                                                class="btn btn-warning">
@@ -311,21 +307,20 @@
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         <li class="page-item">
-                                            <a class="page-link" href="#">
+                                            <a class="page-link" th:href="@{/admin/san-pham/pre}">
                                                 <i class="bi bi-chevron-left"></i>
                                             </a>
                                         </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" th:text="${currentPage+1}"></a></li>
                                         <li class="page-item">
-                                            <a class="page-link" href="#">
+                                            <a class="page-link" th:href="@{/admin/san-pham/next}">
                                                 <i class="bi bi-chevron-right"></i>
                                             </a>
                                         </li>
                                     </ul>
                                 </nav>
                             </div>
+
 
                             <!-- Sản phẩm chi tiết -->
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -867,7 +862,7 @@
                                                             <button type="button" class="btn btn-secondary"
                                                                     data-bs-dismiss="modal">Đóng
                                                             </button>
-                                                            <button type="button" class="btn btn-primary">Thêm</button>
+                                                            <button type="submit" class="btn btn-primary">Thêm</button>
                                                         </div>
                                                     </form>
 
@@ -930,7 +925,7 @@
                     font-size: 1rem; /* Kích thước phông chữ */
                     font-weight: bold; /* Độ đậm của chữ */
                     color: #3ebd61;">
-                        Thêm thành công</span>
+                        Thành công</span>
                 </div>
                 <div class="col-md-2">
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
