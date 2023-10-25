@@ -6,6 +6,7 @@ import com.example.bedatnsd47.service.SanPhamSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,8 +54,8 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
 
     @Override
     public Page<SanPham> getPage(Integer pageNo) {
-
-        return repository.findAll(PageRequest.of(pageNo, 5));
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        return repository.findAll(PageRequest.of(pageNo, 5,sort));
 
     }
 

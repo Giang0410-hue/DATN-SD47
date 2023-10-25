@@ -30,8 +30,6 @@ public class SanPhamController {
 
     private Integer pageNo = 0;
 
-    private Integer trangThai = 1;
-
     private Date currentDate = new Date();
 
 
@@ -111,12 +109,15 @@ public class SanPhamController {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
+            model.addAttribute("currentPage", pageNo);
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
-        } else if (!sanPhamSerivce.checkTenTrung(sanPham.getTen())) {
+        }
+        else if (!sanPhamSerivce.checkTenTrung(sanPham.getTen())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+            model.addAttribute("currentPage", pageNo);
             model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
