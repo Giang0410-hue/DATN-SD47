@@ -58,11 +58,9 @@ public class MauSacController {
     public String update(@RequestParam("ten") String ten, @RequestParam("trangThai") Integer trangThai, Model model, @RequestParam(defaultValue = "0") int page,
                          @RequestParam("id") Long id, @RequestParam("ngayTao")  @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayTao) {
         MauSac mauSac = mauSacService.findById(id).orElse(null);
-
         try {
             if (mauSac != null) {
                 MauSac thuongHieu1 = new MauSac();
-
                 mauSacService.update(thuongHieu1, id, trangThai, ten,ngayTao);
                 return "redirect:/ap1/v1/mau-sac/hien-thi";
             } else {
