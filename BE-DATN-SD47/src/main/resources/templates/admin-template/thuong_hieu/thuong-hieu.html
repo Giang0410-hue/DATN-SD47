@@ -125,8 +125,7 @@
                     <div class="card-body">
 
                         <!-- form tìm kiếm -->
-                        <form th:action="@{/ap1/v1/thuong-hieu/tim}" method="post" style="margin-top: 2%;">
-                            <span style="color: red;" th:if="${message}"></span>
+                        <form  method="post" style="margin-top: 2%;">
                             <label class="col-sm-2 col-form-label">Nhập tên thương hiệu:</label>
                             <div class="row mb-3">
                                 <div class="col-sm-8">
@@ -173,16 +172,24 @@
                                     Dừng hoạt động
                                 </label>
                             </div>
-                            <a type="button" class="btn btn-warning"
-                               href="/hien-thi1">
-                                <i class="bi bi-pencil-fill"></i>
-                            </a>
                         </form>
                         <!-- form tìm kiếm end -->
 
                         <!-- Modal thêm thuộc tính -->
                         <div class="modal fade" id="them-thuong-hieu" tabindex="-1"
                              aria-labelledby="them-thuong-hieuLabel" aria-hidden="true">
+
+                            <!--js bật modal khi check-->
+                            <script th:if="${checkModal=='modal'}">
+                                window.addEventListener('DOMContentLoaded', (event) => {
+                                    // Hiển thị modal
+                                    var myModal = new bootstrap.Modal(document.getElementById('them-thuong-hieu'));
+                                    myModal.show();
+                                });
+                            </script>
+                            <!--js bật modal khi check-->
+
+
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width: 100%;margin: auto;margin-top: 40%;">
                                     <div class="modal-header">
@@ -191,8 +198,10 @@
                                     </div>
 
                                     <!-- form thêm thuộc tính -->
-                                    <form th:action="@{/ap1/v1/thuong-hieu/add}" method="post"
+                                    <form th:action="@{/admin/thuong-hieu/add}" method="post"
+                                          enctype="multipart/form-data"
                                           th:object="${thuongHieu}">
+
 
                                         <div class="modal-body">
                                             <div class="row mb-3" style="margin-top: 3%;">
@@ -201,11 +210,15 @@
                                                     Hiệu</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" id="themThuongHieu"
-                                                           placeholder="Nhập thương hiệu" name="ten" >
+                                                           placeholder="Nhập thương hiệu"  th:field="*{ten}" >
+                                                    <span class="check-loi" th:errors="*{ten}"></span>
+                                                    <span class="check-loi" th:text="${checkTenTrung}"></span>
 
                                                 </div>
                                             </div>
                                         </div>
+
+
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                                 Đóng
@@ -229,64 +242,75 @@
                                 <th>Thao Tác</th>
                             </tr>
                             <thead>
+                            <thead>
                             <tbody>
-                            <tr th:each="thuongHieu : ${thuongHieuPage}">
+                            <tr th:each="thuongHieu,iterStat : ${listThuongHieu}">
+                                <td th:text="${#numbers.sequence(1 + (currentPage * 5), 1 + (currentPage * 5) + 5)[__${iterStat.index}__]}"></td>
                                 <td th:text="${thuongHieu.ten}"></td>
-                                <!--                                <td th:text="${thuongHieu.ngayTao}"></td>-->
-                                <!--                                <td th:text="${thuongHieu.ngaySua}"></td>-->
+                                <td class="trangthaidkd" th:if="${thuongHieu.trangThai==0}">Đang kinh doanh</td>
+                                <td class="trangthainkd" th:if="${thuongHieu.trangThai==1}">Ngừng kinh doanh</td>
                                 <td>
-                                    <div class="trangthaidhd">Đang hoạt động</div>
-                                    <!-- <div class="trangthainhd">Ngừng hoạt động</div> -->
-                                </td>
-                                <td>
-
-                                    <!-- Button trigger modal -->
-                                    <a type="button" class="btn btn-warning"  th:href="@{'/ap1/v1/thuong-hieu/getById/' + ${thuongHieu.id}}" >
+                                    <a th:href="@{/admin/thuong-hieu/view-update/{id}(id=${thuongHieu.id})}"
+                                       class="btn btn-warning">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
-
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 <li class="page-item">
-                                    <a class="page-link" th:if="${thuongHieuPage.hasPrevious()}"
-                                       th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=0)}">
+                                    <a class="page-link" th:href="@{/admin/thuong-hieu/pre}">
                                         <i class="bi bi-chevron-left"></i>
                                     </a>
                                 </li>
-                                <!-- Display page numbers with ellipsis -->
+                                <li class="page-item"><a class="page-link" th:text="${currentPage+1}"></a></li>
                                 <li class="page-item">
-                                    <a class="page-link" th:if="${thuongHieuPage.number > 2}"
-                                       th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=0)}">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <span class="page-link" th:if="${thuongHieuPage.number > 3}">...</span>
-                                </li>
-                                <li class="page-item"
-                                    th:each="i : ${#numbers.sequence(thuongHieuPage.number - 2, thuongHieuPage.number + 2)}"
-                                    th:unless="${i < 0 or i >= thuongHieuPage.totalPages}">
-                                    <a class="page-link" th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=${i})}"
-                                       th:text="${i + 1}"></a>
-                                </li>
-                                <li class="page-item">
-                                        <span class="page-link"
-                                              th:if="${thuongHieuPage.number < thuongHieuPage.totalPages - 4}">...</span>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link"
-                                       th:if="${thuongHieuPage.number < thuongHieuPage.totalPages - 3}"
-                                       th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=${thuongHieuPage.totalPages - 1})}">
+                                    <a class="page-link" th:href="@{/admin/thuong-hieu/next}">
                                         <i class="bi bi-chevron-right"></i>
                                     </a>
                                 </li>
                             </ul>
-
-                            <p>Trang <span th:text="${thuongHieuPage.number + 1}"></span> / <span
-                                    th:text="${thuongHieuPage.totalPages}"></span></p>
                         </nav>
+<!--                        <nav aria-label="Page navigation example">-->
+<!--                            <ul class="pagination">-->
+<!--                                <li class="page-item">-->
+<!--                                    <a class="page-link" th:if="${thuongHieuPage.hasPrevious()}"-->
+<!--                                       th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=0)}">-->
+<!--                                        <i class="bi bi-chevron-left"></i>-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                                &lt;!&ndash; Display page numbers with ellipsis &ndash;&gt;-->
+<!--                                <li class="page-item">-->
+<!--                                    <a class="page-link" th:if="${thuongHieuPage.number > 2}"-->
+<!--                                       th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=0)}">1</a>-->
+<!--                                </li>-->
+<!--                                <li class="page-item">-->
+<!--                                    <span class="page-link" th:if="${thuongHieuPage.number > 3}">...</span>-->
+<!--                                </li>-->
+<!--                                <li class="page-item"-->
+<!--                                    th:each="i : ${#numbers.sequence(thuongHieuPage.number - 2, thuongHieuPage.number + 2)}"-->
+<!--                                    th:unless="${i < 0 or i >= thuongHieuPage.totalPages}">-->
+<!--                                    <a class="page-link" th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=${i})}"-->
+<!--                                       th:text="${i + 1}"></a>-->
+<!--                                </li>-->
+<!--                                <li class="page-item">-->
+<!--                                        <span class="page-link"-->
+<!--                                              th:if="${thuongHieuPage.number < thuongHieuPage.totalPages - 4}">...</span>-->
+<!--                                </li>-->
+<!--                                <li class="page-item">-->
+<!--                                    <a class="page-link"-->
+<!--                                       th:if="${thuongHieuPage.number < thuongHieuPage.totalPages - 3}"-->
+<!--                                       th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=${thuongHieuPage.totalPages - 1})}">-->
+<!--                                        <i class="bi bi-chevron-right"></i>-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+
+<!--                            <p>Trang <span th:text="${thuongHieuPage.number + 1}"></span> / <span-->
+<!--                                    th:text="${thuongHieuPage.totalPages}"></span></p>-->
+<!--                        </nav>-->
                     </div>
                 </div>
             </div>
@@ -294,6 +318,98 @@
     </section>
 
 </main><!-- End #main -->
+
+<!--Thông báo thành công-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='thanhCong'}">
+        // <script>
+        //     function showToast() {
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+        //         liveToast.show();
+        //
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+        //         liveToast.show();
+        //
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+        //         liveToast.show();
+        //     }
+        //     // Show the toast when the page loads
+        //     document.addEventListener('DOMContentLoaded', showToast);
+        //
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="  background-color: rgba(62, 189, 97,0.2);border:2px solid #3ebd61;  border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_notification.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #3ebd61;">
+                        Thành công</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo thành công end-->
+
+<!--Thông báo thất bại-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='thaiBai'}">
+        // <script>
+        //     function showToast() {
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+        //         liveToast.show();
+        //     }
+        //     // Show the toast when the page loads
+        //     document.addEventListener('DOMContentLoaded', showToast);
+        //
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastDanger" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="background-color: rgb(252,134,134);border:2px solid #ff2020;border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_danger.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: white;">
+                        Lỗi</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo thất bại end-->
 
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
