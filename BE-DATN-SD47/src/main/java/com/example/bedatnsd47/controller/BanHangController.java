@@ -20,10 +20,18 @@ public class BanHangController {
         return "/admin-template/ban-hang-admin.html";
     }
 
-    @PostMapping("/create")
+    @GetMapping("/create")
     public String taoHoaDon(){
         HoaDon hd = new HoaDon();
+        Integer size = hoaDonService.findAll().size()+1;
+        hd.setMaHoaDon("HD"+size);
         hoaDonService.saveOrUpdate(hd);
+        
+        return "redirect:home";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Long id){
         return "redirect:home";
     }
 
