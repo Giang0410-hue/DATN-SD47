@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 
 <head>
@@ -10,8 +11,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="../../static/img/favicon.png" rel="icon">
-    <link href="../../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="static/img/favicon.png" rel="icon">
+    <link href="static/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -20,16 +21,16 @@
             rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="../../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="../../static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="../../static/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="../../static/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="../../static/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="../../static/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="../../../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../../../static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../../../static/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="../../../static/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="../../../static/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="../../../static/vendor/simple-datatables/style.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="../../static/css/style.css" rel="stylesheet">
+    <link href="../../../static/css/style.css" rel="stylesheet">
 
 
 </head>
@@ -143,779 +144,81 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <br>
-                        <!-- <h5 class="card-title">Bộ lọc</h5> -->
-                        <!-- Default Tabs -->
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                        data-bs-target="#home"
-                                        type="button" role="tab" aria-controls="home" aria-selected="true">Sản Phẩm
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                                        type="button"
-                                        role="tab" aria-controls="profile" aria-selected="false">Sản phẩm chi tiết
-                                </button>
-                            </li>
-                        </ul>
-                        <div class="tab-content pt-2" id="myTabContent">
-                            <br>
-
-                            <!-- sản phẩm -->
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <br>
-
-                                <form action="">
-                                    <label class="col-sm-2 col-form-label">Nhập tên sản phẩm:</label>
-                                    <div class="row mb-3">
-                                        <div class="col-sm-8">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control"
-                                                       placeholder="Tìm kiếm theo tên sản phẩm">
-                                                <button type="submit" class="btn btn-primary"><i
-                                                        class="bi bi-arrow-clockwise"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <button type="submit" class="btn btn-primary" style="margin-left:35%;">Tìm
-                                                kiếm
-                                            </button>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    style="float: right; "
-                                                    data-bs-target="#them-san-pham">
-                                                Thêm mới
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="search-trang-thai" style="margin-top: 4%;margin-bottom: 4%;">
-                                        <label style="margin-left:20%;">Trạng thái:</label>
-                                        <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                               style="margin-left:10%;" checked>
-                                        <label class="form-check-label">
-                                            Tất cả
-                                        </label>
-
-                                        <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                               style="margin-left:5%;" checked>
-                                        <label class="form-check-label">
+                        <a class="btn btn-link" style="float: left;margin-top: 1%;"
+                           href="/admin/san-pham">
+                            <i class=" bi bi-arrow-left-circle-fill"></i>
+                        </a>
+                        <form th:action="@{/admin/san-pham/update}"
+                              th:object="${sanPham}" method="post"
+                              style="width: 65%;margin: auto">
+                            <input type="hidden" th:field="*{id}">
+                            <input type="hidden" th:field="*{ma}">
+                            <h1 class="modal-title fs-5" style="text-align: center;;margin-top: 10%;margin-bottom: 5%;">
+                                Cập Nhật Sản Phẩm</h1>
+                            <div class="row mb-3">
+                                <label class="col-sm-4 col-form-label" style="float: left;">
+                                    <span style="color: red;">*</span>
+                                    Tên Sản Phảm
+                                </label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm"
+                                           th:field="*{ten}"/>
+                                    <span class="check-loi" th:errors="*{ten}"></span>
+                                    <span class="check-loi" th:text="${checkTenTrung}"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-4 col-form-label" style="float: left;">
+                                    <span style="color: red;">*</span>
+                                    Thương Hiệu
+                                </label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" th:field="*{thuongHieu}">
+                                        <option th:each="thuongHieu : ${listThuongHieu}"
+                                                th:value="${thuongHieu.id}"
+                                                th:text="${thuongHieu.ten}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <fieldset class="row mb-3">
+                                <legend class="col-form-label col-sm-4 pt-0">
+                                    <span style="color: red;">*</span>
+                                    Trạng Thái
+                                </legend>
+                                <div class="col-sm-8">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" value="0" name="trangThai"
+                                               th:field="*{trangThai}">
+                                        <label class="form-check-label" style="float: left;">
                                             Đang hoạt động
                                         </label>
-
-                                        <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                               style="margin-left:5%;" checked>
-                                        <label class="form-check-label">
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="trangThai" value="1"
+                                               th:field="*{trangThai}">
+                                        <label class="form-check-label" style="float: left;">
                                             Ngừng hoạt động
                                         </label>
                                     </div>
-                                </form>
-                                <!-- Modal thêm sản phẩm -->
-                                <div class="modal fade" id="them-san-pham" tabindex="-1"
-                                     aria-labelledby="them-san-phamLabel"
-                                     aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content" style="width: 100%;margin: auto;">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="them-san-phamLabel">Thêm sản
-                                                    phẩm</h1>
-                                            </div>
-
-                                            <form action="" method="post">
-                                                <div class="modal-body">
-                                                    <div class="mb-3">
-                                                        <label class="form-label"><span class="dau-sao">*</span>Tên Sản
-                                                            Phẩm</label>
-                                                        <input type="text" class="form-control"
-                                                               placeholder="Nhập tên giày">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label"><span class="dau-sao">*</span>Thương
-                                                            Hiệu</label>
-                                                        <input type="text" class="form-control"
-                                                               placeholder="Nhập tên thương hiệu">
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Đóng
-                                                    </button>
-                                                    <button type="button" class="btn btn-success">Thêm</button>
-                                                </div>
-                                            </form>
-
-                                        </div>
-                                    </div>
                                 </div>
-                                <!-- Modal thêm sản phẩm end-->
-
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Mã Sản Phẩm</th>
-                                        <th>Tên Sản Phẩm</th>
-                                        <th>Trạng Thái</th>
-                                        <th>Hành Động</th>
-                                    </tr>
-                                    <thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>SP01</td>
-                                        <td>Nike</td>
-                                        <!-- <td class="trangthaidkd">Đang kinh doanh</td> -->
-                                        <td class="trangthainkd">Ngừng kinh doanh</td>
-
-                                        <td>
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                    data-bs-target="#sua-san-pham-tab">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </button>
-                                            <button class="btn btn-danger"><i class="bi bi-trash3-fill"></i></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-                                <!-- Modal sửa sản phẩm-->
-                                <div class="modal fade" id="sua-san-pham-tab" tabindex="-1"
-                                     aria-labelledby="sua-san-pham-tabLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content" style="width: 100%;margin: auto;">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="sua-san-pham-tabLabel">Cập Nhật Sản
-                                                    Phẩm</h1>
-                                            </div>
-
-                                            <form action="" method="post">
-                                                <div class="modal-body">
-                                                    <div class="mb-3">
-                                                        <label class="form-label" style="float: left;"><span
-                                                                class="dau-sao">*</span>Tên
-                                                            Sản Phẩm:</label>
-                                                        <input type="text" class="form-control"
-                                                               placeholder="Nhập tên giày">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label" style="float: left;"><span
-                                                                class="dau-sao">*</span>Thương Hiệu:</label>
-                                                        <input type="text" class="form-control"
-                                                               placeholder="Nhập tên thương hiệu">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label" style="float: left;"><span class="
-                                          dau-sao">*</span>Trạng
-                                                            Thái:</label>
-
-                                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                                               value="option1"
-                                                               checked>
-                                                        <label class="form-check-label" style="margin-right: 20px;">
-                                                            Hoạt động
-                                                        </label>
-                                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                                               value="option2">
-                                                        <label class="form-check-label">
-                                                            Ngừng hoạt động
-                                                        </label>
-
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Đóng
-                                                    </button>
-                                                    <button type="button" class="btn btn-warning">Cập nhật</button>
-                                                </div>
-                                            </form>
-
-                                        </div>
-                                    </div>
+                            </fieldset>
+                            <div class="row mb-3">
+                                <label class="col-sm-4 col-form-label" style="float: left;">
+                                    <span style="color: red;">*</span>
+                                    Mô Tả:
+                                </label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control"
+                                              placeholder="Nhập tên thương hiệu"
+                                              th:field="*{moTa}"/>
+                                    <span class="check-loi" th:errors="*{moTa}"></span>
                                 </div>
-                                <!-- Modal sửa sản phẩm end-->
-
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">
-                                                <i class="bi bi-chevron-left"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">
-                                                <i class="bi bi-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
                             </div>
-
-                            <!-- Sản phẩm chi tiết -->
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-
-                                <!-- Default Tabs -->
-                                <ul class="nav nav-tabs" id="myTabb" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="list-tab" data-bs-toggle="tab"
-                                                data-bs-target="#list"
-                                                type="button" role="tab" aria-controls="list" aria-selected="true">Danh
-                                            Sách
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="create-tab" data-bs-toggle="tab"
-                                                data-bs-target="#create"
-                                                type="button" role="tab" aria-controls="create" aria-selected="false">
-                                            Tạo mới
-                                        </button>
-                                    </li>
-                                </ul>
-
-                                <div class="tab-content pt-2" id="myTabContentt">
-
-                                    <!-- chi tiết sp - danh sách -->
-                                    <div class="tab-pane fade show active" id="list" role="tabpanel"
-                                         aria-labelledby="list-tab">
-
-                                        <!-- form tìm kiếm chi tiết sp -->
-                                        <form style="margin-top: 3%;">
-                                            <label class="col-sm-2 col-form-label">Nhập tên sản phẩm:</label>
-                                            <div class="row mb-3">
-                                                <div class="col-sm-10">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control"
-                                                               placeholder="Tìm kiếm theo sản phẩm">
-                                                        <button type="submit" class="btn btn-primary"><i
-                                                                class="bi bi-arrow-clockwise"></i></button>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <button type="submit" class="btn btn-primary"
-                                                            style="margin-left:35%;">Tìm
-                                                        kiếm
-                                                    </button>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="row mb-3" style="margin-top: 4%;">
-                                                <div class="col-md-3">
-                                                    <label class="form-label">Thương hiệu:</label>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label class="form-label">Kích cỡ:</label>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label class="form-label">Màu Sắc:</label>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label class="form-label">Loại đế:</label>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="search-trang-thai" style="margin-top: 4%;">
-                                                <label style="margin-left:20%;">Trạng thái:</label>
-                                                <input class="form-check-input" type="radio" name="gridRadios"
-                                                       value="option1"
-                                                       style="margin-left:10%;" checked>
-                                                <label class="form-check-label">
-                                                    Tất cả
-                                                </label>
-
-                                                <input class="form-check-input" type="radio" name="gridRadios"
-                                                       value="option1"
-                                                       style="margin-left:5%;" checked>
-                                                <label class="form-check-label">
-                                                    Đang hoạt động
-                                                </label>
-
-                                                <input class="form-check-input" type="radio" name="gridRadios"
-                                                       value="option1"
-                                                       style="margin-left:5%;" checked>
-                                                <label class="form-check-label">
-                                                    Ngừng hoạt động
-                                                </label>
-                                            </div>
-
-                                        </form>
-
-                                        <br>
-                                        <table class="sanpham-table">
-                                            <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Ảnh</th>
-                                                <th>Tên Sản Phẩm</th>
-                                                <th>Số Lượng</th>
-                                                <th>Giá Bán</th>
-                                                <th>Kích Cỡ</th>
-                                                <th>Màu Sắc</th>
-                                                <th>Trạng Thái</th>
-                                                <th>Hành Động</th>
-                                            </tr>
-                                            <thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td><img src="../../static/img/logo.png" alt=""></td>
-                                                <td>Nike</td>
-                                                <td>123</td>
-                                                <td>100000</td>
-                                                <td>200000</td>
-                                                <td>200000</td>
-                                                <td class="trangthainkd">Ngừng kinh doanh</td>
-                                                <td>
-                                                    <!-- button và model -->
-                                                    <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal2">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <!-- model-xem-Cập Nhật-ctsp -->
-                                                    <div class="modal fade" id="exampleModal2" tabindex="-1"
-                                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                        Thông tin sản phẩm
-                                                                    </h1>
-                                                                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                    aria-label="Close"></button> -->
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form class="row g-3">
-                                                                        <div class="row mb-3">
-                                                                            <label class="col-sm-2 col-form-label"><span
-                                                                                    class="dausao">*</span>Tên sản phẩm</label>
-                                                                            <div class="col-sm-10">
-                                                                                <input type="email"
-                                                                                       class="form-control">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row mb-3">
-                                                                            <label class="col-sm-2 col-form-label"><span
-                                                                                    class="dausao">*</span>Mô tả</label>
-                                                                            <div class="col-sm-10">
-                                              <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                        rows="3"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row mb-3">
-                                                                            <label class="col col-form-label"><span
-                                                                                    class="dausao">*</span>Thương
-                                                                                hiệu</label>
-                                                                            <div class="col-sm-4">
-                                                                                <div class="input-group">
-                                                                                    <select name="cars"
-                                                                                            class="form-control">
-                                                                                        <option value="volvo">Volvo
-                                                                                        </option>
-                                                                                        <option value="saab">Saab
-                                                                                        </option>
-                                                                                        <option value="mercedes">
-                                                                                            Mercedes
-                                                                                        </option>
-                                                                                        <option value="audi">Audi
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    <button type="button"
-                                                                                            class="btn btn-primary">
-                                                                                        <i class="bi bi-plus"></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <label class="col col-form-label"><span
-                                                                                    class="dausao">*</span>Trạng
-                                                                                thái</label>
-                                                                            <div class="col-sm-4">
-                                                                                <div class="input-group">
-                                                                                    <select name="cars"
-                                                                                            class="form-control">
-                                                                                        <option value="volvo">Volvo
-                                                                                        </option>
-                                                                                        <option value="saab">Saab
-                                                                                        </option>
-                                                                                        <option value="mercedes">
-                                                                                            Mercedes
-                                                                                        </option>
-                                                                                        <option value="audi">Audi
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    <button type="button"
-                                                                                            class="btn btn-primary">
-                                                                                        <i class="bi bi-plus"></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row mb-3">
-                                                                            <label class="col col-form-label"><span
-                                                                                    class="dausao">*</span>Thương
-                                                                                hiệu</label>
-                                                                            <div class="col-sm-4">
-                                                                                <div class="input-group">
-                                                                                    <select name="cars"
-                                                                                            class="form-control">
-                                                                                        <option value="volvo">Volvo
-                                                                                        </option>
-                                                                                        <option value="saab">Saab
-                                                                                        </option>
-                                                                                        <option value="mercedes">
-                                                                                            Mercedes
-                                                                                        </option>
-                                                                                        <option value="audi">Audi
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    <button type="button"
-                                                                                            class="btn btn-primary">
-                                                                                        <i class="bi bi-plus"></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <label class="col col-form-label"><span
-                                                                                    class="dausao">*</span>Trạng
-                                                                                thái</label>
-                                                                            <div class="col-sm-4">
-                                                                                <div class="input-group">
-                                                                                    <select name="cars"
-                                                                                            class="form-control">
-                                                                                        <option value="volvo">Volvo
-                                                                                        </option>
-                                                                                        <option value="saab">Saab
-                                                                                        </option>
-                                                                                        <option value="mercedes">
-                                                                                            Mercedes
-                                                                                        </option>
-                                                                                        <option value="audi">Audi
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    <button type="button"
-                                                                                            class="btn btn-primary">
-                                                                                        <i class="bi bi-plus"></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row mb-3">
-                                                                            <label class="col col-form-label"><span
-                                                                                    class="dausao">*</span>Thương
-                                                                                hiệu</label>
-                                                                            <div class="col-sm-4">
-                                                                                <div class="input-group">
-                                                                                    <select name="cars"
-                                                                                            class="form-control">
-                                                                                        <option value="volvo">Volvo
-                                                                                        </option>
-                                                                                        <option value="saab">Saab
-                                                                                        </option>
-                                                                                        <option value="mercedes">
-                                                                                            Mercedes
-                                                                                        </option>
-                                                                                        <option value="audi">Audi
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    <button type="button"
-                                                                                            class="btn btn-primary">
-                                                                                        <i class="bi bi-plus"></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <label class="col col-form-label"><span
-                                                                                    class="dausao">*</span>Trạng
-                                                                                thái</label>
-                                                                            <div class="col-sm-4">
-                                                                                <div class="input-group">
-                                                                                    <select name="cars"
-                                                                                            class="form-control">
-                                                                                        <option value="volvo">Volvo
-                                                                                        </option>
-                                                                                        <option value="saab">Saab
-                                                                                        </option>
-                                                                                        <option value="mercedes">
-                                                                                            Mercedes
-                                                                                        </option>
-                                                                                        <option value="audi">Audi
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    <button type="button"
-                                                                                            class="btn btn-primary">
-                                                                                        <i class="bi bi-plus"></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                            data-bs-dismiss="modal">Hủy
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-warning">Cập
-                                                                        Nhật
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td><img src="../../static/img/logo.png" alt=""></td>
-                                                <td>Nike</td>
-                                                <td>123</td>
-                                                <td>100000</td>
-                                                <td>200000</td>
-                                                <td>200000</td>
-                                                <td class="trangthaidkd">Đang kinh doanh</td>
-                                                <td>
-                                                    <!-- button và model -->
-                                                    <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td><img src="../../static/img/logo.png" alt=""></td>
-                                                <td>Nike</td>
-                                                <td>123</td>
-                                                <td>100000</td>
-                                                <td>200000</td>
-                                                <td>200000</td>
-                                                <td class="trangthainkd">Ngừng kinh doanh</td>
-                                                <td>
-                                                    <!-- button và model -->
-                                                    <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td><img src="../../static/img/logo.png" alt=""></td>
-                                                <td>Nike</td>
-                                                <td>123</td>
-                                                <td>100000</td>
-                                                <td>200000</td>
-                                                <td>200000</td>
-                                                <td class="trangthaidkd">Đang kinh doanh</td>
-                                                <td>
-                                                    <!-- button và model -->
-                                                    <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">
-                                                        <i class="bi bi-chevron-left"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">
-                                                        <i class="bi bi-chevron-right"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </nav>
-
-                                    </div><!-- chi tiết sp - danh sách - end -->
-
-                                    <!-- chi tiết sp - tạo mới -->
-                                    <div class="tab-pane fade" id="create" role="tabpanel" aria-labelledby="create-tab">
-
-                                        <!-- form thêm chi tiết sản phẩm -->
-                                        <form action="" method="post" style="margin-top: 2%;">
-                                            <div class="row g-3">
-                                                <div class="col-12">
-                                                    <label for="inputAddress" class="form-label">Tên sản phẩm:</label>
-                                                    <div class="input-group flex-nowrap">
-
-                                                        <input type="text" class="form-control" id="inputAddress"
-                                                               placeholder="Nhập tên giày">
-                                                        <!-- Button trigger modal -->
-                                                        <button type="button" class="btn btn-primary"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#them-san-pham-nhanh">
-                                                            +
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <label for="inputAddress" class="form-label">Loại đế:</label>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option selected>Chọn đế giày</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Kích cỡ:</label>
-                                                    <select class="form-select" multiple
-                                                            aria-label="Multiple select example">
-                                                        <option selected>Open this select menu</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Màu sắc:</label>
-                                                    <select class="form-select" multiple
-                                                            aria-label="Multiple select example">
-                                                        <option selected>Open this select menu</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="danh-sach-cac-sp">
-                                                    <p class="d-inline-flex gap-1">
-                                                    <div class="col-12">
-                                                        <button class="btn btn-light" type="button"
-                                                                data-bs-toggle="collapse"
-                                                                data-bs-target="#collapseExample" aria-expanded="false"
-                                                                aria-controls="collapseExample">
-                                                            <span>Danh sách các sản phẩm cùng loại</span>
-                                                        </button>
-                                                    </div>
-                                                    </p>
-                                                </div>
-
-                                                <div class="collapse" id="collapseExample">
-
-                                                    <div class="thanh-tren">Các sản phẩm màu vàng</div>
-                                                    <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col">STT</th>
-                                                            <th scope="col">Sản Phẩm</th>
-                                                            <th scope="col">Số Lượng</th>
-                                                            <th scope="col">Đơn Giá</th>
-                                                            <th scope="col">Loại Đé</th>
-                                                            <th scope="col">Ảnh</th>
-                                                            <th scope="col">Thao Tác</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>Mark</td>
-                                                            <td>Mark</td>
-                                                            <td>Mark</td>
-                                                            <td>Mark</td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-dark">
-                                                                    <i class="bi bi-image"></i>
-                                                                </button>
-                                                            </td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-danger">
-                                                                    <i class="bi bi-trash-fill"></i>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-
-                                                </div>
-                                            </div>
-                                            <button type="submit" class="btn btn-success"
-                                                    style="float: right;margin-top: 3%;margin-bottom: 2%;">Thêm sản phẩm
-                                            </button>
-
-                                        </form>
-
-                                        <!-- Modal thêm sản phẩm nhanh -->
-                                        <div class="modal fade" id="them-san-pham-nhanh" tabindex="-1"
-                                             aria-labelledby="them-san-pham-nhanhLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content" style="width: 100%;margin: auto;">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="them-san-pham-nhanhLabel">Thêm
-                                                            sản
-                                                            phẩm</h1>
-                                                    </div>
-
-                                                    <form action="" method="post">
-                                                        <div class="modal-body">
-                                                            <div class="mb-3">
-                                                                <label class="form-label"><span class="dau-sao">*</span>Tên
-                                                                    Sản Phẩm</label>
-                                                                <input type="text" class="form-control"
-                                                                       placeholder="Nhập tên giày">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label"><span class="dau-sao">*</span>Thương
-                                                                    Hiệu</label>
-                                                                <input type="text" class="form-control"
-                                                                       placeholder="Nhập tên thương hiệu">
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Đóng
-                                                            </button>
-                                                            <button type="button" class="btn btn-primary">Thêm</button>
-                                                        </div>
-                                                    </form>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Modal thêm sản phẩm nhanh end -->
-
-
-                                    </div><!-- chi tiết sp - tạo mới - end -->
-
-                                </div>
-
-                            </div>
-
-                        </div><!--  Sản phẩm chi tiết End -->
+                            <button type="submit" class="btn btn-warning"
+                                    style="display: block;margin: auto;margin-top: 5%;margin-bottom: 5%;">Cập
+                                nhật
+                            </button>
+                        </form>
 
                     </div>
                 </div>
@@ -925,6 +228,48 @@
     </section>
 
 </main><!-- End #main -->
+<!--Thông báo thất bại-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='thaiBai'}">
+        // <script>
+        //     function showToast() {
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+        //         liveToast.show();
+        //     }
+        //     // Show the toast when the page loads
+        //     document.addEventListener('DOMContentLoaded', showToast);
+        //
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastDanger" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="background-color: rgb(252,134,134);border:2px solid #ff2020;border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_danger.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: white;">
+                        Lỗi</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo thất bại end-->
 
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
