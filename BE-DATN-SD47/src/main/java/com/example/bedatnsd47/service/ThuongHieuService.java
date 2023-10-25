@@ -1,6 +1,7 @@
 package com.example.bedatnsd47.service;
 
 import com.example.bedatnsd47.entity.MauSac;
+import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.entity.ThuongHieu;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,5 +29,16 @@ public interface ThuongHieuService {
 
     Page<ThuongHieu> findByTenContaining(String keyword, Integer trang_thai, int page, int size);
 
+    //tuan
+    boolean checkTenTrung(String ten);
 
+    boolean checkTenTrungSua(Long id, String ten);
+
+    ThuongHieu update(ThuongHieu thuongHieu);
+
+    ThuongHieu getById(Long id);
+
+    Integer checkPageNo(Integer pageNo);
+
+    Page<ThuongHieu> getPage(Integer pageNo);
 }

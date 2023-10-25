@@ -1,15 +1,19 @@
 package com.example.bedatnsd47.controller;
 
+import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.entity.ThuongHieu;
 import com.example.bedatnsd47.service.ThuongHieuService;
 import com.example.bedatnsd47.validation.Validation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,85 +27,108 @@ import java.util.List;
 
 @Controller
 //@RestController
-@RequestMapping("/ap1/v1/thuong-hieu")
+@RequestMapping("/admin/thuong-hieu")
 public class ThuongHieuController {
+
     @Autowired
     private ThuongHieuService thuongHieuService;
 
-    @GetMapping("/hien-thi")
-    public String listThuongHieu(Model model, @RequestParam(defaultValue = "0") int page) {
-        int pageSize = 5; // Số lượng phần tử trên mỗi trang
-        Page<ThuongHieu> thuongHieuPage = thuongHieuService.findAll(page, pageSize);
-        model.addAttribute("thuongHieuPage", thuongHieuPage);
+    private Integer pageNo = 0;
+
+    private Date currentDate = new Date();
+
+    @GetMapping("")
+    public String hienThi(
+            Model model
+    ) {
+        model.addAttribute("listThuongHieu", thuongHieuService.getPage(pageNo).stream().toList());
+        model.addAttribute("currentPage", pageNo);
         model.addAttribute("thuongHieu", new ThuongHieu());
-        return "admin-template/thuong_hieu/thuong-hieu";
+        return "/admin-template/thuong_hieu/thuong-hieu";
     }
 
-    @GetMapping("/getById/{id}")
-    public String getId(@PathVariable("id") Long id, Model model) {
-        ThuongHieu thuongHieu = thuongHieuService.findById(id).orElse(null);
-        System.out.println(thuongHieu);
+    @GetMapping("/pre")
+    public String hienThiPre(
+    ) {
+        pageNo--;
+        pageNo = thuongHieuService.checkPageNo(pageNo);
+        return "redirect:/admin/thuong-hieu";
+    }
+
+    @GetMapping("/next")
+    public String hienThiNext(
+    ) {
+        pageNo++;
+        pageNo = thuongHieuService.checkPageNo(pageNo);
+        return "redirect:/admin/thuong-hieu";
+    }
+
+    @GetMapping("/view-update/{id}")
+    public String viewUpdate(
+            Model model,
+            @PathVariable("id") Long id
+    ) {
+        ThuongHieu thuongHieu = thuongHieuService.getById(id);
+        model.addAttribute("listThuongHieu", thuongHieuService.findAll());
         model.addAttribute("thuongHieu", thuongHieu);
-        return "admin-template/thuong_hieu/sua-thuong-hieu";
+        return "/admin-template/thuong_hieu/sua-thuong-hieu";
     }
 
-
-    @PostMapping("/tim")
-    public String timKiemThuongHieu(@RequestParam("keyword") String keyword, @RequestParam("trangThai") Integer trangThai, Model model, @RequestParam(defaultValue = "0") int page) {
-        int pageSize = 5; // Số lượng phần tử trên mỗi trang
-        System.out.println(keyword);
-        Page<ThuongHieu> thuongHieuPage = thuongHieuService.findAll(page, pageSize);
-        Page<ThuongHieu> ketQua = thuongHieuService.findByTenContaining(keyword, trangThai, page, pageSize);
-
-        if (keyword == null || keyword.equals("")) {
-            model.addAttribute("thuongHieuPage", thuongHieuPage);
-            model.addAttribute("thuongHieu", new ThuongHieu());
-            return "redirect:/ap1/v1/thuong-hieu/hien-thi";
-        } else if (trangThai == 3) {
-            model.addAttribute("thuongHieuPage", thuongHieuPage);
-            model.addAttribute("thuongHieu", new ThuongHieu());
-            return "redirect:/ap1/v1/thuong-hieu/hien-thi";
+    @PostMapping("/update")
+    public String update(@Valid
+                         @ModelAttribute("thuongHieu") ThuongHieu thuongHieu,
+                         BindingResult result,
+                         Model model,
+                         RedirectAttributes redirectAttributes
+    ) {
+        if (result.hasErrors()) {
+            model.addAttribute("checkThongBao", "thaiBai");
+//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            return "/admin-template/thuong_hieu/sua-thuong-hieu";
+        } else if (!thuongHieuService.checkTenTrungSua(thuongHieu.getId(), thuongHieu.getTen())) {
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            return "/admin-template/thuong_hieu/sua-thuong-hieu";
         } else {
-            model.addAttribute("thuongHieuPage", ketQua);
-            model.addAttribute("thuongHieu", new ThuongHieu());
-            return "admin-template/thuong_hieu/thuong-hieu";
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+            ThuongHieu th = thuongHieuService.getById(thuongHieu.getId());
+            thuongHieu.setNgayTao(th.getNgayTao());
+            thuongHieu.setNgaySua(currentDate);
+            thuongHieuService.update(thuongHieu);
+            return "redirect:/admin/thuong-hieu";
         }
     }
 
     @PostMapping("/add")
-    public String timKiemThuongHieu(@RequestParam("ten") String ten, Model model, @RequestParam(defaultValue = "0") int page) {
-        // Tìm "thuongHieu" dựa trên tên
-        ThuongHieu thuongHieu = thuongHieuService.findByTen(ten);
-
-        if (thuongHieu == null) {
-            ThuongHieu thuongHieu1 = new ThuongHieu();
-            thuongHieuService.saveOrUpdate(thuongHieu1, ten);
+    public String add(@Valid
+                      @ModelAttribute("thuongHieu") ThuongHieu thuongHieu,
+                      BindingResult result,
+                      Model model,
+                      RedirectAttributes redirectAttributes
+    ) {
+        if (result.hasErrors()) {
+            model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("listThuongHieu", thuongHieuService.getPage(pageNo).stream().toList());
+            model.addAttribute("index", pageNo + 1);
+//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            return "/admin-template/thuong_hieu/thuong-hieu";
+        } else if (!thuongHieuService.checkTenTrung(thuongHieu.getTen())) {
+            model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+            model.addAttribute("listThuongHieu", thuongHieuService.getPage(pageNo).stream().toList());
+            model.addAttribute("index", pageNo + 1);
+            return "/admin-template/thuong_hieu/thuong-hieu";
         } else {
-            model.addAttribute("message", Validation.MESS_TRUNG_TEN);
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+//            sanPham.setMa("SP" + thuongHieuService.genMaTuDong());
+            thuongHieu.setNgayTao(currentDate);
+            thuongHieu.setTrangThai(0);
+            thuongHieuService.update(thuongHieu);
+            return "redirect:/admin/thuong-hieu";
         }
-        return "redirect:/ap1/v1/thuong-hieu/hien-thi";
-    }
-
-
-    @PostMapping("/update")
-    public String update(@RequestParam("ten") String ten, @RequestParam("trangThai") Integer trangThai, Model model, @RequestParam(defaultValue = "0") int page,
-                         @RequestParam("id") Long id, @RequestParam("ngayTao")  @DateTimeFormat(pattern = "yyyy-MM-dd")Date ngayTao) {
-        // Tìm "thuongHieu" dựa trên tên
-
-        ThuongHieu thuongHieu = thuongHieuService.findById(id).orElse(null);
-
-        try {
-            if (thuongHieu != null) {
-                ThuongHieu thuongHieu1 = new ThuongHieu();
-                thuongHieuService.update(thuongHieu1, id, trangThai, ten,ngayTao);
-                return "redirect:/ap1/v1/thuong-hieu/hien-thi";
-            } else {
-                model.addAttribute("message", Validation.MESS_TRUNG_TEN);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "redirect:/ap1/v1/thuong-hieu/hien-thi";
     }
 
 
