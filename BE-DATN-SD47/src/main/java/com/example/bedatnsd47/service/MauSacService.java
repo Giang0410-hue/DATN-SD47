@@ -35,4 +35,6 @@ public interface MauSacService {
     Page<MauSac> getPage(Integer pageNo);
 
     public Integer genMaTuDong();
+
+
 }

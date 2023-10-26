@@ -1,9 +1,8 @@
 package com.example.bedatnsd47.service.impl;
 
 import com.example.bedatnsd47.entity.KichCo;
-import com.example.bedatnsd47.entity.ThuongHieu;
-import com.example.bedatnsd47.repository.KichThuocRepository;
-import com.example.bedatnsd47.service.KichThuocService;
+import com.example.bedatnsd47.repository.KichCoRepository;
+import com.example.bedatnsd47.service.KichCoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,18 +15,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class KichThuocServiceImpl implements KichThuocService {
+public class KichCoServiceImpl implements KichCoService {
     @Autowired
-    KichThuocRepository kichThuocRepository;
+    KichCoRepository kichCoRepository;
 
     @Override
     public List<KichCo> findAll() {
-        return kichThuocRepository.findAll();
+        return kichCoRepository.findAll();
     }
 
     @Override
     public Optional<KichCo> findById(Long id) {
-        return kichThuocRepository.findById(id);
+        return kichCoRepository.findById(id);
     }
 
     @Override
@@ -42,7 +41,7 @@ public class KichThuocServiceImpl implements KichThuocService {
             thuongHieu.setNgayTao(new Date());
             thuongHieu.setNgaySua(new Date());
             thuongHieu.setTrangThai(1);
-            kichThuocRepository.save(thuongHieu);
+            kichCoRepository.save(thuongHieu);
         } catch (Exception e) {
             // Log the exception
             e.printStackTrace();
@@ -79,13 +78,13 @@ public class KichThuocServiceImpl implements KichThuocService {
 
     @Override
     public KichCo findByTen(Float ten) {
-        return kichThuocRepository.findByTen(ten);
+        return kichCoRepository.findByTen(ten);
     }
 
     @Override
     public Page<KichCo> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "ngaySua"));
-        return kichThuocRepository.findAll(pageable);
+        return kichCoRepository.findAll(pageable);
 
     }
 
@@ -100,7 +99,7 @@ public class KichThuocServiceImpl implements KichThuocService {
         if (ten == null) {
             return false; // No need to check for duplicates if ten is null
         }
-        for (KichCo sp : kichThuocRepository.findAll()) {
+        for (KichCo sp : kichCoRepository.findAll()) {
             if (sp.getTen().equals(ten)) {
                 return false;
             }
@@ -114,7 +113,7 @@ public class KichThuocServiceImpl implements KichThuocService {
         if (ten == null) {
             return false; // No need to check for duplicates if ten is null
         }
-        for (KichCo sp : kichThuocRepository.findAll()) {
+        for (KichCo sp : kichCoRepository.findAll()) {
             if (sp.getTen().equals(ten)) {
                 if (!sp.getId().equals(id)){
                     return false;
@@ -126,17 +125,17 @@ public class KichThuocServiceImpl implements KichThuocService {
 
     @Override
     public KichCo update(KichCo kichCo) {
-        return kichThuocRepository.save(kichCo);
+        return kichCoRepository.save(kichCo);
     }
 
     @Override
     public KichCo getById(Long id) {
-        return kichThuocRepository.findById(id).get();
+        return kichCoRepository.findById(id).get();
     }
 
     @Override
     public Integer checkPageNo(Integer pageNo) {
-        Integer sizeList = kichThuocRepository.findAll().size();
+        Integer sizeList = kichCoRepository.findAll().size();
         Integer pageCount = (int) Math.ceil((double) sizeList / 5);
         if (pageNo >= pageCount) {
             pageNo = 0;
@@ -148,6 +147,6 @@ public class KichThuocServiceImpl implements KichThuocService {
 
     @Override
     public Page<KichCo> getPage(Integer pageNo) {
-        return kichThuocRepository.findAll(PageRequest.of(pageNo, 5));
+        return kichCoRepository.findAll(PageRequest.of(pageNo, 5));
     }
 }

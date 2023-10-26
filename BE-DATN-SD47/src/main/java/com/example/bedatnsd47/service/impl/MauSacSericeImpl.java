@@ -147,7 +147,8 @@ public class MauSacSericeImpl implements MauSacService {
 
     @Override
     public Page<MauSac> getPage(Integer pageNo) {
-        return mauSacRepository.findAll(PageRequest.of(pageNo, 5));
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        return mauSacRepository.findAll(PageRequest.of  (  pageNo, 5,sort));
     }
 
     @Override

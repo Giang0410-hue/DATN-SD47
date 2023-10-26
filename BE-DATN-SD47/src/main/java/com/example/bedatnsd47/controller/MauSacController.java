@@ -4,7 +4,6 @@ import com.example.bedatnsd47.entity.MauSac;
 import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.entity.ThuongHieu;
 import com.example.bedatnsd47.service.MauSacService;
-import com.example.bedatnsd47.validation.Validation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

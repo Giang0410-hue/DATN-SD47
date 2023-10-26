@@ -138,6 +138,7 @@ public class LoaiDeServiceImpl  implements LoaiDeService {
 
     @Override
     public Page<LoaiDe> getPage(Integer pageNo) {
-        return loaiDeRepository.findAll(PageRequest.of(pageNo, 5));
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        return loaiDeRepository.findAll(PageRequest.of(pageNo, 5,sort));
     }
 }

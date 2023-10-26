@@ -146,7 +146,8 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
 
     @Override
     public Page<ThuongHieu> getPage(Integer pageNo) {
-        return thuongHieuRepository.findAll(PageRequest.of(pageNo, 5));
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        return thuongHieuRepository.findAll(PageRequest.of(pageNo, 5,sort));
     }
 
 

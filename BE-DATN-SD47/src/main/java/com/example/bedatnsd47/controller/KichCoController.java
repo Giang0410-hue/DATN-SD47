@@ -1,14 +1,9 @@
 package com.example.bedatnsd47.controller;
 
 import com.example.bedatnsd47.entity.KichCo;
-import com.example.bedatnsd47.entity.ThuongHieu;
-import com.example.bedatnsd47.service.KichThuocService;
-import com.example.bedatnsd47.service.ThuongHieuService;
-import com.example.bedatnsd47.validation.Validation;
+import com.example.bedatnsd47.service.KichCoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,16 +12,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 
 @Controller
 @RequestMapping("/admin/kich-co")
-public class KichThuocController {
+public class KichCoController {
     @Autowired
-    private KichThuocService kichThuocService;
+    private KichCoService kichCoService;
 
     private Integer pageNo = 0;
 
@@ -36,7 +30,7 @@ public class KichThuocController {
     public String hienThi(
             Model model
     ) {
-        model.addAttribute("listKichCo", kichThuocService.getPage(pageNo).stream().toList());
+        model.addAttribute("listKichCo", kichCoService.getPage(pageNo).stream().toList());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("kichCo", new KichCo());
         return "/admin-template/kich_co/kich-co";
@@ -46,7 +40,7 @@ public class KichThuocController {
     public String hienThiPre(
     ) {
         pageNo--;
-        pageNo = kichThuocService.checkPageNo(pageNo);
+        pageNo = kichCoService.checkPageNo(pageNo);
         return "redirect:/admin/kich-co";
     }
 
@@ -54,7 +48,7 @@ public class KichThuocController {
     public String hienThiNext(
     ) {
         pageNo++;
-        pageNo = kichThuocService.checkPageNo(pageNo);
+        pageNo = kichCoService.checkPageNo(pageNo);
         return "redirect:/admin/kich-co";
     }
 
@@ -63,8 +57,8 @@ public class KichThuocController {
             Model model,
             @PathVariable("id") Long id
     ) {
-        KichCo kichCo = kichThuocService.getById(id);
-        model.addAttribute("listKichCo", kichThuocService.findAll());
+        KichCo kichCo = kichCoService.getById(id);
+        model.addAttribute("listKichCo", kichCoService.findAll());
         model.addAttribute("kichCo", kichCo);
         return "/admin-template/kich_co/sua-kich-co";
     }
@@ -78,19 +72,19 @@ public class KichThuocController {
     ) {
         if (result.hasErrors()) {
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("listKichCo", kichThuocService.findAll());
+            model.addAttribute("listKichCo", kichCoService.findAll());
             return "/admin-template/kich_co/sua-kich-co";
-        } else if (!kichThuocService.checkTenTrungSua(kichCo.getId(), kichCo.getTen())) {
+        } else if (!kichCoService.checkTenTrungSua(kichCo.getId(), kichCo.getTen())) {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
-            model.addAttribute("listKichCo", kichThuocService.findAll());
+            model.addAttribute("listKichCo", kichCoService.findAll());
             return "/admin-template/kich_co/sua-kich-co";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            KichCo kt = kichThuocService.getById(kichCo.getId());
+            KichCo kt = kichCoService.getById(kichCo.getId());
             kichCo.setNgayTao(kt.getNgayTao());
             kichCo.setNgaySua(currentDate);
-            kichThuocService.update(kichCo);
+            kichCoService.update(kichCo);
             return "redirect:/admin/kich-co";
         }
     }
@@ -105,17 +99,17 @@ public class KichThuocController {
         if (result.hasErrors()) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("listKichCo", kichThuocService.getPage(pageNo).stream().toList());
+            model.addAttribute("listKichCo", kichCoService.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
             model.addAttribute("currentPage", pageNo);
 //            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/kich_co/kich-co";
-        } else if (!kichThuocService.checkTenTrung(kichCo.getTen())) {
+        } else if (!kichCoService.checkTenTrung(kichCo.getTen())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("currentPage", pageNo);
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
-            model.addAttribute("listKichCo", kichThuocService.getPage(pageNo).stream().toList());
+            model.addAttribute("listKichCo", kichCoService.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
             return "/admin-template/kich_co/kich-co";
         } else {
@@ -123,7 +117,7 @@ public class KichThuocController {
 //            sanPham.setMa("SP" + thuongHieuService.genMaTuDong());
             kichCo.setNgayTao(currentDate);
             kichCo.setTrangThai(0);
-            kichThuocService.update(kichCo);
+            kichCoService.update(kichCo);
             return "redirect:/admin/kich-co";
         }
     }

@@ -1,14 +1,13 @@
 package com.example.bedatnsd47.service;
 
 import com.example.bedatnsd47.entity.KichCo;
-import com.example.bedatnsd47.entity.ThuongHieu;
 import org.springframework.data.domain.Page;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public interface KichThuocService {
+public interface KichCoService {
     List<KichCo> findAll();
 
     Optional<KichCo> findById(Long id);
