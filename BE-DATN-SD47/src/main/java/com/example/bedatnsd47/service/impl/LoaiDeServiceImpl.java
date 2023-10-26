@@ -91,4 +91,53 @@ public class LoaiDeServiceImpl  implements LoaiDeService {
     public Page<LoaiDe> findByTenContaining(String keyword, Integer trang_thai, int page, int size) {
         return null;
     }
+
+    @Override
+    public boolean checkTenTrung(String ten) {
+        for (LoaiDe de : loaiDeRepository.findAll()) {
+            if (de.getTen().equalsIgnoreCase(ten)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkTenTrungSua(Long id, String ten) {
+        for (LoaiDe de : loaiDeRepository.findAll()) {
+            if (de.getTen().equalsIgnoreCase(ten)) {
+                if (!de.getId().equals(id)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public LoaiDe update(LoaiDe loaiDe) {
+        return loaiDeRepository.save(loaiDe);
+    }
+
+    @Override
+    public LoaiDe getById(Long id) {
+        return loaiDeRepository.findById(id).get();
+    }
+
+    @Override
+    public Integer checkPageNo(Integer pageNo) {
+        Integer sizeList = loaiDeRepository.findAll().size();
+        Integer pageCount = (int) Math.ceil((double) sizeList / 5);
+        if (pageNo >= pageCount) {
+            pageNo = 0;
+        } else if (pageNo < 0) {
+            pageNo = pageCount - 1;
+        }
+        return pageNo;
+    }
+
+    @Override
+    public Page<LoaiDe> getPage(Integer pageNo) {
+        return loaiDeRepository.findAll(PageRequest.of(pageNo, 5));
+    }
 }

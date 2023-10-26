@@ -52,29 +52,29 @@ public class KichThuocServiceImpl implements KichThuocService {
 
     @Override
     public void update(KichCo thuongHieu, Long id, Integer trangThai, Float ten, Date ngayTao) {
-        try {
-            List<KichCo> list = KichThuocServiceImpl.this.findAll();
-            boolean duplicateFound = false;
-            for (KichCo thuongHieuTim : list
-            ) {
-                if (thuongHieuTim.getId() != id && thuongHieuTim.getTen().equals(ten)) {
-                    duplicateFound = true;
-                    break;
-                }
-            }
-            if (duplicateFound) {
-                System.out.println("Da ton tai");
-            } else {
-                thuongHieu.setId(id);
-                thuongHieu.setTen(ten);
-                thuongHieu.setNgayTao(ngayTao);
-                thuongHieu.setNgaySua(new Date());
-                thuongHieu.setTrangThai(trangThai);
-                kichThuocRepository.save(thuongHieu);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            List<KichCo> list = KichThuocServiceImpl.this.findAll();
+//            boolean duplicateFound = false;
+//            for (KichCo thuongHieuTim : list
+//            ) {
+//                if (thuongHieuTim.getId() != id && thuongHieuTim.getTen().equals(ten)) {
+//                    duplicateFound = true;
+//                    break;
+//                }
+//            }
+//            if (duplicateFound) {
+//                System.out.println("Da ton tai");
+//            } else {
+//                thuongHieu.setId(id);
+//                thuongHieu.setTen(ten);
+//                thuongHieu.setNgayTao(ngayTao);
+//                thuongHieu.setNgaySua(new Date());
+//                thuongHieu.setTrangThai(trangThai);
+//                kichThuocRepository.save(thuongHieu);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -92,5 +92,62 @@ public class KichThuocServiceImpl implements KichThuocService {
     @Override
     public Page<KichCo> findByTenContaining(String keyword, Integer trang_thai, int page, int size) {
         return null;
+    }
+
+    @Override
+    public boolean checkTenTrung(Float ten) {
+
+        if (ten == null) {
+            return false; // No need to check for duplicates if ten is null
+        }
+        for (KichCo sp : kichThuocRepository.findAll()) {
+            if (sp.getTen().equals(ten)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkTenTrungSua(Long id, Float ten) {
+
+        if (ten == null) {
+            return false; // No need to check for duplicates if ten is null
+        }
+        for (KichCo sp : kichThuocRepository.findAll()) {
+            if (sp.getTen().equals(ten)) {
+                if (!sp.getId().equals(id)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public KichCo update(KichCo kichCo) {
+        return kichThuocRepository.save(kichCo);
+    }
+
+    @Override
+    public KichCo getById(Long id) {
+        return kichThuocRepository.findById(id).get();
+    }
+
+    @Override
+    public Integer checkPageNo(Integer pageNo) {
+        Integer sizeList = kichThuocRepository.findAll().size();
+        Integer pageCount = (int) Math.ceil((double) sizeList / 5);
+        if (pageNo >= pageCount) {
+            pageNo = 0;
+        } else if (pageNo < 0) {
+            pageNo = pageCount - 1;
+        }
+        return pageNo;
+    }
+
+    @Override
+    public Page<KichCo> getPage(Integer pageNo) {
+        return kichThuocRepository.findAll(PageRequest.of(pageNo, 5));
     }
 }

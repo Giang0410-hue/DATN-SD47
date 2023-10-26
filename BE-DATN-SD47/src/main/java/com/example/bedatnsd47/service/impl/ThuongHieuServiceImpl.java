@@ -128,6 +128,7 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
 
     @Override
     public ThuongHieu getById(Long id) {
+
         return thuongHieuRepository.findById(id).get();
     }
 

@@ -5,98 +5,127 @@ import com.example.bedatnsd47.entity.ThuongHieu;
 import com.example.bedatnsd47.service.KichThuocService;
 import com.example.bedatnsd47.service.ThuongHieuService;
 import com.example.bedatnsd47.validation.Validation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 
 @Controller
-@RequestMapping("/ap1/v1/kich-co")
+@RequestMapping("/admin/kich-co")
 public class KichThuocController {
     @Autowired
     private KichThuocService kichThuocService;
 
-    @GetMapping("/hien-thi")
-    public String listThuongHieu(Model model, @RequestParam(defaultValue = "0") int page) {
-        int pageSize = 5; // Số lượng phần tử trên mỗi trang
-        Page<KichCo> thuongHieuPage = kichThuocService.findAll(page, pageSize);
-        model.addAttribute("thuongHieuPage", thuongHieuPage);
-        model.addAttribute("thuongHieu", new KichCo());
-        return "admin-template/kich_co/kich-co";
+    private Integer pageNo = 0;
+
+    private Date currentDate = new Date();
+
+    @GetMapping("")
+    public String hienThi(
+            Model model
+    ) {
+        model.addAttribute("listKichCo", kichThuocService.getPage(pageNo).stream().toList());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("kichCo", new KichCo());
+        return "/admin-template/kich_co/kich-co";
     }
 
-    @GetMapping("/getById/{id}")
-    public String getId(@PathVariable("id") Long id, Model model) {
-        KichCo thuongHieu = kichThuocService.findById(id).orElse(null);
-        System.out.println(thuongHieu);
-        model.addAttribute("thuongHieu", thuongHieu);
-        return "admin-template/kich_co/sua-kich-co";
+    @GetMapping("/pre")
+    public String hienThiPre(
+    ) {
+        pageNo--;
+        pageNo = kichThuocService.checkPageNo(pageNo);
+        return "redirect:/admin/kich-co";
     }
 
+    @GetMapping("/next")
+    public String hienThiNext(
+    ) {
+        pageNo++;
+        pageNo = kichThuocService.checkPageNo(pageNo);
+        return "redirect:/admin/kich-co";
+    }
 
-    @PostMapping("/tim")
-    public String timKiemThuongHieu(@RequestParam("keyword") String keyword, @RequestParam("trangThai") Integer trangThai, Model model, @RequestParam(defaultValue = "0") int page) {
-        int pageSize = 5; // Số lượng phần tử trên mỗi trang
-        System.out.println(keyword);
-        Page<KichCo> thuongHieuPage = kichThuocService.findAll(page, pageSize);
-        Page<KichCo> ketQua = kichThuocService.findByTenContaining(keyword, trangThai, page, pageSize);
+    @GetMapping("/view-update/{id}")
+    public String viewUpdate(
+            Model model,
+            @PathVariable("id") Long id
+    ) {
+        KichCo kichCo = kichThuocService.getById(id);
+        model.addAttribute("listKichCo", kichThuocService.findAll());
+        model.addAttribute("kichCo", kichCo);
+        return "/admin-template/kich_co/sua-kich-co";
+    }
 
-        if (keyword == null || keyword.equals("")) {
-            model.addAttribute("thuongHieuPage", thuongHieuPage);
-            model.addAttribute("thuongHieu", new ThuongHieu());
-            return "redirect:/ap1/v1/thuong-hieu/hien-thi";
-        } else if (trangThai == 3) {
-            model.addAttribute("thuongHieuPage", thuongHieuPage);
-            model.addAttribute("thuongHieu", new ThuongHieu());
-            return "redirect:/ap1/v1/thuong-hieu/hien-thi";
+    @PostMapping("/update")
+    public String update(@Valid
+                         @ModelAttribute("kichCo") KichCo kichCo,
+                         BindingResult result,
+                         Model model,
+                         RedirectAttributes redirectAttributes
+    ) {
+        if (result.hasErrors()) {
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("listKichCo", kichThuocService.findAll());
+            return "/admin-template/kich_co/sua-kich-co";
+        } else if (!kichThuocService.checkTenTrungSua(kichCo.getId(), kichCo.getTen())) {
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+            model.addAttribute("listKichCo", kichThuocService.findAll());
+            return "/admin-template/kich_co/sua-kich-co";
         } else {
-            model.addAttribute("thuongHieuPage", ketQua);
-            model.addAttribute("thuongHieu", new ThuongHieu());
-            return "admin-template/thuong_hieu/thuong-hieu";
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+            KichCo kt = kichThuocService.getById(kichCo.getId());
+            kichCo.setNgayTao(kt.getNgayTao());
+            kichCo.setNgaySua(currentDate);
+            kichThuocService.update(kichCo);
+            return "redirect:/admin/kich-co";
         }
     }
 
     @PostMapping("/add")
-    public String timKiemThuongHieu(@RequestParam("ten") Float ten, Model model, @RequestParam(defaultValue = "0") int page) {
-        // Tìm "thuongHieu" dựa trên tên
-        KichCo thuongHieu = kichThuocService.findByTen(ten);
-
-        if (thuongHieu == null) {
-            KichCo thuongHieu1 = new KichCo();
-            kichThuocService.saveOrUpdate(thuongHieu1, ten);
+    public String add(@Valid
+                      @ModelAttribute("kichCo") KichCo kichCo,
+                      BindingResult result,
+                      Model model,
+                      RedirectAttributes redirectAttributes
+    ) {
+        if (result.hasErrors()) {
+            model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("listKichCo", kichThuocService.getPage(pageNo).stream().toList());
+            model.addAttribute("index", pageNo + 1);
+            model.addAttribute("currentPage", pageNo);
+//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            return "/admin-template/kich_co/kich-co";
+        } else if (!kichThuocService.checkTenTrung(kichCo.getTen())) {
+            model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+            model.addAttribute("listKichCo", kichThuocService.getPage(pageNo).stream().toList());
+            model.addAttribute("index", pageNo + 1);
+            return "/admin-template/kich_co/kich-co";
         } else {
-            model.addAttribute("message", Validation.MESS_TRUNG_TEN);
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+//            sanPham.setMa("SP" + thuongHieuService.genMaTuDong());
+            kichCo.setNgayTao(currentDate);
+            kichCo.setTrangThai(0);
+            kichThuocService.update(kichCo);
+            return "redirect:/admin/kich-co";
         }
-        return "redirect:/ap1/v1/kich-co/hien-thi";
     }
 
-
-    @PostMapping("/update")
-    public String update(@RequestParam("ten") Float ten, @RequestParam("trangThai") Integer trangThai, Model model, @RequestParam(defaultValue = "0") int page,
-                         @RequestParam("id") Long id, @RequestParam("ngayTao") @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayTao) {
-        // Tìm "thuongHieu" dựa trên tên
-
-        KichCo thuongHieu = kichThuocService.findById(id).orElse(null);
-
-        try {
-            if (thuongHieu != null) {
-                KichCo thuongHieu1 = new KichCo();
-                kichThuocService.update(thuongHieu1, id, trangThai, ten, ngayTao);
-                return "redirect:/ap1/v1/kich-co/hien-thi";
-            } else {
-                model.addAttribute("message", Validation.MESS_TRUNG_TEN);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "redirect:/ap1/v1/kich-co/hien-thi";
-    }
 }

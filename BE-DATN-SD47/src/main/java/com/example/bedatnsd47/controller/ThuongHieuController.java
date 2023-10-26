@@ -112,6 +112,7 @@ public class ThuongHieuController {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listThuongHieu", thuongHieuService.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
+            model.addAttribute("currentPage", pageNo);
 //            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/thuong_hieu/thuong-hieu";
         } else if (!thuongHieuService.checkTenTrung(thuongHieu.getTen())) {
@@ -120,6 +121,7 @@ public class ThuongHieuController {
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
             model.addAttribute("listThuongHieu", thuongHieuService.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
+            model.addAttribute("currentPage", pageNo);
             return "/admin-template/thuong_hieu/thuong-hieu";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");

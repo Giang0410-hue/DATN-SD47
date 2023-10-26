@@ -3,98 +3,133 @@ package com.example.bedatnsd47.controller;
 import com.example.bedatnsd47.entity.LoaiDe;
 import com.example.bedatnsd47.entity.ThuongHieu;
 import com.example.bedatnsd47.service.LoaiDeService;
+import com.example.bedatnsd47.service.ThuongHieuService;
 import com.example.bedatnsd47.validation.Validation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 
 @Controller
-@RequestMapping("/ap1/v1/loai-de")
+@RequestMapping("/admin/loai-de")
 public class LoaiDeController {
     @Autowired
     LoaiDeService loaiDeService;
-    @GetMapping("/hien-thi")
-    public String listThuongHieu(Model model, @RequestParam(defaultValue = "0") int page) {
-        int pageSize = 5; // Số lượng phần tử trên mỗi trang
-        Page<LoaiDe> thuongHieuPage = loaiDeService.findAll(page, pageSize);
-        model.addAttribute("thuongHieuPage", thuongHieuPage);
-        model.addAttribute("thuongHieu", new LoaiDe());
-        return "admin-template/loai_de/loai-de";
+
+    private Integer pageNo = 0;
+
+    private Date currentDate = new Date();
+
+    @GetMapping("")
+    public String hienThi(
+            Model model
+    ) {
+        model.addAttribute("listLoaiDe", loaiDeService.getPage(pageNo).stream().toList());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("loaiDe", new LoaiDe());
+        return "/admin-template/loai_de/loai-de";
     }
 
-    @GetMapping("/getById/{id}")
-    public String getId(@PathVariable("id") Long id, Model model) {
-        LoaiDe thuongHieu = loaiDeService.findById(id).orElse(null);
-        System.out.println(thuongHieu);
-        model.addAttribute("thuongHieu", thuongHieu);
-        return "admin-template/loai_de/sua-loai-de";
+    @GetMapping("/pre")
+    public String hienThiPre(
+    ) {
+        pageNo--;
+        pageNo = loaiDeService.checkPageNo(pageNo);
+        return "redirect:/admin/loai-de";
     }
 
+    @GetMapping("/next")
+    public String hienThiNext(
+    ) {
+        pageNo++;
+        pageNo = loaiDeService.checkPageNo(pageNo);
+        return "redirect:/admin/loai-de";
+    }
 
-    @PostMapping("/tim")
-    public String timKiemThuongHieu(@RequestParam("keyword") String keyword, @RequestParam("trangThai") Integer trangThai, Model model, @RequestParam(defaultValue = "0") int page) {
-        int pageSize = 5; // Số lượng phần tử trên mỗi trang
-        System.out.println(keyword);
-        Page<LoaiDe> thuongHieuPage = loaiDeService.findAll(page, pageSize);
-        Page<LoaiDe> ketQua = loaiDeService.findByTenContaining(keyword, trangThai, page, pageSize);
+    @GetMapping("/view-update/{id}")
+    public String viewUpdate(
+            Model model,
+            @PathVariable("id") Long id
+    ) {
+        LoaiDe loaiDe = loaiDeService.getById(id);
+        model.addAttribute("listThuongHieu", loaiDeService.findAll());
+        model.addAttribute("loaiDe", loaiDe);
+        return "/admin-template/loai_de/sua-loai-de";
+    }
 
-        if (keyword == null || keyword.equals("")) {
-            model.addAttribute("thuongHieuPage", thuongHieuPage);
-            model.addAttribute("thuongHieu", new ThuongHieu());
-            return "redirect:/ap1/v1/thuong-hieu/hien-thi";
-        } else if (trangThai == 3) {
-            model.addAttribute("thuongHieuPage", thuongHieuPage);
-            model.addAttribute("thuongHieu", new ThuongHieu());
-            return "redirect:/ap1/v1/thuong-hieu/hien-thi";
+    @PostMapping("/update")
+    public String update(@Valid
+                         @ModelAttribute("loaiDe") LoaiDe loaiDe,
+                         BindingResult result,
+                         Model model,
+                         RedirectAttributes redirectAttributes
+    ) {
+        if (result.hasErrors()) {
+            model.addAttribute("checkThongBao", "thaiBai");
+//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            return "/admin-template/loai_de/sua-loai-de";
+        } else if (!loaiDeService.checkTenTrungSua(loaiDe.getId(), loaiDe.getTen())) {
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            return "/admin-template/loai_de/sua-loai-de";
         } else {
-            model.addAttribute("thuongHieuPage", ketQua);
-            model.addAttribute("thuongHieu", new ThuongHieu());
-            return "admin-template/thuong_hieu/thuong-hieu";
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+            LoaiDe ld = loaiDeService.getById(loaiDe.getId());
+            loaiDe.setNgayTao(ld.getNgayTao());
+            loaiDe.setNgaySua(currentDate);
+            loaiDeService.update(loaiDe);
+            return "redirect:/admin/loai-de";
         }
     }
 
     @PostMapping("/add")
-    public String timKiemThuongHieu(@RequestParam("ten") String ten, Model model, @RequestParam(defaultValue = "0") int page) {
-        // Tìm "thuongHieu" dựa trên tên
-        LoaiDe thuongHieu = loaiDeService.findByTen(ten);
-
-        if (thuongHieu == null) {
-            LoaiDe thuongHieu1 = new LoaiDe();
-            loaiDeService.saveOrUpdate(thuongHieu1, ten);
+    public String add(@Valid @ModelAttribute("loaiDe") LoaiDe loaiDe,
+                      BindingResult result,
+                      Model model,
+                      RedirectAttributes redirectAttributes
+    ) {
+        if (result.hasErrors()) {
+            model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("listThuongHieu", loaiDeService.getPage(pageNo).stream().toList());
+            model.addAttribute("index", pageNo + 1);
+            model.addAttribute("currentPage", pageNo);
+//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            return "/admin-template/loai_de/loai-de";
+        } else if (!loaiDeService.checkTenTrung(loaiDe.getTen())) {
+            model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+            model.addAttribute("listThuongHieu", loaiDeService.getPage(pageNo).stream().toList());
+            model.addAttribute("index", pageNo + 1);
+            model.addAttribute("currentPage", pageNo);
+            return "/admin-template/loai_de/loai-de";
         } else {
-            model.addAttribute("message", Validation.MESS_TRUNG_TEN);
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+//            sanPham.setMa("SP" + thuongHieuService.genMaTuDong());
+            loaiDe.setNgayTao(currentDate);
+            loaiDe.setTrangThai(0);
+            loaiDeService.update(loaiDe);
+            return "redirect:/admin/loai-de";
         }
-        return "redirect:/ap1/v1/loai-de/hien-thi";
     }
 
 
-    @PostMapping("/update")
-    public String update(@RequestParam("ten") String ten, @RequestParam("trangThai") Integer trangThai, Model model, @RequestParam(defaultValue = "0") int page,
-                         @RequestParam("id") Long id, @RequestParam("ngayTao")  @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayTao) {
-        // Tìm "thuongHieu" dựa trên tên
 
-        LoaiDe thuongHieu = loaiDeService.findById(id).orElse(null);
 
-        try {
-            if (thuongHieu != null) {
-                LoaiDe thuongHieu1 = new LoaiDe();
-                loaiDeService.update(thuongHieu1, id, trangThai, ten,ngayTao);
-                return "redirect:/ap1/v1/loai-de/hien-thi";
-            } else {
-                model.addAttribute("message", Validation.MESS_TRUNG_TEN);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "redirect:/ap1/v1/loai-de/hien-thi";
-    }
+
+
 }
