@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,7 +41,7 @@ public class SanPham {
     @NotBlank(message = "Tên sản phẩm không được trống")
     private String ten;
 
-    @Column(name = "mo_ta", columnDefinition = "NVARCHAR(MAX)")
+    @Column(name = "mo_ta")
     @NotBlank(message = "Mô tả sản phẩm không được trống")
     private String moTa;
 
