@@ -148,8 +148,30 @@
                             <div class="form-tao-moi">
                                 <div class="tao-hd">
                                     <!-- <button type="button" class="btn btn-success">Tạo hóa đơn</button> -->
-                                    <a type="button" class="btn btn-success" href="/ban-hang-tai-quay/create">Tạo Hóa
-                                        đơn</a>
+                                    
+                                    <a id="postLink" class="btn btn-success" >Tạo Hóa đơn</a>
+                                       
+                                        <script>
+                                            document.getElementById("postLink").addEventListener("click", function(event) {
+                                              event.preventDefault(); // Ngăn chặn thực hiện mặc định của thẻ <a>
+                                          
+                                              var form = document.createElement("form");
+                                              form.method = "POST";
+                                              form.action = "/ban-hang-tai-quay/create"; // Đặt URL mà bạn muốn gửi yêu cầu POST đến
+                                          
+                                              var input = document.createElement("input");
+                                              input.type = "hidden";
+                                              input.name = "key";
+                                              input.value = "value"; // Dữ liệu bạn muốn gửi
+                                          
+                                              form.appendChild(input);
+                                          
+                                              document.body.appendChild(form);
+                                              form.submit();
+                                            });
+                                          </script>
+
+
                                 </div>
                                 <!-- tao moi va danh sach hoa don tabs -->
 
@@ -178,7 +200,8 @@
                                                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                                                             aria-labelledby="home-tab">
                                                             <div class="them-moi-sp">
-
+                                                                <a class="btn btn-danger" th:href="@{'/ban-hang-tai-quay/delete/' + ${hoaDon.id}}" role="button">Xóa hóa đơn</a>
+                                                                
                                                                 <!-- Button trigger modal -->
                                                                 <button type="button" class="btn btn-primary"
                                                                     data-bs-toggle="modal"
@@ -500,7 +523,8 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr>
+
+                                                                        <tr th:each="obj:${hoaDon.lstHoaDonChiTiet}">
                                                                             <th scope="row">1</th>
                                                                             <td>
                                                                                 <div class="row">
@@ -508,15 +532,16 @@
                                                                                         <img src="../../static/img/card.jpg"
                                                                                             class="fixed-image">
                                                                                     </div>
+
                                                                                     <div class="col-8">
                                                                                         <div class="info-price">
-                                                                                            <h6>Giày Nike [Xanh - 38]
+                                                                                            <h6>[[${obj.ChiTietSanPham.SanPham.ten}]]
                                                                                             </h6>
                                                                                             <span>Đơn giá: <span
                                                                                                     class="gia">
-                                                                                                    2.000.000
+                                                                                                    [[${obj.ChiTietSanPham.giaHienHanh}]]
                                                                                                     VND</span></span>
-                                                                                            <p>Loại đế: Gỗ</p>
+                                                                                            <p>Loại đế: [[${obj.ChiTietSanPham.LoaiDe.ten}]]</p>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -525,11 +550,11 @@
                                                                                 <div class="quantity-table">
                                                                                     <input type="number" name="points"
                                                                                         min="0" max="100" step="1"
-                                                                                        value="0">
+                                                                                        th:value="${obj.soLuong}">
                                                                                 </div>
                                                                             </td>
                                                                             <td>
-                                                                                <div class="price-table">20.000.000VND
+                                                                                <div class="price-table">[[${obj.tongTien()}]] VND
                                                                                 </div>
                                                                             </td>
                                                                             <td>
@@ -542,90 +567,8 @@
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
-                                                                        <tr>
-                                                                            <th scope="row">1</th>
-                                                                            <td>
-                                                                                <div class="row">
-                                                                                    <div class="col-4">
-                                                                                        <img src="../../static/img/card.jpg"
-                                                                                            class="fixed-image">
-                                                                                    </div>
-                                                                                    <div class="col-8">
-                                                                                        <div class="info-price">
-                                                                                            <h6>Giày Nike [Xanh - 38]
-                                                                                            </h6>
-                                                                                            <span>Đơn giá: <span
-                                                                                                    class="gia">
-                                                                                                    2.000.000
-                                                                                                    VND</span></span>
-                                                                                            <p>Loại đế: Gỗ</p>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="quantity-table">
-                                                                                    <input type="number" name="points"
-                                                                                        min="0" max="100" step="1"
-                                                                                        value="0">
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="price-table">20.000.000VND
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="button-table">
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger">
-                                                                                        <i
-                                                                                            class="bi bi-trash-fill"></i></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <th scope="row">1</th>
-                                                                            <td>
-                                                                                <div class="row">
-                                                                                    <div class="col-4">
-                                                                                        <img src="../../static/img/card.jpg"
-                                                                                            class="fixed-image">
-                                                                                    </div>
-                                                                                    <div class="col-8">
-                                                                                        <div class="info-price">
-                                                                                            <h6>Giày Nike [Xanh - 38]
-                                                                                            </h6>
-                                                                                            <span>Đơn giá: <span
-                                                                                                    class="gia">
-                                                                                                    2.000.000
-                                                                                                    VND</span></span>
-                                                                                            <p>Loại đế: Gỗ</p>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="quantity-table">
-                                                                                    <input type="number" name="points"
-                                                                                        min="0" max="100" step="1"
-                                                                                        value="0">
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="price-table">20.000.000VND
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="button-table">
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger">
-                                                                                        <i
-                                                                                            class="bi bi-trash-fill"></i></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
+                                                                        
+                                                                        
                                                                     </tbody>
                                                                 </table>
                                                             </div>
