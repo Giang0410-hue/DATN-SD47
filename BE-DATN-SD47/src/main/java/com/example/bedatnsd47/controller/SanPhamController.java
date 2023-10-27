@@ -1,9 +1,12 @@
 package com.example.bedatnsd47.controller;
 
+import com.example.bedatnsd47.entity.HinhAnhSanPham;
 import com.example.bedatnsd47.entity.SanPham;
+import com.example.bedatnsd47.repository.HinhAnhSanPhamRepository;
 import com.example.bedatnsd47.service.SanPhamSerivce;
 import com.example.bedatnsd47.service.ThuongHieuService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +16,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/san-pham")
@@ -28,9 +35,10 @@ public class SanPhamController {
     @Autowired
     private ThuongHieuService thuongHieuService;
 
-    private Integer pageNo = 0;
+    @Autowired
+    private HinhAnhSanPhamRepository hinhAnhSanPhamRepository;
 
-    private Integer trangThai = 1;
+    private Integer pageNo = 0;
 
     private Date currentDate = new Date();
 
@@ -104,6 +112,7 @@ public class SanPhamController {
                       @ModelAttribute("sanPham") SanPham sanPham,
                       BindingResult result,
                       Model model,
+                      @RequestParam("fileImage") List<MultipartFile> multipartFiles,
                       RedirectAttributes redirectAttributes
     ) {
         if (result.hasErrors()) {
@@ -111,22 +120,25 @@ public class SanPhamController {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
+            model.addAttribute("currentPage", pageNo);
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
-        } else if (!sanPhamSerivce.checkTenTrung(sanPham.getTen())) {
+        }else if (!sanPhamSerivce.checkTenTrung(sanPham.getTen())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+            model.addAttribute("currentPage",    pageNo);
             model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
-        } else {
+        }
+        else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
             sanPham.setNgayTao(currentDate);
             sanPham.setTrangThai(0);
-            sanPhamSerivce.add(sanPham);
+            sanPhamSerivce.add(multipartFiles,sanPham);
             return "redirect:/admin/san-pham";
         }
     }

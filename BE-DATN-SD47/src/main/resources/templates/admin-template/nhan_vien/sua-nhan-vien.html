@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -19,7 +20,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="ban-hang-admin.html" class="logo d-flex align-items-center">
+        <a href="/ban-hang-tai-quay/home" class="logo d-flex align-items-center">
             <img src="../../static/img/logo.png" alt="">
             <span class="d-none d-lg-block">NiceAdmin</span>
         </a>
@@ -35,7 +36,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="ban-hang-admin.html">
+            <a class="nav-link collapsed" href="/ban-hang-tai-quay/home">
                 <i class="bi bi-grid"></i>
                 <span>Bán Hàng</span>
             </a>
@@ -48,27 +49,32 @@
             </a>
             <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="san_pham/san-pham.html">
+                    <a href="/admin/san-pham-chi-tiet">
+                        <i class="bi bi-circle"></i><span>Sản Phẩm Chi Tiết</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/san-pham">
                         <i class="bi bi-circle"></i><span>Sản Phẩm</span>
                     </a>
                 </li>
                 <li>
-                    <a href="thuong_hieu/thuong-hieu.html">
+                    <a href="/admin/thuong-hieu">
                         <i class="bi bi-circle"></i><span>Thương Hiệu</span>
                     </a>
                 </li>
                 <li>
-                    <a href="loai_de/loai-de.html">
+                    <a href="/admin/loai-de">
                         <i class="bi bi-circle"></i><span>Loại Đế</span>
                     </a>
                 </li>
                 <li>
-                    <a href="mau_sac/mau-sac.html">
+                    <a href="/admin/mau-sac">
                         <i class="bi bi-circle"></i><span>Màu Sắc</span>
                     </a>
                 </li>
                 <li>
-                    <a href="kich_co/kich-co.html">
+                    <a href="/admin/kich-co">
                         <i class="bi bi-circle"></i><span>Kích Cỡ</span>
                     </a>
                 </li>
@@ -89,12 +95,12 @@
             </a>
             <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="nhan-vien.html" class="active">
+                    <a href="/admin/nhan-vien" class="active">
                         <i class="bi bi-circle"></i><span>Quản lý nhân viên</span>
                     </a>
                 </li>
                 <li>
-                    <a href="khach-hang.html">
+                    <a href="/admin/khach-hang">
                         <i class="bi bi-circle"></i><span>Quản lý khách hàng</span>
                     </a>
                 </li>
@@ -102,7 +108,7 @@
         </li><!-- End Tables Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="voucher.html">
+            <a class="nav-link collapsed" href="/admin/voucher">
                 <i class="bi bi-envelope"></i>
                 <span>Quản Lý Voucher</span>
             </a>

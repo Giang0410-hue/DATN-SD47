@@ -41,9 +41,9 @@ public class GioHang {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-//    @ManyToOne
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OneToOne
-    @JoinColumn(name = "nguoi_so_huu")
+    @JoinColumn(name = "nguoi_so_huu", referencedColumnName = "id")
     private TaiKhoan taiKhoan;
 
 
