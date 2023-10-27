@@ -216,7 +216,8 @@
                                             phẩm</h1>
                                     </div>
                                     <form th:action="@{/admin/san-pham/add}" method="post"
-                                          enctype="multipart/form-data" th:object="${sanPham}">
+                                          onsubmit="return submitForm()" enctype="multipart/form-data"
+                                          th:object="${sanPham}">
                                         <div class="modal-body">
                                             <div class="mb-3">
                                                 <label class="form-label"><span class="dau-sao">*</span>Tên Sản
@@ -238,8 +239,9 @@
                                             <div class="mb-3">
                                                 <label class="form-label"><span class="dau-sao">*</span>Mô
                                                     Tả:</label>
-                                                <textarea class="form-control" placeholder="Nhập tên thương hiệu"
-                                                          th:field="*{moTa}"/>
+                                                <textarea class="form-control"
+                                                          placeholder="Nhập tên thương hiệu"
+                                                          th:field="*{moTa}"></textarea>
                                                 <span class="check-loi" th:errors="*{moTa}"></span>
                                             </div>
                                             <div class="mb-3">
@@ -249,12 +251,13 @@
                                                         Chọn ảnh <i class="bi bi-images"></i>
                                                     </label>
                                                     <div class="img-them">
-                                                        <input type="file" id="file--input" multiple accept="image/*"
-                                                               name="fileImage"
+                                                        <input type="file" id="file--input" multiple
+                                                               accept="image/*" name="fileImage"
                                                                onchange="handleFiles(this.files)">
                                                         <div id="gallery"></div>
                                                     </div>
-                                                    <span class="check-loi" th:text="${checkNullMultipartFiles}"></span>
+                                                    <span class="check-loi" id="error-msg"></span>
+
                                                 </div>
                                             </div>
                                         </div>

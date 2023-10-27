@@ -123,15 +123,6 @@ public class SanPhamController {
             model.addAttribute("currentPage", pageNo);
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
-        }else if(multipartFiles == null || multipartFiles.isEmpty()){
-            model.addAttribute("checkModal", "modal");
-            model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkNullMultipartFiles", "Bạn cần thêm ảnh!");
-            model.addAttribute("currentPage",    pageNo);
-            model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
-            model.addAttribute("index", pageNo + 1);
-            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
-            return "/admin-template/san_pham/san-pham";
         }else if (!sanPhamSerivce.checkTenTrung(sanPham.getTen())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
@@ -141,13 +132,14 @@ public class SanPhamController {
             model.addAttribute("index", pageNo + 1);
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
-        } else {
-            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
-            sanPham.setNgayTao(currentDate);
-            sanPham.setTrangThai(0);
-            sanPhamSerivce.add(multipartFiles,sanPham);
-            return "redirect:/admin/san-pham";
         }
+//        else {
+//            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+//            sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
+//            sanPham.setNgayTao(currentDate);
+//            sanPham.setTrangThai(0);
+//            sanPhamSerivce.add(multipartFiles,sanPham);
+            return "redirect:/admin/san-pham";
+//        }
     }
 }
