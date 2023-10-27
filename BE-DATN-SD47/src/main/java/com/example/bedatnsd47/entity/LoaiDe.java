@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class LoaiDe {
     private Long id;
 
     @Column(name = "ten", length = 100)
+    @NotBlank(message = "Tên sản phẩm không được trống")
     private String ten;
 
     @Column(name = "ngay_tao")

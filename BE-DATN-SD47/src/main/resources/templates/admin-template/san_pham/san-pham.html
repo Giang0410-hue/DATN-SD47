@@ -149,6 +149,118 @@
                 <div class="card">
                     <div class="card-body">
 
+<<<<<<< HEAD
+                            <!-- sản phẩm -->
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <br>
+                                <form action="">
+                                    <label class="col-sm-5 col-form-label">Nhập tên sản phẩm:</label>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control"
+                                                       placeholder="Tìm kiếm theo tên sản phẩm">
+                                                <a th:href="@{/admin/san-pham}" class="btn btn-primary"><i
+                                                        class="bi bi-arrow-clockwise"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="submit" class="btn btn-primary" style="margin-left:35%;">Tìm
+                                                kiếm
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    style="float: right; "
+                                                    data-bs-target="#them-san-pham">
+                                                Thêm mới
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="search-trang-thai" style="margin-top: 4%;margin-bottom: 4%;">
+                                        <label style="margin-left:15%;">Trạng thái:</label>
+                                        <input class="form-check-input" type="radio" name="gridRadios" value="option1"
+                                               style="margin-left:10%;">
+                                        <label class="form-check-label">
+                                            Tất cả
+                                        </label>
+
+                                        <input class="form-check-input" type="radio" name="gridRadios" value="option1"
+                                               style="margin-left:5%;">
+                                        <label class="form-check-label">
+                                            Đang hoạt động
+                                        </label>
+
+                                        <input class="form-check-input" type="radio" name="gridRadios" value="option1"
+                                               style="margin-left:5%;">
+                                        <label class="form-check-label">
+                                            Ngừng hoạt động
+                                        </label>
+                                    </div>
+                                </form>
+
+                                <!-- Modal thêm sản phẩm -->
+                                <div class="modal" id="them-san-pham" tabindex="-1"
+                                     aria-labelledby="them-san-phamLabel"
+                                     aria-hidden="true">
+                                    <!--js bật modal khi check-->
+                                    <script th:if="${checkModal=='modal'}">
+                                        window.addEventListener('DOMContentLoaded', (event) => {
+                                            // Hiển thị modal
+                                            var myModal = new bootstrap.Modal(document.getElementById('them-san-pham'));
+                                            myModal.show();
+                                        });
+                                    </script>
+                                    <!--js bật modal khi check-->
+
+                                    <div class="modal-dialog">
+                                        <div class="modal-content" style="width: 100%;margin: auto;">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="them-san-phamLabel">Thêm sản
+                                                    phẩm</h1>
+                                            </div>
+
+                                            <form th:action="@{/admin/san-pham/add}" method="post"
+                                                  enctype="multipart/form-data"
+                                                  th:object="${sanPham}">
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><span class="dau-sao">*</span>Tên Sản
+                                                            Phẩm</label>
+                                                        <input type="text" class="form-control"
+                                                               placeholder="Nhập tên giày" th:field="*{ten}">
+                                                        <span class="check-loi" th:errors="*{ten}"></span>
+                                                        <span class="check-loi" th:text="${checkTenTrung}"></span>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><span class="dau-sao">*</span>Thương
+                                                            Hiệu</label>
+                                                        <select class="form-control" th:field="*{thuongHieu}">
+                                                            <option th:each="thuongHieu : ${listThuongHieu}"
+                                                                    th:value="${thuongHieu.id}"
+                                                                    th:text="${thuongHieu.ten}"></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3" type="hidden">
+                                                        <label class="form-label"><span class="dau-sao">*</span>Mô
+                                                            Tả</label>
+                                                        <textarea class="form-control"
+                                                                  placeholder="Nhập tên thương hiệu"
+                                                                  th:field="*{moTa}"/>
+                                                        <span class="check-loi" th:errors="*{moTa}"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Đóng
+                                                    </button>
+                                                    <button type="submit" class="btn btn-success">Thêm</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+=======
                         <!-- sản phẩm -->
                         <form action="" style="margin-top: 2%">
                             <label class="col-sm-5 col-form-label">Nhập tên sản phẩm:</label>
@@ -159,6 +271,7 @@
                                                placeholder="Tìm kiếm theo tên sản phẩm">
                                         <a th:href="@{/admin/san-pham}" class="btn btn-primary"><i
                                                 class="bi bi-arrow-clockwise"></i></a>
+>>>>>>> anhntph27418
                                     </div>
                                 </div>
                                 <div class="col-sm-2">

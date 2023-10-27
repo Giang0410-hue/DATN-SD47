@@ -3,7 +3,7 @@ package com.example.bedatnsd47.controller;
 import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.entity.ThuongHieu;
 import com.example.bedatnsd47.service.ThuongHieuService;
-import com.example.bedatnsd47.validation.Validation;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -112,6 +111,7 @@ public class ThuongHieuController {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listThuongHieu", thuongHieuService.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
+            model.addAttribute("currentPage", pageNo);
 //            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/thuong_hieu/thuong-hieu";
         } else if (!thuongHieuService.checkTenTrung(thuongHieu.getTen())) {
@@ -120,8 +120,10 @@ public class ThuongHieuController {
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
             model.addAttribute("listThuongHieu", thuongHieuService.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
+            model.addAttribute("currentPage", pageNo);
             return "/admin-template/thuong_hieu/thuong-hieu";
-        } else {
+        }
+        else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
 //            sanPham.setMa("SP" + thuongHieuService.genMaTuDong());
             thuongHieu.setNgayTao(currentDate);
