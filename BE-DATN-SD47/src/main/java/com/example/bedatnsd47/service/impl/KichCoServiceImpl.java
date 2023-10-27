@@ -35,7 +35,7 @@ public class KichCoServiceImpl implements KichCoService {
     }
 
     @Override
-    public void saveOrUpdate(KichCo thuongHieu, Float ten) {
+    public void saveOrUpdate(KichCo thuongHieu, Integer ten) {
         try {
             thuongHieu.setTen(ten);
             thuongHieu.setNgayTao(new Date());
@@ -47,38 +47,6 @@ public class KichCoServiceImpl implements KichCoService {
             e.printStackTrace();
             // Handle the exception as needed
         }
-    }
-
-    @Override
-    public void update(KichCo thuongHieu, Long id, Integer trangThai, Float ten, Date ngayTao) {
-//        try {
-//            List<KichCo> list = KichThuocServiceImpl.this.findAll();
-//            boolean duplicateFound = false;
-//            for (KichCo thuongHieuTim : list
-//            ) {
-//                if (thuongHieuTim.getId() != id && thuongHieuTim.getTen().equals(ten)) {
-//                    duplicateFound = true;
-//                    break;
-//                }
-//            }
-//            if (duplicateFound) {
-//                System.out.println("Da ton tai");
-//            } else {
-//                thuongHieu.setId(id);
-//                thuongHieu.setTen(ten);
-//                thuongHieu.setNgayTao(ngayTao);
-//                thuongHieu.setNgaySua(new Date());
-//                thuongHieu.setTrangThai(trangThai);
-//                kichThuocRepository.save(thuongHieu);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-    }
-
-    @Override
-    public KichCo findByTen(Float ten) {
-        return kichCoRepository.findByTen(ten);
     }
 
     @Override
@@ -94,7 +62,7 @@ public class KichCoServiceImpl implements KichCoService {
     }
 
     @Override
-    public boolean checkTenTrung(Float ten) {
+    public boolean checkTenTrung(Integer ten) {
 
         if (ten == null) {
             return false; // No need to check for duplicates if ten is null
@@ -108,14 +76,14 @@ public class KichCoServiceImpl implements KichCoService {
     }
 
     @Override
-    public boolean checkTenTrungSua(Long id, Float ten) {
+    public boolean checkTenTrungSua(Long id, Integer ten) {
 
         if (ten == null) {
             return false; // No need to check for duplicates if ten is null
         }
         for (KichCo sp : kichCoRepository.findAll()) {
             if (sp.getTen().equals(ten)) {
-                if (!sp.getId().equals(id)){
+                if (!sp.getId().equals(id)) {
                     return false;
                 }
             }

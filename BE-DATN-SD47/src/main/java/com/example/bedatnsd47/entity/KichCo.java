@@ -29,7 +29,7 @@ public class KichCo {
 
     @Column(name = "ten")
     @NotNull(message = "Tên sản phẩm không được trống")
-    private Float ten;
+    private Integer ten;
 
     @Column(name = "ngay_tao")
     private Date ngayTao;

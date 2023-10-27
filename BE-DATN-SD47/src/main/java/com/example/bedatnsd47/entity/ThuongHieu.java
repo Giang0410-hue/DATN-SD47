@@ -39,11 +39,4 @@ public class ThuongHieu {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    public ThuongHieu(String ten) {
-        this.ten = ten;
-        this.ngayTao = new Date();
-        this.ngaySua = new Date();
-        this.trangThai = 1;
-    }
-
 }
