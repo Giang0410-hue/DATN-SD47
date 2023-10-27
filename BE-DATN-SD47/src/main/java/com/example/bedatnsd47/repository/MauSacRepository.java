@@ -17,4 +17,7 @@ public interface MauSacRepository extends JpaRepository<MauSac,Long> {
 
     @Query("SELECT t FROM MauSac t WHERE t.ten = :ten")
     MauSac findByTen(@Param("ten") String ten);
+
+    @Query(value = "SELECT MAX(CONVERT(varchar, SUBSTRING(ma_mau,3,10))) from mau_sac",nativeQuery = true)
+    Integer index();
 }
