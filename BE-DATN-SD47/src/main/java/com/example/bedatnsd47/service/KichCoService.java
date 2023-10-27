@@ -14,20 +14,16 @@ public interface KichCoService {
 
     void deleteById(Long id);
 
-    void saveOrUpdate(KichCo thuongHieu, Float ten);
-
-    void update(KichCo thuongHieu, Long id, Integer trangThai, Float ten, Date ngayTao);
-
-    KichCo findByTen(Float ten);
+    void saveOrUpdate(KichCo thuongHieu, Integer ten);
 
     public Page<KichCo> findAll(int page, int size);
 
     Page<KichCo> findByTenContaining(String keyword, Integer trang_thai, int page, int size);
 
     //tuan
-    boolean checkTenTrung(Float ten);
+    boolean checkTenTrung(Integer ten);
 
-    boolean checkTenTrungSua(Long id, Float ten);
+    boolean checkTenTrungSua(Long id, Integer ten);
 
     KichCo update(KichCo kichCo);
 

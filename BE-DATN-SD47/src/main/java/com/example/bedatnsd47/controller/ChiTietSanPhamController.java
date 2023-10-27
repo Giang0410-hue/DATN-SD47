@@ -1,7 +1,7 @@
 package com.example.bedatnsd47.controller;
 
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
-import com.example.bedatnsd47.service.KichThuocService;
+import com.example.bedatnsd47.service.KichCoService;
 import com.example.bedatnsd47.service.LoaiDeService;
 import com.example.bedatnsd47.service.MauSacService;
 import com.example.bedatnsd47.service.SanPhamSerivce;
@@ -26,7 +26,7 @@ public class ChiTietSanPhamController {
     private ThuongHieuService thuongHieuService;
 
     @Autowired
-    private KichThuocService kichThuocService;
+    private KichCoService kichCoService;
 
     @Autowired
     private MauSacService mauSacService;
@@ -44,7 +44,7 @@ public class ChiTietSanPhamController {
         model.addAttribute("listChiTietSP",chiTietSanPhamSerivce.getPage(pageNo).stream().toList());
         model.addAttribute("listSanPham",sanPhamSerivce.getAll());
         model.addAttribute("listThuongHieu",thuongHieuService.findAll());
-        model.addAttribute("listKichCo",kichThuocService.findAll());
+        model.addAttribute("listKichCo",kichCoService.findAll());
         model.addAttribute("listMauSac",mauSacService.findAll());
         model.addAttribute("listLoaiDe",loaiDeService.findAll());
         model.addAttribute("currentPage",pageNo);

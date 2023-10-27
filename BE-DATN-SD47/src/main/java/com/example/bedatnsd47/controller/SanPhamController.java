@@ -133,13 +133,13 @@ public class SanPhamController {
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
         }
-//        else {
-//            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-//            sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
-//            sanPham.setNgayTao(currentDate);
-//            sanPham.setTrangThai(0);
-//            sanPhamSerivce.add(multipartFiles,sanPham);
+        else {
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+            sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
+            sanPham.setNgayTao(currentDate);
+            sanPham.setTrangThai(0);
+            sanPhamSerivce.add(multipartFiles,sanPham);
             return "redirect:/admin/san-pham";
-//        }
+        }
     }
 }

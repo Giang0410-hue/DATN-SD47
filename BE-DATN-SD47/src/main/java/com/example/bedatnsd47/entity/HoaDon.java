@@ -1,7 +1,9 @@
 package com.example.bedatnsd47.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -84,18 +86,18 @@ public class HoaDon {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne
-    @JoinColumn(name = "voucher_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "voucher_id", referencedColumnName = "id")
     private Voucher voucher;
 
-    @ManyToOne
-    @JoinColumn(name = "tai_khoan_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "tai_khoan_id", referencedColumnName = "id")
     private TaiKhoan taiKhoan;
 
-    @OneToMany(mappedBy = "hoaDon")
+    @OneToMany(mappedBy = "hoaDon",cascade = CascadeType.ALL)
     private List<HoaDonChiTiet> lstHoaDonChiTiet;
 
-    @ManyToOne
-    @JoinColumn(name = "phuong_thuc_thanh_toan_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "phuong_thuc_thanh_toan_id", referencedColumnName = "id")
     private PhuongThucThanhToan phuongThucThanhToan;
 }
