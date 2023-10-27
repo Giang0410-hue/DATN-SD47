@@ -8,9 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -18,7 +16,8 @@ import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
-
+@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "hoa_don_chi_tiet")
 public class HoaDonChiTiet {
@@ -54,4 +53,8 @@ public class HoaDonChiTiet {
     @ManyToOne
     @JoinColumn(name = "chi_tiet_san_pham_id")
     private ChiTietSanPham chiTietSanPham;
+
+    public Double tongTien(){
+        return this.donGia*this.soLuong;
+    }
 }
