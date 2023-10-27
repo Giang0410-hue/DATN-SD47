@@ -89,7 +89,6 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
     public Page<ThuongHieu> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "ngaySua"));
         return thuongHieuRepository.findAll(pageable);
-
     }
 
     @Override

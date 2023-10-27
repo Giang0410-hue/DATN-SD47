@@ -123,7 +123,8 @@ public class ThuongHieuController {
             model.addAttribute("index", pageNo + 1);
             model.addAttribute("currentPage", pageNo);
             return "/admin-template/thuong_hieu/thuong-hieu";
-        } else {
+        }
+        else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
 //            sanPham.setMa("SP" + thuongHieuService.genMaTuDong());
             thuongHieu.setNgayTao(currentDate);
