@@ -11,4 +11,5 @@ public interface HoaDonChiTietService {
     HoaDonChiTiet findById(Long id);
     void deleteById(Long id);
     void saveOrUpdate(HoaDonChiTiet hoaDonChiTiet);
+    List<HoaDonChiTiet> findByIdHoaDon(Long idHoaDon);
 }
