@@ -148,28 +148,28 @@
                             <div class="form-tao-moi">
                                 <div class="tao-hd">
                                     <!-- <button type="button" class="btn btn-success">Tạo hóa đơn</button> -->
-                                    
-                                    <a id="postLink" class="btn btn-success" >Tạo Hóa đơn</a>
-                                       
-                                        <script>
-                                            document.getElementById("postLink").addEventListener("click", function(event) {
-                                              event.preventDefault(); // Ngăn chặn thực hiện mặc định của thẻ <a>
-                                          
-                                              var form = document.createElement("form");
-                                              form.method = "POST";
-                                              form.action = "/ban-hang-tai-quay/create"; // Đặt URL mà bạn muốn gửi yêu cầu POST đến
-                                          
-                                              var input = document.createElement("input");
-                                              input.type = "hidden";
-                                              input.name = "key";
-                                              input.value = "value"; // Dữ liệu bạn muốn gửi
-                                          
-                                              form.appendChild(input);
-                                          
-                                              document.body.appendChild(form);
-                                              form.submit();
-                                            });
-                                          </script>
+
+                                    <a id="postLink" class="btn btn-success">Tạo Hóa đơn</a>
+
+                                    <script>
+                                        document.getElementById("postLink").addEventListener("click", function (event) {
+                                            event.preventDefault(); // Ngăn chặn thực hiện mặc định của thẻ <a>
+
+                                            var form = document.createElement("form");
+                                            form.method = "POST";
+                                            form.action = "/ban-hang-tai-quay/create"; // Đặt URL mà bạn muốn gửi yêu cầu POST đến
+
+                                            var input = document.createElement("input");
+                                            input.type = "hidden";
+                                            input.name = "key";
+                                            input.value = "value"; // Dữ liệu bạn muốn gửi
+
+                                            form.appendChild(input);
+
+                                            document.body.appendChild(form);
+                                            form.submit();
+                                        });
+                                    </script>
 
 
                                 </div>
@@ -200,17 +200,20 @@
                                                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                                                             aria-labelledby="home-tab">
                                                             <div class="them-moi-sp">
-                                                                <a class="btn btn-danger" th:href="@{'/ban-hang-tai-quay/delete/' + ${hoaDon.id}}" role="button">Xóa hóa đơn</a>
-                                                                
+                                                                <a class="btn btn-danger"
+                                                                    th:href="@{'/ban-hang-tai-quay/delete/' + ${hoaDon.id}}"
+                                                                    role="button">Xóa hóa đơn</a>
+
                                                                 <!-- Button trigger modal -->
                                                                 <button type="button" class="btn btn-primary"
                                                                     data-bs-toggle="modal"
-                                                                    data-bs-target="#themSanPham">
+                                                                    th:data-bs-target="${'#addsp'+hoaDon.id}">
                                                                     Thêm sản phẩm
                                                                 </button>
                                                                 <!-- Modal -->
-                                                                <div class="modal fade" id="themSanPham" tabindex="-1"
-                                                                    aria-labelledby="themSanPhamLabel"
+                                                                <input  th:value="${hoaDon.id}" type="text" th:object="${idHoaDon}" name="idHoaDon">
+                                                                <div class="modal fade" th:id="${'addsp'+hoaDon.id}"
+                                                                    tabindex="-1" aria-labelledby="themSanPhamLabel"
                                                                     aria-hidden="true">
                                                                     <div class="modal-dialog">
                                                                         <div class="modal-content">
@@ -244,6 +247,7 @@
                                                                                     </div>
 
                                                                                     <div>
+                                                                                       
                                                                                         <div class="row mb-3"
                                                                                             style="margin-top: 4%;">
                                                                                             <div class="col-md-3">
@@ -323,8 +327,10 @@
                                                                                         </tr>
                                                                                         <thead>
                                                                                         <tbody>
-                                                                                            <tr>
-                                                                                                <td>1</td>
+                                                                                            <tr
+                                                                                                th:each=" ctsp, state: ${lstCtsp}">
+                                                                                                <td>[[${state.index+1}]]
+                                                                                                </td>
                                                                                                 <td>
                                                                                                     <div class="row">
                                                                                                         <div
@@ -336,131 +342,35 @@
                                                                                                             class="col-8">
                                                                                                             <div
                                                                                                                 class="info-price-sp">
-                                                                                                                <h6>Giày
-                                                                                                                    Nike
-                                                                                                                    [Nike]
+                                                                                                                <h6
+                                                                                                                    th:text="${ctsp.sanPham.ten}">
                                                                                                                 </h6>
                                                                                                                 <span>Màu:
-                                                                                                                    Xanh
+                                                                                                                    [[${ctsp.MauSac.ten}]]
                                                                                                                     -
                                                                                                                     Kích
                                                                                                                     cỡ:
-                                                                                                                    38</span>
+                                                                                                                    [[${ctsp.KichCo.ten}]]</span>
                                                                                                                 <p>Loại
                                                                                                                     đế :
-                                                                                                                    Gỗ
+                                                                                                                    [[${ctsp.LoaiDe.ten}]]
                                                                                                                 </p>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    1
+                                                                                                    [[${ctsp.soLuong}]]
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    20.000.000VND
+                                                                                                    [[${ctsp.giaHienHanh}]]VND
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <button
-                                                                                                        type="button"
-                                                                                                        class="btn btn-success">
-                                                                                                        <i
-                                                                                                            class="bi bi-check2-circle"></i>
-                                                                                                    </button>
+                                                                                                    <a class="btn btn-success"
+                                                                                                        href="/ban-hang-tai-quay/hdct/add">Thêm</a>
                                                                                                 </td>
                                                                                             </tr>
-                                                                                            <tr>
-                                                                                                <td>1</td>
-                                                                                                <td>
-                                                                                                    <div class="row">
-                                                                                                        <div
-                                                                                                            class="col-4">
-                                                                                                            <img src="../../static/img/card.jpg"
-                                                                                                                class="fixed-image">
-                                                                                                        </div>
-                                                                                                        <div
-                                                                                                            class="col-8">
-                                                                                                            <div
-                                                                                                                class="info-price-sp">
-                                                                                                                <h6>Giày
-                                                                                                                    Nike
-                                                                                                                    [Nike]
-                                                                                                                </h6>
-                                                                                                                <span>Màu:
-                                                                                                                    Xanh
-                                                                                                                    -
-                                                                                                                    Kích
-                                                                                                                    cỡ:
-                                                                                                                    38</span>
-                                                                                                                <p>Loại
-                                                                                                                    đế :
-                                                                                                                    Gỗ
-                                                                                                                </p>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    1
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    20.000.000VND
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <button
-                                                                                                        type="button"
-                                                                                                        class="btn btn-success">
-                                                                                                        <i
-                                                                                                            class="bi bi-check2-circle"></i>
-                                                                                                    </button>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td>1</td>
-                                                                                                <td>
-                                                                                                    <div class="row">
-                                                                                                        <div
-                                                                                                            class="col-4">
-                                                                                                            <img src="../../static/img/card.jpg"
-                                                                                                                class="fixed-image">
-                                                                                                        </div>
-                                                                                                        <div
-                                                                                                            class="col-8">
-                                                                                                            <div
-                                                                                                                class="info-price-sp">
-                                                                                                                <h6>Giày
-                                                                                                                    Nike
-                                                                                                                    [Nike]
-                                                                                                                </h6>
-                                                                                                                <span>Màu:
-                                                                                                                    Xanh
-                                                                                                                    -
-                                                                                                                    Kích
-                                                                                                                    cỡ:
-                                                                                                                    38</span>
-                                                                                                                <p>Loại
-                                                                                                                    đế :
-                                                                                                                    Gỗ
-                                                                                                                </p>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    1
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    20.000.000VND
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <button
-                                                                                                        type="button"
-                                                                                                        class="btn btn-success">
-                                                                                                        <i
-                                                                                                            class="bi bi-check2-circle"></i>
-                                                                                                    </button>
-                                                                                                </td>
-                                                                                            </tr>
+
                                                                                         </tbody>
                                                                                 </table>
                                                                                 <nav
@@ -539,9 +449,11 @@
                                                                                             </h6>
                                                                                             <span>Đơn giá: <span
                                                                                                     class="gia">
-                                                                                                    [[${obj.ChiTietSanPham.giaHienHanh}]]
+                                                                                                    [[${obj.donGia}]]
                                                                                                     VND</span></span>
-                                                                                            <p>Loại đế: [[${obj.ChiTietSanPham.LoaiDe.ten}]]</p>
+                                                                                            <p>Loại đế:
+                                                                                                [[${obj.ChiTietSanPham.LoaiDe.ten}]]
+                                                                                            </p>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -554,7 +466,8 @@
                                                                                 </div>
                                                                             </td>
                                                                             <td>
-                                                                                <div class="price-table">[[${obj.tongTien()}]] VND
+                                                                                <div class="price-table">
+                                                                                    [[${obj.tongTien()}]] VND
                                                                                 </div>
                                                                             </td>
                                                                             <td>
@@ -567,8 +480,8 @@
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
-                                                                        
-                                                                        
+
+
                                                                     </tbody>
                                                                 </table>
                                                             </div>
