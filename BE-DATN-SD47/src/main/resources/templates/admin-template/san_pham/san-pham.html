@@ -19,7 +19,8 @@
     <link
             href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
             rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet"><!-- thư viện thêm ảnh -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
+    <!-- thư viện thêm ảnh -->
     <!-- Vendor CSS Files -->
     <link href="../../../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -276,6 +277,7 @@
                             <thead>
                             <tr>
                                 <th>STT</th>
+                                <th>Ảnh</th>
                                 <th>Mã Sản Phẩm</th>
                                 <th>Tên Sản Phẩm</th>
                                 <th>Trạng Thái</th>
@@ -286,6 +288,23 @@
                             <tr th:each="sanPham,iterStat : ${listSanPham}">
                                 <td
                                         th:text="${#numbers.sequence(1 + (currentPage * 5), 1 + (currentPage * 5) + 5)[__${iterStat.index}__]}">
+                                </td>
+                                <td>
+                                    <div style=" margin: auto; width: 144px;height: 144px;object-fit: cover">
+                                        <div id="carouselExampleSlidesOnly" class="carousel slide"
+                                             data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active" data-bs-interval="1">
+                                                </div>
+                                                <div th:each="anh : ${sanPham.listHinhAnhSanPham}"
+                                                     class="carousel-item" data-bs-interval="1500">
+                                                    <img th:src="@{'../../../static/img/' + ${anh.url}}"
+                                                         class="d-block w-100" alt="...">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </td>
                                 <td th:text="${sanPham.ma}"></td>
                                 <td th:text="${sanPham.ten}"></td>

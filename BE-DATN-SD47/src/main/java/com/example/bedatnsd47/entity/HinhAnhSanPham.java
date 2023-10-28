@@ -38,10 +38,13 @@ public class HinhAnhSanPham {
     @Column(name = "ngay_sua")
     private Date ngaySua;
 
+    @Column(name = "uu_tien")
+    private Integer uuTien;
+
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "san_pham_id",referencedColumnName = "id")
     private SanPham sanPham;
 

@@ -1726,7 +1726,7 @@ table th {
     width: 9rem;
     overflow: hidden;
     position: relative;
-    margin:auto;
+    margin: auto;
 }
 
 .progressSpan {
@@ -1806,4 +1806,31 @@ table th {
     background: #2c3e50;
     cursor: pointer;
 }
+
+/*update ha*/
+.image-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+.thumbnail {
+    width: 144px;
+    height: 144px;
+    object-fit: cover;
+    display: block;
+    margin: 2rem 0.5rem 0;
+
+}
+
 /********************************************* Thêm ảnh trong sản phẩm End *******************************************/
+
+/* hiển thị ảnh trong table sản phẩm*/
+.carousel-item img {
+    width: 144px; /* Độ rộng ảnh */
+    height: 144px; /* Chiều cao ảnh */
+    object-fit: cover; /* Hiển thị toàn bộ hình ảnh trong khung cố định */
+}
+
+/* hiển thị ảnh trong table sản phẩm end*/
