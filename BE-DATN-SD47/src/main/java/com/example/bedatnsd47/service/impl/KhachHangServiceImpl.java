@@ -2,7 +2,7 @@ package com.example.bedatnsd47.service.impl;
 
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.repository.KhachHangRepository;
-import com.example.bedatnsd47.service.TaiKhoanService;
+import com.example.bedatnsd47.service.KhachHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class KhachHangServiceImpl implements TaiKhoanService {
+public class KhachHangServiceImpl implements KhachHangService {
 
     @Autowired
     KhachHangRepository repository;
@@ -93,8 +93,42 @@ public class KhachHangServiceImpl implements TaiKhoanService {
         return true;
     }
 
+//    @Override
+//    public boolean checkTenTkTrungSua(Long id, String ten) {
+//        for (TaiKhoan sp : repository.findAll()) {
+//            if (sp.getTen_tai_khoan().equalsIgnoreCase(ten)) {
+//                if(!sp.getId().equals(id)){
+//                    return false;
+//                }
+//
+//            }
+//        }
+//        return true;
+//    }
+
     @Override
-    public boolean checkTenTrungSua(String ma, String ten) {
-       return  true;
+    public boolean checkTenTkTrungSua(Long id, String ten) {
+        for (TaiKhoan sp : repository.findAll()) {
+            if (sp.getTen_tai_khoan().equalsIgnoreCase(ten)) {
+                if(!sp.getId().equals(id)){
+                    return false;
+                }
+
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkEmailSua(Long id, String email) {
+        for (TaiKhoan sp : repository.findAll()) {
+            if (sp.getEmail().equalsIgnoreCase(email)) {
+                if(!sp.getId().equals(id)){
+                    return false;
+                }
+
+            }
+        }
+        return true;
     }
 }

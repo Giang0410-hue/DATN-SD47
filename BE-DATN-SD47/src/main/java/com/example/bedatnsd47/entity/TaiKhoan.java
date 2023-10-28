@@ -47,7 +47,7 @@ public class TaiKhoan {
 
     @Column(name = "so_dien_thoai", length = 15)
     @NotBlank(message = "Số điện thoai không được trống")
-    @Pattern(regexp = "^0\\d{9,10}",message = "SĐT phải là số và bắt đầu bằng 0 và có 10-11 số")
+    @Pattern(regexp = "^0\\d{9,10}", message = "SĐT phải là số và bắt đầu bằng 0 và có 10-11 số")
     private String soDienThoai;
 
     @Column(name = "email", length = 255)
@@ -80,7 +80,7 @@ public class TaiKhoan {
     private String matKhau;
 
     @Column(name = "ngay_tao")
-    @NotNull(message = "Ngày tạo không được trống")
+//    @NotNull(message = "Ngày tạo không được trống")
     private Date ngayTao;
 
     @Column(name = "ngay_sua")
@@ -89,7 +89,9 @@ public class TaiKhoan {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
+//            (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//   dùng cái này không xóa đến bảng con cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     @JoinColumn(name = "vai_tro_id", referencedColumnName = "id")
     private VaiTro vaiTro;
 
