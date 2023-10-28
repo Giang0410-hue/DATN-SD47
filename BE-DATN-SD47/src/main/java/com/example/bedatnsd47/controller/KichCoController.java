@@ -74,7 +74,7 @@ public class KichCoController {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listKichCo", kichCoService.findAll());
             return "/admin-template/kich_co/sua-kich-co";
-        } else if (!kichCoService.checkTenTrungSua(kichCo.getId(), kichCo.getTen())) {
+        } else if (!kichCoService.checkTenTrungSua(kichCo.getId(), kichCo.getTen()) ) {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
             model.addAttribute("listKichCo", kichCoService.findAll());

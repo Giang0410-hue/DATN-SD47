@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public interface TaiKhoanService {
+public interface KhachHangService {
     List<TaiKhoan> getAll();
 
     TaiKhoan add(TaiKhoan taiKhoan);
@@ -28,6 +28,8 @@ public interface TaiKhoanService {
 
     boolean checkEmail(String email);
 
-    boolean checkTenTrungSua(String ma,String ten);
+    boolean checkTenTkTrungSua(Long id,String ten);
+
+    boolean checkEmailSua(Long id,String email);
 
 }
