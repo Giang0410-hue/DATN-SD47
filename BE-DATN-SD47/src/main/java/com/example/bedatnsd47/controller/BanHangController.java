@@ -47,6 +47,10 @@ public class BanHangController {
         return "redirect:/ban-hang-tai-quay/home";
     }
 
-   
+    @GetMapping("/hdct/add")
+    public String addHdct(@RequestParam("idHoaDon") Long idHoaDon) {
+        System.out.println(idHoaDon+"****************************************");
+        return "redirect:/ban-hang-tai-quay/home";
+    }
 
 }

@@ -211,14 +211,16 @@
                                                                     Thêm sản phẩm
                                                                 </button>
                                                                 <!-- Modal -->
-                                                                <input  th:value="${hoaDon.id}" type="text" th:object="${idHoaDon}" name="idHoaDon">
+
+
+
                                                                 <div class="modal fade" th:id="${'addsp'+hoaDon.id}"
                                                                     tabindex="-1" aria-labelledby="themSanPhamLabel"
                                                                     aria-hidden="true">
                                                                     <div class="modal-dialog">
                                                                         <div class="modal-content">
                                                                             <div class="modal-body">
-
+                                                                                <!-- form search -->
                                                                                 <form action="" class="ctsp-bh">
                                                                                     <label
                                                                                         class="col-sm-2 col-form-label">Nhập
@@ -247,7 +249,7 @@
                                                                                     </div>
 
                                                                                     <div>
-                                                                                       
+
                                                                                         <div class="row mb-3"
                                                                                             style="margin-top: 4%;">
                                                                                             <div class="col-md-3">
@@ -329,46 +331,57 @@
                                                                                         <tbody>
                                                                                             <tr
                                                                                                 th:each=" ctsp, state: ${lstCtsp}">
-                                                                                                <td>[[${state.index+1}]]
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <div class="row">
+                                                                                                <form
+                                                                                                    action="/ban-hang-tai-quay/hdct/add">
+                                                                                                    <input  
+                                                                                                        th:value="${hoaDon.id}"
+                                                                                                        type="hidden"
+                                                                                                        name="idHoaDon">
+                                                                                                    <td>[[${state.index+1}]]
+                                                                                                    </td>
+                                                                                                    <td>
                                                                                                         <div
-                                                                                                            class="col-4">
-                                                                                                            <img src="../../static/img/card.jpg"
-                                                                                                                class="fixed-image">
-                                                                                                        </div>
-                                                                                                        <div
-                                                                                                            class="col-8">
+                                                                                                            class="row">
                                                                                                             <div
-                                                                                                                class="info-price-sp">
-                                                                                                                <h6
-                                                                                                                    th:text="${ctsp.sanPham.ten}">
-                                                                                                                </h6>
-                                                                                                                <span>Màu:
-                                                                                                                    [[${ctsp.MauSac.ten}]]
-                                                                                                                    -
-                                                                                                                    Kích
-                                                                                                                    cỡ:
-                                                                                                                    [[${ctsp.KichCo.ten}]]</span>
-                                                                                                                <p>Loại
-                                                                                                                    đế :
-                                                                                                                    [[${ctsp.LoaiDe.ten}]]
-                                                                                                                </p>
+                                                                                                                class="col-4">
+                                                                                                                <img src="../../static/img/card.jpg"
+                                                                                                                    class="fixed-image">
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                class="col-8">
+                                                                                                                <div
+                                                                                                                    class="info-price-sp">
+                                                                                                                    <h6
+                                                                                                                        th:text="${ctsp.sanPham.ten}">
+                                                                                                                    </h6>
+                                                                                                                    <span>Màu:
+                                                                                                                        [[${ctsp.MauSac.ten}]]
+                                                                                                                        -
+                                                                                                                        Kích
+                                                                                                                        cỡ:
+                                                                                                                        [[${ctsp.KichCo.ten}]]</span>
+                                                                                                                    <p>Loại
+                                                                                                                        đế
+                                                                                                                        :
+                                                                                                                        [[${ctsp.LoaiDe.ten}]]
+                                                                                                                    </p>
+                                                                                                                </div>
                                                                                                             </div>
                                                                                                         </div>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    [[${ctsp.soLuong}]]
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    [[${ctsp.giaHienHanh}]]VND
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <a class="btn btn-success"
-                                                                                                        href="/ban-hang-tai-quay/hdct/add">Thêm</a>
-                                                                                                </td>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        [[${ctsp.soLuong}]]
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        [[${ctsp.giaHienHanh}]]VND
+                                                                                                    </td>
+                                                                                                    <td>
+
+                                                                                                        <button
+                                                                                                            type="submit"
+                                                                                                            class="btn btn-success">Thêm</button>
+                                                                                                    </td>
+                                                                                                </form>
                                                                                             </tr>
 
                                                                                         </tbody>
