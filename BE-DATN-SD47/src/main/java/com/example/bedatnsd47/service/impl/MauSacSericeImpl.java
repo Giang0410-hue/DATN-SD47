@@ -1,6 +1,7 @@
 package com.example.bedatnsd47.service.impl;
 
 import com.example.bedatnsd47.entity.MauSac;
+import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.entity.ThuongHieu;
 import com.example.bedatnsd47.repository.MauSacRepository;
 import com.example.bedatnsd47.service.MauSacService;
@@ -97,6 +98,77 @@ public class MauSacSericeImpl implements MauSacService {
 
 //        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "ngaySua"));
 //        return thuongHieuRepository.findByTenContainingAndTrangThai(keyword, trang_thai, pageable);
-        return  null;
+        return null;
+    }
+
+    @Override
+    public boolean checkTenTrung(String ten) {
+        for (MauSac sp : mauSacRepository.findAll()) {
+            if (sp.getTen().equalsIgnoreCase(ten)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkTenTrungSua(String ma, String ten) {
+        for (MauSac sp : mauSacRepository.findAll()) {
+            if (sp.getTen().equalsIgnoreCase(ten)) {
+                if (!sp.getMaMau().equalsIgnoreCase(ma)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public MauSac update(MauSac mauSac) {
+        return mauSacRepository.save(mauSac);
+    }
+
+    @Override
+    public MauSac getById(Long id) {
+        return mauSacRepository.findById(id).get();
+    }
+
+    @Override
+    public Integer checkPageNo(Integer pageNo) {
+        Integer sizeList = mauSacRepository.findAll().size();
+        Integer pageCount = (int) Math.ceil((double) sizeList / 5);
+        if (pageNo >= pageCount) {
+            pageNo = 0;
+        } else if (pageNo < 0) {
+            pageNo = pageCount - 1;
+        }
+        return pageNo;
+    }
+
+    @Override
+    public Page<MauSac> getPage(Integer pageNo) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        return mauSacRepository.findAll(PageRequest.of  (  pageNo, 5,sort));
+    }
+
+    @Override
+    public Integer genMaTuDong() {
+        String maStr = "";
+        try {
+            if (mauSacRepository.index() != null) {
+                maStr = mauSacRepository.index().toString();
+            } else {
+                maStr = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (maStr == null) {
+            maStr = "0";
+            int ma = Integer.parseInt(maStr);
+            return ++ma;
+        }
+        int ma = Integer.parseInt(maStr);
+        return ++ma;
     }
 }

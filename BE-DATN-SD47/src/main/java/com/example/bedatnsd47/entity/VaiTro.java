@@ -29,5 +29,4 @@ public class VaiTro {
     @Column(name = "ten", length = 100)
     private String ten;
 
-
 }

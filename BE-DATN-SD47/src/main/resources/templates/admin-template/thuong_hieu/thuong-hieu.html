@@ -20,7 +20,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="../ban-hang-admin.html" class="logo d-flex align-items-center">
+        <a href="../ban-hang-tai-quay/home" class="logo d-flex align-items-center">
             <img src="/static/img/logo.png" alt="">
             <span class="d-none d-lg-block">NiceAdmin</span>
         </a>
@@ -36,7 +36,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="../ban-hang-admin.html">
+            <a class="nav-link collapsed" href="../ban-hang-tai-quay/home">
                 <i class="bi bi-grid"></i>
                 <span>Bán Hàng</span>
             </a>
@@ -49,27 +49,32 @@
             </a>
             <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="../san_pham/san-pham.html">
+                    <a href="/admin/san-pham-chi-tiet">
+                        <i class="bi bi-circle"></i><span>Sản Phẩm Chi Tiết</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../admin/san-pham">
                         <i class="bi bi-circle"></i><span>Sản Phẩm</span>
                     </a>
                 </li>
                 <li>
-                    <a href="thuong-hieu.html" class="active">
+                    <a href="/admin/thuong-hieu" class="active">
                         <i class="bi bi-circle"></i><span>Thương Hiệu</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../loai_de/loai-de.html">
+                    <a href="/admin/loai-de">
                         <i class="bi bi-circle"></i><span>Loại Đế</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../mau_sac/mau-sac.html">
+                    <a href="/admin/mau-sac">
                         <i class="bi bi-circle"></i><span>Màu Sắc</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../kich_co/kich-co.html">
+                    <a href="/admin/kich-co">
                         <i class="bi bi-circle"></i><span>Kích Cỡ</span>
                     </a>
                 </li>
@@ -90,12 +95,12 @@
             </a>
             <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="../nhan_vien/nhan-vien.html">
+                    <a href="/admin/nhan-vien">
                         <i class="bi bi-circle"></i><span>Quản lý nhân viên</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../khach_hang/khach-hang.html">
+                    <a href="../admin/khach-hang">
                         <i class="bi bi-circle"></i><span>Quản lý khách hàng</span>
                     </a>
                 </li>
@@ -103,7 +108,7 @@
         </li><!-- End Tables Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="../voucher/voucher.html">
+            <a class="nav-link collapsed" href="../admin/voucher">
                 <i class="bi bi-envelope"></i>
                 <span>Quản Lý Voucher</span>
             </a>
@@ -319,6 +324,53 @@
 
 </main><!-- End #main -->
 
+<!--Thông báo thành công-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='thanhCong'}">
+        // <script>
+        //     function showToast() {
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+        //         liveToast.show();
+        //
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+        //         liveToast.show();
+        //
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+        //         liveToast.show();
+        //     }
+        //     // Show the toast when the page loads
+        //     document.addEventListener('DOMContentLoaded', showToast);
+        //
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="  background-color: rgba(62, 189, 97,0.2);border:2px solid #3ebd61;  border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_notification.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #3ebd61;">
+                        Thành công</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 <!--Thông báo thành công-->
 <div class="toast-container position-fixed top-0 end-0 p-3">
     <script th:if="${checkThongBao=='thanhCong'}">

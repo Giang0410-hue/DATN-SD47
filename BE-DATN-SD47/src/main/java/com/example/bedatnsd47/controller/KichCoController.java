@@ -1,14 +1,9 @@
 package com.example.bedatnsd47.controller;
 
-import com.example.bedatnsd47.entity.SanPham;
-import com.example.bedatnsd47.entity.ThuongHieu;
-import com.example.bedatnsd47.service.ThuongHieuService;
-
+import com.example.bedatnsd47.entity.KichCo;
+import com.example.bedatnsd47.service.KichCoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,20 +12,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
-import java.util.List;
-
 
 @Controller
-//@RestController
-@RequestMapping("/admin/thuong-hieu")
-public class ThuongHieuController {
-
+@RequestMapping("/admin/kich-co")
+public class KichCoController {
     @Autowired
-    private ThuongHieuService thuongHieuService;
+    private KichCoService kichCoService;
 
     private Integer pageNo = 0;
 
@@ -40,26 +30,26 @@ public class ThuongHieuController {
     public String hienThi(
             Model model
     ) {
-        model.addAttribute("listThuongHieu", thuongHieuService.getPage(pageNo).stream().toList());
+        model.addAttribute("listKichCo", kichCoService.getPage(pageNo).stream().toList());
         model.addAttribute("currentPage", pageNo);
-        model.addAttribute("thuongHieu", new ThuongHieu());
-        return "/admin-template/thuong_hieu/thuong-hieu";
+        model.addAttribute("kichCo", new KichCo());
+        return "/admin-template/kich_co/kich-co";
     }
 
     @GetMapping("/pre")
     public String hienThiPre(
     ) {
         pageNo--;
-        pageNo = thuongHieuService.checkPageNo(pageNo);
-        return "redirect:/admin/thuong-hieu";
+        pageNo = kichCoService.checkPageNo(pageNo);
+        return "redirect:/admin/kich-co";
     }
 
     @GetMapping("/next")
     public String hienThiNext(
     ) {
         pageNo++;
-        pageNo = thuongHieuService.checkPageNo(pageNo);
-        return "redirect:/admin/thuong-hieu";
+        pageNo = kichCoService.checkPageNo(pageNo);
+        return "redirect:/admin/kich-co";
     }
 
     @GetMapping("/view-update/{id}")
@@ -67,41 +57,41 @@ public class ThuongHieuController {
             Model model,
             @PathVariable("id") Long id
     ) {
-        ThuongHieu thuongHieu = thuongHieuService.getById(id);
-        model.addAttribute("listThuongHieu", thuongHieuService.findAll());
-        model.addAttribute("thuongHieu", thuongHieu);
-        return "/admin-template/thuong_hieu/sua-thuong-hieu";
+        KichCo kichCo = kichCoService.getById(id);
+        model.addAttribute("listKichCo", kichCoService.findAll());
+        model.addAttribute("kichCo", kichCo);
+        return "/admin-template/kich_co/sua-kich-co";
     }
 
     @PostMapping("/update")
     public String update(@Valid
-                         @ModelAttribute("thuongHieu") ThuongHieu thuongHieu,
+                         @ModelAttribute("kichCo") KichCo kichCo,
                          BindingResult result,
                          Model model,
                          RedirectAttributes redirectAttributes
     ) {
         if (result.hasErrors()) {
             model.addAttribute("checkThongBao", "thaiBai");
-//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
-            return "/admin-template/thuong_hieu/sua-thuong-hieu";
-        } else if (!thuongHieuService.checkTenTrungSua(thuongHieu.getId(), thuongHieu.getTen())) {
+            model.addAttribute("listKichCo", kichCoService.findAll());
+            return "/admin-template/kich_co/sua-kich-co";
+        } else if (!kichCoService.checkTenTrungSua(kichCo.getId(), kichCo.getTen())) {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
-//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
-            return "/admin-template/thuong_hieu/sua-thuong-hieu";
+            model.addAttribute("listKichCo", kichCoService.findAll());
+            return "/admin-template/kich_co/sua-kich-co";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            ThuongHieu th = thuongHieuService.getById(thuongHieu.getId());
-            thuongHieu.setNgayTao(th.getNgayTao());
-            thuongHieu.setNgaySua(currentDate);
-            thuongHieuService.update(thuongHieu);
-            return "redirect:/admin/thuong-hieu";
+            KichCo kt = kichCoService.getById(kichCo.getId());
+            kichCo.setNgayTao(kt.getNgayTao());
+            kichCo.setNgaySua(currentDate);
+            kichCoService.update(kichCo);
+            return "redirect:/admin/kich-co";
         }
     }
 
     @PostMapping("/add")
     public String add(@Valid
-                      @ModelAttribute("thuongHieu") ThuongHieu thuongHieu,
+                      @ModelAttribute("kichCo") KichCo kichCo,
                       BindingResult result,
                       Model model,
                       RedirectAttributes redirectAttributes
@@ -109,29 +99,27 @@ public class ThuongHieuController {
         if (result.hasErrors()) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("listThuongHieu", thuongHieuService.getPage(pageNo).stream().toList());
+            model.addAttribute("listKichCo", kichCoService.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
             model.addAttribute("currentPage", pageNo);
 //            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
-            return "/admin-template/thuong_hieu/thuong-hieu";
-        } else if (!thuongHieuService.checkTenTrung(thuongHieu.getTen())) {
+            return "/admin-template/kich_co/kich-co";
+        } else if (!kichCoService.checkTenTrung(kichCo.getTen())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
-            model.addAttribute("listThuongHieu", thuongHieuService.getPage(pageNo).stream().toList());
-            model.addAttribute("index", pageNo + 1);
             model.addAttribute("currentPage", pageNo);
-            return "/admin-template/thuong_hieu/thuong-hieu";
-        }
-        else {
+            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+            model.addAttribute("listKichCo", kichCoService.getPage(pageNo).stream().toList());
+            model.addAttribute("index", pageNo + 1);
+            return "/admin-template/kich_co/kich-co";
+        } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
 //            sanPham.setMa("SP" + thuongHieuService.genMaTuDong());
-            thuongHieu.setNgayTao(currentDate);
-            thuongHieu.setTrangThai(0);
-            thuongHieuService.update(thuongHieu);
-            return "redirect:/admin/thuong-hieu";
+            kichCo.setNgayTao(currentDate);
+            kichCo.setTrangThai(0);
+            kichCoService.update(kichCo);
+            return "redirect:/admin/kich-co";
         }
     }
-
 
 }

@@ -20,4 +20,21 @@ public interface MauSacService {
 
     public Page<MauSac> findAll(int page, int size);
     Page<MauSac> findByTenContaining(String keyword,Integer trang_thai,int page, int size);
+
+
+    boolean checkTenTrung(String ten);
+
+    boolean checkTenTrungSua(String ma, String ten);
+
+    MauSac update(MauSac mauSac);
+
+    MauSac getById(Long id);
+
+    Integer checkPageNo(Integer pageNo);
+
+    Page<MauSac> getPage(Integer pageNo);
+
+    public Integer genMaTuDong();
+
+
 }

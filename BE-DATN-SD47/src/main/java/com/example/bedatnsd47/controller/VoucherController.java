@@ -17,7 +17,7 @@ public class VoucherController {
     @GetMapping("/list")
     public String index(Model model){
         model.addAttribute("lst",voucherService.findAll());
-        return "/voucher.html";
+        return "voucher.html";
     }
 
     @PostMapping("/add")

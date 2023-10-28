@@ -29,7 +29,7 @@ public class BanHangController {
         model.addAttribute("lstHoaDon", hoaDonService.findAll());
         model.addAttribute("lstHdct", hoaDonChiTietService.findByIdHoaDon(36l));
         model.addAttribute("lstCtsp", chiTietSanPhamSerivce.getAll());
-        return "/admin-template/ban-hang-admin.html";
+        return "/admin-template/ban-hang-admin";
     }
 
     @PostMapping("/create")

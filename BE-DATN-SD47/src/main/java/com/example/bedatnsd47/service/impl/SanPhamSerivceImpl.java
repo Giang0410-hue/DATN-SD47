@@ -1,13 +1,21 @@
 package com.example.bedatnsd47.service.impl;
 
+import com.example.bedatnsd47.entity.HinhAnhSanPham;
 import com.example.bedatnsd47.entity.SanPham;
+import com.example.bedatnsd47.repository.HinhAnhSanPhamRepository;
 import com.example.bedatnsd47.repository.SanPhamRepository;
 import com.example.bedatnsd47.service.SanPhamSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,6 +24,12 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
     @Autowired
     private SanPhamRepository repository;
 
+    @Autowired
+    private HinhAnhSanPhamRepository hinhAnhSanPhamRepository;
+
+    private Date currentDate = new Date();
+
+
     @Override
     public List<SanPham> getAll() {
 
@@ -23,9 +37,29 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
 
     }
 
-    @Override
-    public SanPham add(SanPham sanPham) {
+    public void saveImage(List<MultipartFile> files, SanPham sanPham) {
+        for (MultipartFile multipartFile : files) {
+            if (!multipartFile.isEmpty()) {
+                try {
+                    HinhAnhSanPham hinhAnh = new HinhAnhSanPham();
+                    // Lưu tệp vào cơ sở dữ liệu
+                    hinhAnh.setUrl(multipartFile.getOriginalFilename());
+                    hinhAnh.setNgayTao(currentDate);
+                    hinhAnh.setTrangThai(1);
+                    hinhAnh.setSanPham(sanPham);
+                    // Thực hiện các tác vụ khác nếu cần thiết
+                    hinhAnhSanPhamRepository.save(hinhAnh);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // Xử lý lỗi
+                }
+            }
+        }
+    }
 
+    @Override
+    public SanPham add(List<MultipartFile> multipartFiles, SanPham sanPham) {
+        this.saveImage(multipartFiles, sanPham);
         return repository.save(sanPham);
 
     }
@@ -53,8 +87,8 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
 
     @Override
     public Page<SanPham> getPage(Integer pageNo) {
-
-        return repository.findAll(PageRequest.of(pageNo, 5));
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        return repository.findAll(PageRequest.of(pageNo, 5, sort));
 
     }
 
@@ -108,11 +142,11 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
     }
 
     @Override
-    public boolean checkTenTrungSua(String ma,String ten) {
+    public boolean checkTenTrungSua(String ma, String ten) {
 
         for (SanPham sp : repository.findAll()) {
             if (sp.getTen().equalsIgnoreCase(ten)) {
-                if (!sp.getMa().equalsIgnoreCase(ma)){
+                if (!sp.getMa().equalsIgnoreCase(ma)) {
                     return false;
                 }
             }

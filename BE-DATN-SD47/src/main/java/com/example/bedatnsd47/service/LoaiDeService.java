@@ -24,4 +24,18 @@ public interface LoaiDeService {
     public Page<LoaiDe> findAll(int page, int size);
 
     Page<LoaiDe> findByTenContaining(String keyword, Integer trang_thai, int page, int size);
+
+
+    //tuan
+    boolean checkTenTrung(String ten);
+
+    boolean checkTenTrungSua(Long id, String ten);
+
+    LoaiDe update(LoaiDe loaiDe);
+
+    LoaiDe getById(Long id);
+
+    Integer checkPageNo(Integer pageNo);
+
+    Page<LoaiDe> getPage(Integer pageNo);
 }

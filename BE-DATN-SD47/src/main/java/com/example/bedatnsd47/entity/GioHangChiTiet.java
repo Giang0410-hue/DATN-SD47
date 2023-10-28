@@ -1,7 +1,9 @@
 package com.example.bedatnsd47.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,11 +43,11 @@ public class GioHangChiTiet {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne
-    @JoinColumn(name = "gio_hang_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "gio_hang_id", referencedColumnName = "id")
     private GioHang gioHang;
 
-    @ManyToOne
-    @JoinColumn(name = "chi_tiet_san_pham_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "chi_tiet_san_pham_id", referencedColumnName = "id")
     private ChiTietSanPham chiTietSanPham;
 }
