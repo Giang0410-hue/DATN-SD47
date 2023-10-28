@@ -24,10 +24,7 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
     @Autowired
     private SanPhamRepository repository;
 
-    @Autowired
-    private HinhAnhSanPhamRepository hinhAnhSanPhamRepository;
 
-    private Date currentDate = new Date();
 
 
     @Override
@@ -37,29 +34,28 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
 
     }
 
-    public void saveImage(List<MultipartFile> files, SanPham sanPham) {
-        for (MultipartFile multipartFile : files) {
-            if (!multipartFile.isEmpty()) {
-                try {
-                    HinhAnhSanPham hinhAnh = new HinhAnhSanPham();
-                    // Lưu tệp vào cơ sở dữ liệu
-                    hinhAnh.setUrl(multipartFile.getOriginalFilename());
-                    hinhAnh.setNgayTao(currentDate);
-                    hinhAnh.setTrangThai(1);
-                    hinhAnh.setSanPham(sanPham);
-                    // Thực hiện các tác vụ khác nếu cần thiết
-                    hinhAnhSanPhamRepository.save(hinhAnh);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    // Xử lý lỗi
-                }
-            }
-        }
-    }
+//    public void saveImage(List<MultipartFile> files, SanPham sanPham) {
+//        for (MultipartFile multipartFile : files) {
+//            if (!multipartFile.isEmpty()) {
+//                try {
+//                    HinhAnhSanPham hinhAnh = new HinhAnhSanPham();
+//                    // Lưu tệp vào cơ sở dữ liệu
+//                    hinhAnh.setUrl(multipartFile.getOriginalFilename());
+//                    hinhAnh.setNgayTao(currentDate);
+//                    hinhAnh.setTrangThai(1);
+//                    hinhAnh.setSanPham(sanPham);
+//                    // Thực hiện các tác vụ khác nếu cần thiết
+//                    hinhAnhSanPhamRepository.save(hinhAnh);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    // Xử lý lỗi
+//                }
+//            }
+//        }
+//    }
 
     @Override
-    public SanPham add(List<MultipartFile> multipartFiles, SanPham sanPham) {
-        this.saveImage(multipartFiles, sanPham);
+    public SanPham add(SanPham sanPham) {
         return repository.save(sanPham);
 
     }

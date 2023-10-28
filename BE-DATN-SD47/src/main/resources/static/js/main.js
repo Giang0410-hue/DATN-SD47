@@ -228,6 +228,51 @@ dropArea.addEventListener('drop', function (e) {
     });
 });
 
+
+function handleFilesUpdate(files) {
+    return new Promise((resolve, reject) => {
+        const maxAllowedFiles = 5;
+        const gallery = document.getElementById('gallery');
+        const existingImages = gallery.querySelectorAll('img');
+        const currentImageCount = existingImages.length;
+        const imgCount = files.length;
+        const testImgDiv = document.getElementById('testImg');
+
+        if (currentImageCount >= maxAllowedFiles) {
+            alert('Bạn đã đạt tối đa số lượng ảnh cho phép.');
+            resolve(gallery);
+            return;
+        }
+        if (imgCount > 0) {
+            testImgDiv.style.display = 'none'; // Ẩn đi thẻ <div id="testImg">
+        }
+
+        const Files = Array.from(files);
+        const createFileId = length => {
+            let str = '';
+            for (; str.length < length; str += Math.random().toString(36).substr(2)) ;
+            return str.substr(0, length);
+        };
+
+        const uploadAndPreviewFile = file => {
+            if (currentImageCount + Files.length <= maxAllowedFiles) {
+                Files.forEach(file => {
+                    file.id = createFileId(Math.round(file.lastModified * 100) / file.lastModified);
+                    uploadFile(file);
+                    previewFile(file);
+                });
+
+                resolve(gallery);
+            } else {
+                alert('Bạn chỉ được chọn tối đa 5 ảnh.');
+                resolve(gallery);
+            }
+        };
+
+        uploadAndPreviewFile();
+    });
+}
+
 function handleFiles(files) {
     return new Promise((resolve, reject) => {
         const maxAllowedFiles = 5;
@@ -336,7 +381,7 @@ function submitForm() {
     if (fileInput.files.length === 0) {
         // alert("Không được để ảnh trống")
         var errorMsg = document.getElementById("error-msg");
-        errorMsg.textContent ="Không được để trống ảnh"
+        errorMsg.textContent = "Không được để trống ảnh"
         return false
     } else {
         return true

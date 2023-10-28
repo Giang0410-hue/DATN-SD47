@@ -3,6 +3,7 @@ package com.example.bedatnsd47.controller;
 import com.example.bedatnsd47.entity.HinhAnhSanPham;
 import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.repository.HinhAnhSanPhamRepository;
+import com.example.bedatnsd47.service.HinhAnhSanPhamSerivce;
 import com.example.bedatnsd47.service.SanPhamSerivce;
 import com.example.bedatnsd47.service.ThuongHieuService;
 import jakarta.validation.Valid;
@@ -36,7 +37,7 @@ public class SanPhamController {
     private ThuongHieuService thuongHieuService;
 
     @Autowired
-    private HinhAnhSanPhamRepository hinhAnhSanPhamRepository;
+    private HinhAnhSanPhamSerivce hinhAnhSanPhamSerivce;
 
     private Integer pageNo = 0;
 
@@ -77,22 +78,24 @@ public class SanPhamController {
     ) {
         SanPham sanPham = sanPhamSerivce.getById(id);
         model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+        model.addAttribute("listHinhAnh", hinhAnhSanPhamSerivce.listHinhAnh(id));
         model.addAttribute("sanPham", sanPham);
         return "/admin-template/san_pham/sua-san-pham";
     }
 
     @PostMapping("/update")
     public String update(@Valid
-                      @ModelAttribute("sanPham") SanPham sanPham,
-                      BindingResult result,
-                      Model model,
-                      RedirectAttributes redirectAttributes
+                         @ModelAttribute("sanPham") SanPham sanPham,
+                         BindingResult result,
+                         Model model,
+                         @RequestParam("fileImage") List<MultipartFile> multipartFiles,
+                         RedirectAttributes redirectAttributes
     ) {
         if (result.hasErrors()) {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/sua-san-pham";
-        } else if (!sanPhamSerivce.checkTenTrungSua(sanPham.getMa(),sanPham.getTen())) {
+        } else if (!sanPhamSerivce.checkTenTrungSua(sanPham.getMa(), sanPham.getTen())) {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
@@ -102,6 +105,12 @@ public class SanPhamController {
             SanPham sp = sanPhamSerivce.getById(sanPham.getId());
             sanPham.setNgayTao(sp.getNgayTao());
             sanPham.setNgaySua(currentDate);
+            for (MultipartFile file : multipartFiles) {
+                if (file != null && !file.isEmpty()) {
+                    hinhAnhSanPhamSerivce.deleteByID(sanPham.getId());
+                }
+            }
+            hinhAnhSanPhamSerivce.saveWhenEditingImage(multipartFiles, sanPham.getId());
             sanPhamSerivce.update(sanPham);
             return "redirect:/admin/san-pham";
         }
@@ -123,22 +132,22 @@ public class SanPhamController {
             model.addAttribute("currentPage", pageNo);
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
-        }else if (!sanPhamSerivce.checkTenTrung(sanPham.getTen())) {
+        } else if (!sanPhamSerivce.checkTenTrung(sanPham.getTen())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
-            model.addAttribute("currentPage",    pageNo);
+            model.addAttribute("currentPage", pageNo);
             model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
             model.addAttribute("index", pageNo + 1);
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
-        }
-        else {
+        } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
             sanPham.setNgayTao(currentDate);
             sanPham.setTrangThai(0);
-            sanPhamSerivce.add(multipartFiles,sanPham);
+            hinhAnhSanPhamSerivce.saveImage(multipartFiles, sanPham);
+            sanPhamSerivce.add(sanPham);
             return "redirect:/admin/san-pham";
         }
     }
