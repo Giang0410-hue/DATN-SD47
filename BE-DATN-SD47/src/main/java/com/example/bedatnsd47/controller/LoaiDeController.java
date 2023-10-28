@@ -19,6 +19,7 @@ import java.util.Date;
 @Controller
 @RequestMapping("/admin/loai-de")
 public class LoaiDeController {
+
     @Autowired
     LoaiDeService loaiDeService;
 
@@ -120,10 +121,6 @@ public class LoaiDeController {
             return "redirect:/admin/loai-de";
         }
     }
-
-
-
-
 
 
 }

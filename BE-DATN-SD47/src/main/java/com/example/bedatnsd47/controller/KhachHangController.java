@@ -1,9 +1,8 @@
 package com.example.bedatnsd47.controller;
 
 import com.example.bedatnsd47.entity.TaiKhoan;
-import com.example.bedatnsd47.entity.ThuongHieu;
 import com.example.bedatnsd47.entity.VaiTro;
-import com.example.bedatnsd47.service.TaiKhoanService;
+import com.example.bedatnsd47.service.KhachHangService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +21,7 @@ import java.util.Date;
 @RequestMapping("/admin/khach-hang")
 public class KhachHangController {
     @Autowired
-    TaiKhoanService taiKhoanService;
+    KhachHangService taiKhoanService;
 
     private Integer pageNo = 0;
 
@@ -33,47 +32,37 @@ public class KhachHangController {
 //    private Long vaiTro_id = 1;
 
     @GetMapping("/pre")
-    public String hienThiPre(
-    ) {
+    public String hienThiPre() {
         pageNo--;
         pageNo = taiKhoanService.checkPageNo(pageNo);
         return "redirect:/admin/thuong-hieu";
     }
 
     @GetMapping("/next")
-    public String hienThiNext(
-    ) {
+    public String hienThiNext() {
         pageNo++;
         pageNo = taiKhoanService.checkPageNo(pageNo);
         return "redirect:/admin/thuong-hieu";
     }
 
     @GetMapping()
-    public String hienThi(
-            Model model
-    ) {
+    public String hienThi(Model model) {
         model.addAttribute("listTaiKhoan", taiKhoanService.getPage(pageNo).stream().toList());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("khachHang", new TaiKhoan());
         return "/admin-template/khach_hang/khach-hang";
     }
+
     @PostMapping("/add")
-    public String add(@Valid
-                      @ModelAttribute("khachHang") TaiKhoan taiKhoan,
-                      BindingResult result,
-                      Model model,
-                      RedirectAttributes redirectAttributes
-    ) {
+    public String add(@Valid @ModelAttribute("khachHang") TaiKhoan taiKhoan, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listKhachHang", taiKhoanService.getPage(pageNo).stream().toList());
-//            model.addAttribute("index", pageNo + 1);
             model.addAttribute("currentPage", pageNo);
 //            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/khach_hang/khach-hang";
-        }
-        else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTen_tai_khoan()) ) {
+        } else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTen_tai_khoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
@@ -82,7 +71,7 @@ public class KhachHangController {
             model.addAttribute("index", pageNo + 1);
             model.addAttribute("currentPage", pageNo);
             return "/admin-template/khach_hang/khach-hang";
-        }else if( !taiKhoanService.checkEmail(taiKhoan.getEmail()) ){
+        } else if (!taiKhoanService.checkEmail(taiKhoan.getEmail())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkEmailTrung", "Email phẩm đã tồn tại");
@@ -90,8 +79,7 @@ public class KhachHangController {
             model.addAttribute("index", pageNo + 1);
             model.addAttribute("currentPage", pageNo);
             return "/admin-template/khach_hang/khach-hang";
-        }
-        else {
+        } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             taiKhoan.setNgayTao(currentDate);
             VaiTro vaiTro = new VaiTro();
@@ -104,18 +92,56 @@ public class KhachHangController {
     }
 
 
-
     @GetMapping("/view-update/{id}")
-    public String viewUpdate(
-            Model model,
-            @PathVariable("id") Long id
-    ) {
+    public String viewUpdate(Model model, @PathVariable("id") Long id) {
         TaiKhoan taiKhoan = taiKhoanService.getById(id);
         model.addAttribute("listKhachHang", taiKhoanService.getAll());
         model.addAttribute("khachHang", taiKhoan);
         return "/admin-template/khach_hang/sua-khach-hang";
     }
 
-//00
 
+    @PostMapping("/update")
+    public String update(@Valid @ModelAttribute("khachHang") TaiKhoan taiKhoan
+            , BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("listKhachHang", taiKhoanService.getPage(pageNo).stream().toList());
+            model.addAttribute("currentPage", pageNo);
+//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            return "/admin-template/khach_hang/sua-khach-hang";
+        } else if (!taiKhoanService.checkTenTkTrungSua(taiKhoan.getId(), taiKhoan.getTen_tai_khoan())) {
+            model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
+            model.addAttribute("checkEmailTrung", "Email phẩm đã tồn tại");
+            model.addAttribute("listKhachHang", taiKhoanService.getPage(pageNo).stream().toList());
+            model.addAttribute("index", pageNo + 1);
+            model.addAttribute("currentPage", pageNo);
+            return "/admin-template/khach_hang/sua-khach-hang";
+        } else if (!taiKhoanService.checkEmailSua(taiKhoan.getId(), taiKhoan.getEmail())) {
+            model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkEmailTrung", "Email phẩm đã tồn tại");
+            model.addAttribute("listKhachHang", taiKhoanService.getPage(pageNo).stream().toList());
+            model.addAttribute("index", pageNo + 1);
+            model.addAttribute("currentPage", pageNo);
+            return "/admin-template/khach_hang/khach-hang";
+        } else {
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+
+            taiKhoan.setNgayTao(taiKhoan.getNgayTao());
+            taiKhoan.setNgayTao(currentDate);
+            VaiTro vaiTro = new VaiTro();
+            vaiTro.setId(Long.valueOf(1));
+            taiKhoan.setVaiTro(vaiTro);
+            System.out.println("Vai tro --------------------------" + vaiTro.getId());
+            taiKhoan.setVaiTro(vaiTro);
+            taiKhoan.setTrangThai(taiKhoan.getTrangThai());
+            taiKhoanService.update(taiKhoan);
+            return "redirect:/admin/khach-hang";
+        }
+    }
 }

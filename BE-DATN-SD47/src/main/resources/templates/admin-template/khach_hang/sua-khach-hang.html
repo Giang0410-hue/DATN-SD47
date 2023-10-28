@@ -143,9 +143,10 @@
                             <div class="col-md-12">
                                 <!-- form thêm khách hàng -->
                                 <form class="row g-3" style="margin-top: 1%;margin-bottom: 5%;"
-                                      th:action="@{/admin/khach-hang/add}" method="post"
+                                      th:action="@{/admin/khach-hang/update}" method="post"
                                       enctype="multipart/form-data"
                                       th:object="${khachHang}">
+                                    <input type="hidden" th:field="*{id}" name="id">
                                     <div class="col-md-6">
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Tên tài khoản:</label>
@@ -235,7 +236,7 @@
                                         <label class="form-label"><span class="dau-sao">*</span>Mật
                                             Khẩu:</label>
                                         <input type="text" class="form-control"
-                                               placeholder="Nhập địa chỉ cụ thể" th:field="*{matKhau}"/>
+                                               placeholder="Nhập mật khẩu" th:field="*{matKhau}"/>
                                         <!--  <span class="check-loi" th:errors="*{diaChiCuThe}"></span>-->
                                     </div>
 
