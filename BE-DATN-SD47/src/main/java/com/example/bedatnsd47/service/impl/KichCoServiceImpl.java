@@ -26,6 +26,7 @@ public class KichCoServiceImpl implements KichCoService {
 
     @Override
     public Optional<KichCo> findById(Long id) {
+
         return kichCoRepository.findById(id);
     }
 
@@ -93,11 +94,13 @@ public class KichCoServiceImpl implements KichCoService {
 
     @Override
     public KichCo update(KichCo kichCo) {
+
         return kichCoRepository.save(kichCo);
     }
 
     @Override
     public KichCo getById(Long id) {
+
         return kichCoRepository.findById(id).get();
     }
 
@@ -115,6 +118,7 @@ public class KichCoServiceImpl implements KichCoService {
 
     @Override
     public Page<KichCo> getPage(Integer pageNo) {
+
         return kichCoRepository.findAll(PageRequest.of(pageNo, 5));
     }
 }

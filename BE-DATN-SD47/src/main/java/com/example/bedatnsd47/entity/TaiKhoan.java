@@ -90,7 +90,7 @@ public class TaiKhoan {
     private Integer trangThai;
 
     @ManyToOne
-//            (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//   (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //   dùng cái này không xóa đến bảng con cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     @JoinColumn(name = "vai_tro_id", referencedColumnName = "id")
     private VaiTro vaiTro;
