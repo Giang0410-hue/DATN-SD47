@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CodePen - DataTables - Column Search</title>
+    <style>
+        body {
+            margin: 2em;
+        }
+
+        thead input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    </style>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdn.datatables.net/buttons/1.2.2/css/buttons.bootstrap.min.css'>
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<a class="btn btn-success" style="float:left;margin-right:20px;" href="https://codepen.io/collection/XKgNLN/"
+   target="_blank">Other examples on Codepen</a>
+<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Order</th>
+        <th>Order</th>
+        <th>Description</th>
+        <th>Deadline</th>
+        <th>Status</th>
+        <th>Amount</th>
+        <th>Amount</th>
+        <th>Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="chiTietSP,iterStat : ${listChiTietSP}">
+        <td th:text="${iterStat.index+1}"></td>
+        <td th:text="${chiTietSP.sanPham.ten}"></td>
+        <td th:text="${chiTietSP.soLuong}"></td>
+        <td th:text="${chiTietSP.giaHienHanh}"></td>
+        <td th:text="${chiTietSP.kichCo.ten}"></td>
+        <td th:text="${chiTietSP.loaiDe.ten}"></td>
+
+        <td class="trangthaidkd" th:if="${chiTietSP.trangThai==1}">Đang kinh doanh</td>
+        <td class="trangthainkd" th:if="${chiTietSP.trangThai==0}">Ngừng kinh doanh</td>
+        <td>
+            <!-- button và model -->
+            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal2">
+                <i class="bi bi-eye"></i>
+            </button>
+            <!-- model-xem-Cập Nhật-ctsp -->
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>Order</th>
+        <th>Order</th>
+        <th>Description</th>
+        <th>Deadline</th>
+        <th>Status</th>
+        <th>Amount</th>
+        <th>Amount</th>
+        <th>Amount</th>
+
+    </tr>
+    </tfoot>
+</table><!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script>
+<script src='https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js'></script>
+<script src='https://cdn.datatables.net/buttons/1.2.2/js/buttons.colVis.min.js'></script>
+<script src='https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js'></script>
+<script src='https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js'></script>
+<script src='https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js'></script>
+<script src='https://cdn.datatables.net/buttons/1.2.2/js/buttons.bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js'></script>
+<script src='https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js'></script>
+<script src='https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js'></script>
+<script>
+    $(document).ready(function () {
+        //Chỉ cần cho tên tệp của tệp xuất.
+        //Thông thường được đặt trong thẻ tiêu đề của trang của bạn.
+        document.title = "Simple DataTable";
+        // Tạo đầu vào tìm kiếm ở chân trang
+        $("#example tfoot th").each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        });
+        // Khởi tạo DataTable
+        var table = $("#example").DataTable({
+            dom: '<"dt-buttons"Bf><"clear">lirtp',
+            paging: true,
+            autoWidth: true,
+            buttons: [
+                "colvis",
+                "copyHtml5",
+                "csvHtml5",
+                "excelHtml5",
+                "pdfHtml5",
+                "print"
+            ],
+            initComplete: function (settings, json) {
+                var footer = $("#example tfoot tr");
+                $("#example thead").append(footer);
+            }
+        });
+
+        // Áp dụng tìm kiếm
+        $("#example thead").on("keyup", "input", function () {
+            table.column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -34,26 +34,6 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
 
     }
 
-//    public void saveImage(List<MultipartFile> files, SanPham sanPham) {
-//        for (MultipartFile multipartFile : files) {
-//            if (!multipartFile.isEmpty()) {
-//                try {
-//                    HinhAnhSanPham hinhAnh = new HinhAnhSanPham();
-//                    // Lưu tệp vào cơ sở dữ liệu
-//                    hinhAnh.setUrl(multipartFile.getOriginalFilename());
-//                    hinhAnh.setNgayTao(currentDate);
-//                    hinhAnh.setTrangThai(1);
-//                    hinhAnh.setSanPham(sanPham);
-//                    // Thực hiện các tác vụ khác nếu cần thiết
-//                    hinhAnhSanPhamRepository.save(hinhAnh);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    // Xử lý lỗi
-//                }
-//            }
-//        }
-//    }
-
     @Override
     public SanPham add(SanPham sanPham) {
         return repository.save(sanPham);

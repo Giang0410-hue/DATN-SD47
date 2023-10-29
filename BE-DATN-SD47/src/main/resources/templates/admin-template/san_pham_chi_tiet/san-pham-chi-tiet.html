@@ -75,7 +75,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/san-pham" >
+                    <a href="/admin/san-pham">
                         <i class="bi bi-circle"></i><span>Sản Phẩm</span>
                     </a>
                 </li>
@@ -197,7 +197,8 @@
                                         <div class="col-md-3">
                                             <label class="form-label">Thương hiệu:</label>
                                             <select class="form-select" aria-label="Default select example">
-                                                <option th:each="thuongHieu : ${listThuongHieu}" th:value="${thuongHieu.id}"
+                                                <option th:each="thuongHieu : ${listThuongHieu}"
+                                                        th:value="${thuongHieu.id}"
                                                         th:label="${thuongHieu.ten}"></option>
                                             </select>
                                         </div>
@@ -254,7 +255,6 @@
                                     <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Ảnh</th>
                                         <th>Tên Sản Phẩm</th>
                                         <th>Số Lượng</th>
                                         <th>Giá Bán</th>
@@ -267,7 +267,6 @@
                                     <tbody>
                                     <tr th:each="chiTietSP,iterStat : ${listChiTietSP}">
                                         <td th:text="${#numbers.sequence(1 + (currentPage * 5), 1 + (currentPage * 5) + 5)[__${iterStat.index}__]}"></td>
-                                        <td><img src="../../../static/img/logo.png" alt=""></td>
                                         <td th:text="${chiTietSP.sanPham.ten}"></td>
                                         <td th:text="${chiTietSP.soLuong}"></td>
                                         <td th:text="${chiTietSP.giaHienHanh}"></td>
@@ -476,15 +475,13 @@
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         <li class="page-item">
-                                            <a class="page-link" href="#">
+                                            <a class="page-link" th:href="@{/admin/san-pham/pre}">
                                                 <i class="bi bi-chevron-left"></i>
                                             </a>
                                         </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" th:text="${currentPage+1}"></a></li>
                                         <li class="page-item">
-                                            <a class="page-link" href="#">
+                                            <a class="page-link" th:href="@{/admin/san-pham/next}">
                                                 <i class="bi bi-chevron-right"></i>
                                             </a>
                                         </li>
