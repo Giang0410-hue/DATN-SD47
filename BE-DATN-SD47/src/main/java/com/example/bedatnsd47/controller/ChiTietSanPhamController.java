@@ -41,14 +41,30 @@ public class ChiTietSanPhamController {
     public String hienThi(
         Model model
     ){
-        model.addAttribute("listChiTietSP",chiTietSanPhamSerivce.getPage(pageNo).stream().toList());
+        model.addAttribute("listChiTietSP",chiTietSanPhamSerivce.getAll());
         model.addAttribute("listSanPham",sanPhamSerivce.getAll());
         model.addAttribute("listThuongHieu",thuongHieuService.findAll());
         model.addAttribute("listKichCo",kichCoService.findAll());
         model.addAttribute("listMauSac",mauSacService.findAll());
         model.addAttribute("listLoaiDe",loaiDeService.findAll());
         model.addAttribute("currentPage",pageNo);
-        return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
+        return "/admin-template/san_pham_chi_tiet/test";
+    }
+
+    @GetMapping("/pre")
+    public String hienThiPre(
+    ) {
+        pageNo--;
+        pageNo = chiTietSanPhamSerivce.checkPageNo(pageNo);
+        return "redirect:/admin/san-pham";
+    }
+
+    @GetMapping("/next")
+    public String hienThiNext(
+    ) {
+        pageNo++;
+        pageNo = chiTietSanPhamSerivce.checkPageNo(pageNo);
+        return "redirect:/admin/san-pham";
     }
 
 }
