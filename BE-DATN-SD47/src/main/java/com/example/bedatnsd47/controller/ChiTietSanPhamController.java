@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin/san-pham-chi-tiet")
 public class ChiTietSanPhamController {
@@ -48,7 +50,35 @@ public class ChiTietSanPhamController {
         model.addAttribute("listMauSac",mauSacService.findAll());
         model.addAttribute("listLoaiDe",loaiDeService.findAll());
         model.addAttribute("currentPage",pageNo);
-        return "/admin-template/san_pham_chi_tiet/test";
+        return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
+    }
+
+    @GetMapping("/dang-hoat-dong")
+    public String hienThiDangHoatDong(
+            Model model
+    ){
+        model.addAttribute("listChiTietSP",chiTietSanPhamSerivce.getAllDangHoatDong());
+        model.addAttribute("listSanPham",sanPhamSerivce.getAll());
+        model.addAttribute("listThuongHieu",thuongHieuService.findAll());
+        model.addAttribute("listKichCo",kichCoService.findAll());
+        model.addAttribute("listMauSac",mauSacService.findAll());
+        model.addAttribute("listLoaiDe",loaiDeService.findAll());
+        model.addAttribute("currentPage",pageNo);
+        return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
+    }
+
+    @GetMapping("/ngung-hoat-dong")
+    public String hienThiNgungHoatDong(
+            Model model
+    ){
+        model.addAttribute("listChiTietSP",chiTietSanPhamSerivce.getAllNgungHoatDong());
+        model.addAttribute("listSanPham",sanPhamSerivce.getAll());
+        model.addAttribute("listThuongHieu",thuongHieuService.findAll());
+        model.addAttribute("listKichCo",kichCoService.findAll());
+        model.addAttribute("listMauSac",mauSacService.findAll());
+        model.addAttribute("listLoaiDe",loaiDeService.findAll());
+        model.addAttribute("currentPage",pageNo);
+        return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
     }
 
     @GetMapping("/pre")
