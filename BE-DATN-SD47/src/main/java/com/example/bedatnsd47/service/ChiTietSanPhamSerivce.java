@@ -9,6 +9,11 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> getAll();
 
+    List<ChiTietSanPham> getAllDangHoatDong();
+
+    List<ChiTietSanPham> getAllNgungHoatDong();
+
+
     ChiTietSanPham add(ChiTietSanPham chiTietSanPham);
 
     ChiTietSanPham update(ChiTietSanPham chiTietSanPham);

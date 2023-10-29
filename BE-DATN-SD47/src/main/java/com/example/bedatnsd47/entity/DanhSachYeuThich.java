@@ -32,11 +32,11 @@ public class DanhSachYeuThich {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "chi_tiet_san_pham_id", referencedColumnName = "id")
     private ChiTietSanPham chiTietSanPham;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "danh_sach_yeu_thich_id", referencedColumnName = "id")
     private DanhSachYeuThich danhSachYeuThich;
 

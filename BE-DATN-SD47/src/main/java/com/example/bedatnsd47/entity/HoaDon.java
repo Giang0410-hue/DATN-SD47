@@ -86,18 +86,18 @@ public class HoaDon {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "voucher_id", referencedColumnName = "id")
     private Voucher voucher;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "tai_khoan_id", referencedColumnName = "id")
     private TaiKhoan taiKhoan;
 
-    @OneToMany(mappedBy = "hoaDon",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hoaDon")
     private List<HoaDonChiTiet> lstHoaDonChiTiet;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "phuong_thuc_thanh_toan_id", referencedColumnName = "id")
     private PhuongThucThanhToan phuongThucThanhToan;
 }
