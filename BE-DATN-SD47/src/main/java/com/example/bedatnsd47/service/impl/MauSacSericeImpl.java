@@ -29,6 +29,7 @@ public class MauSacSericeImpl implements MauSacService {
 
     @Override
     public Optional<MauSac> findById(Long id) {
+
         return mauSacRepository.findById(id);
     }
 
@@ -125,11 +126,13 @@ public class MauSacSericeImpl implements MauSacService {
 
     @Override
     public MauSac update(MauSac mauSac) {
+
         return mauSacRepository.save(mauSac);
     }
 
     @Override
     public MauSac getById(Long id) {
+
         return mauSacRepository.findById(id).get();
     }
 
