@@ -11,7 +11,7 @@ public interface SanPhamSerivce {
 
     List<SanPham> getAll();
 
-    SanPham add(List<MultipartFile> multipartFiles, SanPham sanPham);
+    SanPham add(SanPham sanPham);
 
     SanPham update(SanPham sanPham);
 

@@ -38,19 +38,19 @@ public class ChiTietSanPham {
     @Column(name = "gia_hien_hanh")
     private Double giaHienHanh;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "san_pham_id", referencedColumnName = "id")
     private SanPham sanPham;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kich_co_id", referencedColumnName = "id")
     private KichCo kichCo;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mau_sac_id", referencedColumnName = "id")
     private MauSac mauSac;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "loai_de_id", referencedColumnName = "id")
     private LoaiDe loaiDe;
 }
