@@ -337,11 +337,14 @@
                                                                                             <tr
                                                                                                 th:each=" ctsp, state: ${lstCtsp}">
                                                                                                 <form
-                                                                                                    action="/ban-hang-tai-quay/hdct/add">
-                                                                                                    <input  
+                                                                                                    action="/ban-hang-tai-quay/hdct/add" method="post">
+                                                                                                    <!-- input hidden -->
+                                                                                                    <input
                                                                                                         th:value="${hoaDon.id}"
                                                                                                         type="hidden"
                                                                                                         name="idHoaDon">
+                                                                                                    <input th:value="${ctsp.id}" type="hidden"
+                                                                                                        name="idCtsp">
                                                                                                     <td>[[${state.index+1}]]
                                                                                                     </td>
                                                                                                     <td>
@@ -372,7 +375,7 @@
                                                                                                                     </p>
                                                                                                                 </div>
                                                                                                             </div>
-                                                                                                        </div>
+                                                                                                            </divF>
                                                                                                     </td>
                                                                                                     <td>
                                                                                                         [[${ctsp.soLuong}]]
@@ -452,8 +455,8 @@
                                                                     </thead>
                                                                     <tbody>
 
-                                                                        <tr th:each="obj:${hoaDon.lstHoaDonChiTiet}">
-                                                                            <th scope="row">1</th>
+                                                                        <tr th:each="obj, state:${hoaDon.lstHoaDonChiTiet}">
+                                                                            <th scope="row" th:text="${state.index+1}"></th>
                                                                             <td>
                                                                                 <div class="row">
                                                                                     <div class="col-4">
@@ -477,11 +480,7 @@
                                                                                 </div>
                                                                             </td>
                                                                             <td>
-                                                                                <div class="quantity-table">
-                                                                                    <input type="number" name="points"
-                                                                                        min="0" max="100" step="1"
-                                                                                        th:value="${obj.soLuong}">
-                                                                                </div>
+                                                                                [[${obj.soLuong}]]
                                                                             </td>
                                                                             <td>
                                                                                 <div class="price-table">
@@ -490,11 +489,13 @@
                                                                             </td>
                                                                             <td>
                                                                                 <div class="button-table">
-                                                                                    <button type="submit"
+                                                                                    <!-- delete Hóa đơn chi tiết -->
+                                                                                    <button type="submit" class="btn btn-primary">...</button>
+                                                                                    <a th:href="@{'/ban-hang-tai-quay/hdct/delete/'+${obj.id}}"
                                                                                         class="btn btn-danger">
                                                                                         <i
                                                                                             class="bi bi-trash-fill"></i></i>
-                                                                                    </button>
+                                                                                </a>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>

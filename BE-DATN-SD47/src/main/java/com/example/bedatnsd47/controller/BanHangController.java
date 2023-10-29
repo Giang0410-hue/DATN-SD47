@@ -47,9 +47,35 @@ public class BanHangController {
         return "redirect:/ban-hang-tai-quay/home";
     }
 
-    @GetMapping("/hdct/add")
-    public String addHdct(@RequestParam("idHoaDon") Long idHoaDon) {
-        System.out.println(idHoaDon+"****************************************");
+    @PostMapping("/hdct/add")
+    public String addHdct(@RequestParam Long idHoaDon, @RequestParam Long idCtsp) {
+        Boolean cr =true;
+        HoaDonChiTiet hdct = new HoaDonChiTiet();
+        HoaDon hoaDon = hoaDonService.findById(idHoaDon);
+        ChiTietSanPham ctsp = chiTietSanPhamSerivce.getById(idCtsp);
+        for (HoaDonChiTiet obj : hoaDonChiTietService.findAll()) {
+            if (obj.getChiTietSanPham().getId() == idCtsp) {
+                hdct = obj;
+                hdct.setSoLuong(hdct.getSoLuong() + 1);
+                cr=false;
+                break;
+            }
+        }
+
+        if (cr) {
+            hdct = new HoaDonChiTiet();
+            hdct.setHoaDon(hoaDon);
+            hdct.setChiTietSanPham(ctsp);
+            hdct.setSoLuong(1);
+            hdct.setDonGia(ctsp.getGiaHienHanh());
+        }
+        hoaDonChiTietService.saveOrUpdate(hdct);
+        return "redirect:/ban-hang-tai-quay/home";
+    }
+
+    @GetMapping("/hdct/delete/{id}")
+    public String deleteHdct(@PathVariable Long id) {
+        hoaDonChiTietService.deleteById(id);
         return "redirect:/ban-hang-tai-quay/home";
     }
 
