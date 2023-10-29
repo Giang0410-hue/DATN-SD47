@@ -6,6 +6,7 @@ import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,16 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
 
         return repository.findAll();
 
+    }
+
+    @Override
+    public List<ChiTietSanPham> getAllDangHoatDong() {
+        return repository.fillAllDangHoatDong();
+    }
+
+    @Override
+    public List<ChiTietSanPham> getAllNgungHoatDong() {
+        return repository.fillAllNgungHoatDong();
     }
 
     @Override
