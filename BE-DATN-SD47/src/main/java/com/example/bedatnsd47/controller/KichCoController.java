@@ -22,34 +22,33 @@ public class KichCoController {
     @Autowired
     private KichCoService kichCoService;
 
-    private Integer pageNo = 0;
-
     private Date currentDate = new Date();
 
-    @GetMapping("")
+    @GetMapping()
     public String hienThi(
             Model model
     ) {
-        model.addAttribute("listKichCo", kichCoService.getPage(pageNo).stream().toList());
-        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listKichCo", kichCoService.findAll());
         model.addAttribute("kichCo", new KichCo());
         return "/admin-template/kich_co/kich-co";
     }
 
-    @GetMapping("/pre")
-    public String hienThiPre(
+    @GetMapping("/dang-hoat-dong")
+    public String hienThiDangHoatDong(
+            Model model
     ) {
-        pageNo--;
-        pageNo = kichCoService.checkPageNo(pageNo);
-        return "redirect:/admin/kich-co";
+        model.addAttribute("listKichCo", kichCoService.getAllDangHoatDong());
+        model.addAttribute("kichCo", new KichCo());
+        return "/admin-template/kich_co/kich-co";
     }
 
-    @GetMapping("/next")
-    public String hienThiNext(
+    @GetMapping("/ngung-hoat-dong")
+    public String hienThiNgungHoatDong(
+            Model model
     ) {
-        pageNo++;
-        pageNo = kichCoService.checkPageNo(pageNo);
-        return "redirect:/admin/kich-co";
+        model.addAttribute("listKichCo", kichCoService.getAllNgungHoatDong());
+        model.addAttribute("kichCo", new KichCo());
+        return "/admin-template/kich_co/kich-co";
     }
 
     @GetMapping("/view-update/{id}")
@@ -76,7 +75,7 @@ public class KichCoController {
             return "/admin-template/kich_co/sua-kich-co";
         } else if (!kichCoService.checkTenTrungSua(kichCo.getId(), kichCo.getTen()) ) {
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+            model.addAttribute("checkTenTrung", "Kích cỡ đã tồn tại");
             model.addAttribute("listKichCo", kichCoService.findAll());
             return "/admin-template/kich_co/sua-kich-co";
         } else {
@@ -99,25 +98,20 @@ public class KichCoController {
         if (result.hasErrors()) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("listKichCo", kichCoService.getPage(pageNo).stream().toList());
-            model.addAttribute("index", pageNo + 1);
-            model.addAttribute("currentPage", pageNo);
-//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            model.addAttribute("listKichCo", kichCoService.findAll());
+
             return "/admin-template/kich_co/kich-co";
         } else if (!kichCoService.checkTenTrung(kichCo.getTen())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("currentPage", pageNo);
-            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
-            model.addAttribute("listKichCo", kichCoService.getPage(pageNo).stream().toList());
-            model.addAttribute("index", pageNo + 1);
+            model.addAttribute("checkTenTrung", "Kích cỡ đã tồn tại");
+            model.addAttribute("listKichCo", kichCoService.findAll());
             return "/admin-template/kich_co/kich-co";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-//            sanPham.setMa("SP" + thuongHieuService.genMaTuDong());
             kichCo.setNgayTao(currentDate);
             kichCo.setTrangThai(0);
-            kichCoService.update(kichCo);
+            kichCoService.save(kichCo);
             return "redirect:/admin/kich-co";
         }
     }

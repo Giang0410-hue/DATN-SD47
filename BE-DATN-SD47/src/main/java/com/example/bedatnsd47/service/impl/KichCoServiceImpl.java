@@ -16,19 +16,32 @@ import java.util.Optional;
 
 @Service
 public class KichCoServiceImpl implements KichCoService {
+
     @Autowired
     KichCoRepository kichCoRepository;
 
     @Override
     public List<KichCo> findAll() {
-        return kichCoRepository.findAll();
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "ngaySua");
+        return kichCoRepository.findAll(sort);
+
     }
 
     @Override
-    public Optional<KichCo> findById(Long id) {
+    public List<KichCo> getAllDangHoatDong() {
 
-        return kichCoRepository.findById(id);
+        return kichCoRepository.fillAllDangHoatDong();
+
     }
+
+    @Override
+    public List<KichCo> getAllNgungHoatDong() {
+
+        return kichCoRepository.fillAllNgungHoatDong();
+
+    }
+
 
     @Override
     public void deleteById(Long id) {
@@ -36,30 +49,10 @@ public class KichCoServiceImpl implements KichCoService {
     }
 
     @Override
-    public void saveOrUpdate(KichCo thuongHieu, Integer ten) {
-        try {
-            thuongHieu.setTen(ten);
-            thuongHieu.setNgayTao(new Date());
-            thuongHieu.setNgaySua(new Date());
-            thuongHieu.setTrangThai(1);
-            kichCoRepository.save(thuongHieu);
-        } catch (Exception e) {
-            // Log the exception
-            e.printStackTrace();
-            // Handle the exception as needed
-        }
-    }
+    public KichCo save(KichCo kichCo) {
 
-    @Override
-    public Page<KichCo> findAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "ngaySua"));
-        return kichCoRepository.findAll(pageable);
+         return    kichCoRepository.save(kichCo);
 
-    }
-
-    @Override
-    public Page<KichCo> findByTenContaining(String keyword, Integer trang_thai, int page, int size) {
-        return null;
     }
 
     @Override
@@ -104,21 +97,5 @@ public class KichCoServiceImpl implements KichCoService {
         return kichCoRepository.findById(id).get();
     }
 
-    @Override
-    public Integer checkPageNo(Integer pageNo) {
-        Integer sizeList = kichCoRepository.findAll().size();
-        Integer pageCount = (int) Math.ceil((double) sizeList / 5);
-        if (pageNo >= pageCount) {
-            pageNo = 0;
-        } else if (pageNo < 0) {
-            pageNo = pageCount - 1;
-        }
-        return pageNo;
-    }
 
-    @Override
-    public Page<KichCo> getPage(Integer pageNo) {
-
-        return kichCoRepository.findAll(PageRequest.of(pageNo, 5));
-    }
 }
