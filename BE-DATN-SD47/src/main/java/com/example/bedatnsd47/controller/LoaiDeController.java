@@ -23,34 +23,33 @@ public class LoaiDeController {
     @Autowired
     LoaiDeService loaiDeService;
 
-    private Integer pageNo = 0;
-
     private Date currentDate = new Date();
 
     @GetMapping("")
     public String hienThi(
             Model model
     ) {
-        model.addAttribute("listLoaiDe", loaiDeService.getPage(pageNo).stream().toList());
-        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listLoaiDe", loaiDeService.findAll());
         model.addAttribute("loaiDe", new LoaiDe());
         return "/admin-template/loai_de/loai-de";
     }
 
-    @GetMapping("/pre")
-    public String hienThiPre(
+    @GetMapping("/dang-hoat-dong")
+    public String hienThiDangHoatDong(
+            Model model
     ) {
-        pageNo--;
-        pageNo = loaiDeService.checkPageNo(pageNo);
-        return "redirect:/admin/loai-de";
+        model.addAttribute("listLoaiDe", loaiDeService.getAllDangHoatDong());
+        model.addAttribute("loaiDe", new LoaiDe());
+        return "/admin-template/loai_de/loai-de";
     }
 
-    @GetMapping("/next")
-    public String hienThiNext(
+    @GetMapping("/ngung-hoat-dong")
+    public String hienThiNgungHoatDong(
+            Model model
     ) {
-        pageNo++;
-        pageNo = loaiDeService.checkPageNo(pageNo);
-        return "redirect:/admin/loai-de";
+        model.addAttribute("listLoaiDe", loaiDeService.getAllNgungHoatDong());
+        model.addAttribute("loaiDe", new LoaiDe());
+        return "/admin-template/loai_de/loai-de";
     }
 
     @GetMapping("/view-update/{id}")
@@ -59,7 +58,6 @@ public class LoaiDeController {
             @PathVariable("id") Long id
     ) {
         LoaiDe loaiDe = loaiDeService.getById(id);
-        model.addAttribute("listThuongHieu", loaiDeService.findAll());
         model.addAttribute("loaiDe", loaiDe);
         return "/admin-template/loai_de/sua-loai-de";
     }
@@ -71,14 +69,13 @@ public class LoaiDeController {
                          Model model,
                          RedirectAttributes redirectAttributes
     ) {
+
         if (result.hasErrors()) {
             model.addAttribute("checkThongBao", "thaiBai");
-//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/loai_de/sua-loai-de";
         } else if (!loaiDeService.checkTenTrungSua(loaiDe.getId(), loaiDe.getTen())) {
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
-//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            model.addAttribute("checkTenTrung", "Loại đế đã tồn tại");
             return "/admin-template/loai_de/sua-loai-de";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
@@ -88,6 +85,7 @@ public class LoaiDeController {
             loaiDeService.update(loaiDe);
             return "redirect:/admin/loai-de";
         }
+
     }
 
     @PostMapping("/add")
@@ -99,28 +97,22 @@ public class LoaiDeController {
         if (result.hasErrors()) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("listThuongHieu", loaiDeService.getPage(pageNo).stream().toList());
-            model.addAttribute("index", pageNo + 1);
-            model.addAttribute("currentPage", pageNo);
-//            model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+            model.addAttribute("listLoaiDe", loaiDeService.findAll());
             return "/admin-template/loai_de/loai-de";
         } else if (!loaiDeService.checkTenTrung(loaiDe.getTen())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
-            model.addAttribute("listThuongHieu", loaiDeService.getPage(pageNo).stream().toList());
-            model.addAttribute("index", pageNo + 1);
-            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("checkTenTrung", "Loại đế đã tồn tại");
+            model.addAttribute("listLoaiDe", loaiDeService.findAll());
             return "/admin-template/loai_de/loai-de";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-//            sanPham.setMa("SP" + thuongHieuService.genMaTuDong());
             loaiDe.setNgayTao(currentDate);
+            loaiDe.setNgaySua(currentDate);
             loaiDe.setTrangThai(0);
-            loaiDeService.update(loaiDe);
+            loaiDeService.save(loaiDe);
             return "redirect:/admin/loai-de";
         }
+
     }
-
-
 }

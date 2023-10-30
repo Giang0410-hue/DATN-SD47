@@ -25,12 +25,24 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
     private SanPhamRepository repository;
 
 
-
-
     @Override
     public List<SanPham> getAll() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "ngaySua");
+        return repository.findAll(sort);
 
-        return repository.findAll();
+    }
+
+    @Override
+    public List<SanPham> getAllDangHoatDong() {
+
+        return repository.fillAllDangHoatDong();
+
+    }
+
+    @Override
+    public List<SanPham> getAllNgungHoatDong() {
+
+        return repository.fillAllNgungHoatDong();
 
     }
 
@@ -58,27 +70,6 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
     public SanPham getById(Long id) {
 
         return repository.findById(id).get();
-
-    }
-
-    @Override
-    public Page<SanPham> getPage(Integer pageNo) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        return repository.findAll(PageRequest.of(pageNo, 5, sort));
-
-    }
-
-    @Override
-    public Integer checkPageNo(Integer pageNo) {
-
-        Integer sizeList = repository.findAll().size();
-        Integer pageCount = (int) Math.ceil((double) sizeList / 5);
-        if (pageNo >= pageCount) {
-            pageNo = 0;
-        } else if (pageNo < 0) {
-            pageNo = pageCount - 1;
-        }
-        return pageNo;
 
     }
 
@@ -128,7 +119,6 @@ public class SanPhamSerivceImpl implements SanPhamSerivce {
             }
         }
         return true;
-
     }
 
 }

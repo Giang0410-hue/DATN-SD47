@@ -30,7 +30,7 @@ public class MauSac {
     private String maMau;
 
     @Column(name = "ten", length = 100)
-    @NotBlank(message = "Không được để tên trống")
+    @NotBlank(message = "Không được để trống tên")
     private String ten;
 
     @Column(name = "ngay_tao")

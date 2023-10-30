@@ -9,8 +9,12 @@
     <title>Glacat</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    <div th:replace="~{admin-template/fragment/header :: header}"></div>
 
+    <!--    thư viện của bảng tích hợp tìm kiếm-->
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
+
+    <div th:replace="~{admin-template/fragment/header :: header}"></div>
 
 </head>
 
@@ -129,56 +133,36 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <!-- form tìm kiếm -->
-                        <form  method="post" style="margin-top: 2%;">
-                            <label class="col-sm-2 col-form-label">Nhập tên thương hiệu:</label>
-                            <div class="row mb-3">
-                                <div class="col-sm-8">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control"
-                                               placeholder="Tìm kiếm theo thương hiệu" name="keyword">
-
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="bi bi-arrow-clockwise"></i></button>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-primary" style="margin-left:35%;">Tìm
-                                        kiếm
-                                    </button>
-                                </div>
-                                <div class="col-sm-2">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            style="float: right; " data-bs-target="#them-thuong-hieu">
-                                        Thêm mới
-                                    </button>
+                        <!--    tìm kiếm theo trạng thái-->
+                        <div class="row g-3" style="margin-top: 2%;margin-bottom: 2%">
+                            <div class="col-md-8">
+                                <label>Trạng thái:</label>
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                    <a href="/admin/thuong-hieu" class="btn btn-outline-primary">
+                                        Tất cả</a>
+                                    <a href="/admin/thuong-hieu/dang-hoat-dong"
+                                       class="btn btn-outline-primary">
+                                        Đang hoạt động</a>
+                                    <a href="/admin/thuong-hieu/ngung-hoat-dong"
+                                       class="btn btn-outline-primary">
+                                        Ngừng hoạt động</a>
                                 </div>
                             </div>
-
-                            <div class="search-trang-thai" style="margin-top: 4%; margin-bottom: 4%;">
-                                <label style="margin-left:20%;">Trạng thái:</label>
-
-                                <input class="form-check-input" type="radio" name="trangThai" value="3"
-                                       style="margin-left:5%;" checked>
-                                <label class="form-check-label">
-                                    Tất cả
-                                </label>
-
-                                <input class="form-check-input" type="radio" name="trangThai" value="1"
-                                       style="margin-left:5%;">
-                                <label class="form-check-label">
-                                    Đang hoạt động
-                                </label>
-
-                                <input class="form-check-input" type="radio" name="trangThai" value="0"
-                                       style="margin-left:5%;">
-                                <label class="form-check-label">
-                                    Dừng hoạt động
-                                </label>
+                            <div class="col-md-2">
+                                <a href="/admin/thuong-hieu" style="float: right"
+                                   class="btn btn-primary">
+                                    <i class="bi bi-arrow-clockwise"> Làm mới</i>
+                                </a>
                             </div>
-                        </form>
-                        <!-- form tìm kiếm end -->
+                            <div class="col-md-2">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        style="float: right; " data-bs-target="#them-thuong-hieu">
+                                    Thêm mới
+                                </button>
+                            </div>
+                        </div>
+                        <!--     tìm kiếm theo trạng thái end-->
 
                         <!-- Modal thêm thuộc tính -->
                         <div class="modal fade" id="them-thuong-hieu" tabindex="-1"
@@ -238,19 +222,19 @@
                         </div>
                         <!-- Modal thêm thuộc tính end-->
 
-                        <table class="sanpham-table">
+                        <table id="example" class="display" style="width:100%">
                             <thead>
                             <tr>
                                 <th>STT</th>
                                 <th>Tên</th>
                                 <th>Trạng Thái</th>
-                                <th>Thao Tác</th>
+                                <th>Hành Động</th>
                             </tr>
                             <thead>
                             <thead>
                             <tbody>
                             <tr th:each="thuongHieu,iterStat : ${listThuongHieu}">
-                                <td th:text="${#numbers.sequence(1 + (currentPage * 5), 1 + (currentPage * 5) + 5)[__${iterStat.index}__]}"></td>
+                                <td th:text="${iterStat.index+1}"></td>
                                 <td th:text="${thuongHieu.ten}"></td>
                                 <td class="trangthaidkd" th:if="${thuongHieu.trangThai==0}">Đang kinh doanh</td>
                                 <td class="trangthainkd" th:if="${thuongHieu.trangThai==1}">Ngừng kinh doanh</td>
@@ -262,60 +246,16 @@
                                 </td>
                             </tr>
                             </tbody>
+                            <tfoot hidden="hidden">
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên</th>
+                                <th>Trạng Thái</th>
+                                <th>Hành Động</th>
+                            </tr>
+                            </tfoot>
                         </table>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" th:href="@{/admin/thuong-hieu/pre}">
-                                        <i class="bi bi-chevron-left"></i>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" th:text="${currentPage+1}"></a></li>
-                                <li class="page-item">
-                                    <a class="page-link" th:href="@{/admin/thuong-hieu/next}">
-                                        <i class="bi bi-chevron-right"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-<!--                        <nav aria-label="Page navigation example">-->
-<!--                            <ul class="pagination">-->
-<!--                                <li class="page-item">-->
-<!--                                    <a class="page-link" th:if="${thuongHieuPage.hasPrevious()}"-->
-<!--                                       th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=0)}">-->
-<!--                                        <i class="bi bi-chevron-left"></i>-->
-<!--                                    </a>-->
-<!--                                </li>-->
-<!--                                &lt;!&ndash; Display page numbers with ellipsis &ndash;&gt;-->
-<!--                                <li class="page-item">-->
-<!--                                    <a class="page-link" th:if="${thuongHieuPage.number > 2}"-->
-<!--                                       th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=0)}">1</a>-->
-<!--                                </li>-->
-<!--                                <li class="page-item">-->
-<!--                                    <span class="page-link" th:if="${thuongHieuPage.number > 3}">...</span>-->
-<!--                                </li>-->
-<!--                                <li class="page-item"-->
-<!--                                    th:each="i : ${#numbers.sequence(thuongHieuPage.number - 2, thuongHieuPage.number + 2)}"-->
-<!--                                    th:unless="${i < 0 or i >= thuongHieuPage.totalPages}">-->
-<!--                                    <a class="page-link" th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=${i})}"-->
-<!--                                       th:text="${i + 1}"></a>-->
-<!--                                </li>-->
-<!--                                <li class="page-item">-->
-<!--                                        <span class="page-link"-->
-<!--                                              th:if="${thuongHieuPage.number < thuongHieuPage.totalPages - 4}">...</span>-->
-<!--                                </li>-->
-<!--                                <li class="page-item">-->
-<!--                                    <a class="page-link"-->
-<!--                                       th:if="${thuongHieuPage.number < thuongHieuPage.totalPages - 3}"-->
-<!--                                       th:href="@{/ap1/v1/thuong-hieu/hien-thi(page=${thuongHieuPage.totalPages - 1})}">-->
-<!--                                        <i class="bi bi-chevron-right"></i>-->
-<!--                                    </a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
 
-<!--                            <p>Trang <span th:text="${thuongHieuPage.number + 1}"></span> / <span-->
-<!--                                    th:text="${thuongHieuPage.totalPages}"></span></p>-->
-<!--                        </nav>-->
                     </div>
                 </div>
             </div>
@@ -479,6 +419,71 @@
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
+
+<!--    thư viện của bảng tích hợp tìm kiếm-->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
+<script>
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            "language": {
+                "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                "emptyTable": "Không có kết quả nào được tìm thấy",
+                "zeroRecords": "Không có kết quả phù hợp",
+                "infoEmpty": "Không có dữ liệu để hiển thị"
+            },
+            "initComplete": function (settings, json) {
+                // CSS changes
+                $('#example_filter input[type="search"]').addClass('form-control');
+                $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                $('#example_filter label').contents().filter(function () {
+                    return this.nodeType === 3;
+                }).replaceWith(' ');
+
+                $('#example_length label').contents().filter(function () {
+                    return this.nodeType === 3;
+                }).first().replaceWith('Hiển thị');
+                $('#example_length label').contents().filter(function () {
+                    return this.nodeType === 3;
+                }).last().replaceWith('mục');
+
+                $('#example_length select').addClass('form-select');
+            }
+        });
+
+        table.on('draw.dt', function () {
+            var pageInfo = table.page.info();
+
+            var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+            $('#example_info').html(newInfo);
+
+        });
+    });
+</script>
+<style>
+    /*input tìm kiếm*/
+    #example_filter input[type="search"] {
+        width: 180%;
+        margin-left: -80%;
+        margin-bottom: 10%;
+    }
+    /*select hiển thị mục*/
+    .dataTables_length label {
+        white-space: nowrap; /* Ngăn các phần tử xuống dòng */
+        display: flex; /* Hiển thị label và select trên cùng một dòng */
+        align-items: center; /* Canh chỉnh label và select theo chiều dọc */
+    }
+
+    .dataTables_length select {
+        margin-left: 5px; /* Tạo khoảng cách giữa label và select */
+    }
+
+    .dataTables_length label:after {
+        /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
+        content: ''; /* Xóa nội dung */
+    }
+</style>
+<!--    thư viện của bảng tích hợp tìm kiếm end-->
 
 <!-- Vendor JS Files -->
 <div th:replace="~{admin-template/fragment/script :: script}"></div>
