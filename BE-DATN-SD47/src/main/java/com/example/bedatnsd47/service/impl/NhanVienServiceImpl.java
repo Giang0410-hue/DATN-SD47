@@ -4,8 +4,7 @@ import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.repository.NhanVienRepository;
 import com.example.bedatnsd47.service.NhanVienService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,22 @@ public class NhanVienServiceImpl implements NhanVienService {
     @Override
     public List<TaiKhoan> getAll() {
 
-        return repository.findAll();
+        Sort sort = Sort.by(Sort.Direction.DESC, "ngaySua");
+        return repository.findAll(sort);
+
+    }
+
+    @Override
+    public List<TaiKhoan> getAllDangHoatDong() {
+
+        return repository.fillAllDangHoatDong();
+
+    }
+
+    @Override
+    public List<TaiKhoan> getAllNgungHoatDong() {
+
+        return repository.fillAllNgungHoatDong();
 
     }
 
@@ -37,7 +51,9 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public void remove(Long id) {
+
          repository.deleteById(id);
+
     }
 
     @Override
@@ -48,35 +64,29 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public Page<TaiKhoan> getPage(Integer pageNo) {
-        return repository.findAll(PageRequest.of(pageNo,5));
-    }
-
-    @Override
-    public Integer checkPageNo(Integer pageNo) {
-
-        Integer sizeList = repository.findAll().size();
-        Integer pageCount = (int) Math.ceil((double) sizeList / 5);
-        if (pageNo >= pageCount) {
-            pageNo = 0;
-        } else if (pageNo < 0) {
-            pageNo = pageCount - 1;
-        }
-        return pageNo;
-
-    }
-
-    @Override
     public boolean checkTenTrung(String ten) {
 
-        return false;
+
+        for (TaiKhoan sp : repository.findAll()) {
+            if (sp.getTen_tai_khoan().equalsIgnoreCase(ten)) {
+                return false;
+            }
+        }
+        return true;
 
     }
 
     @Override
-    public boolean checkTenTrungSua(String ma, String ten) {
+    public boolean checkTenTrungSua(String id, String ten) {
 
-        return false;
+        for (TaiKhoan tk : repository.findAll()) {
+            if (tk.getTen_tai_khoan().equalsIgnoreCase(ten)) {
+                if (!tk.getId().equals(id)) {
+                    return false;
+                }
+            }
+        }
+        return true;
 
     }
 
