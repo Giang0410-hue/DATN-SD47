@@ -48,27 +48,33 @@ public class SanPhamController {
     public String hienThi(
             Model model
     ) {
-        model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
+        model.addAttribute("listSanPham", sanPhamSerivce.getAll());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("listThuongHieu", thuongHieuService.findAll());
         model.addAttribute("sanPham", new SanPham());
         return "/admin-template/san_pham/san-pham";
     }
 
-    @GetMapping("/pre")
-    public String hienThiPre(
+    @GetMapping("/dang-hoat-dong")
+    public String hienThiAll(
+            Model model
     ) {
-        pageNo--;
-        pageNo = sanPhamSerivce.checkPageNo(pageNo);
-        return "redirect:/admin/san-pham";
+        model.addAttribute("listSanPham", sanPhamSerivce.getAllDangHoatDong());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+        model.addAttribute("sanPham", new SanPham());
+        return "/admin-template/san_pham/san-pham";
     }
 
-    @GetMapping("/next")
-    public String hienThiNext(
+    @GetMapping("/ngung-hoat-dong")
+    public String hienThiNgungHoatDong(
+            Model model
     ) {
-        pageNo++;
-        pageNo = sanPhamSerivce.checkPageNo(pageNo);
-        return "redirect:/admin/san-pham";
+        model.addAttribute("listSanPham", sanPhamSerivce.getAllNgungHoatDong());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listThuongHieu", thuongHieuService.findAll());
+        model.addAttribute("sanPham", new SanPham());
+        return "/admin-template/san_pham/san-pham";
     }
 
     @GetMapping("/view-update/{id}")
@@ -127,27 +133,24 @@ public class SanPhamController {
         if (result.hasErrors()) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
-            model.addAttribute("index", pageNo + 1);
-            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("listSanPham", sanPhamSerivce.getAll());
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
         } else if (!sanPhamSerivce.checkTenTrung(sanPham.getTen())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
-            model.addAttribute("currentPage", pageNo);
-            model.addAttribute("listSanPham", sanPhamSerivce.getPage(pageNo).stream().toList());
-            model.addAttribute("index", pageNo + 1);
+            model.addAttribute("listSanPham", sanPhamSerivce.getAll());
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/san_pham/san-pham";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
             sanPham.setNgayTao(currentDate);
+            sanPham.setNgaySua(currentDate);
             sanPham.setTrangThai(0);
-            hinhAnhSanPhamSerivce.saveImage(multipartFiles, sanPham);
             sanPhamSerivce.add(sanPham);
+            hinhAnhSanPhamSerivce.saveImage(multipartFiles, sanPham);
             return "redirect:/admin/san-pham";
         }
     }

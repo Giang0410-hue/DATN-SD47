@@ -19,18 +19,23 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     @Override
     public List<ChiTietSanPham> getAll() {
 
-        return repository.findAll();
+        Sort sort = Sort.by(Sort.Direction.DESC, "ngaySua");
+        return repository.findAll(sort);
 
     }
 
     @Override
     public List<ChiTietSanPham> getAllDangHoatDong() {
+
         return repository.fillAllDangHoatDong();
+
     }
 
     @Override
     public List<ChiTietSanPham> getAllNgungHoatDong() {
+
         return repository.fillAllNgungHoatDong();
+
     }
 
     @Override
@@ -61,26 +66,6 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
 
     }
 
-    @Override
-    public Page<ChiTietSanPham> getPage(Integer pageNo) {
-
-        return repository.findAll(PageRequest.of(pageNo,5));
-
-    }
-
-    @Override
-    public Integer checkPageNo(Integer pageNo) {
-
-        Integer sizeList = repository.findAll().size();
-        Integer pageCount = (int) Math.ceil((double) sizeList / 5);
-        if (pageNo >= pageCount) {
-            pageNo = 0;
-        } else if (pageNo < 0) {
-            pageNo = pageCount - 1;
-        }
-        return pageNo;
-
-    }
 
     @Override
     public boolean checkTenTrung(String ten) {
