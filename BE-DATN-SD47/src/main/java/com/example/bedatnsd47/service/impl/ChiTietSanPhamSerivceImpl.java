@@ -19,8 +19,7 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     @Override
     public List<ChiTietSanPham> getAll() {
 
-        Sort sort = Sort.by(Sort.Direction.DESC, "ngaySua");
-        return repository.findAll(sort);
+        return repository.findAll();
 
     }
 

@@ -27,10 +27,6 @@ public class MauSacController {
     @Autowired
     MauSacService mauSacService;
 
-    private Integer pageNo = 0;
-
-    private Integer trangThai = 1;
-
     private Date currentDate = new Date();
 
 
@@ -38,27 +34,29 @@ public class MauSacController {
     public String hienThi(
             Model model
     ) {
-        model.addAttribute("listMauSac", mauSacService.getPage(pageNo).stream().toList());
-        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listMauSac", mauSacService.findAll());
         model.addAttribute("mauSac", new MauSac());
         return "/admin-template/mau_sac/mau-sac";
     }
 
-    @GetMapping("/pre")
-    public String hienThiPre(
+    @GetMapping("/dang-hoat-dong")
+    public String hienThiDangHoatDong(
+            Model model
     ) {
-        pageNo--;
-        pageNo = mauSacService.checkPageNo(pageNo);
-        return "redirect:/admin/mau-sac";
+        model.addAttribute("listMauSac", mauSacService.getAllDangHoatDong());
+        model.addAttribute("mauSac", new MauSac());
+        return "/admin-template/mau_sac/mau-sac";
     }
 
-    @GetMapping("/next")
-    public String hienThiNext(
+    @GetMapping("/ngung-hoat-dong")
+    public String hienThiNgungHoatDong(
+            Model model
     ) {
-        pageNo++;
-        pageNo = mauSacService.checkPageNo(pageNo);
-        return "redirect:/admin/mau-sac";
+        model.addAttribute("listMauSac", mauSacService.getAllNgungHoatDong());
+        model.addAttribute("mauSac", new MauSac());
+        return "/admin-template/mau_sac/mau-sac";
     }
+
 
     @GetMapping("/view-update/{id}")
     public String viewUpdate(
@@ -66,7 +64,6 @@ public class MauSacController {
             @PathVariable("id") Long id
     ) {
         MauSac mauSac = mauSacService.getById(id);
-//        model.addAttribute("listThuongHieu", mauSacService.findAll());
         model.addAttribute("mauSac", mauSac);
         return "/admin-template/mau_sac/sua-mau-sac";
     }
@@ -80,12 +77,10 @@ public class MauSacController {
     ) {
         if (result.hasErrors()) {
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("currentPage", pageNo);
             return "/admin-template/mau_sac/sua-mau-sac";
         } else if (!mauSacService.checkTenTrungSua(mauSac.getMaMau(), mauSac.getTen())) {
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("currentPage", pageNo);
-            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
+            model.addAttribute("checkTenTrung", "Màu sắc đã tồn tại");
             return "/admin-template/mau_sac/sua-mau-sac";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
@@ -107,17 +102,13 @@ public class MauSacController {
         if (result.hasErrors()) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("listMauSac", mauSacService.getPage(pageNo).stream().toList());
-            model.addAttribute("currentPage", pageNo);
-            model.addAttribute("index", pageNo + 1);
+            model.addAttribute("listMauSac", mauSacService.findAll());
             return "/admin-template/mau_sac/mau-sac";
         } else if (!mauSacService.checkTenTrung(mauSac.getTen())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("currentPage", pageNo);
-            model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
-            model.addAttribute("listMauSac", mauSacService.getPage(pageNo).stream().toList());
-            model.addAttribute("index", pageNo + 1);
+            model.addAttribute("checkTenTrung", "Màu sắc đã tồn tại");
+            model.addAttribute("listMauSac", mauSacService.findAll());
             return "/admin-template/mau_sac/mau-sac";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");

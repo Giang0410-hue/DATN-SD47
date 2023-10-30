@@ -21,13 +21,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoaiDe {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "ten", length = 100)
-    @NotBlank(message = "Tên sản phẩm không được trống")
+    @NotBlank(message = "Không được để trống tên")
     private String ten;
 
     @Column(name = "ngay_tao")

@@ -21,10 +21,6 @@ public interface SanPhamSerivce {
 
     SanPham getById(Long id);
 
-//    Page<SanPham> getPage(Integer pageNo);
-//
-//    Integer checkPageNo(Integer pageNo);
-
     Integer genMaTuDong();
 
     boolean checkTenTrung(String ten);

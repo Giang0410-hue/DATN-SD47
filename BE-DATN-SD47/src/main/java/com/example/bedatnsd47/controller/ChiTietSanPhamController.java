@@ -37,8 +37,6 @@ public class ChiTietSanPhamController {
     private LoaiDeService loaiDeService;
 
 
-    private Integer pageNo = 0;
-
     @GetMapping()
     public String hienThi(
         Model model
@@ -49,7 +47,6 @@ public class ChiTietSanPhamController {
         model.addAttribute("listKichCo",kichCoService.findAll());
         model.addAttribute("listMauSac",mauSacService.findAll());
         model.addAttribute("listLoaiDe",loaiDeService.findAll());
-        model.addAttribute("currentPage",pageNo);
         return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
     }
 
@@ -63,7 +60,6 @@ public class ChiTietSanPhamController {
         model.addAttribute("listKichCo",kichCoService.findAll());
         model.addAttribute("listMauSac",mauSacService.findAll());
         model.addAttribute("listLoaiDe",loaiDeService.findAll());
-        model.addAttribute("currentPage",pageNo);
         return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
     }
 
@@ -77,7 +73,6 @@ public class ChiTietSanPhamController {
         model.addAttribute("listKichCo",kichCoService.findAll());
         model.addAttribute("listMauSac",mauSacService.findAll());
         model.addAttribute("listLoaiDe",loaiDeService.findAll());
-        model.addAttribute("currentPage",pageNo);
         return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
     }
 
