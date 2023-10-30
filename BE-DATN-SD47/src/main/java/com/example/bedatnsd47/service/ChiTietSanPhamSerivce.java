@@ -9,6 +9,10 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> getAll();
 
+    List<ChiTietSanPham> getAllDangHoatDong();
+
+    List<ChiTietSanPham> getAllNgungHoatDong();
+
     ChiTietSanPham add(ChiTietSanPham chiTietSanPham);
 
     ChiTietSanPham update(ChiTietSanPham chiTietSanPham);
@@ -17,13 +21,9 @@ public interface ChiTietSanPhamSerivce {
 
     ChiTietSanPham getById(Long id);
 
-    Page<ChiTietSanPham> getPage(Integer pageNo);
-
-    Integer checkPageNo(Integer pageNo);
-
     boolean checkTenTrung(String ten);
 
-    boolean checkTenTrungSua(String ma,String ten);
+    boolean checkTenTrungSua(String ma, String ten);
 
 
 }

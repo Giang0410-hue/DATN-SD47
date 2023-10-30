@@ -1,12 +1,15 @@
 package com.example.bedatnsd47.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +17,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
+
+
 
 @Getter
 @Setter
@@ -80,15 +86,18 @@ public class HoaDon {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne
-    @JoinColumn(name = "voucher_id")
+    @ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "voucher_id", referencedColumnName = "id")
     private Voucher voucher;
 
-    @ManyToOne
-    @JoinColumn(name = "tai_khoan_id")
+    @ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "tai_khoan_id", referencedColumnName = "id")
     private TaiKhoan taiKhoan;
 
-    @ManyToOne
-    @JoinColumn(name = "phuong_thuc_thanh_toan_id")
+    @OneToMany(mappedBy = "hoaDon")
+    private List<HoaDonChiTiet> lstHoaDonChiTiet;
+
+    @ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "phuong_thuc_thanh_toan_id", referencedColumnName = "id")
     private PhuongThucThanhToan phuongThucThanhToan;
 }

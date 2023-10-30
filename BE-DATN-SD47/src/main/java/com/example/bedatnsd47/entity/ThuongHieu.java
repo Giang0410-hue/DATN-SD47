@@ -27,7 +27,7 @@ public class ThuongHieu {
     private Long id;
 
     @Column(name = "ten", length = 100)
-    @NotBlank(message = "Tên sản phẩm không được trống")
+    @NotBlank(message = "Không được trống tên")
     private String ten;
 
     @Column(name = "ngay_tao")
@@ -38,12 +38,5 @@ public class ThuongHieu {
 
     @Column(name = "trang_thai")
     private Integer trangThai;
-
-    public ThuongHieu(String ten) {
-        this.ten = ten;
-        this.ngayTao = new Date();
-        this.ngaySua = new Date();
-        this.trangThai = 1;
-    }
 
 }

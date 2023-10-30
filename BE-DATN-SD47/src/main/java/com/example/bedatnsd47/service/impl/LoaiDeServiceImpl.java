@@ -17,16 +17,30 @@ import java.util.Optional;
 
 @Service
 public class LoaiDeServiceImpl  implements LoaiDeService {
+
     @Autowired
     LoaiDeRepository loaiDeRepository;
+
     @Override
     public List<LoaiDe> findAll() {
-        return loaiDeRepository.findAll();
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "ngaySua");
+        return loaiDeRepository.findAll(sort);
+
     }
 
     @Override
-    public Optional<LoaiDe> findById(Long id) {
-        return loaiDeRepository.findById(id);
+    public List<LoaiDe> getAllDangHoatDong() {
+
+        return loaiDeRepository.fillAllDangHoatDong();
+
+    }
+
+    @Override
+    public List<LoaiDe> getAllNgungHoatDong() {
+
+        return loaiDeRepository.fillAllNgungHoatDong();
+
     }
 
     @Override
@@ -35,60 +49,45 @@ public class LoaiDeServiceImpl  implements LoaiDeService {
     }
 
     @Override
-    public void saveOrUpdate(LoaiDe thuongHieu, String ten) {
-        try {
-            thuongHieu.setTen(ten);
-            thuongHieu.setNgayTao(new Date());
-            thuongHieu.setNgaySua(new Date());
-            thuongHieu.setTrangThai(1);
-            loaiDeRepository.save(thuongHieu);
-        } catch (Exception e) {
-            // Log the exception
-            e.printStackTrace();
-            // Handle the exception as needed
+    public LoaiDe save(LoaiDe loaiDe) {
+        return loaiDeRepository.save(loaiDe);
+    }
+
+
+    @Override
+    public boolean checkTenTrung(String ten) {
+        for (LoaiDe de : loaiDeRepository.findAll()) {
+            if (de.getTen().equalsIgnoreCase(ten)) {
+                return false;
+            }
         }
+        return true;
     }
 
     @Override
-    public void update(LoaiDe thuongHieu, Long id, Integer trangThai, String ten, Date ngayTao) {
-        try {
-            List<LoaiDe> list = LoaiDeServiceImpl.this.findAll();
-            boolean duplicateFound = false;
-            for (LoaiDe thuongHieuTim : list
-            ) {
-                if (thuongHieuTim.getId() != id && thuongHieuTim.getTen().equals(ten)) {
-                    duplicateFound = true;
-                    break;
+    public boolean checkTenTrungSua(Long id, String ten) {
+        for (LoaiDe de : loaiDeRepository.findAll()) {
+            if (de.getTen().equalsIgnoreCase(ten)) {
+                if (!de.getId().equals(id)){
+                    return false;
                 }
             }
-            if (duplicateFound) {
-                System.out.println("Da ton tai");
-            } else {
-                thuongHieu.setId(id);
-                thuongHieu.setTen(ten);
-                thuongHieu.setNgayTao(ngayTao);
-                thuongHieu.setNgaySua(new Date());
-                thuongHieu.setTrangThai(trangThai);
-                loaiDeRepository.save(thuongHieu);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        return true;
     }
 
     @Override
-    public LoaiDe findByTen(String ten) {
-        return loaiDeRepository.findByTen(ten);
+    public LoaiDe update(LoaiDe loaiDe) {
+
+        return loaiDeRepository.save(loaiDe);
+
     }
 
     @Override
-    public Page<LoaiDe> findAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "ngaySua"));
-        return loaiDeRepository.findAll(pageable);
+    public LoaiDe getById(Long id) {
+
+        return loaiDeRepository.findById(id).get();
+
     }
 
-    @Override
-    public Page<LoaiDe> findByTenContaining(String keyword, Integer trang_thai, int page, int size) {
-        return null;
-    }
 }

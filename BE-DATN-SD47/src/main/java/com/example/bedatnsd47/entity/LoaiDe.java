@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,12 +21,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoaiDe {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "ten", length = 100)
+    @NotBlank(message = "Không được để trống tên")
     private String ten;
 
     @Column(name = "ngay_tao")

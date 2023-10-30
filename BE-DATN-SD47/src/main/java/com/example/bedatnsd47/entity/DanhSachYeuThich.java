@@ -1,7 +1,9 @@
 package com.example.bedatnsd47.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,12 +32,12 @@ public class DanhSachYeuThich {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne
-    @JoinColumn(name = "chi_tiet_san_pham_id")
+    @ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "chi_tiet_san_pham_id", referencedColumnName = "id")
     private ChiTietSanPham chiTietSanPham;
 
-    @ManyToOne
-    @JoinColumn(name = "danh_sach_yeu_thich_id")
+    @ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "danh_sach_yeu_thich_id", referencedColumnName = "id")
     private DanhSachYeuThich danhSachYeuThich;
 
 }

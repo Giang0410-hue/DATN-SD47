@@ -9,6 +9,10 @@ public interface SanPhamSerivce {
 
     List<SanPham> getAll();
 
+    List<SanPham> getAllDangHoatDong();
+
+    List<SanPham> getAllNgungHoatDong();
+
     SanPham add(SanPham sanPham);
 
     SanPham update(SanPham sanPham);
@@ -16,10 +20,6 @@ public interface SanPhamSerivce {
     void remove(Long id);
 
     SanPham getById(Long id);
-
-    Page<SanPham> getPage(Integer pageNo);
-
-    Integer checkPageNo(Integer pageNo);
 
     Integer genMaTuDong();
 

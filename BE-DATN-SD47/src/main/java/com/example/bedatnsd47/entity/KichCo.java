@@ -6,7 +6,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +32,10 @@ public class KichCo {
     private Long id;
 
     @Column(name = "ten")
-    @NotBlank(message = "Tên sản phẩm không được trống")
-    private Float ten;
+    @NotNull(message = "Không được trống kích cỡ")
+    @Min(value = 35,message = "Kích cỡ nhỏ nhất là 35")
+    @Max(value = 45,message = "Kích cỡ lớn nhất là 45")
+    private Integer ten;
 
     @Column(name = "ngay_tao")
     private Date ngayTao;

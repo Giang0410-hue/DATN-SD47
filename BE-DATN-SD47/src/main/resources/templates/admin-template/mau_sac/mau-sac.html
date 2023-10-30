@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -8,6 +9,10 @@
     <title>Glacat</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
+
+    <!--    thư viện của bảng tích hợp tìm kiếm-->
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
 
     <div th:replace="~{admin-template/fragment/header :: header}"></div>
 </head>
@@ -18,7 +23,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="../ban-hang-admin.html" class="logo d-flex align-items-center">
+        <a href="../ban-hang-tai-quay/home" class="logo d-flex align-items-center">
             <img src="../../../static/img/logo.png" alt="">
             <span class="d-none d-lg-block">NiceAdmin</span>
         </a>
@@ -34,7 +39,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="../ban-hang-admin.html">
+            <a class="nav-link collapsed" href="../ban-hang-tai-quay/home">
                 <i class="bi bi-grid"></i>
                 <span>Bán Hàng</span>
             </a>
@@ -47,27 +52,32 @@
             </a>
             <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="../san_pham/san-pham.html">
+                    <a href="/admin/san-pham-chi-tiet">
+                        <i class="bi bi-circle"></i><span>Sản Phẩm Chi Tiết</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../admin/san-pham">
                         <i class="bi bi-circle"></i><span>Sản Phẩm</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../thuong_hieu/thuong-hieu.html">
+                    <a href="/admin/thuong-hieu">
                         <i class="bi bi-circle"></i><span>Thương Hiệu</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../loai_de/loai-de.html">
+                    <a href="/admin/loai-de">
                         <i class="bi bi-circle"></i><span>Loại Đế</span>
                     </a>
                 </li>
                 <li>
-                    <a href="mau-sac.html" class="active">
+                    <a href="/admin/mau-sac" class="active">
                         <i class="bi bi-circle"></i><span>Màu Sắc</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../kich_co/kich-co.html">
+                    <a href="/admin/kich-co">
                         <i class="bi bi-circle"></i><span>Kích Cỡ</span>
                     </a>
                 </li>
@@ -88,12 +98,12 @@
             </a>
             <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="../nhan_vien/nhan-vien.html">
+                    <a href="/admin/nhan-vien">
                         <i class="bi bi-circle"></i><span>Quản lý nhân viên</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../khach_hang/khach-hang.html">
+                    <a href="../admin/khach-hang">
                         <i class="bi bi-circle"></i><span>Quản lý khách hàng</span>
                     </a>
                 </li>
@@ -101,7 +111,7 @@
         </li><!-- End Tables Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="../voucher/voucher.html">
+            <a class="nav-link collapsed" href="../admin/voucher">
                 <i class="bi bi-envelope"></i>
                 <span>Quản Lý Voucher</span>
             </a>
@@ -121,69 +131,60 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-
-                        <!-- form tìm kiếm -->
-                        <form action="" style="margin-top: 2%;">
-                            <label class="col-sm-2 col-form-label">Nhập tên màu sắc:</label>
-                            <div class="row mb-3">
-                                <div class="col-sm-8">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Tìm kiếm theo màu sắc">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="bi bi-arrow-clockwise"></i></button>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-primary" style="margin-left:35%;">Tìm
-                                        kiếm
-                                    </button>
-                                </div>
-                                <div class="col-sm-2">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            style="float: right; "
-                                            data-bs-target="#them-mau-sac">
-                                        Thêm mới
-                                    </button>
+                        <!--    tìm kiếm theo trạng thái-->
+                        <div class="row g-3" style="margin-top: 2%;margin-bottom: 2%">
+                            <div class="col-md-8">
+                                <label>Trạng thái:</label>
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                    <a href="/admin/mau-sac" class="btn btn-outline-primary">
+                                        Tất cả</a>
+                                    <a href="/admin/mau-sac/dang-hoat-dong"
+                                       class="btn btn-outline-primary">
+                                        Đang hoạt động</a>
+                                    <a href="/admin/mau-sac/ngung-hoat-dong"
+                                       class="btn btn-outline-primary">
+                                        Ngừng hoạt động</a>
                                 </div>
                             </div>
-                            <div class="search-trang-thai" style="margin-top: 4%; margin-bottom: 4%;">
-                                <label style="margin-left:20%;">Trạng thái:</label>
-                                <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                       style="margin-left:5%;"
-                                       checked>
-                                <label class="form-check-label">
-                                    Tất cả
-                                </label>
-
-                                <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                       style="margin-left:5%;"
-                                       checked>
-                                <label class="form-check-label">
-                                    Đang hoạt động
-                                </label>
-
-                                <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                       style="margin-left:5%;"
-                                       checked>
-                                <label class="form-check-label">
-                                    Dừng hoạt động
-                                </label>
+                            <div class="col-md-2">
+                                <a href="/admin/mau-sac" style="float: right"
+                                   class="btn btn-primary">
+                                    <i class="bi bi-arrow-clockwise"> Làm mới</i>
+                                </a>
                             </div>
-                        </form>
-                        <!-- form tìm kiếm end -->
+                            <div class="col-md-2">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        style="float: right; " data-bs-target="#them-mau-sac">
+                                    Thêm mới
+                                </button>
+                            </div>
+                        </div>
+                        <!--     tìm kiếm theo trạng thái end-->
 
                         <!-- Modal thêm thuộc tính -->
                         <div class="modal fade" id="them-mau-sac" tabindex="-1" aria-labelledby="them-mau-sacLabel"
                              aria-hidden="true">
+                            <!--js bật modal khi check-->
+                            <script th:if="${checkModal=='modal'}">
+                                window.addEventListener('DOMContentLoaded', (event) => {
+                                    // Hiển thị modal
+                                    var myModal = new bootstrap.Modal(document.getElementById('them-mau-sac'));
+                                    myModal.show();
+                                });
+                            </script>
+                            <!--js bật modal khi check-->
+
                             <div class="modal-dialog">
                                 <div class="modal-content" style="width: 100%;margin: auto;margin-top: 40%;">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="them-mau-sacLabel">Thêm màu sắc</h1>
+                                        <h1 class="modal-title fs-5" id="them-mau-sacLabel">Thêm Màu Sắc</h1>
                                     </div>
 
                                     <!-- form thêm thuộc tính -->
-                                    <form th:action="@{/ap1/v1/mau-sac/add}" th:object="${mauSac}" method="post">
+                                    <form th:action="@{/admin/mau-sac/add}" method="post"
+                                          enctype="multipart/form-data"
+                                          th:object="${mauSac}">
 
                                         <div class="modal-body">
                                             <div class="row mb-3" style="margin-top: 3%;">
@@ -192,7 +193,9 @@
                                                     sắc</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" id="themMauSac"
-                                                           placeholder="Nhập màu sắc" name="ten" >
+                                                           placeholder="Nhập màu sắc" name="ten"  th:field="*{ten}" >
+                                                    <span class="check-loi" th:errors="*{ten}"></span>
+                                                    <span class="check-loi" th:text="${checkTenTrung}"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -210,46 +213,38 @@
                         </div>
                         <!-- Modal thêm thuộc tính end-->
 
-                        <table class="sanpham-table">
+                        <table id="example" class="display" style="width:100%">
                             <thead>
                             <tr>
                                 <th>STT</th>
                                 <th>Tên</th>
                                 <th>Trạng Thái</th>
-                                <th>Thao Tác</th>
+                                <th>Hành Động</th>
                             </tr>
                             <thead>
                             <tbody>
-                            <tr th:each="thuongHieu : ${thuongHieuPage}">
-                                <td th:text="${thuongHieu.ten}"></td>
-                                <!--                                <td th:text="${thuongHieu.ngayTao}"></td>-->
-                                <!--                                <td th:text="${thuongHieu.ngaySua}"></td>-->
-                                <td>
-                                    <div class="trangthaidhd">Đang hoạt động</div>
-                                    <!-- <div class="trangthainhd">Ngừng hoạt động</div> -->
-                                </td>
-                                <td>
-
-                                    <!-- Button trigger modal -->
-                                    <a type="button" class="btn btn-warning"  th:href="@{'/ap1/v1/mau-sac/getById/' + ${thuongHieu.id}}" >
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                        <tr th:each="sanPham,iterStat : ${listMauSac}">
+                            <td th:text="${iterStat.index+1}"></td>
+                            <td th:text="${sanPham.ten}"></td>
+                            <td class="trangthaidkd" th:if="${sanPham.trangThai==0}">Đang kinh doanh</td>
+                            <td class="trangthainkd" th:if="${sanPham.trangThai==1}">Ngừng kinh doanh</td>
+                            <td>
+                                <a th:href="@{/admin/mau-sac/view-update/{id}(id=${sanPham.id})}"
+                                   class="btn btn-warning">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </a>
+                            </td>
+                        </tr>
                             </tbody>
+                            <tfoot hidden="hidden">
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên Loại Đế</th>
+                                <th>Trạng Thái</th>
+                                <th>Hành Động</th>
+                            </tr>
+                            </tfoot>
                         </table>
-
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#"><i
-                                        class="bi bi-chevron-left"></i></a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a>
-                                </li>
-                            </ul>
-                        </nav>
 
                     </div>
                 </div>
@@ -258,6 +253,99 @@
     </section>
 
 </main><!-- End #main -->
+
+<!--Thông báo thành công-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='thanhCong'}">
+        // <script>
+        //     function showToast() {
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+        //         liveToast.show();
+        //
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+        //         liveToast.show();
+        //
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+        //         liveToast.show();
+        //     }
+        //     // Show the toast when the page loads
+        //     document.addEventListener('DOMContentLoaded', showToast);
+        //
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="  background-color: rgba(62, 189, 97,0.2);border:2px solid #3ebd61;  border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_notification.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #3ebd61;">
+                        Thành công</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo thành công end-->
+
+
+<!--Thông báo thất bại-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='thaiBai'}">
+        // <script>
+        //     function showToast() {
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+        //         liveToast.show();
+        //     }
+        //     // Show the toast when the page loads
+        //     document.addEventListener('DOMContentLoaded', showToast);
+        //
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastDanger" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="background-color: rgb(252,134,134);border:2px solid #ff2020;border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_danger.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: white;">
+                        Lỗi</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo thất bại end-->
 
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
@@ -275,6 +363,72 @@
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
+
+<!--    thư viện của bảng tích hợp tìm kiếm-->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
+<script>
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            "language": {
+                "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                "emptyTable": "Không có kết quả nào được tìm thấy",
+                "zeroRecords": "Không có kết quả phù hợp",
+                "infoEmpty": "Không có dữ liệu để hiển thị"
+            },
+            "initComplete": function (settings, json) {
+                // CSS changes
+                $('#example_filter input[type="search"]').addClass('form-control');
+                $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                $('#example_filter label').contents().filter(function () {
+                    return this.nodeType === 3;
+                }).replaceWith(' ');
+
+                $('#example_length label').contents().filter(function () {
+                    return this.nodeType === 3;
+                }).first().replaceWith('Hiển thị');
+                $('#example_length label').contents().filter(function () {
+                    return this.nodeType === 3;
+                }).last().replaceWith('mục');
+
+                $('#example_length select').addClass('form-select');
+            }
+        });
+
+        table.on('draw.dt', function () {
+            var pageInfo = table.page.info();
+
+            var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+            $('#example_info').html(newInfo);
+
+        });
+    });
+</script>
+<style>
+    /*input tìm kiếm*/
+    #example_filter input[type="search"] {
+        width: 180%;
+        margin-left: -80%;
+        margin-bottom: 10%;
+    }
+
+    /*select hiển thị mục*/
+    .dataTables_length label {
+        white-space: nowrap; /* Ngăn các phần tử xuống dòng */
+        display: flex; /* Hiển thị label và select trên cùng một dòng */
+        align-items: center; /* Canh chỉnh label và select theo chiều dọc */
+    }
+
+    .dataTables_length select {
+        margin-left: 5px; /* Tạo khoảng cách giữa label và select */
+    }
+
+    .dataTables_length label:after {
+        /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
+        content: ''; /* Xóa nội dung */
+    }
+</style>
+<!--    thư viện của bảng tích hợp tìm kiếm end-->
 
 <div th:replace="~{admin-template/fragment/script :: script}"></div>
 

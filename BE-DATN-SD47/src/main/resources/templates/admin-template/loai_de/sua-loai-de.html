@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -20,7 +21,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="ban-hang-admin.html" class="logo d-flex align-items-center">
+            <a href="/ban-hang-tai-quay/home" class="logo d-flex align-items-center">
                 <img src="../../../static/img/logo.png" alt="">
                 <span class="d-none d-lg-block">NiceAdmin</span>
             </a>
@@ -36,7 +37,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="ban-hang-admin.html">
+                <a class="nav-link collapsed" href="/ban-hang-tai-quay/home">
                     <i class="bi bi-grid"></i>
                     <span>Bán Hàng</span>
                 </a>
@@ -49,22 +50,27 @@
                 </a>
                 <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="san-pham.html">
+                        <a href="/admin/san-pham-chi-tiet">
+                            <i class="bi bi-circle"></i><span>Sản Phẩm Chi Tiết</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/san-pham">
                             <i class="bi bi-circle"></i><span>Sản Phẩm</span>
                         </a>
                     </li>
                     <li>
-                        <a href="thuong-hieu.html">
+                        <a href="/admin/thuong-hieu">
                             <i class="bi bi-circle"></i><span>Thương Hiệu</span>
                         </a>
                     </li>
                     <li>
-                        <a href="loai-de.html" class="active">
+                        <a href="/admin/loai-de" class="active">
                             <i class="bi bi-circle"></i><span>Loại Đế</span>
                         </a>
                     </li>
                     <li>
-                        <a href="mau-sac.html">
+                        <a href="/admin/mau-sac">
                             <i class="bi bi-circle"></i><span>Màu Sắc</span>
                         </a>
                     </li>
@@ -90,12 +96,12 @@
                 </a>
                 <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="nhan-vien.html">
+                        <a href="/admin/nhan-vien">
                             <i class="bi bi-circle"></i><span>Quản lý nhân viên</span>
                         </a>
                     </li>
                     <li>
-                        <a href="khach-hang.html">
+                        <a href="/admin/khach-hang">
                             <i class="bi bi-circle"></i><span>Quản lý khách hàng</span>
                         </a>
                     </li>
@@ -103,7 +109,7 @@
             </li><!-- End Tables Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="voucher.html">
+                <a class="nav-link collapsed" href="/admin/voucher">
                     <i class="bi bi-envelope"></i>
                     <span>Quản Lý Voucher</span>
                 </a>
@@ -124,13 +130,12 @@
                     <div class="card">
                         <div class="card-body">
                             <a class="btn btn-link" style="float: left;margin-top: 1%;"
-                                href="../thuong_hieu/thuong-hieu.html">
+                                href="/admin/loai-de">
                                 <i class=" bi bi-arrow-left-circle-fill"></i>
                             </a>
                             <!-- form thêm thuộc tính -->
-                            <form method="post" style="width: 55%;margin: auto"   th:action="@{/ap1/v1/loai-de/update}"   th:object="${thuongHieu}">
+                            <form method="post" style="width: 55%;margin: auto"   th:action="@{/admin/loai-de/update}"  th:object="${loaiDe}">
                                 <input type="hidden" th:field="*{id}" name="id">
-                                <input type="hidden" th:field="*{ngayTao}" name="ngayTao" >
                                 <h1 class="modal-title fs-5"
                                     style="text-align: center;;margin-top: 10%;margin-bottom: 5%;">Cập Nhật
                                     Loại Đế</h1>
@@ -141,7 +146,10 @@
                                         Loại Đế
                                     </label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" placeholder="Nhập loại đế"  th:field="*{ten}">
+                                        <input type="text" class="form-control" placeholder="Nhập tên sản phẩm"
+                                               th:field="*{ten}"/>
+                                        <span class="check-loi" th:errors="*{ten}"></span>
+                                        <span class="check-loi" th:text="${checkTenTrung}"></span>
 
                                     </div>
                                 </div>
@@ -152,13 +160,15 @@
                                     </legend>
                                     <div class="col-sm-8">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="trangThai" checked  value="1" th:field="*{trangThai}">
-                                            <label class="form-check-label" style="float: left;" value="1">
+                                            <input class="form-check-input" type="radio" value="0" name="trangThai"
+                                                   th:field="*{trangThai}">
+                                            <label class="form-check-label" style="float: left;">
                                                 Đang hoạt động
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="trangThai" value="0"  th:field="*{trangThai}">
+                                            <input class="form-check-input" type="radio" name="trangThai" value="1"
+                                                   th:field="*{trangThai}">
                                             <label class="form-check-label" style="float: left;">
                                                 Ngừng hoạt động
                                             </label>
@@ -166,7 +176,7 @@
                                     </div>
                                 </fieldset>
                                 <button type="submit" class="btn btn-warning"
-                                    style="display: block;margin: auto;margin-top: 5%;margin-bottom: 5%;">Cập
+                                        style="display: block;margin: auto;margin-top: 5%;margin-bottom: 5%;">Cập
                                     nhật
                                 </button>
 
@@ -193,6 +203,49 @@
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
         </div>
     </footer><!-- End Footer -->
+
+    <!--Thông báo thất bại-->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <script th:if="${checkThongBao=='thaiBai'}">
+            // <script>
+            //     function showToast() {
+            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+            //         liveToast.show();
+            //     }
+            //     // Show the toast when the page loads
+            //     document.addEventListener('DOMContentLoaded', showToast);
+            //
+            window.addEventListener('DOMContentLoaded', (event) => {
+                // Hiển thị modal
+                var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+                liveToast.show();
+            });
+        </script>
+        <div id="liveToastDanger" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+             style="background-color: rgb(252,134,134);border:2px solid #ff2020;border-radius:1rem;">
+            <div class="toast-body">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <img src="../../../static/img/successful_danger.png" alt="" style="margin: auto">
+                    </div>
+                    <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: white;">
+                        Lỗi</span>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                                style="font-size: 1.5rem;margin: auto"></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Thông báo thất bại end-->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
