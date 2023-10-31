@@ -100,4 +100,12 @@ public class HoaDon {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "phuong_thuc_thanh_toan_id", referencedColumnName = "id")
     private PhuongThucThanhToan phuongThucThanhToan;
+
+    public Double tongTienHoaDon (){
+        Double total = (double) 0;
+        for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
+            total+=hoaDonChiTiet.tongTien();
+        }
+        return total;
+    }
 }
