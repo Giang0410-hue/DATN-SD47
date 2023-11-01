@@ -53,4 +53,5 @@ public class ChiTietSanPham {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "loai_de_id", referencedColumnName = "id")
     private LoaiDe loaiDe;
+
 }

@@ -13,7 +13,10 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> getAllNgungHoatDong();
 
-    ChiTietSanPham add(ChiTietSanPham chiTietSanPham);
+    ChiTietSanPham add(
+            List<String> listSanPham, List<String> listKichCo,
+            List<String> listMauSac, List<String> listLoaiDe,
+            List<String> listSoLuong, List<String> listDonGia);
 
     ChiTietSanPham update(ChiTietSanPham chiTietSanPham);
 
@@ -24,6 +27,5 @@ public interface ChiTietSanPhamSerivce {
     boolean checkTenTrung(String ten);
 
     boolean checkTenTrungSua(String ma, String ten);
-
 
 }
