@@ -29,11 +29,9 @@ public class MauSacController {
 
     private Date currentDate = new Date();
 
-
     @GetMapping()
     public String hienThi(
-            Model model
-    ) {
+            Model model) {
         model.addAttribute("listMauSac", mauSacService.findAll());
         model.addAttribute("mauSac", new MauSac());
         return "/admin-template/mau_sac/mau-sac";
@@ -41,8 +39,7 @@ public class MauSacController {
 
     @GetMapping("/dang-hoat-dong")
     public String hienThiDangHoatDong(
-            Model model
-    ) {
+            Model model) {
         model.addAttribute("listMauSac", mauSacService.getAllDangHoatDong());
         model.addAttribute("mauSac", new MauSac());
         return "/admin-template/mau_sac/mau-sac";
@@ -50,31 +47,26 @@ public class MauSacController {
 
     @GetMapping("/ngung-hoat-dong")
     public String hienThiNgungHoatDong(
-            Model model
-    ) {
+            Model model) {
         model.addAttribute("listMauSac", mauSacService.getAllNgungHoatDong());
         model.addAttribute("mauSac", new MauSac());
         return "/admin-template/mau_sac/mau-sac";
     }
 
-
     @GetMapping("/view-update/{id}")
     public String viewUpdate(
             Model model,
-            @PathVariable("id") Long id
-    ) {
+            @PathVariable("id") Long id) {
         MauSac mauSac = mauSacService.getById(id);
         model.addAttribute("mauSac", mauSac);
         return "/admin-template/mau_sac/sua-mau-sac";
     }
 
     @PostMapping("/update")
-    public String update(@Valid
-                         @ModelAttribute("mauSac") MauSac mauSac,
-                         BindingResult result,
-                         Model model,
-                         RedirectAttributes redirectAttributes
-    ) {
+    public String update(@Valid @ModelAttribute("mauSac") MauSac mauSac,
+            BindingResult result,
+            Model model,
+            RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("checkThongBao", "thaiBai");
             return "/admin-template/mau_sac/sua-mau-sac";
@@ -93,12 +85,10 @@ public class MauSacController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid
-                      @ModelAttribute("mauSac") MauSac mauSac,
-                      BindingResult result,
-                      Model model,
-                      RedirectAttributes redirectAttributes
-    ) {
+    public String add(@Valid @ModelAttribute("mauSac") MauSac mauSac,
+            BindingResult result,
+            Model model,
+            RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");

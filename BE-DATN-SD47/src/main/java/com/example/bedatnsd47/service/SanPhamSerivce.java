@@ -1,7 +1,6 @@
 package com.example.bedatnsd47.service;
 
 import com.example.bedatnsd47.entity.SanPham;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -25,7 +24,6 @@ public interface SanPhamSerivce {
 
     boolean checkTenTrung(String ten);
 
-    boolean checkTenTrungSua(String ma,String ten);
-
+    boolean checkTenTrungSua(String ma, String ten);
 
 }
