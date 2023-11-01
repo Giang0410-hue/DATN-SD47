@@ -81,15 +81,17 @@ public class TaiKhoan {
 
     @Column(name = "ngay_tao")
 //    @NotNull(message = "Ngày tạo không được trống")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayTao;
 
     @Column(name = "ngay_sua")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngaySua;
 
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vai_tro_id", referencedColumnName = "id")
     private VaiTro vaiTro;
 

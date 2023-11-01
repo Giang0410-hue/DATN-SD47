@@ -9,6 +9,11 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
 
+
+    <!--    thư viện của bảng tích hợp tìm kiếm-->
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
+
     <div th:replace="~{admin-template/fragment/header :: header}"></div>
 
 
@@ -131,7 +136,7 @@
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <a class="btn btn-link" style="float: left;margin-top: 1%;"
-                                   href="/hien-thi5">
+                                   href="/admin/khach-hang">
                                     <i class=" bi bi-arrow-left-circle-fill"></i>
                                 </a>
                             </div>
@@ -147,6 +152,8 @@
                                       enctype="multipart/form-data"
                                       th:object="${khachHang}">
                                     <input type="hidden" th:field="*{id}" name="id">
+                                    <input hidden type="date" th:field="*{ngayTao}">
+
                                     <div class="col-md-6">
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Tên tài khoản:</label>
@@ -172,15 +179,15 @@
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Giới tính:</label>
                                         <div style="margin-top: 1%;">
-                                            <input class="form-check-input" type="radio" name="gridRadios"
+                                            <input class="form-check-input" type="radio" name="gioiTinh"
                                                    style="margin-left:5%;" checked th:field="*{gioiTinh}"
                                                    value="0">
                                             <label class="form-check-label">
                                                 Nam
                                             </label>
 
-                                            <input class="form-check-input" type="radio" name="gridRadios"
-                                                   style="margin-left:5%;" checked th:field="*{gioiTinh}"
+                                            <input class="form-check-input" type="radio" name="gioiTinh"
+                                                   style="margin-left:5%;" th:field="*{gioiTinh}"
                                                    value="1">
                                             <label class="form-check-label">
                                                 Nữ
@@ -195,6 +202,27 @@
                                         <span class="check-loi" th:errors="*{soDienThoai}"></span>
                                     </div>
                                     <div class="col-md-6">
+                                        <label class="form-label">
+                                            <span class="dau-sao">*</span>Trạng thái:</label>
+                                        <div style="margin-top: 1%;">
+                                            <input class="form-check-input" type="radio" name="trangThai"
+                                                   style="margin-left:5%;" checked th:field="*{trangThai}"
+                                                   value="0">
+                                            <label class="form-check-label">
+                                                Đang hoạt động
+                                            </label>
+
+                                            <input class="form-check-input" type="radio" name="trangThai"
+                                                   style="margin-left:5%;" checked th:field="*{trangThai}"
+                                                   value="1">
+                                            <label class="form-check-label">
+                                                Ngừng hoạt động
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Email:</label>
                                         <input type="email" class="form-control" placeholder="Nhập email"
@@ -230,7 +258,8 @@
                                         <label class="form-label"><span class="dau-sao">*</span>Địa chỉ cụ thể:</label>
                                         <input type="text" class="form-control"
                                                placeholder="Nhập địa chỉ cụ thể" th:field="*{diaChiCuThe}"/>
-                                        <!--                                                <span class="check-loi" th:errors="*{diaChiCuThe}"></span>-->
+                                        <!--                                                                                        <span class="check-loi" th:errors="*{diaChiCuThe}"></span>-->
+
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label"><span class="dau-sao">*</span>Mật
@@ -241,102 +270,15 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                            Đóng
-                                        </button>
-                                        <button type="submit" class="btn btn-success">Thêm</button>
+                                        <button type="submit" class="btn btn-warning">Cập nhật</button>
                                     </div>
                                 </form>
-                                <!-- form thêm khách hàng end-->
-<!--                                <form class="row g-3" style="margin-top: 1%;margin-bottom: 5%;" th:action="@{/admin/khach-hang/update}" method="post"-->
-<!--                                      enctype="multipart/form-data"-->
-<!--                                      th:object="${khachHang}">-->
-<!--                                    <div class="col-md-6">-->
-<!--                                        <label class="form-label">-->
-<!--                                            <span class="dau-sao">*</span>Tên tài khoản:</label>-->
-<!--                                        <input type="text" class="form-control"-->
-<!--                                               placeholder="Nhập tên tài khoản" th:field="*{ten_tai_khoan}" >-->
-<!--                                        <span class="check-loi" th:errors="*{ten_tai_khoan}"></span>-->
-<!--                                        &lt;!&ndash;                                                <span class="check-loi" th:text="${checkTenTrung}"></span>&ndash;&gt;-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-6">-->
-<!--                                        <label class="form-label">-->
-<!--                                            <span class="dau-sao">*</span>Tên khách hàng:</label>-->
-<!--                                        <input type="text" class="form-control" placeholder="Nhập khách hàng" th:field="*{hoVaTen}">-->
-<!--                                        &lt;!&ndash;                                                <span class="check-loi" th:errors="*{hoVaTen}"></span>&ndash;&gt;-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-6">-->
-<!--                                        <label class="form-label">-->
-<!--                                            <span class="dau-sao">*</span>Ngày sinh:</label>-->
-<!--                                        <input type="date" class="form-control" th:field="*{ngaySinh}" >-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-6">-->
-<!--                                        <label class="form-label">-->
-<!--                                            <span class="dau-sao">*</span>Giới tính:</label>-->
-<!--                                        <div style="margin-top: 1%;">-->
-<!--                                            <input class="form-check-input" type="radio" name="gridRadios"-->
-
-<!--                                                   style="margin-left:5%;" checked th:field="*{gioiTinh}" value="0">-->
-<!--                                            <label class="form-check-label">-->
-<!--                                                Nam-->
-<!--                                            </label>-->
-
-<!--                                            <input class="form-check-input" type="radio" name="gridRadios"-->
-
-<!--                                                   style="margin-left:5%;" checked th:field="*{gioiTinh}"  value="1">-->
-<!--                                            <label class="form-check-label">-->
-<!--                                                Nữ-->
-<!--                                            </label>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-6">-->
-<!--                                        <label class="form-label">-->
-<!--                                            <span class="dau-sao">*</span>Số điện thoại:</label>-->
-<!--                                        <input type="text" class="form-control"-->
-<!--                                               placeholder="Nhập số điện thoại" th:field="*{soDienThoai}">-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-6">-->
-<!--                                        <label class="form-label">-->
-<!--                                            <span class="dau-sao">*</span>Email:</label>-->
-<!--                                        <input type="text" class="form-control" placeholder="Nhập email" th:field="*{email}">-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-4">-->
-<!--                                        <label class="form-label"><span-->
-<!--                                                class="dau-sao">*</span>Xã/phường</label>-->
-<!--                                        <input type="text" class="form-control" placeholder="Nhập thành phố" th:field="*{thanhPho}">-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-4">-->
-<!--                                        <label class="form-label"><span-->
-<!--                                                class="dau-sao">*</span>Quận/huyện</label>-->
-<!--                                        <input type="text" class="form-control" placeholder="Nhập quận huyện" th:field="*{quanHuyen}">-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-4">-->
-<!--                                        <label class="form-label"><span class="dau-sao">*</span>Tỉnh/thành-->
-<!--                                            phố</label>-->
-<!--                                        <input type="text" class="form-control"-->
-<!--                                               placeholder="Nhập tỉnh phường xã" th:field="*{phuongXa}">-->
-<!--                                    </div>-->
-
-<!--                                    tỉnh-->
-<!--                                    <div class="col-12">-->
-<!--                                        <label class="form-label"><span class="dau-sao">*</span>Địa chỉ cụ thể:</label>-->
-<!--                                        <input type="text" class="form-control"-->
-<!--                                               placeholder="Nhập địa chỉ cụ thể" th:field="*{diaChiCuThe}"/>-->
-<!--                                    </div>-->
-
-<!--                                    <div class="modal-footer">-->
-<!--                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng-->
-<!--                                        </button>-->
-<!--                                        <button type="submit" class="btn btn-success">Thêm</button>-->
-<!--                                    </div>-->
-<!--                                </form>-->
-
                             </div>
 
                             <div class="col-md-12" style="width: 95%;margin: auto">
                                 <h1 class="modal-title fs-5"
                                     style="text-align: center;;margin-top: 2%;margin-bottom: 2%;">Địa Chỉ Khác</h1>
-                                <table class="sanpham-table">
+                                <table id="example" class="display" style="width:100%">
                                     <thead>
                                     <tr>
                                         <th scope="col">STT</th>
@@ -348,64 +290,41 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Dị Nậu</td>
-                                        <td>Thạch Thất</td>
-                                        <td>Hà Nội</td>
-                                        <td>Dị Nậu - Thạch Thất - Hà Nội</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </button>
+                                    <tr th:each="diaChi,iterStat : ${listDiaChi}">
+                                        <td th:text="${iterStat.index+1}"></td>
+                                        <td th:text="${diaChi.phuongXa}"></td>
+                                        <td th:text="${diaChi.quanHuyen}"></td>
+                                        <td th:text="${diaChi.thanhPho}"></td>
+                                        <td th:text="${diaChi.diaChiCuThe}"></td>
 
+                                        <td>
+                                            <a type="button" class="btn btn-warning"
+                                               data-bs-target="#sua-khach-hang"
+                                               th:href="@{/admin/khach-hang/view-update-dia-chi/{idKhachHang}/{idDiaChi}(idKhachHang=${diaChi.getTaiKhoan().id}, idDiaChi=${diaChi.id})}">
+                                                <i class="bi bi-pencil-fill"></i>
+                                            </a>
+                                            <a type="button" class="btn btn-danger"
+                                               data-bs-target="#sua-khach-hang"
+                                               th:href="@{/admin/khach-hang/dia-chi/delete/{idKhachHang}/{idDiaChi}(idKhachHang=${diaChi.getTaiKhoan().id}, idDiaChi=${diaChi.id})}">
+                                                <i class="bi bi-pencil-fill"></i>
+                                            </a>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Dị Nậu</td>
-                                        <td>Thạch Thất</td>
-                                        <td>Hà Nội</td>
-                                        <td>Dị Nậu - Thạch Thất - Hà Nội</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </button>
 
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Dị Nậu</td>
-                                        <td>Thạch Thất</td>
-                                        <td>Hà Nội</td>
-                                        <td>Dị Nậu - Thạch Thất - Hà Nội</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </button>
-
-                                        </td>
-                                    </tr>
                                     </tbody>
+                                    <tfoot hidden="hidden">
+                                    <tr>
+                                        <th scope="col">STT</th>
+                                        <th scope="col">Xã/Phường</th>
+                                        <th scope="col">Quận/Huyện</th>
+                                        <th scope="col">Tỉnh/Thành Phố</th>
+                                        <th scope="col">Địa Chỉ Cụ Thể</th>
+                                        <th scope="col">Thao Tác</th>
+                                    </tr>
+                                    </tfoot>
                                 </table>
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">
-                                                <i class="bi bi-chevron-left"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">
-                                                <i class="bi bi-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+
+
                                 <div class="danh-sach-cac-sp" style="margin-top: -3%;">
                                     <p class="d-inline-flex gap-1">
                                     <div class="col-12">
@@ -413,45 +332,66 @@
                                                 data-bs-toggle="collapse"
                                                 data-bs-target="#collapseExample" aria-expanded="false"
                                                 aria-controls="collapseExample">
-                                            <span style="color: rgb(0, 110, 28);">+ Thêm địa chỉ khác</span>
+                                            <span style="color: rgb(0, 110, 28);">+ Thêm và cập nhật địa chỉ khác</span>
                                         </button>
                                     </div>
                                     </p>
                                 </div>
                                 <div class="collapse" id="collapseExample">
                                     <!-- form thêm và sửa địa chỉ khách hàng -->
-                                    <form class="row g-3" style="margin-top: 1%;margin-bottom: 5%;">
+                                    <form class="row g-3" style="margin-top: 1%;margin-bottom: 5%;"
+                                          th:action="@{/admin/khach-hang/dia-chi}"
+                                          enctype="multipart/form-data"
+                                          th:object="${diaChi}" method="post">
+
+                                        <!--                                        input lấy id của địa chỉ-->
+                                        <input th:value="${idDiaChiUpdate}" th:field="*{id}" type="hidden">
+
+                                        <!--                                        input lấy id của khách hàng-->
+                                        <input th:value="${idKhachHangUpdate}" name="idTaiKhoanUpdateRequestParam"
+                                               type="hidden">
+
                                         <div class="col-md-4">
                                             <label class="form-label"><span class="dau-sao">*</span>Xã/phường</label>
                                             <input type="text" class="form-control"
-                                                   placeholder="Nhập xã/phường">
+                                                   placeholder="Nhập xã/phường" th:field="*{phuongXa}">
+                                            <span class="check-loi" th:errors="*{phuongXa}"></span>
+                                            <span class="check-loi" th:text="${checkTenTrung}"></span>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label"><span class="dau-sao">*</span>Quận/huyện</label>
                                             <input type="text" class="form-control"
-                                                   placeholder="Nhập quận/ huyện">
+                                                   placeholder="Nhập quận/ huyện" th:field="*{quanHuyen}">
+                                            <span class="check-loi" th:errors="*{quanHuyen}"></span>
+
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label"><span class="dau-sao">*</span>Tỉnh/thành
                                                 phố</label>
                                             <input type="text" class="form-control"
-                                                   placeholder="Nhập tỉnh thành phố">
+                                                   placeholder="Nhập tỉnh thành phố" th:field="*{thanhPho}">
+                                            <span class="check-loi" th:errors="*{thanhPho}"></span>
                                         </div>
                                         <div class="col-12">
                                             <label class="form-label"><span class="dau-sao">*</span>Địa
                                                 chỉ cụ thể:</label>
                                             <input type="text" class="form-control"
-                                                   placeholder="Nhập địa chỉ cụ thể"/>
-
+                                                   placeholder="Nhập địa chỉ cụ thể" th:field="*{diaChiCuThe}"/>
+                                            <span class="check-loi" th:errors="*{diaChiCuThe}"></span>
+                                            <span class="check-loi" th:text="${checkTenTrungDiaChi}"></span>
                                         </div>
                                         <div class="col-12">
-                                            <button type="button" class="btn btn-warning"
-                                                    style="float: right;margin-left: 5%;">Cập
-                                                nhập
-                                            </button>
-                                            <button type="submit" class="btn btn-success"
-                                                    style="float: right;">Thêm
-                                            </button>
+                                            <div th:if="${checkUpdate=='update'}">
+                                                <button type="submit" class="btn btn-warning"
+                                                        style="float: right;">Cập nhật
+                                                </button>
+                                            </div>
+                                            <div th:if="${checkAdd=='add'}">
+                                                <button type="submit" class="btn btn-success    "
+                                                        style="float: right;">Thêm
+                                                </button>
+                                            </div>
+
                                         </div>
                                     </form>
                                     <!-- form thêm và sửa địa chỉ khách hàng end -->
@@ -480,70 +420,168 @@
     </div>
 </footer><!-- End Footer -->
 
+<!--Thông báo thành công-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='thanhCong'}">
+        // <script>
+        //     function showToast() {
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+        //         liveToast.show();
+        //
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+        //         liveToast.show();
+        //
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+        //         liveToast.show();
+        //     }
+        //     // Show the toast when the page loads
+        //     document.addEventListener('DOMContentLoaded', showToast);
+        //
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="  background-color: rgba(62, 189, 97,0.2);border:2px solid #3ebd61;  border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_notification.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #3ebd61;">
+                        Thành công</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo thành công end-->
+
+<!--Thông báo thất bại-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='thaiBai'}">
+        // <script>
+        //     function showToast() {
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+        //         liveToast.show();
+        //     }
+        //     // Show the toast when the page loads
+        //     document.addEventListener('DOMContentLoaded', showToast);
+        //
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastDanger" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="background-color: rgb(252,134,134);border:2px solid #ff2020;border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_danger.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: white;">
+                        Lỗi</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo thất bại end-->
+
+
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
-
-<div th:replace="~{admin-template/fragment/script :: script}"></div>
+<!--    thư viện của bảng tích hợp tìm kiếm-->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
 <script>
-    // Sample data for Tỉnh/thành phố, Quận/huyện, and Xã/phường
-    var tinhThanhData = {
-        tinh1: ["Quận/Huyện 1", "Quận/Huyện 2", "Quận/Huyện 3"],
-        tinh2: ["Quận/Huyện 4", "Quận/Huyện 5", "Quận/Huyện 6"],
-        tinh3: ["Quận/Huyện 7", "Quận/Huyện 8", "Quận/Huyện 9"],
-    };
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            "language": {
+                "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                "emptyTable": "Không có kết quả nào được tìm thấy",
+                "zeroRecords": "Không có kết quả phù hợp",
+                "infoEmpty": "Không có dữ liệu để hiển thị"
+            },
+            "initComplete": function (settings, json) {
+                // CSS changes
+                $('#example_filter input[type="search"]').addClass('form-control');
+                $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                $('#example_filter label').contents().filter(function () {
+                    return this.nodeType === 3;
+                }).replaceWith(' ');
 
-    var quanHuyenData = {
-        "Quận/Huyện 1": ["Xã/Phường A", "Xã/Phường B", "Xã/Phường C"],
-        "Quận/Huyện 2": ["Xã/Phường D", "Xã/Phường E", "Xã/Phường F"],
-        "Quận/Huyện 3": ["Xã/Phường G", "Xã/Phường H", "Xã/Phường I"],
-        "Quận/Huyện 4": ["Xã/Phường J", "Xã/Phường K", "Xã/Phường L"],
-        "Quận/Huyện 5": ["Xã/Phường M", "Xã/Phường N", "Xã/Phường O"],
-        "Quận/Huyện 6": ["Xã/Phường P", "Xã/Phường Q", "Xã/Phường R"],
-        "Quận/Huyện 7": ["Xã/Phường S", "Xã/Phường T", "Xã/Phường U"],
-        "Quận/Huyện 8": ["Xã/Phường V", "Xã/Phường W", "Xã/Phường X"],
-        "Quận/Huyện 9": ["Xã/Phường Y", "Xã/Phường Z", "Xã/Phường AA"],
-    };
+                $('#example_length label').contents().filter(function () {
+                    return this.nodeType === 3;
+                }).first().replaceWith('Hiển thị');
+                $('#example_length label').contents().filter(function () {
+                    return this.nodeType === 3;
+                }).last().replaceWith('mục');
 
-    function updateQuanHuyen() {
-        var tinhThanhSelect = document.getElementById("tinhThanhSelect");
-        var quanHuyenSelect = document.getElementById("quanHuyenSelect");
-        var xaPhuongSelect = document.getElementById("xaPhuongSelect");
+                $('#example_length select').addClass('form-select');
+            }
+        });
 
-        quanHuyenSelect.innerHTML = "<option value=''>Chọn Quận/Huyện</option>";
-        xaPhuongSelect.innerHTML = "<option value=''>Chọn Xã/Phường</option>";
+        table.on('draw.dt', function () {
+            var pageInfo = table.page.info();
 
-        var selectedTinhThanh = tinhThanhSelect.value;
-        var quanHuyenOptions = tinhThanhData[selectedTinhThanh];
+            var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+            $('#example_info').html(newInfo);
 
-        for (var i = 0; i < quanHuyenOptions.length; i++) {
-            var option = document.createElement("option");
-            option.text = quanHuyenOptions[i];
-            option.value = quanHuyenOptions[i];
-            quanHuyenSelect.add(option);
-        }
-    }
-
-    function updateXaPhuong() {
-        var quanHuyenSelect = document.getElementById("quanHuyenSelect");
-        var xaPhuongSelect = document.getElementById("xaPhuongSelect");
-
-        xaPhuongSelect.innerHTML = "<option value=''>Chọn Xã/Phường</option>";
-
-        var selectedQuanHuyen = quanHuyenSelect.value;
-        var xaPhuongOptions = quanHuyenData[selectedQuanHuyen];
-
-        for (var i = 0; i < xaPhuongOptions.length; i++) {
-            var option = document.createElement("option");
-            option.text = xaPhuongOptions[i];
-            option.value = xaPhuongOptions[i];
-            xaPhuongSelect.add(option);
-        }
-    }
-
-    // Initialize the Quận/huyện and Xã/phường selects when the page loads
-    updateQuanHuyen();
-    updateXaPhuong();
+        });
+    });
 </script>
+<style>
+    /*input tìm kiếm*/
+    #example_filter input[type="search"] {
+        width: 180%;
+        margin-left: -80%;
+        margin-bottom: 10%;
+    }
+
+    /*select hiển thị mục*/
+    .dataTables_length label {
+        white-space: nowrap; /* Ngăn các phần tử xuống dòng */
+        display: flex; /* Hiển thị label và select trên cùng một dòng */
+        align-items: center; /* Canh chỉnh label và select theo chiều dọc */
+    }
+
+    .dataTables_length select {
+        margin-left: 5px; /* Tạo khoảng cách giữa label và select */
+    }
+
+    .dataTables_length label:after {
+        /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
+        content: ''; /* Xóa nội dung */
+    }
+</style>
+<!--    thư viện của bảng tích hợp tìm kiếm end-->
+<div th:replace="~{admin-template/fragment/script :: script}"></div>
+
 </body>
 
 </html>
