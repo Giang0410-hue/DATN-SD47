@@ -13,7 +13,7 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> getAllNgungHoatDong();
 
-    ChiTietSanPham add(
+    List<ChiTietSanPham> add(
             List<String> listSanPham, List<String> listKichCo,
             List<String> listMauSac, List<String> listLoaiDe,
             List<String> listSoLuong, List<String> listDonGia);
