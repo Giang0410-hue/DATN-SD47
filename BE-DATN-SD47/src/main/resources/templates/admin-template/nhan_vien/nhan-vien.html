@@ -10,6 +10,10 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
 
+    <!--    thư viện của bảng tích hợp tìm kiếm-->
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
+
     <!-- Favicons -->
     <link href="../../../static/img/favicon.png" rel="icon">
     <link href="../../../static/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -149,50 +153,34 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="" style="margin-top: 5%;">
-                                <label class="col-sm-3 col-form-label">Nhập tên, số điện thoại, email:</label>
-                                <div class="row mb-3">
-                                    <div class="col-sm-8">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control"
-                                                placeholder="Tìm kiếm khách hàng theo tên, số điện thoại, email">
-                                            <button type="submit" class="btn btn-primary"><i
-                                                    class="bi bi-arrow-clockwise"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <button type="submit" class="btn btn-primary" style="margin-left:35%;">Tìm kiếm
-                                        </button>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            style="float: right; " data-bs-target="#them-nhan-vien">
-                                            Thêm mới
-                                        </button>
+
+                            <!--    tìm kiếm theo trạng thái-->
+                            <div class="row g-3" style="margin-top: 2%;margin-bottom: 2%">
+                                <div class="col-md-8">
+                                    <label>Trạng thái:</label>
+                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                        <a href="/admin/nhan-vien" class="btn btn-outline-primary">
+                                            Tất cả</a>
+                                        <a href="/admin/nhan-vien/dang-hoat-dong" class="btn btn-outline-primary">
+                                            Đang hoạt động</a>
+                                        <a href="/admin/nhan-vien/ngung-hoat-dong" class="btn btn-outline-primary">
+                                            Ngừng hoạt động</a>
                                     </div>
                                 </div>
-                                <div class="search-trang-thai" style="margin-top: 4%;">
-                                    <label style="margin-left:20%;">Trạng thái:</label>
-                                    <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                        style="margin-left:10%;" checked>
-                                    <label class="form-check-label">
-                                        Tất cả
-                                    </label>
-
-                                    <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                        style="margin-left:5%;" checked>
-                                    <label class="form-check-label">
-                                        Kích hoạt
-                                    </label>
-
-                                    <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                        style="margin-left:5%;" checked>
-                                    <label class="form-check-label">
-                                        Dừng kích hoạt
-                                    </label>
+                                <div class="col-md-2">
+                                    <a href="/admin/nhan-vien" style="float: right" class="btn btn-primary">
+                                        <i class="bi bi-arrow-clockwise"> Làm mới</i>
+                                    </a>
                                 </div>
-                            </form>
+                                <div class="col-md-2">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        style="float: right; " data-bs-target="#them-nhan-vien">
+                                        Thêm mới
+                                    </button>
+                                </div>
+                            </div>
+                            <!--     tìm kiếm theo trạng thái end-->
 
                             <!-- Modal -->
                             <div class="modal fade" id="them-nhan-vien" tabindex="-1"
@@ -292,7 +280,7 @@
 
 
                             <!-- Table with stripped rows -->
-                            <table class="sanpham-table" style="margin-top: 4%;">
+                            <table id="example" class="display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>STT</th>
@@ -314,139 +302,26 @@
                                             <td class="trangthaidhd">Kích hoạt</td>
                                             <!-- <td class="trangthainkd">Dừng kích hoạtc</td> -->
                                             <td>
-                                                <!-- button và model -->
-                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                    data-bs-target="#sua-nhan-vien">
+                                                <a href="" class="btn btn-warning">
                                                     <i class="bi bi-pencil-fill"></i>
-                                                </button>
+                                                </a>
                                             </td>
                                         </tr>
                                     </tbody>
+                                <tfoot hidden="hidden">
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Họ Và Tên</th>
+                                        <th>Email</th>
+                                        <th>Số Điện Thoại</th>
+                                        <th>Ngày tham gia</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Hành Động</th>
+                                    </tr>
+                                </tfoot>
                             </table>
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">
-                                            <i class="bi bi-chevron-left"></i>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">
-                                            <i class="bi bi-chevron-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+
                             <!-- End Table with stripped rows -->
-
-
-                            <!-- model-xem-sửa-voucher -->
-                            <div class="modal fade" id="sua-nhan-vien" tabindex="-1"
-                                aria-labelledby="sua-nhan-vienLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="sua-nhan-vienLabel">Cập Nhật Nhân Viên
-                                            </h1>
-                                        </div>
-                                        <!-- form sửa khách hàng -->
-                                        <form action="">
-                                            <div class="modal-body">
-                                                <div class="row g-3">
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">
-                                                            <span class="dau-sao">*</span>Tên tài khoản:</label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Nhập tên tài khoản">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">
-                                                            <span class="dau-sao">*</span>Tên Nhân Viên:</label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Nhập nhân viên">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">
-                                                            <span class="dau-sao">*</span>Ngày sinh:</label>
-                                                        <input type="date" class="form-control">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">
-                                                            <span class="dau-sao">*</span>Giới tính:</label>
-                                                        <div style="margin-top: 1%;">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="gridRadios" value="option1"
-                                                                style="margin-left:5%;" checked>
-                                                            <label class="form-check-label">
-                                                                Nam
-                                                            </label>
-
-                                                            <input class="form-check-input" type="radio"
-                                                                name="gridRadios" value="option1"
-                                                                style="margin-left:5%;" checked>
-                                                            <label class="form-check-label">
-                                                                Nữ
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">
-                                                            <span class="dau-sao">*</span>Số điện thoại:</label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Nhập số điện thoại">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">
-                                                            <span class="dau-sao">*</span>Email:</label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Nhập email">
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label class="form-label"><span
-                                                                class="dau-sao">*</span>Xã/phường</label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Nhập xã/phường">
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label class="form-label"><span
-                                                                class="dau-sao">*</span>Quận/huyện</label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Nhập quận/ huyện">
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label class="form-label"><span
-                                                                class="dau-sao">*</span>Tỉnh/thành
-                                                            phố</label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Nhập tỉnh thành phố">
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <label class="form-label"><span class="dau-sao">*</span>Địa
-                                                            chỉ
-                                                            cụ thể:</label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Nhập địa chỉ cụ thể"
-                                                            placeholder="Nhập địa chỉ cụ thể">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Đóng
-                                                </button>
-                                                <button type="submit" class="btn btn-warning" style="float: right;">Cập
-                                                    nhật
-                                                </button>
-                                            </div>
-                                        </form>
-                                        <!-- form sửa khách hàng end-->
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Modal end-->
 
                         </div>
                     </div>
@@ -473,6 +348,77 @@
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
+
+    <!--    thư viện của bảng tích hợp tìm kiếm-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                "language": {
+                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                    "emptyTable": "Không có kết quả nào được tìm thấy",
+                    "zeroRecords": "Không có kết quả phù hợp",
+                    "infoEmpty": "Không có dữ liệu để hiển thị"
+                },
+                "initComplete": function (settings, json) {
+                    // CSS changes
+                    $('#example_filter input[type="search"]').addClass('form-control');
+                    $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                    $('#example_filter label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).replaceWith(' ');
+
+                    $('#example_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).first().replaceWith('Hiển thị');
+                    $('#example_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).last().replaceWith('mục');
+
+                    $('#example_length select').addClass('form-select');
+                }
+            });
+
+            table.on('draw.dt', function () {
+                var pageInfo = table.page.info();
+
+                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+                $('#example_info').html(newInfo);
+
+            });
+        });
+    </script>
+    <style>
+        /*input tìm kiếm*/
+        #example_filter input[type="search"] {
+            width: 180%;
+            margin-left: -80%;
+            margin-bottom: 10%;
+        }
+
+        /*select hiển thị mục*/
+        .dataTables_length label {
+            white-space: nowrap;
+            /* Ngăn các phần tử xuống dòng */
+            display: flex;
+            /* Hiển thị label và select trên cùng một dòng */
+            align-items: center;
+            /* Canh chỉnh label và select theo chiều dọc */
+        }
+
+        .dataTables_length select {
+            margin-left: 5px;
+            /* Tạo khoảng cách giữa label và select */
+        }
+
+        .dataTables_length label:after {
+            /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
+            content: '';
+            /* Xóa nội dung */
+        }
+    </style>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
 
     <!-- Vendor JS Files -->
     <script src="../../../static/vendor/apexcharts/apexcharts.min.js"></script>

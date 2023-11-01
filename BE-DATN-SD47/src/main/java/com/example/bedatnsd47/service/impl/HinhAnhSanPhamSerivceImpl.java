@@ -21,11 +21,11 @@ public class HinhAnhSanPhamSerivceImpl implements HinhAnhSanPhamSerivce {
 
     @Override
     public void saveImage(List<MultipartFile> files, SanPham sanPham) {
+        HinhAnhSanPham hinhAnh = new HinhAnhSanPham();
 
         for (MultipartFile multipartFile : files) {
             if (!multipartFile.isEmpty()) {
                 try {
-                    HinhAnhSanPham hinhAnh = new HinhAnhSanPham();
                     // Lưu tệp vào cơ sở dữ liệu
                     hinhAnh.setUrl(multipartFile.getOriginalFilename());
                     hinhAnh.setNgayTao(currentDate);
