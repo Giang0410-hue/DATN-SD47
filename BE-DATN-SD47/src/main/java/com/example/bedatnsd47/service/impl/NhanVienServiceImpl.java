@@ -66,7 +66,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     public boolean checkTenTrung(String ten) {
 
         for (TaiKhoan sp : repository.findAll()) {
-            if (sp.getTen_tai_khoan().equalsIgnoreCase(ten)) {
+            if (sp.getTenTaiKhoan().equalsIgnoreCase(ten)) {
                 return false;
             }
         }
@@ -78,7 +78,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     public boolean checkTenTrungSua(String id, String ten) {
 
         for (TaiKhoan tk : repository.findAll()) {
-            if (tk.getTen_tai_khoan().equalsIgnoreCase(ten)) {
+            if (tk.getTenTaiKhoan().equalsIgnoreCase(ten)) {
                 if (!tk.getId().equals(id)) {
                     return false;
                 }
@@ -92,7 +92,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     public boolean checkTenTkTrungSua(Long id, String ten) {
 
         for (TaiKhoan sp : repository.findAll()) {
-            if (sp.getTen_tai_khoan().equalsIgnoreCase(ten)) {
+            if (sp.getTenTaiKhoan().equalsIgnoreCase(ten)) {
                 if (!sp.getId().equals(id)) {
                     return false;
                 }
@@ -105,7 +105,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     public boolean checkTenTaiKhoanTrung(String ten) {
 
         for (TaiKhoan sp : repository.findAll()) {
-            if (sp.getTen_tai_khoan().equalsIgnoreCase(ten)) {
+            if (sp.getTenTaiKhoan().equalsIgnoreCase(ten)) {
                 return false;
             }
         }
