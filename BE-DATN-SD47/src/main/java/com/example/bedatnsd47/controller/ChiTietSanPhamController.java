@@ -88,6 +88,16 @@ public class ChiTietSanPhamController {
         return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
     }
 
+    @GetMapping("/view-update/{id}")
+    public String viewUpdate(
+            Model model
+    ) {
+        model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllDangHoatDong());
+        getString(model);
+        model.addAttribute("sanPham", new SanPham());
+        return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
+    }
+
     @PostMapping("/add-san-pham")
     public String addSanPham(@Valid
                              @ModelAttribute("sanPham") SanPham sanPham,
