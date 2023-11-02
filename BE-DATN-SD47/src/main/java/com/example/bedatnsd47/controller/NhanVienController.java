@@ -94,7 +94,7 @@ public class NhanVienController {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkNgaySinh", "ngaySinh");
             return "/admin-template/nhan_vien/sua-nhan-vien";
-        } else if (!taiKhoanService.checkTenTkTrungSua(taiKhoan.getId(), taiKhoan.getTen_tai_khoan())) {
+        } else if (!taiKhoanService.checkTenTkTrungSua(taiKhoan.getId(), taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
@@ -136,7 +136,7 @@ public class NhanVienController {
             model.addAttribute("checkNgaySinh", "ngaySinh");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/nhan-vien";
-        } else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTen_tai_khoan())) {
+        } else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");

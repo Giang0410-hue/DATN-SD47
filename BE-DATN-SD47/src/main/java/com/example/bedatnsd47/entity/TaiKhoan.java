@@ -52,7 +52,7 @@ public class TaiKhoan {
             Calendar cal = Calendar.getInstance();
             cal.setTime(ngaySinh);
             int year = cal.get(Calendar.YEAR);
-            return year >= 1923;
+            return year >= 1905;
         }
         return true; // Truong ngaySinh co the de trong
     }
@@ -89,14 +89,13 @@ public class TaiKhoan {
 
     @Column(name = "ten_tai_khoan", length = 100)
     @NotBlank(message = "Tên tài khoản không được trống")
-    private String ten_tai_khoan;
+    private String tenTaiKhoan;
 
     @Column(name = "mat_khau", length = 30)
     @NotBlank(message = "Mật khẩu không được trống")
     private String matKhau;
 
     @Column(name = "ngay_tao")
-//    @NotNull(message = "Ngày tạo không được trống")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayTao;
 
