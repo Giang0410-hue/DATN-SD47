@@ -83,9 +83,9 @@ public class ChiTietSanPhamController {
             @RequestParam("listLoaiDe") List<String> listLoaiDe,
             @RequestParam("listSoLuong") List<String> listSoLuong,
             @RequestParam("listDonGia") List<String> listDonGia
-
     ) {
-        // chiTietSanPhamSerivce.add(listSanPham,listKichCo,listMauSac,listLoaiDe,listSoLuong,listDonGia);
+
+        chiTietSanPhamSerivce.add(listSanPham, listKichCo, listMauSac, listLoaiDe, listSoLuong, listDonGia);
         return "redirect:/admin/san-pham-chi-tiet";
     }
 
