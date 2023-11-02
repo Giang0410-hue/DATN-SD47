@@ -224,23 +224,34 @@ public class KhachHangController {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
+            List<DiaChi> listDiaChi = diaChiService.getAllByTaiKhoan(taiKhoan.getId());
+            model.addAttribute("listDiaChi", listDiaChi);
+            model.addAttribute("diaChi", new DiaChi());
             return "/admin-template/khach_hang/sua-khach-hang";
         } else if (!taiKhoanEntity.isValidNgaySinh()) {
-            model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkNgaySinh", "ngaySinh");
-            model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
-            return "/admin-template/khach_hang/khach-hang";
+            List<DiaChi> listDiaChi = diaChiService.getAllByTaiKhoan(taiKhoan.getId());
+            model.addAttribute("listDiaChi", listDiaChi);
+            model.addAttribute("diaChi", new DiaChi());
+
+            return "/admin-template/khach_hang/sua-khach-hang";
         } else if (!taiKhoanService.checkTenTkTrungSua(taiKhoan.getId(), taiKhoan.getTen_tai_khoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
+            List<DiaChi> listDiaChi = diaChiService.getAllByTaiKhoan(taiKhoan.getId());
+            model.addAttribute("listDiaChi", listDiaChi);
+            model.addAttribute("diaChi", new DiaChi());
             return "/admin-template/khach_hang/sua-khach-hang";
         } else if (!taiKhoanService.checkEmailSua(taiKhoan.getId(), taiKhoan.getEmail())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
+            List<DiaChi> listDiaChi = diaChiService.getAllByTaiKhoan(taiKhoan.getId());
+            model.addAttribute("listDiaChi", listDiaChi);
+            model.addAttribute("diaChi", new DiaChi());
             return "/admin-template/khach_hang/khach-hang";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
