@@ -164,7 +164,7 @@ public class KhachHangController {
                 model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
                 model.addAttribute("khachHang", taiKhoan);
                 return "/admin-template/khach_hang/sua-khach-hang";
-            } else if (!diaChiService.checkTenTrungSua(diaChi.getId(),diaChi.getDiaChiCuThe(), idTaiKhoan)) {
+            } else if (!diaChiService.checkTenTrungSua(diaChi.getId(), diaChi.getDiaChiCuThe(), idTaiKhoan)) {
                 model.addAttribute("checkModal", "modal");
                 model.addAttribute("checkThongBao", "thaiBai");
                 model.addAttribute("checkTenTrungDiaChi", "Tên địa chỉ cũ thể đã tồn tại");
@@ -218,21 +218,40 @@ public class KhachHangController {
             Model model,
             RedirectAttributes redirectAttributes
     ) {
+        TaiKhoan taiKhoanEntity = new TaiKhoan();
+        taiKhoanEntity.setNgaySinh(taiKhoan.getNgaySinh());
         if (result.hasErrors()) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
+            List<DiaChi> listDiaChi = diaChiService.getAllByTaiKhoan(taiKhoan.getId());
+            model.addAttribute("listDiaChi", listDiaChi);
+            model.addAttribute("diaChi", new DiaChi());
+            return "/admin-template/khach_hang/sua-khach-hang";
+        } else if (!taiKhoanEntity.isValidNgaySinh()) {
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkNgaySinh", "ngaySinh");
+            List<DiaChi> listDiaChi = diaChiService.getAllByTaiKhoan(taiKhoan.getId());
+            model.addAttribute("listDiaChi", listDiaChi);
+            model.addAttribute("diaChi", new DiaChi());
+
             return "/admin-template/khach_hang/sua-khach-hang";
         } else if (!taiKhoanService.checkTenTkTrungSua(taiKhoan.getId(), taiKhoan.getTen_tai_khoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
+            List<DiaChi> listDiaChi = diaChiService.getAllByTaiKhoan(taiKhoan.getId());
+            model.addAttribute("listDiaChi", listDiaChi);
+            model.addAttribute("diaChi", new DiaChi());
             return "/admin-template/khach_hang/sua-khach-hang";
         } else if (!taiKhoanService.checkEmailSua(taiKhoan.getId(), taiKhoan.getEmail())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
+            List<DiaChi> listDiaChi = diaChiService.getAllByTaiKhoan(taiKhoan.getId());
+            model.addAttribute("listDiaChi", listDiaChi);
+            model.addAttribute("diaChi", new DiaChi());
             return "/admin-template/khach_hang/khach-hang";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
@@ -248,10 +267,21 @@ public class KhachHangController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("khachHang") TaiKhoan taiKhoan, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String add(@Valid @ModelAttribute("khachHang") TaiKhoan taiKhoan,
+                      BindingResult result, Model model,
+                      RedirectAttributes redirectAttributes) {
+
+        TaiKhoan taiKhoanEntity = new TaiKhoan();
+        taiKhoanEntity.setNgaySinh(taiKhoan.getNgaySinh());
         if (result.hasErrors()) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
+            return "/admin-template/khach_hang/khach-hang";
+        } else if (!taiKhoanEntity.isValidNgaySinh()) {
+            model.addAttribute("checkModal", "modal");
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkNgaySinh", "ngaySinh");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/khach_hang/khach-hang";
         } else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTen_tai_khoan())) {
