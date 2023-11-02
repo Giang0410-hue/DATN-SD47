@@ -77,46 +77,14 @@ public class ChiTietSanPhamController {
 
     @PostMapping("/add")
     public String add(
-//            @RequestParam(value = "multipleKichCo") String[] multipleKichCo,
-//            @RequestParam(value = "multipleMauSac,") String[] multipleMauSac,
             @RequestParam("listSanPham") List<String> listSanPham,
             @RequestParam("listKichCo") List<String> listKichCo,
             @RequestParam("listMauSac") List<String> listMauSac,
             @RequestParam("listLoaiDe") List<String> listLoaiDe,
             @RequestParam("listSoLuong") List<String> listSoLuong,
-            @RequestParam("listDonGia") List<String> listDonGia,
-            Model model
-
+            @RequestParam("listDonGia") List<String> listDonGia
     ) {
-//        if (multipleKichCo != null && multipleKichCo.length > 0){
-//            for (String kichCo : multipleKichCo) {
-//                System.out.println("Giá trị đã chọn: " + kichCo);
-//            }
-//            model.addAttribute("checkTab","true");
-//            model.addAttribute("checkThongBao", "thaiBai");
-//            model.addAttribute("listKichCo", kichCoService.findAll());
-//            model.addAttribute("listMauSac", mauSacService.findAll());
-//            model.addAttribute("listLoaiDe", loaiDeService.findAll());
-//            model.addAttribute("listSanPham", sanPhamSerivce.getAll());
-//            return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
-//        } else {
-//            // Không có giá trị hoặc giá trị là null
-//            // Thực hiện xử lý khi không có giá trị hoặc giá trị là null
-//            model.addAttribute("checkTab","true");
-//            model.addAttribute("checkThongBao", "thaiBai");
-//            System.out.println("Không có giá trị hoặc giá trị là null");
-//        }
-        if (listDonGia.isEmpty()||listDonGia.size()==0|listDonGia==null||listSoLuong.isEmpty()||listSoLuong.size()==0|listSoLuong==null) {
-            model.addAttribute("checkTab","true");
-            model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("listKichCo", kichCoService.findAll());
-            model.addAttribute("listMauSac", mauSacService.findAll());
-            model.addAttribute("listLoaiDe", loaiDeService.findAll());
-            model.addAttribute("listSanPham", sanPhamSerivce.getAll());
 
-            return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
-
-        }
         chiTietSanPhamSerivce.add(listSanPham, listKichCo, listMauSac, listLoaiDe, listSoLuong, listDonGia);
         return "redirect:/admin/san-pham-chi-tiet";
     }

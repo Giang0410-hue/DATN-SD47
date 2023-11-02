@@ -480,6 +480,7 @@
 
                                 <!-- from thêm chi tiết sản phẩm -->
                                 <form th:action="@{/admin/san-pham-chi-tiet/add}" class="row g-3"
+                                      onsubmit="return checkSelections()"
                                       enctype="multipart/form-data" method="post" style="margin-top: 2%;">
                                     <div class="col-12">
                                         <label class="form-label">Tên sản phẩm:</label>
@@ -540,7 +541,7 @@
                                             </tbody>
                                         </table>
 
-                                        <button type="submit" onclick="return checkSelections()" class="btn btn-success"
+                                        <button type="submit" class="btn btn-success"
                                                 style="float: right;margin-top: 3%;margin-bottom: 2%;">Thêm sản phẩm
                                         </button>
                                         <!-- js build lấy id sản phẩm -->
@@ -555,19 +556,22 @@
                                                 var selectedKichCo = kichCoSelect.selectedOptions.length > 0;
                                                 var selectedMauSac = mauSacSelect.selectedOptions.length > 0;
 
+                                                errorDivMauSac.style.display = "block";
+                                                errorDivKichCo.style.display = "block";
+
                                                 if (!selectedKichCo && !selectedMauSac) {
                                                     // Không có select nào được chọn
-                                                    errorDivKichCo.textContent ="Vui lòng chọn giá trị cho 'Kích cỡ'.";
-                                                    errorDivMauSac.textContent ="Vui lòng chọn giá trị cho 'Màu sắc'.";
+                                                    errorDivKichCo.textContent = "Vui lòng chọn giá trị cho 'Kích cỡ'.";
+                                                    errorDivMauSac.textContent = "Vui lòng chọn giá trị cho 'Màu sắc'.";
                                                     return false
                                                 } else if (!selectedKichCo) {
                                                     // Chỉ có kichCoSelect không được chọn
-                                                    errorDivKichCo.textContent ="Vui lòng chọn giá trị cho 'Kích cỡ'.";
+                                                    errorDivKichCo.textContent = "Vui lòng chọn giá trị cho 'Kích cỡ'.";
                                                     errorDivMauSac.style.display = "none";
                                                     return false
                                                 } else if (!selectedMauSac) {
                                                     // Chỉ có mauSacSelect không được chọn
-                                                    errorDivMauSac.textContent ="Vui lòng chọn giá trị cho 'Màu sắc'.";
+                                                    errorDivMauSac.textContent = "Vui lòng chọn giá trị cho 'Màu sắc'.";
                                                     errorDivKichCo.style.display = "none";
                                                     return false
                                                 } else {
@@ -611,72 +615,6 @@
                                                         return false; // Trả về false nếu có lỗi
                                                     }
 
-
-
-                                                    // const soLuongInputs = document.getElementsByName("listSoLuong");
-                                                    // const donGiaInputs = document.getElementsByName("listDonGia");
-                                                    //
-                                                    // let errorList = []; // Danh sách lỗi
-                                                    //
-                                                    // for (let i = 0; i < donGiaInputs.length; i++) {
-                                                    //     const checkDonGia = donGiaInputs[i].value;
-                                                    //     const errorDiv = document.getElementById("checkDonGia" + (i * 2 + 2));
-                                                    //
-                                                    //     if (checkDonGia <= 0) {
-                                                    //         errorList[i] = true;
-                                                    //         errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
-                                                    //         errorDiv.textContent = "Giá phải >= 0"; // Hiển thị thông báo lỗi
-                                                    //     }else if (checkDonGia >= 1000000000) {
-                                                    //         errorList[i] = true;
-                                                    //         errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
-                                                    //         errorDiv.textContent = "Giá phải <= 1000000000"; // Hiển thị thông báo lỗi
-                                                    //     }else {
-                                                    //         errorList[i] = false;
-                                                    //         errorDiv.style.display = "none"; // Ẩn div thông báo lỗi nếu giá trị hợp lệ
-                                                    //     }
-                                                    //
-                                                    // }
-                                                    //
-                                                    // // Kiểm tra lại tất cả các input và hiển thị lại thông báo lỗi nếu cần
-                                                    // for (let i = 0; i < donGiaInputs.length; i++) {
-                                                    //     const errorDiv = document.getElementById("checkDonGia" + (i * 2 + 2));
-                                                    //     if (errorList[i]) {
-                                                    //         errorDiv.style.display = "block";
-                                                    //     }
-                                                    // }
-                                                    //
-                                                    //
-                                                    // for (let i = 0; i < soLuongInputs.length; i++) {
-                                                    //     const checkSoLuong = soLuongInputs[i].value;
-                                                    //     const errorDiv = document.getElementById("checkSoLuong" + (i * 2 + 1));
-                                                    //
-                                                    //     if (checkSoLuong <= 0) {
-                                                    //         errorList[i] = true;
-                                                    //         errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
-                                                    //         errorDiv.textContent = "Số lượng phải >= 0"; // Hiển thị thông báo lỗi
-                                                    //     } else if (checkSoLuong >= 100000) {
-                                                    //         errorList[i] = true;
-                                                    //         errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
-                                                    //         errorDiv.textContent = "Số lượng phải <= 100000"; // Hiển thị thông báo lỗi
-                                                    //     }else {
-                                                    //         errorList[i] = false;
-                                                    //         errorDiv.style.display = "none"; // Ẩn div thông báo lỗi nếu giá trị hợp lệ
-                                                    //     }
-                                                    // }
-                                                    //
-                                                    // // Kiểm tra lại tất cả các input và hiển thị lại thông báo lỗi nếu cần
-                                                    // for (let i = 0; i < soLuongInputs.length; i++) {
-                                                    //     const errorDiv = document.getElementById("checkSoLuong" + (i * 2 + 1));
-                                                    //     if (errorList[i]) {
-                                                    //         errorDiv.style.display = "block";
-                                                    //     }
-                                                    // }
-                                                    //
-                                                    // if (errorList.includes(true)) {
-                                                    //     return false; // Trả về false nếu có lỗi
-                                                    // } else {
-                                                    //     return true; // Trả về true nếu không có lỗi
-                                                    // }
 
                                                 }
                                             }
@@ -866,7 +804,8 @@
                                 <!-- Modal thêm sản phẩm nhanh end -->
 
 
-                            </div><!-- chi tiết sp - tạo mới - end -->
+                            </div>
+                            <!-- chi tiết sp - tạo mới - end -->
 
                         </div>
                     </div>
