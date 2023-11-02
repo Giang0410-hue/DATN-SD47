@@ -10,6 +10,10 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
 
+    <!--    thư viện của bảng tích hợp tìm kiếm-->
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
+
     <!-- Favicons -->
     <div th:replace="~{admin-template/fragment/header :: header}"></div>
 
@@ -131,53 +135,36 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <form action="" style="margin-top: 5%;">
-                            <label class="col-sm-3 col-form-label">Nhập tên, số điện thoại, email:</label>
-                            <div class="row mb-3">
-                                <div class="col-sm-8">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control"
-                                               placeholder="Tìm kiếm khách hàng theo tên, số điện thoại, email">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="bi bi-arrow-clockwise"></i></button>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-primary" style="margin-left:35%;">Tìm kiếm
-                                    </button>
-                                </div>
-                                <div class="col-sm-2">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            style="float: right; "
-                                            data-bs-target="#them-khach-hang">
-                                        Thêm mới
-                                    </button>
+                        <!--    tìm kiếm theo trạng thái-->
+                        <div class="row g-3" style="margin-top: 2%;margin-bottom: 2%">
+                            <div class="col-md-8">
+                                <label>Trạng thái:</label>
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                    <a href="/admin/khach-hang" class="btn btn-outline-primary">
+                                        Tất cả</a>
+                                    <a href="/admin/khach-hang/dang-hoat-dong"
+                                       class="btn btn-outline-primary">
+                                        Đang hoạt động</a>
+                                    <a href="/admin/khach-hang/ngung-hoat-dong"
+                                       class="btn btn-outline-primary">
+                                        Ngừng hoạt động</a>
                                 </div>
                             </div>
-                            <div class="search-trang-thai" style="margin-top: 4%;">
-                                <label style="margin-left:20%;">Trạng thái:</label>
-                                <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                       style="margin-left:10%;" checked>
-                                <label class="form-check-label">
-                                    Tất cả
-                                </label>
-
-                                <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                       style="margin-left:5%;"
-                                       checked>
-                                <label class="form-check-label">
-                                    Kích hoạt
-                                </label>
-
-                                <input class="form-check-input" type="radio" name="gridRadios" value="option1"
-                                       style="margin-left:5%;"
-                                       checked>
-                                <label class="form-check-label">
-                                    Dừng kích hoạt
-                                </label>
+                            <div class="col-md-2">
+                                <a href="/admin/khach-hang" style="float: right"
+                                   class="btn btn-primary">
+                                    <i class="bi bi-arrow-clockwise"> Làm mới</i>
+                                </a>
                             </div>
-                        </form>
+                            <div class="col-sm-2">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        style="float: right; " data-bs-target="#them-khach-hang">
+                                    Thêm mới
+                                </button>
+                            </div>
+                        </div>
+                        <!--     tìm kiếm theo trạng thái end-->
 
                         <!-- Modal -->
                         <div class="modal fade" id="them-khach-hang" tabindex="-1"
@@ -202,9 +189,9 @@
                                     <div class="modal-body">
 
                                         <!-- form thêm khách hàng -->
-                                        <form class="row g-3" style="margin-top: 1%;margin-bottom: 5%;"
-                                              th:action="@{/admin/khach-hang/add}" method="post"
+                                        <form class="row g-3" style="margin-top: 1%;margin-bottom: 5%;" method="post"
                                               enctype="multipart/form-data"
+                                              th:action="@{/admin/khach-hang/add}"
                                               th:object="${khachHang}">
                                             <div class="col-md-6">
                                                 <label class="form-label">
@@ -226,6 +213,7 @@
                                                     <span class="dau-sao">*</span>Ngày sinh:</label>
                                                 <input type="date" class="form-control" th:field="*{ngaySinh}">
                                                 <span class="check-loi" th:errors="*{ngaySinh}"></span>
+                                                <span class="check-loi" th:if="${checkNgaySinh=='ngaySinh'}">Năm sinh phải lớn 1923</span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">
@@ -239,12 +227,13 @@
                                                     </label>
 
                                                     <input class="form-check-input" type="radio" name="gridRadios"
-                                                           style="margin-left:5%;" checked th:field="*{gioiTinh}"
+                                                           style="margin-left:5%;"  th:field="*{gioiTinh}"
                                                            value="1">
                                                     <label class="form-check-label">
                                                         Nữ
                                                     </label>
                                                 </div>
+                                                <span class="check-loi" th:errors="*{gioiTinh}"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">
@@ -317,7 +306,7 @@
 
 
                         <!-- Table with stripped rows -->
-                        <table class="sanpham-table" style="margin-top: 4%;">
+                        <table id="example" class="display" style="width:100%;margin-top: 4%">
                             <thead>
                             <tr>
                                 <th>STT</th>
@@ -331,47 +320,35 @@
                             <thead>
                             <tbody>
                             <tr th:each="khachHang,iterStat : ${listTaiKhoan}">
-                                <td th:text="${#numbers.sequence(1 + (currentPage * 5), 1 + (currentPage * 5) + 5)[__${iterStat.index}__]}"></td>
+                                <td th:text="${iterStat.index+1}"></td>
                                 <td th:text="${khachHang.getHoVaTen()}"></td>
                                 <td th:text="${khachHang.email}"></td>
                                 <td th:text="${khachHang.soDienThoai}"></td>
                                 <td th:text="${khachHang.ngayTao}"></td>
                                 <td class="trangthaidkd" th:if="${khachHang.trangThai==0}">Đang kinh doanh</td>
                                 <td class="trangthainkd" th:if="${khachHang.trangThai==1}">Ngừng kinh doanh</td>
-
                                 <td>
                                     <!-- button và model -->
                                     <a type="button" class="btn btn-warning"
-
                                        data-bs-target="#sua-khach-hang"
-                                       th:href="@{/admin/khach-hang/view-update/{id}(id=${khachHang.id})}">
+                                       th:href="@{/admin/khach-hang/view-update-khach-hang/{id}(id=${khachHang.id})}">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
                                 </td>
                             </tr>
                             </tbody>
+                            <tfoot hidden="hidden">
+                            <tr>
+                                <th>STT</th>
+                                <th>Họ Và Tên</th>
+                                <th>Email</th>
+                                <th>Số Điện Thoại</th>
+                                <th>Ngày tham gia</th>
+                                <th>Trạng Thái</th>
+                                <th>Hành Động</th>
+                            </tr>
+                            </tfoot>
                         </table>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        <i class="bi bi-chevron-left"></i>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        <i class="bi bi-chevron-right"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <!-- End Table with stripped rows -->
-
-
-                        <!--                    -->
 
                     </div>
                 </div>
@@ -491,8 +468,71 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 
-<!-- Vendor JS Files -->
-<!-- Vendor JS Files -->
+<!--    thư viện của bảng tích hợp tìm kiếm-->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
+<script>
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            "language": {
+                "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                "emptyTable": "Không có kết quả nào được tìm thấy",
+                "zeroRecords": "Không có kết quả phù hợp",
+                "infoEmpty": "Không có dữ liệu để hiển thị"
+            },
+            "initComplete": function (settings, json) {
+                // CSS changes
+                $('#example_filter input[type="search"]').addClass('form-control');
+                $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                $('#example_filter label').contents().filter(function () {
+                    return this.nodeType === 3;
+                }).replaceWith(' ');
+
+                $('#example_length label').contents().filter(function () {
+                    return this.nodeType === 3;
+                }).first().replaceWith('Hiển thị');
+                $('#example_length label').contents().filter(function () {
+                    return this.nodeType === 3;
+                }).last().replaceWith('mục');
+
+                $('#example_length select').addClass('form-select');
+            }
+        });
+
+        table.on('draw.dt', function () {
+            var pageInfo = table.page.info();
+
+            var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+            $('#example_info').html(newInfo);
+
+        });
+    });
+</script>
+<style>
+    /*input tìm kiếm*/
+    #example_filter input[type="search"] {
+        width: 180%;
+        margin-left: -80%;
+        margin-bottom: 10%;
+    }
+
+    /*select hiển thị mục*/
+    .dataTables_length label {
+        white-space: nowrap; /* Ngăn các phần tử xuống dòng */
+        display: flex; /* Hiển thị label và select trên cùng một dòng */
+        align-items: center; /* Canh chỉnh label và select theo chiều dọc */
+    }
+
+    .dataTables_length select {
+        margin-left: 5px; /* Tạo khoảng cách giữa label và select */
+    }
+
+    .dataTables_length label:after {
+        /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
+        content: ''; /* Xóa nội dung */
+    }
+</style>
+<!--    thư viện của bảng tích hợp tìm kiếm end--><!-- Vendor JS Files -->
 <div th:replace="~{admin-template/fragment/script :: script}"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>

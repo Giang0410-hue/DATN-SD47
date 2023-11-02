@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @Getter
@@ -40,9 +42,23 @@ public class TaiKhoan {
 
     @Column(name = "ngay_sinh")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Ngày sinh không được trống")
+    @PastOrPresent(message = "Phải là một ngày trong quá khứ hoặc hiện tại")
     private Date ngaySinh;
 
+    // Kiem tra ngay sinh >= 1923
+    public boolean isValidNgaySinh() {
+        if (ngaySinh != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(ngaySinh);
+            int year = cal.get(Calendar.YEAR);
+            return year >= 1923;
+        }
+        return true; // Truong ngaySinh co the de trong
+    }
+
     @Column(name = "gioi_tinh")
+    @NotNull(message = "Giới tính không được để trống")
     private Integer gioiTinh;
 
     @Column(name = "so_dien_thoai", length = 15)
@@ -81,15 +97,17 @@ public class TaiKhoan {
 
     @Column(name = "ngay_tao")
 //    @NotNull(message = "Ngày tạo không được trống")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayTao;
 
     @Column(name = "ngay_sua")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngaySua;
 
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vai_tro_id", referencedColumnName = "id")
     private VaiTro vaiTro;
 
