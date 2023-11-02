@@ -39,8 +39,6 @@ public class SanPhamController {
     @Autowired
     private HinhAnhSanPhamSerivce hinhAnhSanPhamSerivce;
 
-    private Integer pageNo = 0;
-
     private Date currentDate = new Date();
 
 
@@ -49,7 +47,6 @@ public class SanPhamController {
             Model model
     ) {
         model.addAttribute("listSanPham", sanPhamSerivce.getAll());
-        model.addAttribute("currentPage", pageNo);
         model.addAttribute("listThuongHieu", thuongHieuService.findAll());
         model.addAttribute("sanPham", new SanPham());
         return "/admin-template/san_pham/san-pham";
@@ -60,7 +57,6 @@ public class SanPhamController {
             Model model
     ) {
         model.addAttribute("listSanPham", sanPhamSerivce.getAllDangHoatDong());
-        model.addAttribute("currentPage", pageNo);
         model.addAttribute("listThuongHieu", thuongHieuService.findAll());
         model.addAttribute("sanPham", new SanPham());
         return "/admin-template/san_pham/san-pham";
@@ -71,7 +67,6 @@ public class SanPhamController {
             Model model
     ) {
         model.addAttribute("listSanPham", sanPhamSerivce.getAllNgungHoatDong());
-        model.addAttribute("currentPage", pageNo);
         model.addAttribute("listThuongHieu", thuongHieuService.findAll());
         model.addAttribute("sanPham", new SanPham());
         return "/admin-template/san_pham/san-pham";
@@ -150,7 +145,8 @@ public class SanPhamController {
             sanPham.setNgaySua(currentDate);
             sanPham.setTrangThai(0);
             sanPhamSerivce.add(sanPham);
-            hinhAnhSanPhamSerivce.saveImage(multipartFiles, sanPham);
+
+            hinhAnhSanPhamSerivce.saveImage(multipartFiles,sanPham);
             return "redirect:/admin/san-pham";
         }
     }
