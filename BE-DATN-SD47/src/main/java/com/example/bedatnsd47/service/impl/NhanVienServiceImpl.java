@@ -17,8 +17,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     @Override
     public List<TaiKhoan> getAll() {
 
-        Sort sort = Sort.by(Sort.Direction.DESC, "ngaySua");
-        return repository.findAll(sort);
+        return repository.fillAllNhanVien();
 
     }
 
@@ -52,7 +51,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     @Override
     public void remove(Long id) {
 
-         repository.deleteById(id);
+        repository.deleteById(id);
 
     }
 
@@ -65,7 +64,6 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public boolean checkTenTrung(String ten) {
-
 
         for (TaiKhoan sp : repository.findAll()) {
             if (sp.getTen_tai_khoan().equalsIgnoreCase(ten)) {
@@ -88,6 +86,55 @@ public class NhanVienServiceImpl implements NhanVienService {
         }
         return true;
 
+    }
+
+    @Override
+    public boolean checkTenTkTrungSua(Long id, String ten) {
+
+        for (TaiKhoan sp : repository.findAll()) {
+            if (sp.getTen_tai_khoan().equalsIgnoreCase(ten)) {
+                if (!sp.getId().equals(id)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkTenTaiKhoanTrung(String ten) {
+
+        for (TaiKhoan sp : repository.findAll()) {
+            if (sp.getTen_tai_khoan().equalsIgnoreCase(ten)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkEmailSua(Long id, String email) {
+
+        for (TaiKhoan sp : repository.findAll()) {
+            if (sp.getEmail().equalsIgnoreCase(email)) {
+                if (!sp.getId().equals(id)) {
+                    return false;
+                }
+
+            }
+        }
+        return true;
+
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        for (TaiKhoan sp : repository.findAll()) {
+            if (sp.getEmail().equalsIgnoreCase(email)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

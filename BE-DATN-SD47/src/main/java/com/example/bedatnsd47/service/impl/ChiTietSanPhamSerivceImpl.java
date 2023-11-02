@@ -1,6 +1,9 @@
 package com.example.bedatnsd47.service.impl;
 
 import com.example.bedatnsd47.entity.ChiTietSanPham;
+import com.example.bedatnsd47.entity.KichCo;
+import com.example.bedatnsd47.entity.LoaiDe;
+import com.example.bedatnsd47.entity.MauSac;
 import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.repository.ChiTietSanPhamRepository;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
@@ -38,33 +41,29 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     }
 
     @Override
-    public ChiTietSanPham add(
+    public List<ChiTietSanPham> add(
             List<String> listSanPham, List<String> listKichCo,
             List<String> listMauSac, List<String> listLoaiDe,
             List<String> listSoLuong, List<String> listDonGia) {
-//
-//        List<ChiTietSanPham> chiTietSanPhamList = new ArrayList<>();
-//
-//        for (int i = 0; i < listSanPham.size(); i++) {
-//            ChiTietSanPham chiTietSanPham = new ChiTietSanPham();
-//            chiTietSanPham.setSanPham(SanPham.builder().id(Long.valueOf(listSanPham.get(i))).build()); // Thiết lập từng phần tử từ danh sách
-//
-//            // Thiết lập các thuộc tính khác dựa trên danh sách tương ứng, tương tự như đoạn mã trên
-//            chiTietSanPham.setKichCo(listKichCo.get(i));
-//            chiTietSanPham.setMauSac(listMauSac.get(i));
-//            chiTietSanPham.setLoaiDe(listLoaiDe.get(i));
-//            chiTietSanPham.setSoLuong(Integer.parseInt(listSoLuong.get(i)));
-//            chiTietSanPham.setGiaHienHanh(Double.parseDouble(listDonGia.get(i)));
-//            chiTietSanPham.setTrangThai(0);
-//
-//            chiTietSanPhamList.add(chiTietSanPham); // Thêm đối tượng đã tạo vào danh sách
-//        }
-//
-//        // Lưu tất cả các đối tượng ChiTietSanPham đã tạo trong repository
-//        return repository.saveAll(chiTietSanPhamList);
-        return null;
-    }
 
+        List<ChiTietSanPham> chiTietSanPhamList = new ArrayList<>();
+
+        for (int i = 0; i < listSanPham.size(); i++) {
+            ChiTietSanPham chiTietSanPham = new ChiTietSanPham();
+            chiTietSanPham.setSanPham(SanPham.builder().id(Long.valueOf(listSanPham.get(i))).build());
+            chiTietSanPham.setKichCo(KichCo.builder().id(Long.valueOf(listKichCo.get(i))).build());
+            chiTietSanPham.setMauSac(MauSac.builder().id(Long.valueOf(listMauSac.get(i))).build());
+            chiTietSanPham.setLoaiDe(LoaiDe.builder().id(Long.valueOf(listLoaiDe.get(i))).build());
+            chiTietSanPham.setSoLuong(Integer.parseInt(listSoLuong.get(i)));
+            chiTietSanPham.setGiaHienHanh(Double.parseDouble(listDonGia.get(i)));
+            chiTietSanPham.setTrangThai(0);
+
+            ChiTietSanPham savedChiTietSanPham = repository.save(chiTietSanPham);
+            chiTietSanPhamList.add(savedChiTietSanPham);
+        }
+
+        return chiTietSanPhamList;
+    }
 
     @Override
     public ChiTietSanPham update(ChiTietSanPham sanPham) {
