@@ -685,7 +685,7 @@ h6 {
     font-size: 15px;
     font-weight: 600;
     color: #4154f1;
-    transition: 0.3;
+    transition: 0.3s;
     background: #f6f9ff;
     padding: 10px 15px;
     border-radius: 4px;
@@ -736,7 +736,7 @@ h6 {
     font-size: 14px;
     font-weight: 600;
     color: #012970;
-    transition: 0.3;
+    transition: 0.3s;
     padding: 10px 0 10px 40px;
     transition: 0.3s;
 }
@@ -1234,7 +1234,7 @@ h6 {
 
 /* ------------------------------Quản lý sản phẩm-------------------------------- */
 table {
-    border-spacing: 1;
+    border-spacing: 1px;
     border-collapse: collapse;
     background: white;
     border-radius: 6px;
@@ -1438,7 +1438,7 @@ table th {
     margin-top: 20%;
     font-family: Arial, sans-serif;
     /* Font-family chọn */
-    font-size: 15;
+    font-size: 15px;
     /* Kích thước font */
     font-weight: bold;
     /* Độ đậm của font */

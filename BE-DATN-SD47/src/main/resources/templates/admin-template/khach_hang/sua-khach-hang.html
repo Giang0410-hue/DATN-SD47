@@ -174,7 +174,6 @@
                                             <span class="dau-sao">*</span>Ngày sinh:</label>
                                         <input type="date" class="form-control" th:field="*{ngaySinh}">
                                         <span class="check-loi" th:errors="*{ngaySinh}"></span>
-                                        <span class="check-loi" th:errors="*{ngaySinh}"></span>
                                         <span class="check-loi" th:if="${checkNgaySinh=='ngaySinh'}">Năm sinh phải lớn 1923</span>
                                     </div>
                                     <div class="col-md-6">
@@ -261,7 +260,7 @@
                                         <label class="form-label"><span class="dau-sao">*</span>Địa chỉ cụ thể:</label>
                                         <input type="text" class="form-control"
                                                placeholder="Nhập địa chỉ cụ thể" th:field="*{diaChiCuThe}"/>
-                                        <!--                                                                                        <span class="check-loi" th:errors="*{diaChiCuThe}"></span>-->
+                                        <span class="check-loi" th:errors="*{diaChiCuThe}"></span>
 
                                     </div>
                                     <div class="col-12">
@@ -269,7 +268,8 @@
                                             Khẩu:</label>
                                         <input type="text" class="form-control"
                                                placeholder="Nhập mật khẩu" th:field="*{matKhau}"/>
-                                        <!--  <span class="check-loi" th:errors="*{diaChiCuThe}"></span>-->
+                                        <span class="check-loi" th:errors="*{matKhau}"></span>
+
                                     </div>
 
                                     <div class="modal-footer">
@@ -309,7 +309,7 @@
                                             <a type="button" class="btn btn-danger"
                                                data-bs-target="#sua-khach-hang"
                                                th:href="@{/admin/khach-hang/dia-chi/delete/{idKhachHang}/{idDiaChi}(idKhachHang=${diaChi.getTaiKhoan().id}, idDiaChi=${diaChi.id})}">
-                                                <i class="bi bi-pencil-fill"></i>
+                                                <i class="bi bi-trash-fill"></i></i>
                                             </a>
                                         </td>
                                     </tr>
