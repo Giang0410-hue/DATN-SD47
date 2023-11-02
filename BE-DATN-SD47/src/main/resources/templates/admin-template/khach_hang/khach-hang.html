@@ -213,6 +213,7 @@
                                                     <span class="dau-sao">*</span>Ngày sinh:</label>
                                                 <input type="date" class="form-control" th:field="*{ngaySinh}">
                                                 <span class="check-loi" th:errors="*{ngaySinh}"></span>
+                                                <span class="check-loi" th:if="${checkNgaySinh=='ngaySinh'}">Năm sinh phải lớn 1923</span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">
@@ -232,6 +233,7 @@
                                                         Nữ
                                                     </label>
                                                 </div>
+                                                <span class="check-loi" th:errors="*{gioiTinh}"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">
