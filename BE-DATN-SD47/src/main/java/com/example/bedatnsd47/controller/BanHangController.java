@@ -6,7 +6,8 @@ import com.example.bedatnsd47.entity.HoaDonChiTiet;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import com.example.bedatnsd47.service.HoaDonChiTietService;
 import com.example.bedatnsd47.service.HoaDonService;
-import com.example.bedatnsd47.service.TaiKhoanService;
+import com.example.bedatnsd47.service.KhachHangService;
+import com.example.bedatnsd47.service.KhachHangService;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 @RequestMapping("/ban-hang-tai-quay")
 @Controller
 public class BanHangController {
@@ -28,16 +30,14 @@ public class BanHangController {
     ChiTietSanPhamSerivce chiTietSanPhamSerivce;
 
     @Autowired
-    TaiKhoanService taiKhoanService;
+    KhachHangService khachHangService;
 
     @GetMapping("/hoa-don")
     public String home(Model model) {
         model.addAttribute("lstHoaDon", hoaDonService.findByTrangThai(6));
         return "/admin-template/ban-hang-admin-v2";
     }
-    
-   
-    
+
     Long idhdc;
 
     @GetMapping("/hoa-don/{id}")
@@ -45,7 +45,7 @@ public class BanHangController {
         model.addAttribute("lstHoaDon", hoaDonService.findByTrangThai(6));
         model.addAttribute("lstHdct", hoaDonChiTietService.findAll());
         model.addAttribute("lstCtsp", chiTietSanPhamSerivce.getAll());
-        model.addAttribute("lstTaiKhoan", taiKhoanService.getAll());
+        model.addAttribute("lstTaiKhoan", khachHangService.getAll());
         idhdc = id;
         HoaDon hd = hoaDonService.findById(id);
         model.addAttribute("hoaDon", hd);
@@ -57,7 +57,7 @@ public class BanHangController {
         HoaDon hd = new HoaDon();
         Integer size = hoaDonService.findAll().size() + 1;
         hd.setMaHoaDon("HD" + size);
-        hd.setTaiKhoan(taiKhoanService.getById((long) 1));
+        hd.setTaiKhoan(khachHangService.getById((long) 1));
         hd.setTrangThai(6);
         hoaDonService.saveOrUpdate(hd);
         return "redirect:/ban-hang-tai-quay/hoa-don";
@@ -67,7 +67,7 @@ public class BanHangController {
     public String delete(@PathVariable Long id) {
         hoaDonService.deleteById(id);
 
-        return "redirect:/hoa-don/"+idhdc;
+        return "redirect:/hoa-don/" + idhdc;
     }
 
     @PostMapping("/hoa-don-chi-tiet/add")
@@ -109,25 +109,25 @@ public class BanHangController {
     }
 
     @PostMapping("/hoa-don-chi-tiet/update")
-    public String updateSoLuong(@RequestParam Integer soLuongEdit, @RequestParam Long idHdct){
+    public String updateSoLuong(@RequestParam Integer soLuongEdit, @RequestParam Long idHdct) {
         HoaDonChiTiet hdct = hoaDonChiTietService.findById(idHdct);
-        System.out.println("000"+idHdct);
+        System.out.println("000" + idHdct);
         hdct.setSoLuong(soLuongEdit);
         hoaDonChiTietService.saveOrUpdate(hdct);
         return "redirect:/ban-hang-tai-quay/hoa-don/" + idhdc;
     }
 
     @PostMapping("/hoa-don/add-khach-hang")
-    public String addKhachHang(@RequestParam Long idTaiKhoan){
+    public String addKhachHang(@RequestParam Long idTaiKhoan) {
         HoaDon hd = hoaDonService.findById(idhdc);
-        hd.setTaiKhoan(taiKhoanService.getById(idTaiKhoan));
+        hd.setTaiKhoan(khachHangService.getById(idTaiKhoan));
         hoaDonService.saveOrUpdate(hd);
-        System.out.println(idTaiKhoan+"idtk");
+        System.out.println(idTaiKhoan + "idtk");
         return "redirect:/ban-hang-tai-quay/hoa-don/" + idhdc;
     }
 
     @PostMapping("/hoa-don/thanh-toan")
-    public String thanhToan(){
+    public String thanhToan() {
         HoaDon hd = hoaDonService.findById(idhdc);
         hd.setTrangThai(1);
         hd.setTongTien(hd.tongTienHoaDon());
@@ -136,7 +136,7 @@ public class BanHangController {
     }
 
     @GetMapping("/hoa-don/quan-ly")
-    public String quanLyHoaDon(){
+    public String quanLyHoaDon() {
         return "";
     }
 }
