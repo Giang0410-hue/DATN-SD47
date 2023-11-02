@@ -33,4 +33,10 @@ public class HoaDonServiceImpl implements HoaDonService {
     public void saveOrUpdate(HoaDon hoaDon) {
         hoaDonRepository.save(hoaDon);
     }
+
+    @Override
+    public List<HoaDon> findByTrangThai(Integer trangThai) {
+        // TODO Auto-generated method stub
+        return hoaDonRepository.findByTrangThai(trangThai);
+    }
 }

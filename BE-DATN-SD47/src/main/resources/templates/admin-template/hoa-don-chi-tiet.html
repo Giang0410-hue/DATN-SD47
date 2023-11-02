@@ -876,7 +876,7 @@
                                                 </div>
                                             </div>
 
-                                            <form action="" class="row g-3">
+                                            <form action="/ban-hang-tai-quay/hoa-don/thanh-toan" class="row g-3" method="post">
                                                 <div class="col">
                                                     <div class="thong-tin-kh">
                                                         <div class="row g-3">
@@ -889,8 +889,8 @@
                                                                     <span class="dau-sao">*</span>
                                                                     Tên khác hàng:
                                                                 </label>
-                                                                <input type="text" class="form-control"
-                                                                    id="inputEmail2" th:value="${hoaDon.TaiKhoan.hoVaTen}">
+                                                                <input type="text" class="form-control" id="inputHoVaTen"
+                                                                    th:value="${hoaDon.TaiKhoan.hoVaTen}">
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label for="inputPassword3" class="form-label">
@@ -898,35 +898,41 @@
                                                                     Số điện thoại:
                                                                 </label>
                                                                 <input type="text" class="form-control"
-                                                                    id="inputPassword3" th:value="${hoaDon.TaiKhoan.soDienThoai}">
+                                                                    id="inputSoDienThoai"
+                                                                    th:value="${hoaDon.TaiKhoan.soDienThoai}">
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">
                                                                     <span class="dau-sao">*</span>
                                                                     Địa chỉ:
                                                                 </label>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Tỉnh / Thành Phố" th:value="${hoaDon.TaiKhoan.thanhPho}">
+                                                                <input id="inputThanhPho" type="text" class="form-control"
+                                                                    placeholder="Tỉnh / Thành Phố"
+                                                                    th:value="${hoaDon.TaiKhoan.thanhPho}">
                                                                 <br>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Quận / Huyện" th:value="${hoaDon.TaiKhoan.quanHuyen}">
+                                                                <input id="inputQuanHuyen" type="text" class="form-control"
+                                                                    placeholder="Quận / Huyện"
+                                                                    th:value="${hoaDon.TaiKhoan.quanHuyen}">
                                                                 <br>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Xã / Phường" th:value="${hoaDon.TaiKhoan.phuongXa}">
+                                                                <input id="inputPhuongXa" type="text" class="form-control"
+                                                                    placeholder="Xã / Phường"
+                                                                    th:value="${hoaDon.TaiKhoan.phuongXa}">
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="form-label">
                                                                     <span class="dau-sao">*</span>
                                                                     Địa chỉ cụ thể:
                                                                 </label>
-                                                                <textarea class="form-control" rows="6" >[[${hoaDon.TaiKhoan.diaChiCuThe}]]</textarea>
+                                                                <textarea id="inputDiaChiCuThe" class="form-control"
+                                                                    rows="6">[[${hoaDon.TaiKhoan.diaChiCuThe}]]</textarea>
                                                             </div>
                                                             <div class="col-12">
                                                                 <label class="form-label">
                                                                     <span class="dau-sao">*</span>
                                                                     Ghi chú:
                                                                 </label>
-                                                                <textarea class="form-control" rows="3" >[[${hoaDon.ghiChu}]]</textarea>
+                                                                <textarea id="inputGhiChu" class="form-control"
+                                                                    rows="3">[[${hoaDon.ghiChu}]]</textarea>
                                                             </div>
                                                         </div>
                                                     </div>

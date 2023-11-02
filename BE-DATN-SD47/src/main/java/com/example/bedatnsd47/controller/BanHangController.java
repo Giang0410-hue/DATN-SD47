@@ -32,7 +32,7 @@ public class BanHangController {
 
     @GetMapping("/hoa-don")
     public String home(Model model) {
-        model.addAttribute("lstHoaDon", hoaDonService.findAll());
+        model.addAttribute("lstHoaDon", hoaDonService.findByTrangThai(6));
         return "/admin-template/ban-hang-admin-v2";
     }
     
@@ -42,7 +42,7 @@ public class BanHangController {
 
     @GetMapping("/hoa-don/{id}")
     public String hoaDon(@PathVariable Long id, Model model) {
-        model.addAttribute("lstHoaDon", hoaDonService.findAll());
+        model.addAttribute("lstHoaDon", hoaDonService.findByTrangThai(6));
         model.addAttribute("lstHdct", hoaDonChiTietService.findAll());
         model.addAttribute("lstCtsp", chiTietSanPhamSerivce.getAll());
         model.addAttribute("lstTaiKhoan", taiKhoanService.getAll());
@@ -58,6 +58,7 @@ public class BanHangController {
         Integer size = hoaDonService.findAll().size() + 1;
         hd.setMaHoaDon("HD" + size);
         hd.setTaiKhoan(taiKhoanService.getById((long) 1));
+        hd.setTrangThai(6);
         hoaDonService.saveOrUpdate(hd);
         return "redirect:/ban-hang-tai-quay/hoa-don";
     }
@@ -125,4 +126,17 @@ public class BanHangController {
         return "redirect:/ban-hang-tai-quay/hoa-don/" + idhdc;
     }
 
+    @PostMapping("/hoa-don/thanh-toan")
+    public String thanhToan(){
+        HoaDon hd = hoaDonService.findById(idhdc);
+        hd.setTrangThai(1);
+        hd.setTongTien(hd.tongTienHoaDon());
+        hoaDonService.saveOrUpdate(hd);
+        return "redirect:/ban-hang-tai-quay/hoa-don/" + idhdc;
+    }
+
+    @GetMapping("/hoa-don/quan-ly")
+    public String quanLyHoaDon(){
+        return "";
+    }
 }
