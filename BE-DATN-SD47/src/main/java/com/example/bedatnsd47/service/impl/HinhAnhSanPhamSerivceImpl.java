@@ -21,15 +21,16 @@ public class HinhAnhSanPhamSerivceImpl implements HinhAnhSanPhamSerivce {
 
     @Override
     public void saveImage(List<MultipartFile> files, SanPham sanPham) {
-        HinhAnhSanPham hinhAnh = new HinhAnhSanPham();
 
         for (MultipartFile multipartFile : files) {
             if (!multipartFile.isEmpty()) {
                 try {
+                    HinhAnhSanPham hinhAnh = new HinhAnhSanPham();
                     // Lưu tệp vào cơ sở dữ liệu
                     hinhAnh.setUrl(multipartFile.getOriginalFilename());
                     hinhAnh.setNgayTao(currentDate);
-                    hinhAnh.setTrangThai(1);
+                    hinhAnh.setNgaySua(currentDate);
+                    hinhAnh.setTrangThai(0);
                     hinhAnh.setUuTien(0);
                     hinhAnh.setSanPham(sanPham);
                     // Thực hiện các tác vụ khác nếu cần thiết
@@ -53,7 +54,8 @@ public class HinhAnhSanPhamSerivceImpl implements HinhAnhSanPhamSerivce {
                     // Lưu tệp vào cơ sở dữ liệu
                     hinhAnh.setUrl(multipartFile.getOriginalFilename());
                     hinhAnh.setNgayTao(currentDate);
-                    hinhAnh.setTrangThai(1);
+                    hinhAnh.setNgaySua(currentDate);
+                    hinhAnh.setTrangThai(0);
                     hinhAnh.setUuTien(0);
                     hinhAnh.setSanPham(SanPham.builder().id(id).build());
                     // Thực hiện các tác vụ khác nếu cần thiết

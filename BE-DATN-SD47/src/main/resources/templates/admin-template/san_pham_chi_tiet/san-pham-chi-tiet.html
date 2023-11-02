@@ -14,6 +14,9 @@
     <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
     <!--    thư viện của bảng tích hợp tìm kiếm end-->
 
+    <!-- thư viện thêm ảnh -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
+    <!-- thư viện thêm ảnh end -->
 
     <!-- Favicons -->
     <link href="../../../static/img/favicon.png" rel="icon">
@@ -234,10 +237,9 @@
                                         </td>
                                         <td>
                                             <!-- button và model -->
-                                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal2">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
+                                            <a class="btn btn-info">
+                                                <i class="bi bi-pencil-fill"></i></i>
+                                            </a>
                                             <!-- model-xem-Cập Nhật-ctsp -->
                                             <div class="modal fade" id="exampleModal2" tabindex="-1"
                                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -474,6 +476,14 @@
                                             var listTabContent = document.getElementById("list");
                                             listTabContent.classList.remove("active", "show");
                                         }
+                                    });
+
+                                </script>
+                                <script th:if="${checkModal=='true'}">
+                                    window.addEventListener('DOMContentLoaded', (event) => {
+                                        // Hiển thị modal
+                                        var myModal = new bootstrap.Modal(document.getElementById('them-san-pham-nhanh'));
+                                        myModal.show();
                                     });
                                 </script>
                                 <!-- form thêm chi tiết sản phẩm -->
@@ -767,34 +777,64 @@
                                 <div class="modal fade" id="them-san-pham-nhanh" tabindex="-1"
                                      aria-labelledby="them-san-pham-nhanhLabel" aria-hidden="true">
                                     <div class="modal-dialog">
-                                        <div class="modal-content" style="width: 100%;margin: auto;">
+                                        <div class="modal-content" style="width: 200%;">
                                             <div class="modal-header">
                                                 <h1 class="modal-title fs-5" id="them-san-pham-nhanhLabel">Thêm
                                                     sản
                                                     phẩm</h1>
                                             </div>
 
-                                            <form action="" method="post">
+                                            <form th:action="@{/admin/san-pham-chi-tiet/add-san-pham}" method="post"
+                                                  onsubmit="return submitForm()" enctype="multipart/form-data"
+                                                  th:object="${sanPham}">
                                                 <div class="modal-body">
                                                     <div class="mb-3">
-                                                        <label class="form-label"><span class="dau-sao">*</span>Tên
-                                                            Sản Phẩm</label>
-                                                        <input type="text" class="form-control"
-                                                               placeholder="Nhập tên giày">
+                                                        <label class="form-label"><span class="dau-sao">*</span>Tên Sản
+                                                            Phẩm:</label>
+                                                        <input type="text" class="form-control" placeholder="Nhập tên giày"
+                                                               th:field="*{ten}">
+                                                        <span class="check-loi" th:errors="*{ten}"></span>
+                                                        <span class="check-loi" th:text="${checkTenTrung}"></span>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label class="form-label"><span
-                                                                class="dau-sao">*</span>Thương
-                                                            Hiệu</label>
-                                                        <input type="text" class="form-control"
-                                                               placeholder="Nhập tên thương hiệu">
+                                                        <label class="form-label"><span class="dau-sao">*</span>Thương
+                                                            Hiệu:</label>
+                                                        <select class="form-control" th:field="*{thuongHieu}">
+                                                            <option th:each="thuongHieu : ${listThuongHieu}"
+                                                                    th:value="${thuongHieu.id}" th:text="${thuongHieu.ten}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><span class="dau-sao">*</span>Mô
+                                                            Tả:</label>
+                                                        <textarea class="form-control"
+                                                                  placeholder="Nhập tên thương hiệu"
+                                                                  th:field="*{moTa}"></textarea>
+                                                        <span class="check-loi" th:errors="*{moTa}"></span>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><span class="dau-sao">*</span>Ảnh:</label>
+                                                        <div id="drop--area">
+                                                            <label for="file--input" class="button-img">
+                                                                Chọn ảnh <i class="bi bi-images"></i>
+                                                            </label>
+                                                            <div class="img-them">
+                                                                <input type="file" id="file--input" multiple
+                                                                       accept="image/*" name="fileImage"
+                                                                       onchange="handleFiles(this.files)">
+                                                                <div id="gallery"></div>
+                                                            </div>
+                                                            <span class="check-loi" id="error-msg"></span>
+                                                        </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Đóng
                                                     </button>
-                                                    <button type="submit" class="btn btn-primary">Thêm</button>
+                                                    <button type="submit" class="btn btn-success">Thêm</button>
                                                 </div>
                                             </form>
 
@@ -821,20 +861,6 @@
 <!--Thông báo thành công-->
 <div class="toast-container position-fixed top-0 end-0 p-3">
     <script th:if="${checkThongBao=='thanhCong'}">
-        // <script>
-        //     function showToast() {
-        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
-        //         liveToast.show();
-        //
-        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
-        //         liveToast.show();
-        //
-        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
-        //         liveToast.show();
-        //     }
-        //     // Show the toast when the page loads
-        //     document.addEventListener('DOMContentLoaded', showToast);
-        //
         window.addEventListener('DOMContentLoaded', (event) => {
             // Hiển thị modal
             var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
@@ -871,14 +897,6 @@
 <!--Thông báo cảnh báo-->
 <div class="toast-container position-fixed top-0 end-0 p-3">
     <script th:if="${checkThongBao=='canhBao'}">
-        // <script>
-        //     function showToast() {
-        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
-        //         liveToast.show();
-        //     }
-        //     // Show the toast when the page loads
-        //     document.addEventListener('DOMContentLoaded', showToast);
-        //
         window.addEventListener('DOMContentLoaded', (event) => {
             // Hiển thị modal
             var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
@@ -914,14 +932,7 @@
 <!--Thông báo thất bại-->
 <div class="toast-container position-fixed top-0 end-0 p-3">
     <script th:if="${checkThongBao=='thaiBai'}">
-        // <script>
-        //     function showToast() {
-        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
-        //         liveToast.show();
-        //     }
-        //     // Show the toast when the page loads
-        //     document.addEventListener('DOMContentLoaded', showToast);
-        //
+
         window.addEventListener('DOMContentLoaded', (event) => {
             // Hiển thị modal
             var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
@@ -1061,6 +1072,11 @@
 <script src="../../../static/vendor/simple-datatables/simple-datatables.js"></script>
 <script src="../../../static/vendor/tinymce/tinymce.min.js"></script>
 <script src="../../../static/vendor/php-email-form/validate.js"></script>
+
+<!-- thư viện thêm ảnh -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- thư viện thêm ảnh end -->
+
 <!-- Template Main JS File -->
 <script src="../../../static/js/main.js"></script>
 </body>
