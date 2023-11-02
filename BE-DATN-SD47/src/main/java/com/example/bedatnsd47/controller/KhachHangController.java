@@ -236,7 +236,7 @@ public class KhachHangController {
             model.addAttribute("diaChi", new DiaChi());
 
             return "/admin-template/khach_hang/sua-khach-hang";
-        } else if (!taiKhoanService.checkTenTkTrungSua(taiKhoan.getId(), taiKhoan.getTen_tai_khoan())) {
+        } else if (!taiKhoanService.checkTenTkTrungSua(taiKhoan.getId(), taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
@@ -284,7 +284,7 @@ public class KhachHangController {
             model.addAttribute("checkNgaySinh", "ngaySinh");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/khach_hang/khach-hang";
-        } else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTen_tai_khoan())) {
+        } else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
