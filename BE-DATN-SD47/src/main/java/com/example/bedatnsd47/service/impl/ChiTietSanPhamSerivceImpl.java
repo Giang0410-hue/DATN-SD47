@@ -55,7 +55,7 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
             chiTietSanPham.setMauSac(MauSac.builder().id(Long.valueOf(listMauSac.get(i))).build());
             chiTietSanPham.setLoaiDe(LoaiDe.builder().id(Long.valueOf(listLoaiDe.get(i))).build());
             chiTietSanPham.setSoLuong(Integer.parseInt(listSoLuong.get(i)));
-            chiTietSanPham.setGiaHienHanh(Double.parseDouble(listDonGia.get(i)));
+            chiTietSanPham.setGiaHienHanh(Long.valueOf(listDonGia.get(i)));
             chiTietSanPham.setTrangThai(0);
 
             ChiTietSanPham savedChiTietSanPham = repository.save(chiTietSanPham);

@@ -229,206 +229,16 @@
                                         <td th:text="${chiTietSP.kichCo.ten}"></td>
                                         <td th:text="${chiTietSP.loaiDe.ten}"></td>
 
-                                        <td class="trangthaidkd" th:if="${chiTietSP.trangThai==1}">Đang kinh
+                                        <td class="trangthaidkd" th:if="${chiTietSP.trangThai==0}">Đang kinh
                                             doanh
                                         </td>
-                                        <td class="trangthainkd" th:if="${chiTietSP.trangThai==0}">Ngừng kinh
+                                        <td class="trangthainkd" th:if="${chiTietSP.trangThai==1}">Ngừng kinh
                                             doanh
                                         </td>
                                         <td>
-                                            <!-- button và model -->
                                             <a th:href="@{/admin/san-pham-chi-tiet/view-update/{id}(id=${chiTietSP.id})}" class="btn btn-info">
                                                 <i class="bi bi-pencil-fill"></i></i>
                                             </a>
-                                            <!-- model-xem-Cập Nhật-ctsp -->
-                                            <div class="modal fade" id="exampleModal2" tabindex="-1"
-                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                Thông tin sản phẩm
-                                                            </h1>
-                                                            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button> -->
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form class="row g-3">
-                                                                <div class="row mb-3">
-                                                                    <label class="col-sm-2 col-form-label"><span
-                                                                            class="dausao">*</span>Tên sản
-                                                                        phẩm</label>
-                                                                    <div class="col-sm-10">
-                                                                        <input type="email"
-                                                                               class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <label class="col-sm-2 col-form-label"><span
-                                                                            class="dausao">*</span>Mô tả</label>
-                                                                    <div class="col-sm-10">
-                                                                                <textarea class="form-control"
-                                                                                          id="exampleFormControlTextarea1"
-                                                                                          rows="3"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <label class="col col-form-label"><span
-                                                                            class="dausao">*</span>Thương
-                                                                        hiệu</label>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="input-group">
-                                                                            <select name="cars"
-                                                                                    class="form-control">
-                                                                                <option value="volvo">Volvo
-                                                                                </option>
-                                                                                <option value="saab">Saab
-                                                                                </option>
-                                                                                <option value="mercedes">
-                                                                                    Mercedes
-                                                                                </option>
-                                                                                <option value="audi">Audi
-                                                                                </option>
-                                                                            </select>
-                                                                            <button type="button"
-                                                                                    class="btn btn-primary">
-                                                                                <i class="bi bi-plus"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <label class="col col-form-label"><span
-                                                                            class="dausao">*</span>Trạng
-                                                                        thái</label>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="input-group">
-                                                                            <select name="cars"
-                                                                                    class="form-control">
-                                                                                <option value="volvo">Volvo
-                                                                                </option>
-                                                                                <option value="saab">Saab
-                                                                                </option>
-                                                                                <option value="mercedes">
-                                                                                    Mercedes
-                                                                                </option>
-                                                                                <option value="audi">Audi
-                                                                                </option>
-                                                                            </select>
-                                                                            <button type="button"
-                                                                                    class="btn btn-primary">
-                                                                                <i class="bi bi-plus"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <label class="col col-form-label"><span
-                                                                            class="dausao">*</span>Thương
-                                                                        hiệu</label>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="input-group">
-                                                                            <select name="cars"
-                                                                                    class="form-control">
-                                                                                <option value="volvo">Volvo
-                                                                                </option>
-                                                                                <option value="saab">Saab
-                                                                                </option>
-                                                                                <option value="mercedes">
-                                                                                    Mercedes
-                                                                                </option>
-                                                                                <option value="audi">Audi
-                                                                                </option>
-                                                                            </select>
-                                                                            <button type="button"
-                                                                                    class="btn btn-primary">
-                                                                                <i class="bi bi-plus"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <label class="col col-form-label"><span
-                                                                            class="dausao">*</span>Trạng
-                                                                        thái</label>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="input-group">
-                                                                            <select name="cars"
-                                                                                    class="form-control">
-                                                                                <option value="volvo">Volvo
-                                                                                </option>
-                                                                                <option value="saab">Saab
-                                                                                </option>
-                                                                                <option value="mercedes">
-                                                                                    Mercedes
-                                                                                </option>
-                                                                                <option value="audi">Audi
-                                                                                </option>
-                                                                            </select>
-                                                                            <button type="button"
-                                                                                    class="btn btn-primary">
-                                                                                <i class="bi bi-plus"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <label class="col col-form-label"><span
-                                                                            class="dausao">*</span>Thương
-                                                                        hiệu</label>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="input-group">
-                                                                            <select name="cars"
-                                                                                    class="form-control">
-                                                                                <option value="volvo">Volvo
-                                                                                </option>
-                                                                                <option value="saab">Saab
-                                                                                </option>
-                                                                                <option value="mercedes">
-                                                                                    Mercedes
-                                                                                </option>
-                                                                                <option value="audi">Audi
-                                                                                </option>
-                                                                            </select>
-                                                                            <button type="button"
-                                                                                    class="btn btn-primary">
-                                                                                <i class="bi bi-plus"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <label class="col col-form-label"><span
-                                                                            class="dausao">*</span>Trạng
-                                                                        thái</label>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="input-group">
-                                                                            <select name="cars"
-                                                                                    class="form-control">
-                                                                                <option value="volvo">Volvo
-                                                                                </option>
-                                                                                <option value="saab">Saab
-                                                                                </option>
-                                                                                <option value="mercedes">
-                                                                                    Mercedes
-                                                                                </option>
-                                                                                <option value="audi">Audi
-                                                                                </option>
-                                                                            </select>
-                                                                            <button type="button"
-                                                                                    class="btn btn-primary">
-                                                                                <i class="bi bi-plus"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Hủy
-                                                            </button>
-                                                            <button type="button" class="btn btn-warning">Cập
-                                                                Nhật
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -486,7 +296,6 @@
                                         myModal.show();
                                     });
                                 </script>
-                                <!-- form thêm chi tiết sản phẩm -->
 
                                 <!-- from thêm chi tiết sản phẩm -->
                                 <form th:action="@{/admin/san-pham-chi-tiet/add}" class="row g-3"
