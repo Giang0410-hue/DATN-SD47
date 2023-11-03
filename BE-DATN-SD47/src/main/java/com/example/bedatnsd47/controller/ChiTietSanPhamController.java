@@ -1,5 +1,6 @@
 package com.example.bedatnsd47.controller;
 
+import com.example.bedatnsd47.entity.ChiTietSanPham;
 import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import com.example.bedatnsd47.service.HinhAnhSanPhamSerivce;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -90,12 +92,13 @@ public class ChiTietSanPhamController {
 
     @GetMapping("/view-update/{id}")
     public String viewUpdate(
+            @PathVariable("id")Long id,
             Model model
     ) {
-        model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllDangHoatDong());
+        ChiTietSanPham chiTietSanPham = chiTietSanPhamSerivce.getById(id);
+        model.addAttribute("chiTietSP", chiTietSanPham);
         getString(model);
-        model.addAttribute("sanPham", new SanPham());
-        return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
+        return "/admin-template/san_pham_chi_tiet/sua-san-pham-chi-tiet";
     }
 
     @PostMapping("/add-san-pham")
@@ -133,6 +136,25 @@ public class ChiTietSanPhamController {
 
             hinhAnhSanPhamSerivce.saveImage(multipartFiles, sanPham);
             return "redirect:/admin/san-pham-chi-tiet";
+        }
+    }
+
+    @PostMapping("/update")
+    public String update(@Valid
+                             @ModelAttribute("chiTietSP") ChiTietSanPham chiTietSP,
+                         BindingResult result,
+                         Model model,
+                         RedirectAttributes redirectAttributes
+
+    ) {
+         if (result.hasErrors()) {
+            model.addAttribute("checkThongBao", "thaiBai");
+             getString(model);
+             return "/admin-template/san_pham_chi_tiet/sua-san-pham-chi-tiet";
+        } else {
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+            chiTietSanPhamSerivce.update(chiTietSP);
+             return "redirect:/admin/san-pham-chi-tiet";
         }
     }
 
