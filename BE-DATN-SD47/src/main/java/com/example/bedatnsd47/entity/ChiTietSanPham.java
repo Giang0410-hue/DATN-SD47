@@ -43,7 +43,7 @@ public class ChiTietSanPham {
 
     @Column(name = "gia_hien_hanh")
     @NotNull(message = "Giá không được trống.")
-    @Min(value = 10000,message = "Giá  nhỏ nhất là 1")
+    @Min(value = 10000,message = "Giá  nhỏ nhất là 10000")
     @Max(value = 1000000000,message = "Giá lớn nhất là 1000000000")
     private Long giaHienHanh;
 
