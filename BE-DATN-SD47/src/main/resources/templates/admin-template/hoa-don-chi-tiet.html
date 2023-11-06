@@ -11,7 +11,15 @@
 
     <!-- Favicons -->
     <div th:replace="~{admin-template/fragment/header :: header}"></div>
+    <style>
+        .hidden {
+            display: none;
+        }
 
+        .show {
+            display: block;
+        }
+    </style>
 
 </head>
 
@@ -85,7 +93,7 @@
             </li><!-- End Components Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="hoa-don.html">
+                <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
                     <i class="bi bi-envelope"></i>
                     <span>Hóa Đơn</span>
                 </a>
@@ -133,7 +141,7 @@
                         <div class="card-body">
                             <div class="form-tao-moi">
                                 <div class="row g-3">
-                                    <div class="col-12">
+                                    <div th:if="${hoaDon.trangThai ==-1}" class="col-12">
                                         <div class="tao-hd">
                                             <!-- <button type="button" class="btn btn-success">Tạo hóa đơn</button> -->
                                             <a id="postLink" class="btn btn-success">Tạo Hóa đơn</a>
@@ -158,14 +166,28 @@
                                             </script>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div th:each="hd : ${lstHoaDon}" class="btn-group" role="group"
-                                            aria-label="Basic outlined example">
-                                            <a th:text="${hd.maHoaDon}"
-                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"
-                                                class="btn btn-outline-primary"></a>
+                                    <div class="listHoaDon" th:if="${hoaDon.trangThai ==-1}">
+                                        <div class="col-12">
+                                            <div th:each="hd : ${lstHoaDon}" class="btn-group" role="group"
+                                                aria-label="Basic outlined example">
+                                                <a th:text="${hd.maHoaDon}"
+                                                    th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"
+                                                    th:classappend="${#strings.equals(hd.id, hoaDon.id) ? 'active' : ''}"
+                                                    class="btn btn-outline-primary"></a>
+                                            </div>
                                         </div>
                                     </div>
+                                  
+                                        <h1 th:if="${hoaDon.trangThai !=-1}">
+                                            #[[${hoaDon.maHoaDon}]]
+                                        </h1>
+ 
+
+
+
+
+
+
                                     <div class="col-12">
                                         <div> <!-- div tổng của hóa đơn chi tiết -->
 
@@ -500,10 +522,11 @@
             color: black;">Tài khoản</h4>
 
 
-                                                    <div class="col-sm-10">
+                                                    <div class="col-sm-10" th:if="${hoaDon.trangThai ==-1}">
                                                         <button type="button" class="btn btn-primary"
                                                             data-bs-toggle="modal" style="float: right;"
                                                             data-bs-target="#chonKhachHangModal">
+
                                                             Chọn tài khoản
                                                         </button>
                                                     </div>
@@ -735,8 +758,7 @@
 
                                                 <!-- Thông tin khách hàng -->
                                                 <div class="row mb-3">
-                                                    <label class="col-sm-2 ">Tên khách
-                                                        hàng:</label>
+                                                    <label class="col-sm-2">Tên khách hàng:</label>
                                                     <div class="col-sm-6">
                                                         <label class="thong-tin-tai-khoan"
                                                             th:text="${hoaDon.taiKhoan.hoVaTen}"></label>
@@ -759,84 +781,441 @@
                                                     </div>
                                                 </div>
 
-                                            </div>
 
-                                            <div class="line"></div>
+                                                <div class="line"></div>
 
-                                            <!------------------ model chọn địa chỉ ------------------>
-                                            <div class="row g-3" style=" margin-bottom: 2%;">
+                                                <!------------------ model chọn địa chỉ ------------------>
+                                                <div class="row g-3" style=" margin-bottom: 2%;">
 
-                                                <!-- Button trigger modal -->
-                                                <div class="col-sm-12">
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                        style="float: right;" data-bs-target="#chonDiaChiModal">
-                                                        Chọn địa chỉ
-                                                    </button>
-                                                </div>
+                                                    <!-- Button trigger modal -->
+                                                    <div class="col-sm-12" id="check-giao-hang-1">
+                                                        <button type="button" class="btn btn-primary"
+                                                            data-bs-toggle="modal" style="float: right;"
+                                                            data-bs-target="#chonDiaChiModal">
+                                                            Chọn địa chỉ
+                                                        </button>
+                                                    </div>
 
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="chonDiaChiModal" tabindex="-1"
-                                                    aria-labelledby="chonDiaChiModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="chonDiaChiModalLabel">
-                                                                    Danh sách
-                                                                    địa chỉ
-                                                                </h1>
-                                                            </div>
-                                                            <div class="modal-body">
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="chonDiaChiModal" tabindex="-1"
+                                                        aria-labelledby="chonDiaChiModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5"
+                                                                        id="chonDiaChiModalLabel">
+                                                                        Danh sách
+                                                                        địa chỉ
+                                                                    </h1>
+                                                                </div>
+                                                                <div class="modal-body">
 
-                                                                <!-- form tìm kiếm khách hàng -->
-                                                                <form action="">
-                                                                    <label class="col-sm-2 col-form-label">Nhập
-                                                                        địa
-                                                                        chỉ:</label>
-                                                                    <div class="row mb-3">
-                                                                        <div class="col-sm-10">
-                                                                            <div class="input-group">
-                                                                                <input type="text" class="form-control"
-                                                                                    placeholder="Tìm kiếm theo địa chỉ">
+                                                                    <!-- form tìm kiếm khách hàng -->
+                                                                    <form action="">
+                                                                        <label class="col-sm-2 col-form-label">Nhập
+                                                                            địa
+                                                                            chỉ:</label>
+                                                                        <div class="row mb-3">
+                                                                            <div class="col-sm-10">
+                                                                                <div class="input-group">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="Tìm kiếm theo địa chỉ">
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-primary"><i
+                                                                                            class="bi bi-arrow-clockwise"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-2">
                                                                                 <button type="submit"
-                                                                                    class="btn btn-primary"><i
-                                                                                        class="bi bi-arrow-clockwise"></i>
+                                                                                    class="btn btn-primary"
+                                                                                    style="float: right;">Tìm
+                                                                                    kiếm
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-sm-2">
-                                                                            <button type="submit"
+                                                                    </form>
+
+
+                                                                    <!-- table khách hàng -->
+                                                                    <table>
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>STT</th>
+                                                                                <th>Phường/Xã</th>
+                                                                                <th>Quận/Huyện</th>
+                                                                                <th>Thành phố</th>
+                                                                                <th>Địa chỉ cụ thể</th>
+                                                                                <th>Hành Động</th>
+                                                                            </tr>
+                                                                            <thead>
+                                                                            <tbody>
+                                                                                <tr th:each="dc,state : ${lstTaiKhoanDc.lstDiaChi}">
+                                                                                    <td th:text="${state.index+1}"></td>
+                                                                                    <td th:text="${dc.phuongXa}"></td>
+                                                                                    <td th:text="${dc.quanHuyen}"></td>
+                                                                                    <td th:text="${dc.thanhPho}"></td>
+                                                                                    <td th:text="${dc.diaChiCuThe}"></td>
+                                                                                    
+                                                                                    <!-- <td class="trangthainkd">Phụ</td> -->
+                                                                                    <td>
+                                                                                        <button class="btn btn-success">
+                                                                                            <i
+                                                                                                class="bi bi-check2-circle"></i>
+                                                                                        </button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                    </table>
+                                                                    <nav aria-label="Page navigation example">
+                                                                        <ul class="pagination">
+                                                                            <li class="page-item">
+                                                                                <a class="page-link" href="#">
+                                                                                    <i class="bi bi-chevron-left"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li class="page-item"><a class="page-link"
+                                                                                    href="#">1</a></li>
+                                                                            <li class="page-item"><a class="page-link"
+                                                                                    href="#">2</a></li>
+                                                                            <li class="page-item"><a class="page-link"
+                                                                                    href="#">3</a></li>
+                                                                            <li class="page-item">
+                                                                                <a class="page-link" href="#">
+                                                                                    <i class="bi bi-chevron-right"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </nav>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Đóng
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <form action="/ban-hang-tai-quay/hoa-don/thanh-toan" class="row g-3"
+                                                    method="post">
+                                                    <div class="col">
+                                                        <div id="check-giao-hang-2" class="thong-tin-kh ">
+                                                            <div class="row g-3">
+                                                                <h4 style="font-family: Arial, sans-serif;font-size: 15px;
+              font-weight: bold;
+              color: black;">Thông tin khách hàng</h4>
+
+                                                                <div class="col-md-6">
+                                                                    <label for="inputEmail2" class="form-label">
+                                                                        <span class="dau-sao">*</span>
+                                                                        Tên khác hàng:
+                                                                    </label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="inputHoVaTen"
+                                                                        th:value="${hoaDon.TaiKhoan.hoVaTen}">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="inputPassword3" class="form-label">
+                                                                        <span class="dau-sao">*</span>
+                                                                        Số điện thoại:
+                                                                    </label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="inputSoDienThoai"
+                                                                        th:value="${hoaDon.TaiKhoan.soDienThoai}">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="form-label">
+                                                                        <span class="dau-sao">*</span>
+                                                                        Địa chỉ:
+                                                                    </label>
+                                                                    <input id="inputThanhPho" type="text"
+                                                                        class="form-control"
+                                                                        placeholder="Tỉnh / Thành Phố"
+                                                                        th:value="${hoaDon.TaiKhoan.thanhPho}">
+                                                                    <br>
+                                                                    <input id="inputQuanHuyen" type="text"
+                                                                        class="form-control" placeholder="Quận / Huyện"
+                                                                        th:value="${hoaDon.TaiKhoan.quanHuyen}">
+                                                                    <br>
+                                                                    <input id="inputPhuongXa" type="text"
+                                                                        class="form-control" placeholder="Xã / Phường"
+                                                                        th:value="${hoaDon.TaiKhoan.phuongXa}">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="form-label">
+                                                                        <span class="dau-sao">*</span>
+                                                                        Địa chỉ cụ thể:
+                                                                    </label>
+                                                                    <textarea id="inputDiaChiCuThe" class="form-control"
+                                                                        rows="6">[[${hoaDon.TaiKhoan.diaChiCuThe}]]</textarea>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <label class="form-label">
+                                                                        <span class="dau-sao">*</span>
+                                                                        Ghi chú:
+                                                                    </label>
+                                                                    <textarea id="inputGhiChu" class="form-control"
+                                                                        rows="3">[[${hoaDon.ghiChu}]]</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <div class="thong-tin-tt">
+                                                            <h4 style="font-family: Arial, sans-serif;font-size: 15px;
+                                                            font-weight: bold;
+                                                                color: black;">Thông tin thanh toán</h4>
+                                                            <div class="thong-tin-tt-2">
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <h6>Giao hàng:</h6>
+                                                                    </div>
+                                                                    <div th:switch="${hoaDon.trangThai}" class="col"
+                                                                        style="margin-top: 3%;">
+                                                                        <div th:case="-1" class="form-check form-switch">
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox" role="switch"
+                                                                                id="toggleVisibility">
+                                                                            <script>
+                                                                                var checkbox = document.getElementById("toggleVisibility");
+
+                                                                                function handleCheckboxChange(event) {
+                                                                                    var status1 = document.getElementById('check-giao-hang-2')
+                                                                                    var status2 = document.getElementById('check-giao-hang-1')
+                                                                                    if (event.target.checked) {
+                                                                                        status1.style.display = 'block'
+                                                                                        status2.style.display = 'block'
+                                                                                    } else {
+                                                                                        status1.style.display = 'none'
+                                                                                        status2.style.display = 'none'
+                                                                                    }
+                                                                                }
+
+                                                                                // Gắn sự kiện "change" vào ô checkbox
+                                                                                checkbox.addEventListener("change", handleCheckboxChange);
+
+                                                                            </script>
+                                                                        </div>
+                                                                        <div th:case="*" class="form-check form-switch">
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox" role="switch"
+                                                                                id="toggleVisibility" checked disabled>
+
+                                                                            <script>
+
+
+
+                                                                                var status1 = document.getElementById('check-giao-hang-2')
+                                                                                var status2 = document.getElementById('check-giao-hang-1')
+
+                                                                                status1.style.display = 'block'
+                                                                                status2.style.display = 'block'
+
+
+                                                                            </script>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <h6>Phương thức thanh toán:</h6>
+                                                                    </div>
+                                                                    <div class="col" style="margin-top: 1%">
+                                                                        <select name="ptht" class="form-control">
+                                                                            <option value="Tiền mặt">Tiền
+                                                                                mặt</option>
+                                                                            <option value="Online">Online
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <h6>Voucher:</h6>
+                                                                    </div>
+                                                                    <div class="col" style="margin-top: 1%">
+                                                                        <div class="input-group flex-nowrap">
+                                                                            <input type="text" class="form-control"
+                                                                                placeholder="Nhập têm voucher"
+                                                                                aria-label="Username"
+                                                                                aria-describedby="addon-wrapping">
+                                                                            <!-- Button trigger modal -->
+                                                                            <button type="button"
                                                                                 class="btn btn-primary"
-                                                                                style="float: right;">Tìm
-                                                                                kiếm
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#voucher">+
                                                                             </button>
                                                                         </div>
                                                                     </div>
-                                                                </form>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <h6>Tổng tiền sản phẩm:</h6>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <h6 class="thong-tin-gia">
+                                                                            [[${hoaDon.tongTienHoaDon()}]]
+                                                                            VND</h6>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <h6>Phí vận chuyển:</h6>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <h6 class="thong-tin-gia">0 VND</h6>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <h6>Giảm giá:</h6>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <h6 class="thong-tin-gia">0 VND</h6>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <h3>Tổng tiền:</h3>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <h6 class="tong-gia">
+                                                                            [[${hoaDon.tongTienHoaDon()}]]
+                                                                            VND
+                                                                        </h6>
+                                                                    </div>
 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div th:switch="${hoaDon.trangThai}">
+                                                        <button th:case="-1" type="submit" style="float: right;"
+                                                            class="btn btn-success">Thanh toán
+                                                        </button>
+                                                        <button th:case="0" type="submit" style="float: right;"
+                                                            class="btn btn-success">Xác nhận
+                                                        </button>
+                                                        <button th:case="1" type="submit" style="float: right;"
+                                                            class="btn btn-success">Đã thanh toán
+                                                        </button>
+                                                        <button th:case="2" type="submit" style="float: right;"
+                                                            class="btn btn-success">Giao hàng
+                                                        </button>
+                                                        <button th:case="3" type="submit" style="float: right;"
+                                                            class="btn btn-success">Giao hàng thành công
+                                                        </button>
 
-                                                                <!-- table khách hàng -->
-                                                                <table>
+                                                    </div>
+                                                </form>
+                                                <!-- Modal voucher -->
+                                                <div class="modal fade" id="voucher" tabindex="-1"
+                                                    aria-labelledby="voucherLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="voucherLabel">
+                                                                    Voucher</h1>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row mb-3">
+                                                                    <form action="" method="post">
+                                                                        <label class="col-sm-4 col-form-label">Nhập
+                                                                            mã,
+                                                                            tên voucher:</label>
+                                                                        <div class="row mb-3">
+                                                                            <div class="col-sm-10">
+                                                                                <div class="input-group">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="Tìm kiếm voucher theo mã, tên">
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-primary"><i
+                                                                                            class="bi bi-arrow-clockwise"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-2">
+                                                                                <button type="submit"
+                                                                                    class="btn btn-primary"
+                                                                                    style="float: right;">Tìm
+                                                                                    kiếm
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+
+                                                                <table class="sanpham-table">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>STT</th>
-                                                                            <th>Họ Tên</th>
-                                                                            <th>Số Điện Thoại</th>
-                                                                            <th>Địa Chỉ</th>
-                                                                            <th>Trạng Thái</th>
+                                                                            <th>Mã Voucher</th>
+                                                                            <th>Tên Voucher</th>
+                                                                            <th>Giá Trị Giảm</th>
+                                                                            <th>Giá Trị Giảm Tối Đa</th>
+                                                                            <th>Số Lượng</th>
+                                                                            <th>Thời Gian</th>
                                                                             <th>Hành Động</th>
                                                                         </tr>
                                                                         <thead>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <td>1</td>
-                                                                                <td>SP01</td>
-                                                                                <td>Nike</td>
-                                                                                <td>aaaa</td>
-                                                                                <td class="trangthaidkd">
-                                                                                    Mặc định</td>
-                                                                                <!-- <td class="trangthainkd">Phụ</td> -->
+                                                                                <td>aaaaaa</td>
+                                                                                <td>aaaaaa</td>
+                                                                                <td>123</td>
+                                                                                <td>123</td>
+                                                                                <td>123</td>
                                                                                 <td>
-                                                                                    <button class="btn btn-success">
+                                                                                    11/01/2003
+                                                                                </td>
+                                                                                <td>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-success">
+                                                                                        <i
+                                                                                            class="bi bi-check2-circle"></i>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>1</td>
+                                                                                <td>aaaaaa</td>
+                                                                                <td>aaaaaa</td>
+                                                                                <td>123</td>
+                                                                                <td>123</td>
+                                                                                <td>123</td>
+                                                                                <td>
+                                                                                    11/01/2003
+                                                                                </td>
+                                                                                <td>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-success">
+                                                                                        <i
+                                                                                            class="bi bi-check2-circle"></i>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>1</td>
+                                                                                <td>aaaaaa</td>
+                                                                                <td>aaaaaa</td>
+                                                                                <td>123</td>
+                                                                                <td>123</td>
+                                                                                <td>123</td>
+                                                                                <td>
+                                                                                    11/01/2003
+                                                                                </td>
+                                                                                <td>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-success">
                                                                                         <i
                                                                                             class="bi bi-check2-circle"></i>
                                                                                     </button>
@@ -844,27 +1223,6 @@
                                                                             </tr>
                                                                         </tbody>
                                                                 </table>
-                                                                <nav aria-label="Page navigation example">
-                                                                    <ul class="pagination">
-                                                                        <li class="page-item">
-                                                                            <a class="page-link" href="#">
-                                                                                <i class="bi bi-chevron-left"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li class="page-item"><a class="page-link"
-                                                                                href="#">1</a></li>
-                                                                        <li class="page-item"><a class="page-link"
-                                                                                href="#">2</a></li>
-                                                                        <li class="page-item"><a class="page-link"
-                                                                                href="#">3</a></li>
-                                                                        <li class="page-item">
-                                                                            <a class="page-link" href="#">
-                                                                                <i class="bi bi-chevron-right"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </nav>
-
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
@@ -874,291 +1232,19 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- Modal voucher end -->
+
+
                                             </div>
-
-                                            <form action="/ban-hang-tai-quay/hoa-don/thanh-toan" class="row g-3" method="post">
-                                                <div class="col">
-                                                    <div class="thong-tin-kh">
-                                                        <div class="row g-3">
-                                                            <h4 style="font-family: Arial, sans-serif;font-size: 15px;
-              font-weight: bold;
-              color: black;">Thông tin khách hàng</h4>
-
-                                                            <div class="col-md-6">
-                                                                <label for="inputEmail2" class="form-label">
-                                                                    <span class="dau-sao">*</span>
-                                                                    Tên khác hàng:
-                                                                </label>
-                                                                <input type="text" class="form-control" id="inputHoVaTen"
-                                                                    th:value="${hoaDon.TaiKhoan.hoVaTen}">
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label for="inputPassword3" class="form-label">
-                                                                    <span class="dau-sao">*</span>
-                                                                    Số điện thoại:
-                                                                </label>
-                                                                <input type="text" class="form-control"
-                                                                    id="inputSoDienThoai"
-                                                                    th:value="${hoaDon.TaiKhoan.soDienThoai}">
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label class="form-label">
-                                                                    <span class="dau-sao">*</span>
-                                                                    Địa chỉ:
-                                                                </label>
-                                                                <input id="inputThanhPho" type="text" class="form-control"
-                                                                    placeholder="Tỉnh / Thành Phố"
-                                                                    th:value="${hoaDon.TaiKhoan.thanhPho}">
-                                                                <br>
-                                                                <input id="inputQuanHuyen" type="text" class="form-control"
-                                                                    placeholder="Quận / Huyện"
-                                                                    th:value="${hoaDon.TaiKhoan.quanHuyen}">
-                                                                <br>
-                                                                <input id="inputPhuongXa" type="text" class="form-control"
-                                                                    placeholder="Xã / Phường"
-                                                                    th:value="${hoaDon.TaiKhoan.phuongXa}">
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label class="form-label">
-                                                                    <span class="dau-sao">*</span>
-                                                                    Địa chỉ cụ thể:
-                                                                </label>
-                                                                <textarea id="inputDiaChiCuThe" class="form-control"
-                                                                    rows="6">[[${hoaDon.TaiKhoan.diaChiCuThe}]]</textarea>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <label class="form-label">
-                                                                    <span class="dau-sao">*</span>
-                                                                    Ghi chú:
-                                                                </label>
-                                                                <textarea id="inputGhiChu" class="form-control"
-                                                                    rows="3">[[${hoaDon.ghiChu}]]</textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col">
-                                                    <div class="thong-tin-tt">
-                                                        <h4 style="font-family: Arial, sans-serif;font-size: 15px;
-            font-weight: bold;
-            color: black;">Thông tin thanh toán</h4>
-                                                        <div class="thong-tin-tt-2">
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <h6>Giao hàng:</h6>
-                                                                </div>
-                                                                <div class="col" style="margin-top: 3%;">
-                                                                    <div class="form-check form-switch">
-                                                                        <input class="form-check-input" type="checkbox"
-                                                                            role="switch" id="flexSwitchCheckChecked"
-                                                                            checked>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <h6>Phương thức thanh toán:</h6>
-                                                                </div>
-                                                                <div class="col" style="margin-top: 1%">
-                                                                    <select name="ptht" class="form-control">
-                                                                        <option value="Tiền mặt">Tiền
-                                                                            mặt</option>
-                                                                        <option value="Online">Online
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <h6>Voucher:</h6>
-                                                                </div>
-                                                                <div class="col" style="margin-top: 1%">
-                                                                    <div class="input-group flex-nowrap">
-                                                                        <input type="text" class="form-control"
-                                                                            placeholder="Nhập têm voucher"
-                                                                            aria-label="Username"
-                                                                            aria-describedby="addon-wrapping">
-                                                                        <!-- Button trigger modal -->
-                                                                        <button type="button" class="btn btn-primary"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#voucher">+
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <h6>Tổng tiền sản phẩm:</h6>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <h6 class="thong-tin-gia">
-                                                                        [[${hoaDon.tongTienHoaDon()}]]
-                                                                        VND</h6>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <h6>Phí vận chuyển:</h6>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <h6 class="thong-tin-gia">0 VND</h6>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <h6>Giảm giá:</h6>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <h6 class="thong-tin-gia">0 VND</h6>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <h3>Tổng tiền:</h3>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <h6 class="tong-gia">[[${hoaDon.tongTienHoaDon()}]]
-                                                                        VND
-                                                                    </h6>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <button type="submit" style="float: right;"
-                                                        class="btn btn-success">Thanh toán
-                                                    </button>
-                                                </div>
-                                            </form>
-                                            <!-- Modal voucher -->
-                                            <div class="modal fade" id="voucher" tabindex="-1"
-                                                aria-labelledby="voucherLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="voucherLabel">
-                                                                Voucher</h1>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="row mb-3">
-                                                                <form action="" method="post">
-                                                                    <label class="col-sm-4 col-form-label">Nhập
-                                                                        mã,
-                                                                        tên voucher:</label>
-                                                                    <div class="row mb-3">
-                                                                        <div class="col-sm-10">
-                                                                            <div class="input-group">
-                                                                                <input type="text" class="form-control"
-                                                                                    placeholder="Tìm kiếm voucher theo mã, tên">
-                                                                                <button type="submit"
-                                                                                    class="btn btn-primary"><i
-                                                                                        class="bi bi-arrow-clockwise"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-2">
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary"
-                                                                                style="float: right;">Tìm
-                                                                                kiếm
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-
-                                                            <table class="sanpham-table">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>STT</th>
-                                                                        <th>Mã Voucher</th>
-                                                                        <th>Tên Voucher</th>
-                                                                        <th>Giá Trị Giảm</th>
-                                                                        <th>Giá Trị Giảm Tối Đa</th>
-                                                                        <th>Số Lượng</th>
-                                                                        <th>Thời Gian</th>
-                                                                        <th>Hành Động</th>
-                                                                    </tr>
-                                                                    <thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>1</td>
-                                                                            <td>aaaaaa</td>
-                                                                            <td>aaaaaa</td>
-                                                                            <td>123</td>
-                                                                            <td>123</td>
-                                                                            <td>123</td>
-                                                                            <td>
-                                                                                11/01/2003
-                                                                            </td>
-                                                                            <td>
-                                                                                <button type="button"
-                                                                                    class="btn btn-success">
-                                                                                    <i class="bi bi-check2-circle"></i>
-                                                                                </button>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>1</td>
-                                                                            <td>aaaaaa</td>
-                                                                            <td>aaaaaa</td>
-                                                                            <td>123</td>
-                                                                            <td>123</td>
-                                                                            <td>123</td>
-                                                                            <td>
-                                                                                11/01/2003
-                                                                            </td>
-                                                                            <td>
-                                                                                <button type="button"
-                                                                                    class="btn btn-success">
-                                                                                    <i class="bi bi-check2-circle"></i>
-                                                                                </button>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>1</td>
-                                                                            <td>aaaaaa</td>
-                                                                            <td>aaaaaa</td>
-                                                                            <td>123</td>
-                                                                            <td>123</td>
-                                                                            <td>123</td>
-                                                                            <td>
-                                                                                11/01/2003
-                                                                            </td>
-                                                                            <td>
-                                                                                <button type="button"
-                                                                                    class="btn btn-success">
-                                                                                    <i class="bi bi-check2-circle"></i>
-                                                                                </button>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Đóng
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Modal voucher end -->
-
-
                                         </div>
                                     </div>
+
+
+
+
+
                                 </div>
-
-
-
-
-
                             </div>
-                        </div>
         </section>
 
     </main><!-- End #main -->
@@ -1182,7 +1268,15 @@
 
     <!-- Vendor JS Files -->
     <div th:replace="~{admin-template/fragment/script :: script}"></div>
+    <style>
+        .hidden {
+            display: none;
+        }
 
+        .show {
+            display: block;
+        }
+    </style>
 </body>
 
 </html>
