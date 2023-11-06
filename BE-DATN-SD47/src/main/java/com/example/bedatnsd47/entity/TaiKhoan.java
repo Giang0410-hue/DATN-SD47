@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,6 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -110,4 +112,6 @@ public class TaiKhoan {
     @JoinColumn(name = "vai_tro_id", referencedColumnName = "id")
     private VaiTro vaiTro;
 
+    @OneToMany(mappedBy = "taiKhoan")
+    List<DiaChi> lstDiaChi;
 }

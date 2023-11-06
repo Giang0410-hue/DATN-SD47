@@ -1,6 +1,5 @@
 package com.example.bedatnsd47.service.impl;
 
-
 import com.example.bedatnsd47.entity.HoaDon;
 import com.example.bedatnsd47.repository.HoaDonRepository;
 import com.example.bedatnsd47.service.HoaDonService;
@@ -8,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class HoaDonServiceImpl implements HoaDonService {
 
@@ -36,7 +36,21 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     public List<HoaDon> findByTrangThai(Integer trangThai) {
-        // TODO Auto-generated method stub
         return hoaDonRepository.findByTrangThai(trangThai);
+    }
+
+    @Override
+    public Integer countHoaDonTreo() {
+        return hoaDonRepository.countHoaDonTreo();
+    }
+
+    @Override
+    public List<HoaDon> find5ByTrangThai(Integer trangThai) {
+        return hoaDonRepository.find5ByTrangThai(trangThai);
+    }
+
+    @Override
+    public HoaDon findByMa(String ma) {
+        return hoaDonRepository.findByMa(ma);
     }
 }
