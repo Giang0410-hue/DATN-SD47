@@ -151,8 +151,8 @@
                 <div class="fail-message" style="display:none;"></div>
                 <div th:each="chiTiepSp : ${listChiTietSP}" class="pf-card">
                     <a style=" color: inherit;" th:href="@{/shop-single/{id}(id=${chiTiepSp.sanPham.id})}">
-                        <input type="text" th:value="${chiTiepSp.sanPham.ten}">
-                        <input type="text" th:value="${chiTiepSp.sanPham.id}">
+                        <input type="hidden" th:value="${chiTiepSp.sanPham.ten}">
+                        <input type="hidden" th:value="${chiTiepSp.sanPham.id}">
                         <div class="pf-card-header" style="object-fit: cover">
                             <div id="carouselExampleSlidesOnly" class="carousel slide"
                                  data-bs-ride="carousel" style=" width: 200px;height: 200px;margin: auto">

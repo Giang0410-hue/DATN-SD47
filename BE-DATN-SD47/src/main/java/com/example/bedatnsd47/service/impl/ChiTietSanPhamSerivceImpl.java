@@ -62,7 +62,9 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
             chiTietSanPham.setSoLuong(Integer.parseInt(listSoLuong.get(i)));
             chiTietSanPham.setGiaHienHanh(Long.valueOf(listDonGia.get(i)));
             chiTietSanPham.setTrangThai(0);
-
+            if(chiTietSanPham.getSoLuong()==0){
+                continue;
+            }
             ChiTietSanPham savedChiTietSanPham = repository.save(chiTietSanPham);
             chiTietSanPhamList.add(savedChiTietSanPham);
         }

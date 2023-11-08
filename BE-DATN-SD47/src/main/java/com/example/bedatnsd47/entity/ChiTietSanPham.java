@@ -36,7 +36,7 @@ public class ChiTietSanPham {
 
     @Column(name = "so_luong")
     @NotNull(message = "Số lượng không được trống.")
-    @Min(value = 1, message = "Số lượng nhỏ nhất là 1")
+    @Min(value = 0, message = "Số lượng nhỏ nhất là 0")
     @Max(value = 99999, message = "Số lượng lớn nhất là 99999")
     private Integer soLuong;
 

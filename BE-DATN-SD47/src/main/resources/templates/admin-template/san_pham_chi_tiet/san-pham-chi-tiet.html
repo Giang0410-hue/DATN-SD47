@@ -51,7 +51,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="../ban-hang-tai-quay/home" class="logo d-flex align-items-center">
+        <a href="/ban-hang-tai-quay/hoa-don" class="logo d-flex align-items-center">
             <img src="../../../static/img/logo.png" alt="">
             <span class="d-none d-lg-block">Glacat</span>
         </a>
@@ -67,7 +67,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="../ban-hang-tai-quay/home">
+            <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don">
                 <i class="bi bi-grid"></i>
                 <span>Bán Hàng</span>
             </a>
@@ -113,7 +113,7 @@
         </li><!-- End Components Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="../hoa-don.html">
+            <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
                 <i class="bi bi-envelope"></i>
                 <span>Hóa Đơn</span>
             </a>
@@ -419,10 +419,10 @@
                                                         const checkSoLuong = soLuongInputs[i].value;
                                                         const errorDiv = document.getElementById("checkSoLuong" + (i * 2 + 1));
 
-                                                        if (checkSoLuong <= 0 || checkSoLuong >= 100000) {
+                                                        if (checkSoLuong < 0 || checkSoLuong >= 100000) {
                                                             hasError = true; // Có lỗi
                                                             errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
-                                                            errorDiv.textContent = (checkSoLuong <= 0) ? "Số lượng phải >= 0" : "Số lượng phải <= 100000"; // Hiển thị thông báo lỗi
+                                                            errorDiv.textContent = (checkSoLuong < 0) ? "Số lượng phải >= 0" : "Số lượng phải <= 100000"; // Hiển thị thông báo lỗi
                                                         } else {
                                                             errorDiv.style.display = "none"; // Ẩn div thông báo lỗi nếu giá trị hợp lệ
                                                         }
