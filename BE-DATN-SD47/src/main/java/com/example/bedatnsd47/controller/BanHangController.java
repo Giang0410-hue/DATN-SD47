@@ -136,12 +136,17 @@ public class BanHangController {
     }
 
     @PostMapping("/hoa-don/thanh-toan")
-    public String thanhToan() {
+    public String thanhToan(@RequestParam(defaultValue = "khongthay") String checkGiaoHang) {
+        // System.out.println(checkGiaoHang+"!!!!!!!!!!!!!!!!!!!");
         HoaDon hd = hoaDonService.findById(idhdc);
-        if(hd.getTrangThai()==-1){
-            hd.setTrangThai(4);
-        }else if(hd.getTrangThai()<=4){
-            hd.setTrangThai(hd.getTrangThai()+1);
+        if (hd.getTrangThai() == -1 && !checkGiaoHang.equals("on")) {
+            hd.setTrangThai(3);
+        } else if (hd.getTrangThai() == -1 && checkGiaoHang.equals("on")) {
+            hd.setTrangThai(0);
+        } else if (hd.getTrangThai() <= 3) {
+            hd.setTrangThai(hd.getTrangThai() + 1);
+        }else if (hd.getTrangThai() == 4) {
+            hd.setTrangThai(3);
         }
         hd.setTongTien(hd.tongTienHoaDon());
         List<HoaDonChiTiet> lstHdct = hoaDonService.findById(idhdc).getLstHoaDonChiTiet();
@@ -159,12 +164,12 @@ public class BanHangController {
     @GetMapping("/hoa-don/quan-ly")
     public String quanLyHoaDon(Model model) {
         model.addAttribute("lstHdChoXacNhan", hoaDonService.find5ByTrangThai(0));
-        model.addAttribute("lstHdChoThanhToan", hoaDonService.find5ByTrangThai(1));
-        model.addAttribute("lstHdChoGiao", hoaDonService.find5ByTrangThai(2));
-        model.addAttribute("lstHdDangGiao", hoaDonService.find5ByTrangThai(3));
-        model.addAttribute("lstHdHoanThanh", hoaDonService.find5ByTrangThai(4));
+        model.addAttribute("lstHdChoGiao", hoaDonService.find5ByTrangThai(1));
+        model.addAttribute("lstHdDangGiao", hoaDonService.find5ByTrangThai(2));
+        model.addAttribute("lstHdHoanThanh", hoaDonService.find5ByTrangThai(3));
+        model.addAttribute("lstHdChoThanhToan", hoaDonService.find5ByTrangThai(4));
         model.addAttribute("lstHdHuy", hoaDonService.find5ByTrangThai(5));
-        
+
         return "/admin-template/hoa-don";
     }
 }

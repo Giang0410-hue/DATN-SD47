@@ -10,7 +10,6 @@ import java.util.List;
 
 @Service
 public class VoucherServiceImpl implements VoucherService {
-
     @Autowired
     VoucherRepository voucherRepository;
 
@@ -31,7 +30,81 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
-    public void saveOrUpdate(Voucher voucher) {
-        voucherRepository.save(voucher);
+    public List<Voucher> fillAllDangDienRa() {
+        return voucherRepository.fillAllDangDienRa();
     }
+
+    @Override
+    public List<Voucher> fillAllDaKetThuc() {
+        return voucherRepository.fillAllDaKetThuc();
+    }
+
+    @Override
+    public List<Voucher> fillAllSapDienRa() {
+        return voucherRepository.fillAllSapDienRa();
+    }
+
+
+    @Override
+    public Voucher save(Voucher voucher) {
+        return voucherRepository.save(voucher);
+    }
+
+    @Override
+    public boolean checkMaTrung(String ma) {
+        for (Voucher sp : voucherRepository.findAll()) {
+            if (sp.getMaVoucher().equalsIgnoreCase(ma)) {
+                return false;
+            }
+        }
+        return true;    }
+
+    @Override
+    public boolean checkMaTrungSua(String ma, String ten) {
+        for (Voucher sp : voucherRepository.findAll()) {
+            if (sp.getMaVoucher().equalsIgnoreCase(ma)) {
+                if (!sp.getTenVoucher().equalsIgnoreCase(ten)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkTenTrung(String ten) {
+        for (Voucher sp : voucherRepository.findAll()) {
+            if (sp.getTenVoucher().equalsIgnoreCase(ten)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkTenTrungSua(String ma, String ten) {
+        for (Voucher sp : voucherRepository.findAll()) {
+            if (sp.getTenVoucher().equalsIgnoreCase(ten)) {
+                if (!sp.getMaVoucher().equalsIgnoreCase(ma)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public Voucher update(Voucher voucher) {
+
+        return voucherRepository.save(voucher);
+
+    }
+
+    @Override
+    public Voucher getById(Long id) {
+
+        return voucherRepository.findById(id).get();
+
+    }
+
 }
