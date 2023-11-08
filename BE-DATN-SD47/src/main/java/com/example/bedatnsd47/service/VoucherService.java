@@ -12,5 +12,24 @@ public interface VoucherService {
 
     void deleteById(Long id);
 
-    void saveOrUpdate(Voucher voucher);
+    List<Voucher> fillAllDangDienRa();
+
+    List<Voucher> fillAllDaKetThuc();
+
+    List<Voucher> fillAllSapDienRa();
+
+    Voucher save(Voucher voucher);
+
+    boolean checkMaTrung(String ma);
+
+    boolean checkMaTrungSua(String ma, String ten);
+
+    boolean checkTenTrung(String ten);
+
+    boolean checkTenTrungSua(String ma, String ten);
+
+    Voucher update(Voucher voucher);
+
+    Voucher getById(Long id);
+
 }
