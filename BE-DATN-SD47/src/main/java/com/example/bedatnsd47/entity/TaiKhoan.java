@@ -15,7 +15,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,7 +29,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "tai_khoan")
-@Builder
+
 public class TaiKhoan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
