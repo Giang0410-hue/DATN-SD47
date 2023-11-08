@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "gio_hang")
+@Builder
 public class GioHang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,5 +48,15 @@ public class GioHang {
     @JoinColumn(name = "nguoi_so_huu", referencedColumnName = "id")
     private TaiKhoan taiKhoan;
 
+    //    @OneToMany
+//    private List<GioHangChiTiet> listGioHangChiTiet;
+//
+//    public Double tongTienHoaDon (){
+//        Double total = (double) 0;
+//        for (GioHangChiTiet gioHangChiTiet : listGioHangChiTiet) {
+//            total+=gioHangChiTiet.tongTien();
+//        }
+//        return total;
+//    }
 
 }

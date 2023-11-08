@@ -9,6 +9,8 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> getAll();
 
+    List<ChiTietSanPham> getAllCtspOneSanPham();
+
     List<ChiTietSanPham> getAllDangHoatDong();
 
     List<ChiTietSanPham> getAllNgungHoatDong();
@@ -23,6 +25,10 @@ public interface ChiTietSanPhamSerivce {
     void remove(Long id);
 
     ChiTietSanPham getById(Long id);
+
+    List<ChiTietSanPham> getAllById(Long id);
+
+    List<ChiTietSanPham> getAllbyIdSPAndIdMS(Long idSanPham,Long idMauSac);
 
     boolean checkTenTrung(String ten);
 

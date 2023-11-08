@@ -1,5 +1,7 @@
 package com.example.bedatnsd47.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -34,8 +36,8 @@ public class ChiTietSanPham {
 
     @Column(name = "so_luong")
     @NotNull(message = "Số lượng không được trống.")
-    @Min(value = 1,message = "Số lượng nhỏ nhất là 1")
-    @Max(value = 99999,message = "Số lượng lớn nhất là 99999")
+    @Min(value = 0, message = "Số lượng nhỏ nhất là 0")
+    @Max(value = 99999, message = "Số lượng lớn nhất là 99999")
     private Integer soLuong;
 
     @Column(name = "trang_thai")
@@ -43,11 +45,12 @@ public class ChiTietSanPham {
 
     @Column(name = "gia_hien_hanh")
     @NotNull(message = "Giá không được trống.")
-    @Min(value = 10000,message = "Giá  nhỏ nhất là 10000")
-    @Max(value = 1000000000,message = "Giá lớn nhất là 1000000000")
+    @Min(value = 10000, message = "Giá  nhỏ nhất là 10000")
+    @Max(value = 1000000000, message = "Giá lớn nhất là 1000000000")
     private Long giaHienHanh;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     @JoinColumn(name = "san_pham_id", referencedColumnName = "id")
     private SanPham sanPham;
 
@@ -63,4 +66,6 @@ public class ChiTietSanPham {
     @JoinColumn(name = "loai_de_id", referencedColumnName = "id")
     private LoaiDe loaiDe;
 
+//    @OneToMany(mappedBy = "chiTietSanPham",cascade = CascadeType.ALL)
+//    private List<GioHangChiTiet> listGioHangChiTiet = new ArrayList<>();
 }
