@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "hoa_don")
+@Builder
 public class HoaDon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,13 +44,13 @@ public class HoaDon {
     private Integer loaiHoaDon;
 
     @Column(name = "phi_ship")
-    private Double phiShip;
+    private Long phiShip;
 
     @Column(name = "tong_tien")
-    private Double tongTien;
+    private Long tongTien;
 
     @Column(name = "tong_tien_khi_giam")
-    private Double tongTienKhiGiam;
+    private Long tongTienKhiGiam;
 
     @Column(name = "ghi_chu", length = 255)
     private String ghiChu;
@@ -101,8 +103,8 @@ public class HoaDon {
     @JoinColumn(name = "phuong_thuc_thanh_toan_id", referencedColumnName = "id")
     private PhuongThucThanhToan phuongThucThanhToan;
 
-    public Double tongTienHoaDon (){
-        Double total = (double) 0;
+    public Long tongTienHoaDon (){
+        Long total =  (long) 0;
         for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
             total+=hoaDonChiTiet.tongTien();
         }

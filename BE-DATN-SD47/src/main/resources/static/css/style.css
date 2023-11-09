@@ -461,7 +461,7 @@ h6 {
     list-style: none;
 }
 
-.header-nav > ul {
+.header-nav>ul {
     margin: 0;
     padding: 0;
 }
@@ -883,7 +883,7 @@ h6 {
 }
 
 /* News & Updates */
-.dashboard .news .post-item + .post-item {
+.dashboard .news .post-item+.post-item {
     margin-top: 15px;
 }
 
@@ -1686,9 +1686,11 @@ table th {
     0% {
         transform: rotate(0deg);
     }
+
     50% {
         opacity: 0;
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -1773,8 +1775,10 @@ table th {
     background: red;
     top: 2.2%;
     right: 34%;
-    width: 5%; /* Giảm kích thước chiều rộng */
-    height: 70%; /* Giảm kích thước chiều cao */
+    width: 5%;
+    /* Giảm kích thước chiều rộng */
+    height: 70%;
+    /* Giảm kích thước chiều cao */
     transform: rotate(-50deg);
     cursor: pointer;
 }
@@ -1785,8 +1789,10 @@ table th {
     z-index: 2000;
     top: 1.2%;
     right: 34%;
-    width: 5%; /* Giảm kích thước chiều rộng */
-    height: 70%; /* Giảm kích thước chiều cao */
+    width: 5%;
+    /* Giảm kích thước chiều rộng */
+    height: 70%;
+    /* Giảm kích thước chiều cao */
     transform: rotate(50deg);
     cursor: pointer;
 }
@@ -1828,11 +1834,21 @@ table th {
 
 /* hiển thị ảnh trong table sản phẩm*/
 .carousel-item img {
-    width: 144px; /* Độ rộng ảnh */
-    height: 144px; /* Chiều cao ảnh */
-    object-fit: cover; /* Hiển thị toàn bộ hình ảnh trong khung cố định */
+    width: 144px;
+    /* Độ rộng ảnh */
+    height: 144px;
+    /* Chiều cao ảnh */
+    object-fit: cover;
+    /* Hiển thị toàn bộ hình ảnh trong khung cố định */
 }
+
 /* hiển thị ảnh trong table sản phẩm end*/
 
 
+#check-giao-hang-1 {
+    display: none;
+}
 
+#check-giao-hang-2 {
+    display: none;
+}
