@@ -27,6 +27,11 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     }
 
     @Override
+    public List<ChiTietSanPham> getAllCtspOneSanPham() {
+        return repository.fillAllCtspOneSanPham();
+    }
+
+    @Override
     public List<ChiTietSanPham> getAllDangHoatDong() {
 
         return repository.fillAllDangHoatDong();
@@ -57,7 +62,9 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
             chiTietSanPham.setSoLuong(Integer.parseInt(listSoLuong.get(i)));
             chiTietSanPham.setGiaHienHanh(Long.valueOf(listDonGia.get(i)));
             chiTietSanPham.setTrangThai(0);
-
+            if(chiTietSanPham.getSoLuong()==0){
+                continue;
+            }
             ChiTietSanPham savedChiTietSanPham = repository.save(chiTietSanPham);
             chiTietSanPhamList.add(savedChiTietSanPham);
         }
@@ -83,6 +90,20 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     public ChiTietSanPham getById(Long id) {
 
         return repository.findById(id).get();
+
+    }
+
+    @Override
+    public List<ChiTietSanPham> getAllById(Long id) {
+
+        return repository.fillAllChiTietSpShop(id);
+
+    }
+
+    @Override
+    public List<ChiTietSanPham> getAllbyIdSPAndIdMS(Long idSanPham, Long idMauSac) {
+
+        return repository.fillAllChiTietSpMauSac(idSanPham,idMauSac);
 
     }
 
