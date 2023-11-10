@@ -136,29 +136,48 @@ public class BanHangController {
     }
 
     @PostMapping("/hoa-don/thanh-toan")
-    public String thanhToan(@RequestParam(defaultValue = "khongthay") String checkGiaoHang) {
+    public String thanhToan(@RequestParam(defaultValue = "khongthay") String checkGiaoHang,
+            @RequestParam(defaultValue = "khongthaytreo") String treo) {
         // System.out.println(checkGiaoHang+"!!!!!!!!!!!!!!!!!!!");
+
         HoaDon hd = hoaDonService.findById(idhdc);
+        if (treo.equals("on")) {
+            hd.setTrangThai(4);
+            hoaDonService.saveOrUpdate(hd);
+            return "redirect:/ban-hang-tai-quay/hoa-don/quan-ly";
+        }
         if (hd.getTrangThai() == -1 && !checkGiaoHang.equals("on")) {
+
+            hd.setTongTien(hd.tongTienHoaDon());
+            List<HoaDonChiTiet> lstHdct = hoaDonService.findById(idhdc).getLstHoaDonChiTiet();
+            for (HoaDonChiTiet hdct : lstHdct) {
+                Long idid = hdct.getChiTietSanPham().getId();
+                ChiTietSanPham ctsp = chiTietSanPhamSerivce.getById(idid);
+                ctsp.setSoLuong(ctsp.getSoLuong() - hdct.getSoLuong());
+                chiTietSanPhamSerivce.update(ctsp);
+            }
+
             hd.setTrangThai(3);
         } else if (hd.getTrangThai() == -1 && checkGiaoHang.equals("on")) {
+
+            hd.setTongTien(hd.tongTienHoaDon());
+            List<HoaDonChiTiet> lstHdct = hoaDonService.findById(idhdc).getLstHoaDonChiTiet();
+            for (HoaDonChiTiet hdct : lstHdct) {
+                Long idid = hdct.getChiTietSanPham().getId();
+                ChiTietSanPham ctsp = chiTietSanPhamSerivce.getById(idid);
+                ctsp.setSoLuong(ctsp.getSoLuong() - hdct.getSoLuong());
+                chiTietSanPhamSerivce.update(ctsp);
+            }
+
             hd.setTrangThai(0);
         } else if (hd.getTrangThai() <= 3) {
             hd.setTrangThai(hd.getTrangThai() + 1);
-        }else if (hd.getTrangThai() == 4) {
+        } else if (hd.getTrangThai() == 4) {
             hd.setTrangThai(3);
-        }
-        hd.setTongTien(hd.tongTienHoaDon());
-        List<HoaDonChiTiet> lstHdct = hoaDonService.findById(idhdc).getLstHoaDonChiTiet();
-        for (HoaDonChiTiet hdct : lstHdct) {
-            Long idid = hdct.getChiTietSanPham().getId();
-            ChiTietSanPham ctsp = chiTietSanPhamSerivce.getById(idid);
-            ctsp.setSoLuong(ctsp.getSoLuong() - hdct.getSoLuong());
-            chiTietSanPhamSerivce.update(ctsp);
         }
 
         hoaDonService.saveOrUpdate(hd);
-        return "redirect:/ban-hang-tai-quay/hoa-don";
+        return "redirect:/ban-hang-tai-quay/hoa-don/quan-ly";
     }
 
     @GetMapping("/hoa-don/quan-ly")
@@ -169,7 +188,6 @@ public class BanHangController {
         model.addAttribute("lstHdHoanThanh", hoaDonService.find5ByTrangThai(3));
         model.addAttribute("lstHdChoThanhToan", hoaDonService.find5ByTrangThai(4));
         model.addAttribute("lstHdHuy", hoaDonService.find5ByTrangThai(5));
-
         return "/admin-template/hoa-don";
     }
 }
