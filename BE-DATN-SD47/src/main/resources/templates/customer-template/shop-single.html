@@ -128,6 +128,35 @@
                                  th:src="@{'../../../static/img/' + ${anh.url}}" alt="" class="image-list"/>
                         </div>
                     </div>
+                    <script>
+                        const sliderMainImage = document.getElementById("product-main-image");
+                        const sliderImageList = document.getElementsByClassName("image-list");
+                        console.log(sliderImageList);
+
+                        sliderImageList[0].onclick = function () {
+                            sliderMainImage.src = sliderImageList[0].src;
+                            console.log(sliderMainImage.src);
+                        };
+
+                        sliderImageList[1].onclick = function () {
+                            sliderMainImage.src = sliderImageList[1].src;
+                            console.log(sliderMainImage.src);
+                        };
+
+                        sliderImageList[2].onclick = function () {
+                            sliderMainImage.src = sliderImageList[2].src;
+                            console.log(sliderMainImage.src);
+                        };
+
+                        sliderImageList[3].onclick = function () {
+                            sliderMainImage.src = sliderImageList[3].src;
+                            console.log(sliderMainImage.src);
+                        };
+                        sliderImageList[4].onclick = function () {
+                            sliderMainImage.src = sliderImageList[4].src;
+                            console.log(sliderMainImage.src);
+                        };
+                    </script>
                 </div>
                 <div class="col-6">
                     <div class="product">
@@ -145,7 +174,7 @@
                         </div>
                         <div class="product-price">
                                 <span class="offer-price" id="giaHienThi"
-                                      th:text="${chiTietSp.giaHienHanh}+'VND'"></span>
+                                      th:text="${chiTietSp.giaHienHanh}+' VND'"></span>
                         </div>
 
                         <div class="product-details">
@@ -163,6 +192,7 @@
                                 <label th:for="${iterStat.index}+6" class="size"
                                        th:text="${chiTietSPs.mauSac.ten}"></label>
                             </div>
+                            <h4 id="labelKichThuoc" style="display: none">Kích Thước</h4>
                         </div>
 
                         <!-- Thêm thẻ script trước khi sử dụng Axios -->
@@ -178,6 +208,12 @@
                                     console.log(idMauSac + 'id màu sắc');
                                     document.getElementById('so-luong-ton').style.display = 'none';
                                     getAllbyIdSPAndIdMS(idSanPham, idMauSac); // Gọi hàm để lấy danh sách kích cỡ
+
+                                    var soLuong = document.getElementById('soLuong');
+                                    soLuong.value = '';
+                                    var rqIdChiTietSp = document.getElementById('idChiTietSp');
+                                    rqIdChiTietSp.value = '';
+
                                 });
                             });
 
@@ -203,10 +239,11 @@
                             }
 
 
-
                             function displaylistChiTietSpByMauSac(listChiTietSpByMauSac) {
                                 // Hiển thị danh sách kích cỡ trên trang web
                                 var kichCoContainer = document.getElementById('kichCoContainer');
+                                var labelKichThuoc = document.getElementById('labelKichThuoc');
+                                labelKichThuoc.style.display = 'block';
                                 kichCoContainer.className = 'product-size';
                                 kichCoContainer.innerHTML = ''; // Xóa nội dung cũ
 
@@ -264,15 +301,78 @@
                                 });
 
                             }
-                            // // add sản phẩm
-                            // var addToCartButton = document.getElementById('yourAddToCartButtonId');
-                            //
-                            // addToCartButton.addEventListener('click', function () {
-                            function themVaoGioHang() {
-                                var soLuong = document.getElementById('soLuong');
-                                var rqIdChiTietSp = document.getElementById('idChiTietSp');
 
+                            function limitInput(inputElement) {
+                                var minValue = parseInt(inputElement.min, 10);
+                                var maxValue = parseInt(inputElement.max, 10);
+                                var stepValue = parseInt(inputElement.step, 10);
+
+                                // Chuyển giá trị nhập vào thành số nguyên
+                                var enteredValue = parseInt(inputElement.value, 10);
+
+                                // Kiểm tra giá trị nhập vào
+                                if (isNaN(enteredValue)) {
+                                    // Nếu giá trị không phải là số, đặt giá trị mặc định là giá trị nhỏ nhất
+                                    inputElement.value = minValue;
+                                } else if (enteredValue < minValue) {
+                                    // Nếu giá trị nhỏ hơn giá trị nhỏ nhất, đặt giá trị nhỏ nhất
+                                    inputElement.value = minValue;
+                                } else if (enteredValue > maxValue) {
+                                    // Nếu giá trị lớn hơn giá trị lớn nhất, đặt giá trị lớn nhất
+                                    inputElement.value = maxValue;
+                                } else if (enteredValue % stepValue !== 0) {
+                                    // Nếu giá trị không chia hết cho bước, làm tròn đến giá trị gần nhất chia hết cho bước
+                                    inputElement.value = Math.round(enteredValue / stepValue) * stepValue;
+                                }
+                            }
+
+
+                            function themVaoGioHang() {
+
+                                var fillErro = document.getElementById('so-luong-ton');
+
+                                var mauSacInputs = document.getElementsByName('mauSac');
+
+                                var isMauSacSelected = false;
+
+                                for (var i = 0; i < mauSacInputs.length; i++) {
+                                    if (mauSacInputs[i].checked) {
+                                        isMauSacSelected = true;
+                                        break; // Ngừng lặp nếu đã có kích thước được chọn
+                                    }
+                                }
+
+                                if (!isMauSacSelected) {
+                                    console.log("Vui lòng chọn một màu sắc.");
+                                    fillErro.innerHTML = '';
+                                    fillErro.innerText = 'Vui lòng chọn Phân loại hàng';
+                                    fillErro.style = 'color: red'
+                                    return false;
+                                }
+
+                                var sizeInputs = document.getElementsByName('size');
+
+                                var isSizeSelected = false;
+
+                                for (var i = 0; i < sizeInputs.length; i++) {
+                                    if (sizeInputs[i].checked) {
+                                        isSizeSelected = true;
+                                        break; // Ngừng lặp nếu đã có kích thước được chọn
+                                    }
+                                }
+
+                                if (!isSizeSelected) {
+                                    console.log("Vui lòng chọn một màu sắc.");
+                                    fillErro.innerHTML = '';
+                                    fillErro.innerText = 'Vui lòng chọn Phân loại hàng';
+                                    fillErro.style = 'color: red';
+                                    return false;
+                                }
+
+                                var soLuong = document.getElementById('soLuong');
                                 var soLuongAdd = soLuong.value;
+
+                                var rqIdChiTietSp = document.getElementById('idChiTietSp');
                                 var rqIdChiTietSp = rqIdChiTietSp.value;
 
                                 // Lấy URL cần gửi phương thức POST
@@ -297,15 +397,16 @@
                                         console.error(error);
                                     });
                             }
+
                             // });
 
                         </script>
                         <!-- Thêm một phần tử để hiển thị danh sách kích cỡ -->
                         <div id="kichCoContainer">
                         </div>
-                        <div>
+                        <div class="product-size">
                             <h4>Số lượng</h4>
-                            <input type="number" name="soLuong" id="soLuong" class="form-control" min="1" step="1">
+                            <input type="number" name="soLuong" id="soLuong" class="form-control" min="1" step="1" oninput="limitInput(this)">
                             <input type="hidden" name="idChiTietSp" id="idChiTietSp">
                             <span id="so-luong-ton"></span>
                         </div>
@@ -314,7 +415,7 @@
 
                         <div class="product-btn-group">
                             <div class="button buy-now"><i class='bx bxs-zap'></i> Buy Now</div>
-                            <button onclick="themVaoGioHang()"  class="button add-cart">
+                            <button onclick="themVaoGioHang()" class="button add-cart">
                                 <i class='bx bxs-cart'></i> Thêm vào giỏ
                             </button>
                             <div class="button heart"><i class='bx bxs-heart'></i> Add to Wishlist</div>
@@ -878,55 +979,6 @@
             </div>
         </div>
     </footer>
-</div>
-
-<!--test-->
-<div>
-    <!--                            <div class="size-layout" th:each="number : ${#numbers.sequence(35, 45)}">-->
-    <!--                                <input type="radio" th:id="'size-' + ${number}" th:name="size" th:value="${number}" th:class="size-input">-->
-    <!--                                <label th:for="'size-' + ${number}" th:class="size" th:text="${number}"></label>-->
-    <!--                            </div>-->
-    <!--                            <div class="size-layout" th:each="number : ${#numbers.sequence(35, 45)}">-->
-    <!--                                <input type="radio" th:id="'size-' + ${number}" th:name="size" th:value="${number}"-->
-    <!--                                       th:class="size-input"-->
-    <!--                                       th:disabled="${not #lists.contains(chiTietSp.kichCo.ten, number)}">-->
-    <!--                                <label th:for="'size-' + ${number}" th:class="size" th:text="${number}"></label>-->
-    <!--                            </div>-->
-
-    <!--                            <style>-->
-    <!--                                /* CSS */-->
-    <!--                                .size-input:not([disabled]) {-->
-    <!--                                    opacity: 1;-->
-    <!--                                }-->
-
-
-    <!--                                .size-input[disabled] + label {-->
-    <!--                                    opacity: 0.5; /* Làm mờ label khi input được disabled */-->
-    <!--                                }-->
-    <!--                                /* CSS */-->
-    <!--                                .size-input {-->
-    <!--                                    font-weight: bold;-->
-    <!--                                }-->
-
-    <!--                                .size-input[disabled] {-->
-    <!--                                    opacity: 0.5; /* Điều này làm mờ input khi disabled */-->
-
-    <!--                                    cursor: not-allowed; /* Thay đổi con trỏ khi di chuột vào input tắt */-->
-    <!--                                }-->
-
-    <!--                                .size-input[disabled]:hover {-->
-    <!--                                    cursor: not-allowed; /* Đảm bảo con trỏ hiển thị là not-allowed khi hover */-->
-    <!--                                    background-color: #f0f0f0; /* Thay đổi màu nền khi hover */-->
-    <!--                                }-->
-
-    <!--                                .size-input[disabled]:hover + label::before {-->
-    <!--                                    content: "X"; /* Hiển thị dấu X khi hover vào input tắt */-->
-    <!--                                    color: red;-->
-    <!--                                    position: absolute;-->
-    <!--                                    /*right: -20px; !* Điều chỉnh vị trí dấu X *!*/-->
-    <!--                                }-->
-
-    <!--                            </style>-->
 </div>
 
 <script src="../../static/js/jquery-3.3.1.min.js"></script>
