@@ -122,4 +122,9 @@ public class KhachHangServiceImpl implements KhachHangService {
         }
         return true;
     }
+
+    @Override
+    public TaiKhoan findKhachLe() {
+        return repository.findKhachLe();
+    }
 }

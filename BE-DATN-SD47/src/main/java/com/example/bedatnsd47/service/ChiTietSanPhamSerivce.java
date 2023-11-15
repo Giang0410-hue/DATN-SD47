@@ -34,4 +34,6 @@ public interface ChiTietSanPhamSerivce {
 
     boolean checkTenTrungSua(String ma, String ten);
 
+    List<ChiTietSanPham> fillAllDangHoatDongLonHon0();
+
 }
