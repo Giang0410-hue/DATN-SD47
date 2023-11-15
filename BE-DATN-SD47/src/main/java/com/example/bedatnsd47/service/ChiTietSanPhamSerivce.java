@@ -38,4 +38,6 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> getAllCtspByIdSanPham(Long idSanPham);
 
+    List<ChiTietSanPham> fillAllDangHoatDongLonHon0();
+
 }

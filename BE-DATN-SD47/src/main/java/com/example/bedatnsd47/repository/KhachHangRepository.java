@@ -18,5 +18,7 @@ public interface KhachHangRepository extends JpaRepository<TaiKhoan,Long> {
 
     @Query(value = "select * from tai_khoan where trang_thai = 1 and vai_tro_id = 3",nativeQuery = true)
     List<TaiKhoan> fillAllNgungHoatDong();
+    @Query(value = "select * from tai_khoan where ho_va_ten =N'Khách lẻ'",nativeQuery = true)
+    TaiKhoan findKhachLe();
 
 }

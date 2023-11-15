@@ -165,4 +165,9 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
 
     }
 
+    @Override
+    public List<ChiTietSanPham> fillAllDangHoatDongLonHon0() {
+        return repository.fillAllDangHoatDongLonHon0();
+    }
+
 }
