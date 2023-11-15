@@ -246,6 +246,150 @@
                                 </label>
                                 <input type="text" class="form-control" id="c_companyname1" name="phuongXa"
                                        th:value="${khacHang.phuongXa}"/>
+
+                                <select id="citySelect" class="form-control" >
+                                    <option disabled selected>Chọn Thành Phố</option>
+                                    <!-- Options will be filled dynamically here -->
+                                </select>
+
+                                <select id="districtSelect" class="form-control">
+                                    <option value="" disabled selected>Chọn Quận Huyện</option>
+                                    <!-- Options will be filled dynamically here -->
+                                </select>
+
+                                <select id="wardSelect" class="form-control">
+                                    <option value="" disabled selected>Chọn Phường / Xã</option>
+                                    <!-- Options will be filled dynamically here -->
+                                </select>
+
+                                <script th:inline="javascript">
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var citySelect = document.getElementById('citySelect');
+                                        var districtSelect = document.getElementById('districtSelect');
+                                        var wardSelect = document.getElementById('wardSelect');
+
+                                        // Gọi API để lấy dữ liệu thành phố
+                                        fetch('https://online-gateway.ghn.vn/shiip/public-api/master-data/province', {
+                                            method: 'GET',
+                                            headers: {
+                                                'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+                                                'Content-Type': 'application/json',
+                                            },
+                                        })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                // Xử lý dữ liệu khi API trả về thành công
+                                                populateSelect(citySelect, data.data, 'ProvinceID', 'ProvinceName');
+
+                                                // Lấy giá trị từ biểu thức Thymeleaf và gán cho biến JavaScript
+                                                var selectedCityValue = /*[[ ${khacHang.thanhPho} ]]*/ '';
+                                                console.log(selectedCityValue)
+
+                                                // Tìm option có giá trị là selectedCityValue và đặt nó làm được chọn
+                                                var selectedOption = citySelect.querySelector(`option[value="${selectedCityValue}"]`);
+                                                if (selectedOption) {
+                                                    selectedOption.selected = true;
+                                                }
+
+                                                fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${selectedCityValue}`, {
+                                                    method: 'GET',
+                                                    headers: {
+                                                        'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+                                                        'Content-Type': 'application/json',
+                                                    },
+                                                })
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        // Xử lý dữ liệu khi API trả về thành công
+                                                        populateSelect(districtSelect, data.data, 'DistrictID', 'DistrictName');
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('Lỗi khi tải dữ liệu quận:', error);
+                                                    });
+
+
+                                            })
+                                            .catch(error => {
+                                                console.error('Lỗi khi tải dữ liệu thành phố:', error);
+                                            });
+
+                                        // Phần còn lại của mã của bạn...
+                                        // Sự kiện khi chọn thành phố
+                                        citySelect.addEventListener('change', function () {
+                                            // Lấy ID của thành phố đã chọn
+                                            var selectedCityId = this.value;
+
+                                            console.log(selectedCityId);
+                                            // Gọi API để lấy dữ liệu về quận dựa trên ID của thành phố
+                                            fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${selectedCityId}`, {
+                                                method: 'GET',
+                                                headers: {
+                                                    'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+                                                    'Content-Type': 'application/json',
+                                                },
+                                            })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    // Xử lý dữ liệu khi API trả về thành công
+                                                    populateSelect(districtSelect, data.data, 'DistrictID', 'DistrictName');
+                                                })
+                                                .catch(error => {
+                                                    console.error('Lỗi khi tải dữ liệu quận:', error);
+                                                });
+                                        });
+
+                                        // Sự kiện khi chọn quận
+                                        districtSelect.addEventListener('change', function () {
+                                            // Lấy ID của quận đã chọn
+                                            var selectedDistrictId = this.value;
+                                            console.log(selectedDistrictId)
+
+                                            // Gọi API để lấy dữ liệu về xã dựa trên ID của quận
+                                            fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${selectedDistrictId}`, {
+                                                method: 'GET',
+                                                headers: {
+                                                    'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+                                                    'Content-Type': 'application/json',
+                                                },
+                                            })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    // Xử lý dữ liệu khi API trả về thành công
+                                                    populateSelect(wardSelect, data.data, 'WardCode', 'WardName');
+
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error fetching ward data:', error);
+                                                });
+
+                                        });
+                                        console.log(wardSelect)
+
+
+                                        // Hàm để điền dữ liệu vào phần tử <select>
+                                        function populateSelect(selectElement, data, valueKey, textKey) {
+                                            // Xóa tất cả các option hiện có
+                                            // selectElement.innerHTML = "";
+
+                                            // Thêm option mặc định
+                                            // var defaultOption = document.createElement('option');
+                                            // defaultOption.value = "";
+                                            // defaultOption.text = "Chọn " + "thành phố" + selectElement.id.slice(1);
+                                            // defaultOption.disabled = true;
+                                            // defaultOption.selected = true;
+                                            // selectElement.appendChild(defaultOption);
+
+                                            // Lặp qua mảng dữ liệu và tạo các phần tử <option>
+                                            data.forEach(item => {
+                                                var option = document.createElement('option');
+                                                option.value = item[valueKey];
+                                                option.text = item[textKey];
+                                                selectElement.appendChild(option);
+                                            });
+                                        }
+                                    });
+
+                                </script>
                             </div>
                             <div class="col-md-4">
                                 <label for="c_companyname2" class="text-black">

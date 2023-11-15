@@ -46,6 +46,13 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     }
 
     @Override
+    public GioHangChiTiet fillById(Long id) {
+
+        return repository.findById(id).get();
+
+    }
+
+    @Override
     public Integer soLuongSPGioHangCT(Long idGioHang) {
 
         return repository.soLuongSpTrongGioHangCT(idGioHang);
@@ -133,7 +140,7 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
             gioHangChiTietNew.setNgayTao(currentDate);
             gioHangChiTietNew.setNgayTao(currentDate);
             gioHangChiTietNew.setChiTietSanPham(ChiTietSanPham.builder().id(Long.valueOf(idChiTietSp)).build());
-            gioHangChiTietNew.setGioHang(GioHang.builder().id(Long.valueOf(1)).build());
+            gioHangChiTietNew.setGioHang(GioHang.builder().id(idGioHang).build());
             gioHangChiTietNew.setTrangThai(0);
             System.out.println("a1");
 

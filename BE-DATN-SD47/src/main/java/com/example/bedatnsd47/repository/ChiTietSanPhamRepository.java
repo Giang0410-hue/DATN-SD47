@@ -18,7 +18,7 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
             "    SELECT\n" +
             "        id,\n" +
             "        san_pham_id,\n" +
-            "        ROW_NUMBER() OVER (PARTITION BY san_pham_id ORDER BY id) AS rn\n" +
+            "        ROW_NUMBER() OVER (PARTITION BY san_pham_id ORDER BY id DESC) AS rn\n" +
             "    FROM chi_tiet_san_pham\n" +
             "    WHERE trang_thai = 1\n" +
             ")\n" +
@@ -33,14 +33,14 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
             "    cts.loai_de_id\n" +
             "FROM chi_tiet_san_pham cts\n" +
             "JOIN CTE ON cts.id = CTE.id\n" +
-            "WHERE CTE.rn = 1;", nativeQuery = true)
+            "WHERE CTE.rn = 1  ORDER BY cts.id DESC;", nativeQuery = true)
     List<ChiTietSanPham> fillAllNgungHoatDong();
 
     @Query(value = "WITH CTE AS (\n" +
             "    SELECT\n" +
             "        id,\n" +
             "        san_pham_id,\n" +
-            "        ROW_NUMBER() OVER (PARTITION BY san_pham_id ORDER BY id) AS rn\n" +
+            "        ROW_NUMBER() OVER (PARTITION BY san_pham_id ORDER BY id DESC) AS rn\n" +
             "    FROM chi_tiet_san_pham\n" +
             "    WHERE trang_thai = 0\n" +
             ")\n" +
@@ -55,7 +55,7 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
             "    cts.loai_de_id\n" +
             "FROM chi_tiet_san_pham cts\n" +
             "JOIN CTE ON cts.id = CTE.id\n" +
-            "WHERE CTE.rn = 1;", nativeQuery = true)
+            "WHERE CTE.rn = 1 ORDER BY cts.id DESC;", nativeQuery = true)
     List<ChiTietSanPham> fillAllCtspOneSanPham();
 
     @Query(value = "SELECT cts.*\n" +
@@ -68,7 +68,7 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
             "WHERE cts.RowAsc = 1  AND cts.trang_thai = 0;", nativeQuery = true)
     List<ChiTietSanPham> fillAllChiTietSpShop(@Param("id") Long id);
 
-    @Query(value = "select * from chi_tiet_san_pham where san_pham_id = :idSanPham and mau_sac_id = :idMauSac and trang_thai = 0", nativeQuery = true)
+    @Query(value = "select * from chi_tiet_san_pham where san_pham_id = :idSanPham and mau_sac_id = :idMauSac and trang_thai = 0 ORDER BY kich_co_id ASC, id ASC;\n", nativeQuery = true)
     List<ChiTietSanPham> fillAllChiTietSpMauSac(@Param("idSanPham") Long idSanPham, @Param("idMauSac") Long idMauSac);
 
     @Query(value = "SELECT *\n" +

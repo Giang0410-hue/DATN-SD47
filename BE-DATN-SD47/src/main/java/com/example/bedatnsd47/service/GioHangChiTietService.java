@@ -12,6 +12,8 @@ public interface GioHangChiTietService {
 
     List<GioHangChiTiet> findAllByIdGioHang(Long idGioHang);
 
+    GioHangChiTiet fillById(Long id);
+
     Integer soLuongSPGioHangCT(Long idGioHang);
 
     List<GioHangChiTiet> findAllById(List<String> listIdString);

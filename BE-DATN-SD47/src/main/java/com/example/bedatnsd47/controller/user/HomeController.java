@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -68,26 +69,26 @@ public class HomeController {
     private Date currentDate = new Date();
 
     @GetMapping("/home")
-    public String hienThi() {
+    public String home() {
 
         return "/customer-template/ban-hang-customer";
 
     }
 
     @GetMapping("/dang-nhap")
-    public String hienThi7() {
+    public String dangNhap() {
 
         return "/customer-template/dang-nhap";
     }
 
     @GetMapping("/dang-ky")
-    public String hienThi8() {
+    public String dangKy() {
 
         return "/customer-template/dang-ky";
     }
 
     @GetMapping("/cart")
-    public String hienThi1(
+    public String cart(
             Model model
     ) {
         List<GioHangChiTiet> listGioHangChiTiet = gioHangChiTietService.findAllByIdGioHang(Long.valueOf(1));
@@ -97,23 +98,27 @@ public class HomeController {
     }
 
     @GetMapping("/cart/detele/{id}")
-    public String delete(
+    public String deleteCart(
             @PathVariable("id") Long id
     ) {
         gioHangChiTietService.deleteById(id);
         return "redirect:/cart";
     }
 
-    @PostMapping("/cart/update/{id}")
-    public String updateGioHangChiTiet(
-            @PathVariable("id") Long id
+    @GetMapping("/cart/update/{id}")
+    public String updateCart(
+            @PathVariable("id") Long id,
+            @RequestParam("soLuong") String soLuong
     ) {
-        gioHangChiTietService.deleteById(id);
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietService.fillById(id);
+        gioHangChiTiet.setSoLuong(Integer.valueOf(soLuong));
+        gioHangChiTietService.update(gioHangChiTiet);
         return "redirect:/cart";
     }
+
 
     @GetMapping("/checkout")
-    public String hienThi2(
+    public String checkout(
             @RequestParam String options,
             Model model
     ) {
@@ -146,7 +151,7 @@ public class HomeController {
     }
 
     @GetMapping("/shop")
-    public String hienThi3(
+    public String shop(
             Model model
     ) {
         model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllCtspOneSanPham());
@@ -191,7 +196,7 @@ public class HomeController {
     }
 
     @GetMapping("/shop-single/{id}")
-    public String hienThi4(
+    public String shopSingle(
             @PathVariable("id") String id,
             Model model
     ) {
@@ -204,13 +209,13 @@ public class HomeController {
     }
 
     @GetMapping("/about")
-    public String hienThi5() {
+    public String about() {
 
         return "/customer-template/about";
     }
 
     @GetMapping("/thankyou")
-    public String hienThi6() {
+    public String thankYou() {
 
         return "/customer-template/thankyou";
     }
