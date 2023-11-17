@@ -11,10 +11,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.GroupSequence;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.groups.Default;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -74,28 +76,12 @@ public class TaiKhoan {
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Email không hợp lệ")
     private String email;
 
-    @Column(name = "thanh_pho", length = 50)
-    @NotBlank(message = "Thành phố không được trống")
-    private String thanhPho;
-
-    @Column(name = "quan_huyen", length = 50)
-    @NotBlank(message = "Quận huyện không được trống")
-    private String quanHuyen;
-
-    @Column(name = "phuong_xa", length = 50)
-    @NotBlank(message = "Phường xã không được trống")
-    private String phuongXa;
-
-    @Column(name = "dia_chi_cu_the", length = 100)
-    @NotBlank(message = "Địa chỉ cụ thể không được trống")
-    private String diaChiCuThe;
-
     @Column(name = "ten_tai_khoan", length = 100)
     @NotBlank(message = "Tên tài khoản không được trống")
     private String tenTaiKhoan;
 
     @Column(name = "mat_khau", length = 30)
-    @NotBlank(message = "Mật khẩu không được trống")
+//    @NotBlank(message = "Mật khẩu không được trống")
     private String matKhau;
 
     @Column(name = "ngay_tao")

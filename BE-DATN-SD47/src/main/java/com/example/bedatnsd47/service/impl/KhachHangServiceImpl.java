@@ -3,10 +3,13 @@ package com.example.bedatnsd47.service.impl;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.repository.KhachHangRepository;
 import com.example.bedatnsd47.service.KhachHangService;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +19,9 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     @Autowired
     KhachHangRepository repository;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Override
     public List<TaiKhoan> getAll() {
@@ -101,7 +107,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     public boolean checkTenTkTrungSua(Long id, String ten) {
         for (TaiKhoan sp : repository.findAll()) {
             if (sp.getTenTaiKhoan().equalsIgnoreCase(ten)) {
-                if(!sp.getId().equals(id)){
+                if (!sp.getId().equals(id)) {
                     return false;
                 }
 
@@ -114,7 +120,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     public boolean checkEmailSua(Long id, String email) {
         for (TaiKhoan sp : repository.findAll()) {
             if (sp.getEmail().equalsIgnoreCase(email)) {
-                if(!sp.getId().equals(id)){
+                if (!sp.getId().equals(id)) {
                     return false;
                 }
 
@@ -126,5 +132,33 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public TaiKhoan findKhachLe() {
         return repository.findKhachLe();
+    }
+    public void sendEmail(TaiKhoan taiKhoan, String path, String random) {
+        String from = "daspabitra55@gmail.com";
+        String to = taiKhoan.getEmail();
+        String subject = "Account Verfication";
+        String content = "Khách hàng" + "<br>" + "Tài khoản  " + taiKhoan.getTenTaiKhoan() + "<br>" + "Mật khẩu   " + random;
+        try {
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            helper.setFrom(from, "Becoder");
+            helper.setTo(to);
+            helper.setSubject(subject);
+            content = content.replace("[[name]]", taiKhoan.getTenTaiKhoan());
+            String siteUrl = "Mật khẩu" + random + "Tài khoản" + taiKhoan.getTenTaiKhoan();
+
+            System.out.println(siteUrl);
+
+            content = content.replace("[[URL]]", siteUrl);
+
+            helper.setText(content, true);
+
+            javaMailSender.send(message);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

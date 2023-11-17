@@ -24,7 +24,6 @@ public class DiaChiServiceImpl implements DiaChiService {
 
     @Override
     public List<DiaChi> getAllByTaiKhoan(Long id) {
-
         return diaChiRepository.getAllByIdTaiKhoan(id);
 
     }
