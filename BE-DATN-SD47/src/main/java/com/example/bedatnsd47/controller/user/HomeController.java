@@ -1,27 +1,25 @@
 package com.example.bedatnsd47.controller.user;
 
 import com.example.bedatnsd47.entity.ChiTietSanPham;
+import com.example.bedatnsd47.entity.DiaChi;
 import com.example.bedatnsd47.entity.GioHang;
 import com.example.bedatnsd47.entity.GioHangChiTiet;
 import com.example.bedatnsd47.entity.TaiKhoan;
-import com.example.bedatnsd47.repository.GioHangRepository;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
+import com.example.bedatnsd47.service.DiaChiService;
 import com.example.bedatnsd47.service.GioHangChiTietService;
 import com.example.bedatnsd47.service.GioHangService;
-import com.example.bedatnsd47.service.HinhAnhSanPhamSerivce;
 import com.example.bedatnsd47.service.KhachHangService;
 import com.example.bedatnsd47.service.KichCoService;
 import com.example.bedatnsd47.service.LoaiDeService;
 import com.example.bedatnsd47.service.MauSacService;
-import com.example.bedatnsd47.service.SanPhamSerivce;
-import com.example.bedatnsd47.service.ThuongHieuService;
+import com.example.bedatnsd47.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -35,15 +33,6 @@ public class HomeController {
 
     @Autowired
     private ChiTietSanPhamSerivce chiTietSanPhamSerivce;
-
-    @Autowired
-    private SanPhamSerivce sanPhamSerivce;
-
-    @Autowired
-    private HinhAnhSanPhamSerivce hinhAnhSanPhamSerivce;
-
-    @Autowired
-    private ThuongHieuService thuongHieuService;
 
     @Autowired
     private KichCoService kichCoService;
@@ -61,7 +50,10 @@ public class HomeController {
     private KhachHangService khachHangService;
 
     @Autowired
-    private GioHangRepository gioHangRepository;
+    private DiaChiService diaChiService;
+
+    @Autowired
+    private VoucherService voucherService;
 
     @Autowired
     private GioHangChiTietService gioHangChiTietService;
@@ -116,6 +108,23 @@ public class HomeController {
         return "redirect:/cart";
     }
 
+    @PostMapping("/gio-hang-chi-tiet/add/{idChiTietSpAdd}/{soLuongAdd}")
+    public String addGioHangChiTiet(
+            @PathVariable String idChiTietSpAdd,
+            @PathVariable String soLuongAdd
+    ) {
+        gioHangChiTietService.save(Long.valueOf(1), Long.valueOf(idChiTietSpAdd), Integer.valueOf(soLuongAdd));
+        return "redirect:/shop";
+    }
+
+    @PostMapping("/gio-hang-chi-tiet/add-fast/{idChiTietSpAdd}/{soLuongAdd}")
+    public String addGioHangChiTietNhanh(
+            @PathVariable String idChiTietSpAdd,
+            @PathVariable String soLuongAdd
+    ) {
+        gioHangChiTietService.save(Long.valueOf(1), Long.valueOf(idChiTietSpAdd), Integer.valueOf(soLuongAdd));
+        return "redirect:/cart";
+    }
 
     @GetMapping("/checkout")
     public String checkout(
@@ -126,7 +135,17 @@ public class HomeController {
         List<String> listIdString = Arrays.asList(optionArray);
         List<GioHangChiTiet> listGioHangChiTiet = gioHangChiTietService.findAllById(listIdString);
         model.addAttribute("listGioHangChiTiet", listGioHangChiTiet);
-        model.addAttribute("khacHang", khachHangService.getById(Long.valueOf(4)));
+        TaiKhoan khachHang = khachHangService.getById(Long.valueOf(4));
+        List<DiaChi> diaChi = diaChiService.getAllByTaiKhoan(Long.valueOf(4));
+        model.addAttribute("listVoucher",voucherService.fillAllDangDienRa());
+        model.addAttribute("khachHang",khachHang);
+
+        if(khachHang.getLstDiaChi() == null || khachHang.getLstDiaChi().size() == 0){
+           model.addAttribute("checkDiaChi","DiaChiNull");
+       }else {
+           model.addAttribute("checkDiaChi", "DiaChi");
+            model.addAttribute("listDiaChi",diaChi);
+       }
         return "/customer-template/checkout";
     }
 
@@ -137,16 +156,16 @@ public class HomeController {
             @RequestParam("tongTienAndSale") String tongTienAndSale,
             @RequestParam("hoVaTen") String hoVaTen,
             @RequestParam("soDienThoai") String soDienThoai,
-            @RequestParam("phuongXa") String phuongXa,
-            @RequestParam("quanHuyen") String quanHuyen,
-            @RequestParam("thanhPho") String thanhPho,
+            @RequestParam("tienShip") String tienShip,
+            @RequestParam("email") String email,
+            @RequestParam("voucher") String voucher,
             @RequestParam("diaChiCuThe") String diaChiCuThe,
             @RequestParam("ghiChu") String ghiChu
     ) {
         String[] optionArray = idGioHangChiTiet.split(",");
         List<String> listIdString = Arrays.asList(optionArray);
         gioHangChiTietService.addHoaDon(listIdString, Long.valueOf(tongTien), Long.valueOf(tongTienAndSale)
-                , hoVaTen, soDienThoai, phuongXa, quanHuyen, thanhPho, diaChiCuThe, ghiChu);
+                , hoVaTen, soDienThoai, tienShip, email, voucher, diaChiCuThe, ghiChu);
         return "redirect:/thankyou";
     }
 
@@ -176,14 +195,7 @@ public class HomeController {
         return "redirect:/shop";
     }
 
-    @PostMapping("/gio-hang-chi-tiet/add/{idChiTietSpAdd}/{soLuongAdd}")
-    public String addGioHangChiTiet(
-            @PathVariable String idChiTietSpAdd,
-            @PathVariable String soLuongAdd
-    ) {
-        gioHangChiTietService.save(Long.valueOf(1), Long.valueOf(idChiTietSpAdd), Integer.valueOf(soLuongAdd));
-        return "redirect:/shop";
-    }
+
 
     @GetMapping("/chi-tiet-san-pham/{idSanPham}/{idMauSac}")
     @ResponseBody

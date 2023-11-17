@@ -398,7 +398,78 @@
                                     });
                             }
 
-                            // });
+                            function themVaoGioHangNhanh() {
+
+                                var fillErro = document.getElementById('so-luong-ton');
+
+                                var mauSacInputs = document.getElementsByName('mauSac');
+
+                                var isMauSacSelected = false;
+
+                                for (var i = 0; i < mauSacInputs.length; i++) {
+                                    if (mauSacInputs[i].checked) {
+                                        isMauSacSelected = true;
+                                        break; // Ngừng lặp nếu đã có kích thước được chọn
+                                    }
+                                }
+
+                                if (!isMauSacSelected) {
+                                    console.log("Vui lòng chọn một màu sắc.");
+                                    fillErro.innerHTML = '';
+                                    fillErro.innerText = 'Vui lòng chọn Phân loại hàng';
+                                    fillErro.style = 'color: red'
+                                    return false;
+                                }
+
+                                var sizeInputs = document.getElementsByName('size');
+
+                                var isSizeSelected = false;
+
+                                for (var i = 0; i < sizeInputs.length; i++) {
+                                    if (sizeInputs[i].checked) {
+                                        isSizeSelected = true;
+                                        break; // Ngừng lặp nếu đã có kích thước được chọn
+                                    }
+                                }
+
+                                if (!isSizeSelected) {
+                                    console.log("Vui lòng chọn một màu sắc.");
+                                    fillErro.innerHTML = '';
+                                    fillErro.innerText = 'Vui lòng chọn Phân loại hàng';
+                                    fillErro.style = 'color: red';
+                                    return false;
+                                }
+
+                                var soLuong = document.getElementById('soLuong');
+                                var soLuongAdd = soLuong.value;
+
+                                var rqIdChiTietSp = document.getElementById('idChiTietSp');
+                                var rqIdChiTietSp = rqIdChiTietSp.value;
+
+                                // Lấy URL cần gửi phương thức POST
+                                var url = '/gio-hang-chi-tiet/add-fast/' + rqIdChiTietSp + '/' + soLuongAdd; // Thay thế bằng URL thực tế
+
+                                // Thực hiện phương thức POST
+                                fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    }
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            // Xử lý kết quả nếu cần
+                                            console.log('Đã thêm vào giỏ hàng');
+                                            window.location.href = '/cart?checkGHCT=true';
+                                        } else {
+                                            throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error(error);
+                                    });
+                            }
+
 
                         </script>
                         <!-- Thêm một phần tử để hiển thị danh sách kích cỡ -->
@@ -414,7 +485,7 @@
                         <span class="divider"></span>
 
                         <div class="product-btn-group">
-                            <div class="button buy-now"><i class='bx bxs-zap'></i> Buy Now</div>
+                            <button onclick="themVaoGioHangNhanh()" class="button buy-now"><i class='bx bxs-zap'></i>Mua Ngay</button>
                             <button onclick="themVaoGioHang()" class="button add-cart">
                                 <i class='bx bxs-cart'></i> Thêm vào giỏ
                             </button>

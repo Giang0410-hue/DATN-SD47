@@ -164,12 +164,13 @@
                                                 &minus;
                                             </button>
                                         </div>
-                                        <input type="text" min="1" th:max="${gioHangCT.chiTietSanPham.soLuong}"
+                                        <input type="text" min="1"
+                                               th:max="${gioHangCT.chiTietSanPham.soLuong}"
                                                oninput="limitInput(this)"
                                                step="1"
                                                class="form-control text-center" style="width: 50px;"
                                                th:value="${gioHangCT.soLuong}"
-                                               th:id="${'soLuong_' + gioHangCT.id}"
+                                               th:id="${'soLuong_' + gioHangCT.id}+'_'+${gioHangCT.chiTietSanPham.soLuong}"
                                                placeholder="" aria-label="Example text with button addon"
                                                aria-describedby="button-addon1"/>
 
@@ -187,7 +188,6 @@
                                                 scrollPosition = window.pageYOffset;
                                             };
                                         </script>
-                                        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
                                         <script>
                                             function limitInput(inputElement) {
                                                 var minValue = parseInt(inputElement.min, 10);
@@ -212,52 +212,6 @@
                                                     inputElement.value = Math.round(enteredValue / stepValue) * stepValue;
                                                 }
                                             }
-                                            $(document).ready(function () {
-                                                // Sự kiện click nút giảm số lượng
-                                                $('.js-btn-minus').on('click', function () {
-                                                    capNhatSoLuong(-1);
-                                                });
-
-                                                // Sự kiện click nút tăng số lượng
-                                                $('.js-btn-plus').on('click', function () {
-                                                    capNhatSoLuong(1);
-                                                });
-
-                                                // Sự kiện thay đổi giá trị của input
-                                                $('input[id^="soLuong_"]').on('input', function () {
-                                                    // Không làm gì khi input thay đổi
-                                                });
-
-                                                // Sự kiện mất focus (blur) trên input
-                                                $('input[id^="soLuong_"]').on('blur', function () {
-                                                    capNhatSoLuong(0); // Giá trị 0 để chỉ cập nhật số lượng, không tăng/giảm
-                                                });
-                                                function capNhatSoLuong(soLuongThem) {
-                                                    var id = $('input[id^="soLuong_"]').attr('id').split('_')[1];
-                                                    var soLuongHienTai = parseInt($('input[id^="soLuong_"]').val());
-                                                    var soLuongMoi = soLuongHienTai + soLuongThem;
-
-                                                    $.ajax({
-                                                        url: '/cart/update/' + id,
-                                                        type: 'GET',
-                                                        data: { soLuong: soLuongMoi },
-                                                        success: function (data) {
-                                                            $('input[id^="soLuong_"]').val(soLuongMoi);
-                                                            // Cập nhật giá trị mới của tổng tiền
-                                                            console.log('Cập nhật thành công');
-                                                            // Lưu vị trí trang khi số lượng được cập nhật
-                                                            scrollPosition = window.pageYOffset;
-
-                                                            // Load lại trang
-                                                            location.reload();
-                                                        },
-                                                        error: function (error) {
-                                                            console.error('Lỗi khi cập nhật:', error);
-                                                        }
-                                                    });
-                                                }
-                                            });
-
                                         </script>
 
                                     </div>
@@ -298,58 +252,9 @@
                                             onclick="checkOut()">
                                         Mua hàng
                                     </button>
+                                    <div id="checkMua"></div>
                                     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
                                     <script>
-                                        $(document).ready(function () {
-                                            // Kích hoạt tooltip
-
-                                            // Select/Deselect checkboxes
-                                            var checkbox = $('table tbody input[type="checkbox"]');
-                                            var tongGia = 0; // Biến để lưu tổng giá
-
-                                            $("#selectAll").click(function () {
-                                                if (this.checked) {
-                                                    checkbox.each(function () {
-                                                        this.checked = true;
-                                                    });
-                                                } else {
-                                                    checkbox.each(function () {
-                                                        this.checked = false;
-                                                    });
-                                                }
-                                                tinhTongGia();
-                                            });
-
-                                            checkbox.click(function () {
-                                                if (!this.checked) {
-                                                    $("#selectAll").prop("checked", false);
-                                                }
-                                                tinhTongGia();
-                                            });
-
-
-                                            // Hàm tính tổng giá
-                                            function tinhTongGia() {
-                                                tongGia = 0;
-                                                checkbox.each(function () {
-                                                    if (this.checked) {
-                                                        var row = $(this).closest('tr');
-                                                        var giaSanPham = parseFloat(row.find('td:eq(5)').text());
-                                                        tongGia += giaSanPham;
-                                                    }
-                                                });
-
-                                                // Hiển thị tổng giá hoặc thực hiện bất kỳ hành động nào khác với nó
-                                                console.log("Tổng Giá: " + tongGia);
-                                                var tongThanhToan = document.getElementById("tongTienCart");
-                                                tongThanhToan.innerHTML = '';
-                                                tongThanhToan.innerText = tongGia + ' VND';
-                                            }
-
-                                        });
-
-
                                         function checkOut() {
                                             var checkboxes = document.querySelectorAll("input[name='options[]']");
                                             // Mảng để lưu trữ giá trị của các checkbox được chọn
@@ -361,13 +266,15 @@
                                                     selectedOptions.push(encodeURIComponent(checkbox.value));
                                                 }
                                             });
+                                            if(selectedOptions.join(',')==''){
+                                                alert("Bạn vẫn chưa chọn sản phẩm nào để mua")
+                                                return
+                                            }
 
                                             // Chuyển đến đường dẫn checkout và truyền giá trị mã hóa thông qua tham số
                                             window.location.href = 'checkout?options=' + selectedOptions.join(',');
                                         }
-
                                     </script>
-
                                 </div>
                             </div>
                         </div>
@@ -377,6 +284,7 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <footer class="site-footer border-top">
         <div class="container">
             <div class="row">
@@ -451,8 +359,6 @@
                     <p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;
-
-
                         <script>
                             document.write(new Date().getFullYear());
                         </script>
@@ -471,6 +377,7 @@
 <script src="../../static/js/popper.min.js"></script>
 <script src="../../static/js/bootstrap.min.js"></script>
 <script src="../../static/js/owl.carousel.min.js"></script>
+<script src="../../static/js/mainn.js"></script>
 <script src="../../static/js/jquery.magnific-popup.min.js"></script>
 <script src="../../static/js/aos.js"></script>
 
