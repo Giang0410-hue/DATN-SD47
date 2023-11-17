@@ -8,7 +8,9 @@ public interface TaiKhoanService {
 
     public void sendEmail(TaiKhoan taiKhoan, String path);
 
-    public boolean verifyAccount(String verificationPassWord);
+    public void sendEmail1(TaiKhoan taiKhoan, String url,String random);
+
+    public boolean verifyAccount(String verificationPassWord,String resetPass);
 
     public TaiKhoan saveUser(TaiKhoan user,String url);
 }
