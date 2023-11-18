@@ -6,8 +6,10 @@ import com.example.bedatnsd47.entity.ThuongHieu;
 import com.example.bedatnsd47.entity.VaiTro;
 import com.example.bedatnsd47.service.DiaChiService;
 import com.example.bedatnsd47.service.KhachHangService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/admin/khach-hang")
@@ -34,6 +37,13 @@ public class KhachHangController {
     DiaChiService diaChiService;
 
     private Date currentDate = new Date();
+
+    String random3 = ranDom1();
+
+    TaiKhoan userInfo = new TaiKhoan();
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping()
     public String hienThi(Model model) {
@@ -269,8 +279,11 @@ public class KhachHangController {
     @PostMapping("/add")
     public String add(@Valid @ModelAttribute("khachHang") TaiKhoan taiKhoan,
                       BindingResult result, Model model,
-                      RedirectAttributes redirectAttributes) {
-
+                      RedirectAttributes redirectAttributes,
+                      HttpServletRequest request,
+                      @RequestParam("email") String email
+    ) {
+        userInfo = taiKhoan;
         TaiKhoan taiKhoanEntity = new TaiKhoan();
         taiKhoanEntity.setNgaySinh(taiKhoan.getNgaySinh());
         if (result.hasErrors()) {
@@ -297,17 +310,47 @@ public class KhachHangController {
             model.addAttribute("checkEmailTrung", "Email phẩm đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/khach_hang/khach-hang";
-        } else {
+        }
+        else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            taiKhoan.setNgayTao(currentDate);
-            taiKhoan.setNgaySua(currentDate);
+            String url = request.getRequestURL().toString();
+            System.out.println(url);
+            url = url.replace(request.getServletPath(), "");
+            taiKhoanService.sendEmail(userInfo, url, random3);
+            System.out.println(userInfo);
+            userInfo.setNgayTao(currentDate);
+            userInfo.setNgaySua(currentDate);
+            userInfo.setMatKhau(passwordEncoder.encode(random3));
             VaiTro vaiTro = new VaiTro();
-            vaiTro.setId(Long.valueOf(3));
-            taiKhoan.setVaiTro(vaiTro);
-            taiKhoan.setTrangThai(0);
-            taiKhoanService.update(taiKhoan);
+            vaiTro.setId(Long.valueOf(2));
+            userInfo.setVaiTro(vaiTro);
+            userInfo.setTrangThai(1);
+            userInfo.setVaiTro(vaiTro);
+            taiKhoanService.update(userInfo);
             return "redirect:/admin/khach-hang";
         }
+    }
+
+    public String ranDom1() {
+        // Khai báo một mảng chứa 6 số nguyên ngẫu nhiên
+        String ran = "";
+        int[] randomNumbers = new int[6];
+
+        // Tạo một đối tượng Random
+        Random random = new Random();
+
+        // Đổ số nguyên ngẫu nhiên vào mảng
+        for (int i = 0; i < 6; i++) {
+            randomNumbers[i] = random.nextInt(100); // Giới hạn số ngẫu nhiên từ 0 đến 99
+        }
+
+        // In ra các số nguyên ngẫu nhiên trong mảng
+        System.out.println("Dãy 6 số nguyên ngẫu nhiên:");
+        for (int number : randomNumbers) {
+            ran = ran + number;
+            System.out.println(number);
+        }
+        return ran;
     }
 
 

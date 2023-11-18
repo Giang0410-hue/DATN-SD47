@@ -115,8 +115,8 @@
             <div class="row mb-3">
                 <form class="col-md-12" method="post">
                     <div class="site-blocks-table">
-<!--                        <table class="table table-bordered">-->
-                            <table class="table">
+                        <!--                        <table class="table table-bordered">-->
+                        <table class="table">
                             <thead>
                             <tr>
                                 <th class="product-price">
@@ -164,15 +164,56 @@
                                                 &minus;
                                             </button>
                                         </div>
-                                        <input type="text" class="form-control text-center" style="width: 50px;"
+                                        <input type="text" min="1"
+                                               th:max="${gioHangCT.chiTietSanPham.soLuong}"
+                                               oninput="limitInput(this)"
+                                               step="1"
+                                               class="form-control text-center" style="width: 50px;"
                                                th:value="${gioHangCT.soLuong}"
+                                               th:id="${'soLuong_' + gioHangCT.id}+'_'+${gioHangCT.chiTietSanPham.soLuong}"
                                                placeholder="" aria-label="Example text with button addon"
                                                aria-describedby="button-addon1"/>
+
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-primary js-btn-plus" type="button">
                                                 &plus;
                                             </button>
                                         </div>
+                                        <script>
+                                            // Biến để lưu trữ vị trí trang
+                                            var scrollPosition = 0;
+
+                                            // Lấy vị trí trang khi trang được load
+                                            window.onload = function () {
+                                                scrollPosition = window.pageYOffset;
+                                            };
+                                        </script>
+                                        <script>
+                                            function limitInput(inputElement) {
+                                                var minValue = parseInt(inputElement.min, 10);
+                                                var maxValue = parseInt(inputElement.max, 10);
+                                                var stepValue = parseInt(inputElement.step, 10);
+
+                                                // Chuyển giá trị nhập vào thành số nguyên
+                                                var enteredValue = parseInt(inputElement.value, 10);
+
+                                                // Kiểm tra giá trị nhập vào
+                                                if (isNaN(enteredValue)) {
+                                                    // Nếu giá trị không phải là số, đặt giá trị mặc định là giá trị nhỏ nhất
+                                                    inputElement.value = minValue;
+                                                } else if (enteredValue < minValue) {
+                                                    // Nếu giá trị nhỏ hơn giá trị nhỏ nhất, đặt giá trị nhỏ nhất
+                                                    inputElement.value = minValue;
+                                                } else if (enteredValue > maxValue) {
+                                                    // Nếu giá trị lớn hơn giá trị lớn nhất, đặt giá trị lớn nhất
+                                                    inputElement.value = maxValue;
+                                                } else if (enteredValue % stepValue !== 0) {
+                                                    // Nếu giá trị không chia hết cho bước, làm tròn đến giá trị gần nhất chia hết cho bước
+                                                    inputElement.value = Math.round(enteredValue / stepValue) * stepValue;
+                                                }
+                                            }
+                                        </script>
+
                                     </div>
                                 </td>
                                 <td th:text="${gioHangCT.tongTien() + ' VNĐ'}"></td>
@@ -201,7 +242,7 @@
                                     <span class="text-black">Tổng số tiền</span>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black">$230.00</strong>
+                                    <strong class="text-black" id="tongTienCart">0 VND</strong>
                                 </div>
                             </div>
 
@@ -211,50 +252,29 @@
                                             onclick="checkOut()">
                                         Mua hàng
                                     </button>
+                                    <div id="checkMua"></div>
                                     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
                                     <script>
-                                        $(document).ready(function () {
-                                            // Activate tooltip
-
-                                            // Select/Deselect checkboxes
-                                            var checkbox = $('table tbody input[type="checkbox"]');
-                                            $("#selectAll").click(function () {
-                                                if (this.checked) {
-                                                    checkbox.each(function () {
-                                                        this.checked = true;
-                                                    });
-                                                } else {
-                                                    checkbox.each(function () {
-                                                        this.checked = false;
-                                                    });
-                                                }
-                                            });
-                                            checkbox.click(function () {
-                                                if (!this.checked) {
-                                                    $("#selectAll").prop("checked", false);
-                                                }
-                                            });
-                                        });
-
                                         function checkOut() {
                                             var checkboxes = document.querySelectorAll("input[name='options[]']");
                                             // Mảng để lưu trữ giá trị của các checkbox được chọn
                                             var selectedOptions = [];
 
-                                            checkboxes.forEach(function(checkbox) {
+                                            checkboxes.forEach(function (checkbox) {
                                                 if (checkbox.checked) {
                                                     // Nếu checkbox được chọn, thêm giá trị của nó vào mảng
                                                     selectedOptions.push(encodeURIComponent(checkbox.value));
                                                 }
                                             });
+                                            if(selectedOptions.join(',')==''){
+                                                alert("Bạn vẫn chưa chọn sản phẩm nào để mua")
+                                                return
+                                            }
 
                                             // Chuyển đến đường dẫn checkout và truyền giá trị mã hóa thông qua tham số
                                             window.location.href = 'checkout?options=' + selectedOptions.join(',');
                                         }
-
                                     </script>
-
                                 </div>
                             </div>
                         </div>
@@ -264,6 +284,7 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <footer class="site-footer border-top">
         <div class="container">
             <div class="row">
@@ -338,8 +359,6 @@
                     <p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;
-
-
                         <script>
                             document.write(new Date().getFullYear());
                         </script>
@@ -358,6 +377,7 @@
 <script src="../../static/js/popper.min.js"></script>
 <script src="../../static/js/bootstrap.min.js"></script>
 <script src="../../static/js/owl.carousel.min.js"></script>
+<script src="../../static/js/mainn.js"></script>
 <script src="../../static/js/jquery.magnific-popup.min.js"></script>
 <script src="../../static/js/aos.js"></script>
 

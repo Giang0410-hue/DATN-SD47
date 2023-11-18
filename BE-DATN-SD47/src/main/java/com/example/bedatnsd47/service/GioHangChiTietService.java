@@ -12,13 +12,15 @@ public interface GioHangChiTietService {
 
     List<GioHangChiTiet> findAllByIdGioHang(Long idGioHang);
 
+    GioHangChiTiet fillById(Long id);
+
     Integer soLuongSPGioHangCT(Long idGioHang);
 
     List<GioHangChiTiet> findAllById(List<String> listIdString);
 
     HoaDonChiTiet addHoaDon(List<String> listStringIdGioHangCT, Long tongTien, Long tongTienSale,
-                            String hoVaTen, String soDienThoai, String phuongXa, String quanHuyen,
-                            String thanhPho, String diaChiCuThe, String ghiChu);
+                            String hoVaTen, String soDienThoai, String tienShip, String email,
+                            String voucher, String diaChiCuThe, String ghiChu);
 
     void deleteById(Long id);
 

@@ -3,16 +3,23 @@ package com.example.bedatnsd47.service.impl;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.repository.NhanVienRepository;
 import com.example.bedatnsd47.service.NhanVienService;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class NhanVienServiceImpl implements NhanVienService {
 
     @Autowired
     private NhanVienRepository repository;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Override
     public List<TaiKhoan> getAll() {
@@ -136,5 +143,39 @@ public class NhanVienServiceImpl implements NhanVienService {
         }
         return true;
     }
+
+    @Override
+    public void sendEmail(TaiKhoan taiKhoan, String path, String random) {
+        String from = "daspabitra55@gmail.com";
+        String to = taiKhoan.getEmail();
+        String subject = "Account Verfication";
+        String content =   "Tài khoản  " + taiKhoan.getTenTaiKhoan() + "<br>"+ "Mật khẩu   " + random ;
+
+        try {
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+
+            helper.setFrom(from, "Becoder");
+            helper.setTo(to);
+            helper.setSubject(subject);
+
+            content = content.replace("[[name]]", taiKhoan.getTenTaiKhoan());
+            String siteUrl = "Mật khẩu" + random + "Tài khoản" + taiKhoan.getTenTaiKhoan();
+
+            System.out.println(siteUrl);
+
+            content = content.replace("[[URL]]", siteUrl);
+
+            helper.setText(content, true);
+
+            javaMailSender.send(message);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }

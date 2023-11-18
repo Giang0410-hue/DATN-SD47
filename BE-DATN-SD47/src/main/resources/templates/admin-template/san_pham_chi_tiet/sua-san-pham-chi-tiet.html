@@ -172,102 +172,186 @@
                                 </h1>
                             </div>
                             <div class="col-md-12">
-                                <form th:action="@{/admin/san-pham-chi-tiet/update}"
-                                      th:object="${chiTietSP}" method="post"
-                                      class="row g-3" style="margin-top: 2%;width: 95%; margin: auto">
-                                    <input type="hidden" th:field="*{id}">
+                                <div class="row g-3" style="margin-top: 2%;width: 95%; margin: auto">
                                     <div class="col-md-12">
                                         <label class="col-form-label">
                                             <span class="dausao">*</span>Tên sản phẩm
                                         </label>
-                                        <select class="form-control" th:field="*{sanPham}"
-                                                style="color: black; pointer-events: none; user-select: none; opacity: 0.6">
-                                            <option th:each="sanPham : ${listSanPham}"
-                                                    th:value="${sanPham.id}" th:text="${sanPham.ten}">
-                                            </option>
-                                        </select>
-                                    </div>
+                                        <input type="text" class="form-control"
+                                               th:value="${sanPhamDetail != null ? sanPhamDetail.ten : ''}" disabled>
 
-                                    <div class="col-md-6">
-                                        <label class=" col-form-label"><span
-                                                class="dausao">*</span>Màu Sắc</label>
-                                        <select class="form-control" th:field="*{mauSac}"
-                                                style="color: black; pointer-events: none; user-select: none; opacity: 0.6">
-                                            <option th:each="mauSac : ${listMauSac}"
-                                                    th:value="${mauSac.id}" th:text="${mauSac.ten}">
-                                            </option>
-                                        </select>
                                     </div>
-
                                     <div class="col-md-6">
-                                        <label class=" col-form-label">
-                                            <span class="dausao">*</span>Kích cỡ
+                                        <label class="col-form-label">
+                                            <span class="dausao">*</span>Tên sản phẩm
                                         </label>
-                                        <select class="form-control" th:field="*{kichCo}"
-                                                style="color: black; pointer-events: none; user-select: none; opacity: 0.6">
-                                            <option th:each="kichCo : ${listKichCo}"
-                                                    th:value="${kichCo.id}" th:text="${kichCo.ten}">
-                                            </option>
-                                        </select>
-                                    </div>
+                                        <!-- Kiểm tra nếu sanPhamDetail không null thì hiển thị giá trị, ngược lại hiển thị một giá trị mặc định hoặc không hiển thị gì cả -->
+                                        <input type="text" class="form-control"
+                                               th:value="${sanPhamDetail != null ? sanPhamDetail.thuongHieu.ten : ''}"
+                                               disabled>
 
-                                    <div class="col-md-6">
-                                        <label class=" col-form-label">
-                                            <span class="dausao">*</span>Loại Đế
-                                        </label>
-                                        <select class="form-control" th:field="*{loaiDe}"
-                                                style="color: black; pointer-events: none; user-select: none; opacity: 0.6">
-                                            <option th:each="loaiDe : ${listLoaiDe}"
-                                                    th:value="${loaiDe.id}" th:text="${loaiDe.ten}">
-                                            </option>
-                                        </select>
                                     </div>
-
                                     <div class="col-md-6">
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Trạng thái:</label>
                                         <div style="margin-top: 1%;">
-                                            <input class="form-check-input" type="radio" name="trangThai"
-                                                   style="margin-left:5%;" checked th:field="*{trangThai}"
-                                                   value="0">
-                                            <label class="form-check-label">
-                                                Đang hoạt động
-                                            </label>
+                                            <input class="form-check-input" id="trangThai1" type="radio"
+                                                   name="trangThai1" style="margin-left:5%;"
+                                                   onchange="selectOnChange(0)">
+                                            <label class="form-check-label" for="trangThai1">Đang hoạt động</label>
 
-                                            <input class="form-check-input" type="radio" name="trangThai"
-                                                   style="margin-left:5%;" checked th:field="*{trangThai}"
-                                                   value="1">
-                                            <label class="form-check-label">
-                                                Ngừng hoạt động
-                                            </label>
+                                            <input class="form-check-input" id="trangThai2" type="radio"
+                                                   name="trangThai1" style="margin-left:5%;"
+                                                   onchange="selectOnChange(1)">
+                                            <label class="form-check-label" for="trangThai2">Ngừng hoạt động</label>
+
                                         </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label class=" col-form-label"><span
-                                                class="dausao">*</span>Số lượng</label>
-                                        <input type="number" th:field="*{soLuong}" class="form-control">
-                                        <span class="check-loi" th:errors="*{soLuong}"></span>
-
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label class=" col-form-label"><span
-                                                class="dausao">*</span>Giá</label>
-                                        <input type="number" th:field="*{giaHienHanh}" class="form-control">
-                                        <span class="check-loi" th:errors="*{giaHienHanh}"></span>
                                     </div>
 
                                     <div class="col-md-12">
                                         <label class="col-form-label"><span
                                                 class="dausao">*</span>Mô tả</label>
-                                        <textarea class="form-control" th:field="*{sanPham.moTa}"
+                                        <textarea class="form-control" th:text="${sanPhamDetail != null ? sanPhamDetail.moTa : ''}"
                                                   id="exampleFormControlTextarea1" rows="3" disabled>
                                         </textarea>
                                     </div>
 
+                                </div>
+                                <form th:action="@{/admin/san-pham-chi-tiet/update}" method="post"
+                                      enctype="multipart/form-data"
+                                      class="row g-3" style="margin-top: 2%;width: 95%; margin: auto">
+                                    <div class="col-md-12">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Kích Cỡ</th>
+                                                <th scope="col">Màu Sắc</th>
+                                                <th scope="col">Loại Đế</th>
+                                                <th scope="col" style="width: 18%">Trạng Thái</th>
+                                                <th scope="col" style="width: 12%">Số Lượng</th>
+                                                <th scope="col" style="width: 17%">Đơn Giá</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="chiTietSanPham,iterStat : ${listChiTietSP}">
+
+                                                <input type="hidden" th:value="${chiTietSanPham.id}"
+                                                       name="listIdChiTietSp">
+                                                <select hidden=class="form-control" name="listSanPham"
+                                                        aria-label="Default select example">
+                                                    <option th:value="${chiTietSanPham.sanPham.id}"
+                                                            th:label="${chiTietSanPham.sanPham.ten}"></option>
+                                                </select>
+
+                                                <td>
+                                                    <select class="form-control" name="listKichCo"
+                                                            style="color: black; pointer-events: none; user-select: none; opacity: 0.6;"
+                                                            aria-label="Default select example">
+                                                        <option th:value="${chiTietSanPham.kichCo.id}"
+                                                                th:label="${chiTietSanPham.kichCo.ten}"></option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" name="listMauSac"
+                                                            style="color: black; pointer-events: none; user-select: none; opacity: 0.6;"
+                                                            aria-label="Default select example">
+                                                        <option th:value="${chiTietSanPham.mauSac.id}"
+                                                                th:label="${chiTietSanPham.mauSac.ten}"></option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" name="listLoaiDe"
+                                                            style="color: black; pointer-events: none; user-select: none; opacity: 0.6;"
+                                                            aria-label="Default select example">
+                                                        <option th:value="${chiTietSanPham.loaiDe.id}"
+                                                                th:label="${chiTietSanPham.loaiDe.ten}"></option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control listTrangThai" name="listTrangThai"
+                                                            aria-label="Default select example">
+                                                        <option th:value="0" th:label="|Đang hoạt động|"
+                                                                th:selected="${chiTietSanPham.trangThai == 0}"></option>
+                                                        <option th:value="1" th:label="|Ngừng hoạt động|"
+                                                                th:selected="${chiTietSanPham.trangThai == 1}"></option>
+                                                    </select>
+                                                    <script>
+                                                        // Hàm xử lý sự kiện onchange của radio buttons
+                                                        function selectOnChange(trangThai) {
+                                                            // Lấy thẻ select
+                                                            var selectElements = document.querySelectorAll('.listTrangThai');
+
+                                                            // Chọn option tương ứng với giá trị của radio button
+                                                            selectElements.forEach(function (selectElement) {
+                                                                selectElement.value = trangThai;
+                                                            });
+                                                        }
+                                                    </script>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" min="0" name="listSoLuong"
+
+                                                           th:value="${chiTietSanPham.soLuong}">
+                                                    <div class="error-message" th:id="'checkSoLuong' + ${iterStat.index}"
+                                                         style="display: none;color: #ff0000;font-size: 14px;font-weight: bold;"></div>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" min="0" name="listDonGia"
+                                                           th:value="${chiTietSanPham.giaHienHanh}">
+                                                    <div class="error-message" th:id="'checkDonGia' + ${iterStat.index}"
+                                                         style="display: none;color: #ff0000;font-size: 14px;font-weight: bold;"></div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-warning">Cập nhật</button>
+                                        <button type="submit" onclick="return checkSuaCtsp()" class="btn btn-warning">Cập nhật</button>
+                                        <script>
+                                            function checkSuaCtsp() {
+                                                const soLuongInputs = document.getElementsByName("listSoLuong");
+                                                const donGiaInputs = document.getElementsByName("listDonGia");
+
+                                                let hasError = false; // Biến flag để kiểm tra lỗi
+
+                                                for (let i = 0; i < donGiaInputs.length; i++) {
+                                                    const checkDonGia = donGiaInputs[i].value;
+                                                    const errorDiv = document.getElementById("checkDonGia" + i);
+
+                                                    if (checkDonGia <= 10000 || checkDonGia >= 1000000000) {
+                                                        hasError = true; // Có lỗi
+                                                        errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
+                                                        errorDiv.textContent = (checkDonGia <= 10000) ? "Giá phải >= 10000" : "Giá phải <= 1000000000"; // Hiển thị thông báo lỗi
+                                                    } else {
+                                                        errorDiv.style.display = "none"; // Ẩn div thông báo lỗi nếu giá trị hợp lệ
+                                                    }
+                                                }
+
+                                                for (let i = 0; i < soLuongInputs.length; i++) {
+                                                    const checkSoLuong = soLuongInputs[i].value;
+                                                    const errorDiv = document.getElementById("checkSoLuong" + i);
+
+                                                    if (checkSoLuong=="") {
+                                                        hasError = true; // Có lỗi
+                                                        errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
+                                                        errorDiv.textContent =  "Không được để null"; // Hiển thị thông báo lỗi
+                                                    } else if (checkSoLuong < 0 || checkSoLuong >= 100000) {
+                                                        hasError = true; // Có lỗi
+                                                        errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
+                                                        errorDiv.textContent = (checkSoLuong < 0) ? "Số lượng phải >= 0" : "Số lượng phải <= 100000"; // Hiển thị thông báo lỗi
+                                                    } else {
+                                                        errorDiv.style.display = "none"; // Ẩn div thông báo lỗi nếu giá trị hợp lệ
+                                                    }
+                                                }
+
+                                                if (!hasError) {
+                                                    return true; // Trả về true nếu không có lỗi
+                                                } else {
+                                                    return false; // Trả về false nếu có lỗi
+                                                }
+                                            }
+                                        </script>
                                     </div>
 
                                 </form>
