@@ -1,8 +1,10 @@
 package com.example.bedatnsd47.service.impl;
 
+import com.example.bedatnsd47.entity.GioHang;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.entity.VaiTro;
 import com.example.bedatnsd47.repository.TaiKhoanRepository;
+import com.example.bedatnsd47.service.GioHangService;
 import com.example.bedatnsd47.service.TaiKhoanService;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.ConstraintViolation;
@@ -15,6 +17,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.Set;
 
 @Service
@@ -29,11 +33,23 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    @Autowired
+    private GioHangService gioHangService;
+
     @Override
     public String addUser(TaiKhoan userInfo) {
         userInfo.setTrangThai(1);
         userInfo.setMatKhau(passwordEncoder.encode(userInfo.getMatKhau()));
         repository.save(userInfo);
+        GioHang gioHang = new GioHang();
+        Date currentDate = new Date();
+        gioHang.setMaGioHang("GH" + gioHangService.genMaTuDong());
+        gioHang.setGhiChu("");
+        gioHang.setNgayTao(currentDate);
+        gioHang.setNgayTao(currentDate);
+        gioHang.setTaiKhoan(TaiKhoan.builder().id(userInfo.getId()).build());
+        gioHang.setTrangThai(0);
+        gioHangService.save(gioHang);
         return "user added to system";
     }
 
@@ -72,7 +88,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     }
 
     @Override
-    public void sendEmail1(TaiKhoan taiKhoan, String url,String random) {
+    public void sendEmail1(TaiKhoan taiKhoan, String url, String random) {
         String from = "daspabitra55@gmail.com";
         String to = taiKhoan.getEmail();
         String subject = "Account Verfication";
@@ -88,7 +104,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
             helper.setSubject(subject);
 
             content = content.replace("[[name]]", taiKhoan.getTenTaiKhoan());
-            String siteUrl =  random;
+            String siteUrl = random;
 
             System.out.println(siteUrl);
 
@@ -105,7 +121,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     }
 
     @Override
-    public boolean verifyAccount(String verificationPassWord,String resetPass) {
+    public boolean verifyAccount(String verificationPassWord, String resetPass) {
         TaiKhoan user = repository.findByMatKhau(verificationPassWord);
 
         if (user == null) {
@@ -126,7 +142,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         user.setVaiTro(vaiTro);
 
         user.setTrangThai(0);
-        TaiKhoan newuser =  repository.save(user);
+        TaiKhoan newuser = repository.save(user);
 
         if (newuser != null) {
             sendEmail(newuser, url);
