@@ -1,10 +1,12 @@
 package com.example.bedatnsd47.controller;
 
 import com.example.bedatnsd47.entity.DiaChi;
+import com.example.bedatnsd47.entity.GioHang;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.entity.ThuongHieu;
 import com.example.bedatnsd47.entity.VaiTro;
 import com.example.bedatnsd47.service.DiaChiService;
+import com.example.bedatnsd47.service.GioHangService;
 import com.example.bedatnsd47.service.KhachHangService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -35,6 +37,9 @@ public class KhachHangController {
 
     @Autowired
     DiaChiService diaChiService;
+
+    @Autowired
+    GioHangService gioHangService;
 
     private Date currentDate = new Date();
 
@@ -327,6 +332,15 @@ public class KhachHangController {
             userInfo.setTrangThai(1);
             userInfo.setVaiTro(vaiTro);
             taiKhoanService.update(userInfo);
+            GioHang gioHang = new GioHang();
+            gioHang.setMaGioHang("GH" + gioHangService.genMaTuDong());
+            gioHang.setGhiChu("");
+            gioHang.setNgayTao(currentDate);
+            gioHang.setNgayTao(currentDate);
+            gioHang.setTaiKhoan(TaiKhoan.builder().id(userInfo.getId()).build());
+            gioHang.setTrangThai(0);
+            gioHangService.save(gioHang);
+
             return "redirect:/admin/khach-hang";
         }
     }
