@@ -79,7 +79,8 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     @Override
     public HoaDonChiTiet addHoaDon(List<String> listStringIdGioHangCT, Long tongTien, Long tongTienSale,
                                    String hoVaTen, String soDienThoai, String tienShip, String email,
-                                   String voucher, String diaChiCuThe, String ghiChu, TaiKhoan taiKhoan) {
+                                   String voucher, String diaChiCuThe, String ghiChu, TaiKhoan taiKhoan,
+                                   String phuongXaID, String quanHuyenID, String thanhPhoID) {
         Date currentAdd = new Date();
 
         HoaDon hoaDon = new HoaDon();
@@ -96,6 +97,9 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         hoaDon.setNgayTao(currentAdd);
         hoaDon.setNgaySua(currentAdd);
         hoaDon.setTrangThai(0);
+        hoaDon.setPhuongXa(phuongXaID);
+        hoaDon.setQuanHuyen(quanHuyenID);
+        hoaDon.setThanhPho(thanhPhoID);
         hoaDon.setVoucher(Voucher.builder().id(Long.valueOf(voucher)).build());
 
         hoaDon.setTaiKhoan(taiKhoan);

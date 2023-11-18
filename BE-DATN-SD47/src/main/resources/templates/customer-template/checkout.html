@@ -56,7 +56,7 @@
                                 <li>
                                     <a href="/cart" class="site-cart">
                                         <span class="icon icon-shopping_cart"></span>
-                                        <span class="count">2</span>
+                                        <span class="count" th:text="${soLuongSPGioHangCT}"></span>
                                     </a>
                                 </li>
                                 <li class="d-inline-block d-md-none ml-md-0">
@@ -190,7 +190,7 @@
                                 <td th:text="${diaChi.diaChiCuThe}"></td>
                                 <td th:id="${diaChi.phuongXa}" class="phuongXaColumn"></td>
                                 <td th:id="${diaChi.quanHuyen}" class="quanHuyenColumn"></td>
-                                <td class="thanhPhoColumn"></td>
+                                <td th:id="${diaChi.thanhPho}" class="thanhPhoColumn"></td>
                                 <td>
                                     <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                             th:data-bs-target="${'#modalDiaChi'+diaChi.id}">
@@ -204,14 +204,16 @@
                                                 <div class="modal-header">
                                                     <h1 class="modal-title fs-5" id="modalDiaChiLabel">Cập Nhật Địa
                                                         Chỉ </h1>
-                                                    <h1 th:text="${status.index}"></h1>
                                                 </div>
                                                 <div class="modal-body">
 
                                                     <!--form sửa địa chỉ-->
-                                                    <form th:action="@{/}" method="post">
+                                                    <form th:id="${'myForm'+diaChi.id}" th:action="@{/dia-chi/update}"
+                                                          method="post"
+                                                          th:onsubmit="'submitFormAndReload(event,'+ ${diaChi.id} + ')'">
                                                         <div class="form-group row">
-                                                            <input type="text" name="idDiaChi" th:value="${diaChi.id}">
+                                                            <input type="hidden" name="idDiaChi"
+                                                                   th:value="${diaChi.id}">
                                                             <div class="col-md-4">
                                                                 <label class="text-black">
                                                                     <span class="text-danger">*</span>
@@ -261,7 +263,34 @@
                                                                        placeholder="Địa chỉ đường phố"/>
                                                             </div>
                                                         </div>
+
+                                                        <div class="form-check">
+                                                            <input type="hidden" name="trangThai"
+                                                                   th:id="${'trangThaiHidden'+diaChi.id}"
+                                                                   th:value="${diaChi.trangThai}">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                   name="trangThaiCheckbox"
+                                                                   th:id="${'defaultCheck'+diaChi.id}"
+                                                                   th:onclick="'updateTrangThai('+ ${diaChi.id} + ')'"
+                                                                   th:checked="${diaChi.trangThai == 0}"
+                                                                   th:disabled="${diaChi.trangThai == 0}">
+                                                            <label class="form-check-label"
+                                                                   th:for="${'defaultCheck'+diaChi.id}">
+                                                                Đặt làm địa chỉ mặc định
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-primary">Cập Nhật
+                                                            </button>
+
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Đóng
+                                                            </button>
+                                                        </div>
                                                     </form>
+
+                                                    <!--        api detail địa chỉ-->
                                                     <script th:inline="javascript">
                                                         document.addEventListener('DOMContentLoaded', function () {
                                                             var citySelect = document.getElementById(/*[[ ${'citySelect'+status.index} ]]*/ '');
@@ -398,13 +427,8 @@
                                                         });
 
                                                     </script>
+                                                    <!--    api detail địa chỉ end-->
 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Đóng
-                                                    </button>
-                                                    <button type="submit" class="btn btn-primary">Cập Nhật</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -413,6 +437,75 @@
                             </tr>
                             </tbody>
                         </table>
+
+                        <!--  update địa chỉ-->
+                        <script>
+                            function updateTrangThai(index) {
+                                var defaultCheck = 'defaultCheck' + index
+                                var trangThaiHidden = 'trangThaiHidden' + index
+
+                                var checkbox = document.getElementById(defaultCheck);
+                                var trangThaiHidden = document.getElementById(trangThaiHidden);
+
+                                // Nếu checkbox được chọn, thiết lập giá trị của input hidden là 0
+                                // Ngược lại, giữ giá trị là 1
+                                trangThaiHidden.value = checkbox.checked ? '1' : '0';
+                                trangThaiHidden.value = checkbox.checked ? '0' : '1';
+                            }
+
+                            function submitFormAndReload(event, index) {
+                                event.preventDefault(); // Prevent the default form submission behavior
+                                var nameForm = 'myForm' + index
+                                var formElement = document.getElementById(nameForm);
+                                var formData = new FormData(formElement);
+
+                                fetch(formElement.action, {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        // Nếu muốn xử lý dữ liệu trả về từ máy chủ, thêm logic xử lý ở đây
+                                        // ...
+
+                                        // Load lại trang hiện tại sau khi gửi dữ liệu thành công
+                                        location.reload();
+                                    })
+                                    .catch(error => {
+                                        console.error('There was a problem with the fetch operation:', error);
+                                        // Xử lý lỗi nếu cần thiết
+                                    });
+                            }
+
+                            function submitFormAndReloadAdd(event) {
+                                event.preventDefault(); // Prevent the default form submission behavior
+                                var formElement = document.getElementById('myFormAdd');
+                                var formData = new FormData(formElement);
+
+                                fetch(formElement.action, {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        // Nếu muốn xử lý dữ liệu trả về từ máy chủ, thêm logic xử lý ở đây
+                                        // ...
+
+                                        // Load lại trang hiện tại sau khi gửi dữ liệu thành công
+                                        location.reload();
+                                    })
+                                    .catch(error => {
+                                        console.error('There was a problem with the fetch operation:', error);
+                                        // Xử lý lỗi nếu cần thiết
+                                    });
+                            }
+                        </script>
+                        <!-- update địa chỉ end-->
+
 
                         <!--  radio địa chỉ + hiển thị phí ship-->
                         <script>
@@ -423,7 +516,7 @@
                                     defaultRadio.checked = true;
                                     setTimeout(function () {
                                         defaultRadio.dispatchEvent(new Event('change'));
-                                    }, 500); // Trì hoãn 1000 miligiây (1 giây)
+                                    }, 800); // Trì hoãn 1000 miligiây (1 giây)
                                 }
                             });
 
@@ -432,18 +525,25 @@
                                 var selectedRow = $('.diaChiRow:eq(' + index + ')');
 
                                 // Sử dụng .attr() để lấy giá trị thuộc tính id
+                                var thanhPhoId = selectedRow.find('.thanhPhoColumn').attr('id');
                                 var phuongXaId = selectedRow.find('.phuongXaColumn').attr('id');
                                 var quanHuyenId = selectedRow.find('.quanHuyenColumn').attr('id');
                                 console.log(phuongXaId)
                                 console.log(quanHuyenId)
                                 var secondTdValue2 = selectedRow.find('td:nth-child(2)').text();
-                                var secondTdValue3 = selectedRow.find('td:nth-child(3)').text();
-                                var secondTdValue4 = selectedRow.find('td:nth-child(4)').text();
-                                var secondTdValue5 = selectedRow.find('td:nth-child(5)').text();
+                                // var secondTdValue3 = selectedRow.find('td:nth-child(3)').text();
+                                // var secondTdValue4 = selectedRow.find('td:nth-child(4)').text();
+                                // var secondTdValue5 = selectedRow.find('td:nth-child(5)').text();
                                 var diaChi = document.getElementById("diaChiCuTheAll");
                                 // console.log(secondTdValue2)
                                 // console.log(secondTdValue3)
-                                diaChi.value = secondTdValue2 + ', ' + secondTdValue3 + ', ' + secondTdValue4 + ', ' + secondTdValue5;
+                                diaChi.value = secondTdValue2;
+                                var thanhPhoID = document.getElementById("thanhPhoID")
+                                var quanHuyenID = document.getElementById("quanHuyenID")
+                                var phuongXaID = document.getElementById("phuongXaID")
+                                thanhPhoID.value = thanhPhoId
+                                quanHuyenID.value = phuongXaId
+                                phuongXaID.value = quanHuyenId
                                 // Thực hiện các thao tác khác dựa trên giá trị của secondTdValue
 
                                 const shippingInfo = {
@@ -516,7 +616,7 @@
                         </script>
                         <!-- js radio địa chỉ + hiển thị phí ship enđ-->
 
-                        <!-- detail api địa chỉ-->
+                        <!-- detail api địa chỉ lẻn bảng-->
                         <script th:inline="javascript">
 
                             document.addEventListener('DOMContentLoaded', function () {
@@ -630,7 +730,12 @@
                             <input type="text" name="tienShip" id="tienShip">
                             <input type="text" name="tongTienAndSale" id="tongTienAndSale">
                             <input type="text" th:value="${khachHang.email}" name="email">
-                            <input type="text" name="voucher" id="voucherID">
+                            <input type="text" name="voucher" id="voucherID" value="-1">
+                            <input type="text" name="thanhPhoID" id="thanhPhoID">
+                            <input type="text" name="quanHuyenID" id="quanHuyenID">
+                            <input type="text" name="phuongXaID" id="phuongXaID">
+                            <input type="hidden" id="diaChiCuTheAll" class="form-control"
+                                   name="diaChiCuThe"/>
 
                             <div class="form-group row">
                                 <div class="col-md-12">
@@ -654,16 +759,7 @@
                                            th:value="${khachHang.soDienThoai}"/>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <label class="text-black">
-                                        <span class="text-danger">*</span>
-                                        Địa Chỉ
-                                    </label>
-                                    <input type="text" id="diaChiCuTheAll" readonly class="form-control"
-                                           name="diaChiCuThe"/>
-                                </div>
-                            </div>
+
                             <div class="form-group">
                                 <label for="c_order_notes" class="text-black">Ghi chú</label>
                                 <textarea name="ghiChu" id="c_order_notes" cols="30" rows="5"
@@ -1016,6 +1112,7 @@
                                                             }
 
                                                             function checkAndDisplayVouchers() {
+
                                                                 // Lấy giá trị totalAmount từ #totalAmount
                                                                 var totalAmount = parseFloat(document.getElementById('totalAmount').innerText.replace(' VND', '').trim());
                                                                 console.log(totalAmount)
@@ -1032,6 +1129,8 @@
                                                                         card.classList.add('muted-card');
 
                                                                         // Thêm thông báo cho mỗi thẻ voucher không đủ điều kiện
+                                                                        thongBao.innerHTML = '';
+
                                                                         thongBao.style.display = 'block';
                                                                         thongBao.innerText += 'Mua thêm ' + (voucherGiaTriDonToiThieu - totalAmount) + ' sản phẩm để sử dụng Voucher cho mã ';
                                                                     } else {

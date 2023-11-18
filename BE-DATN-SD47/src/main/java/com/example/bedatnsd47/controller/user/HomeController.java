@@ -4,6 +4,7 @@ import com.example.bedatnsd47.entity.ChiTietSanPham;
 import com.example.bedatnsd47.entity.DiaChi;
 import com.example.bedatnsd47.entity.GioHangChiTiet;
 import com.example.bedatnsd47.entity.TaiKhoan;
+import com.example.bedatnsd47.entity.Voucher;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import com.example.bedatnsd47.service.DiaChiService;
 import com.example.bedatnsd47.service.GioHangChiTietService;
@@ -139,6 +140,22 @@ public class HomeController {
             @RequestParam("diaChiCuThe") String diaChiCuThe,
             @RequestParam("trangThai") Integer trangThai
     ) {
+        if (trangThai == 0) {
+            List<DiaChi> listDiaChi = diaChiService.getAllTrangThai(0);
+            DiaChi diaChiNew = new DiaChi();
+            for (DiaChi diaChiUpdate : listDiaChi) {
+                diaChiNew.setId(diaChiUpdate.getId());
+                diaChiNew.setPhuongXa(diaChiUpdate.getPhuongXa());
+                diaChiNew.setQuanHuyen(diaChiUpdate.getQuanHuyen());
+                diaChiNew.setThanhPho(diaChiUpdate.getThanhPho());
+                diaChiNew.setDiaChiCuThe(diaChiUpdate.getDiaChiCuThe());
+                diaChiNew.setTrangThai(1);
+                diaChiNew.setNgayTao(diaChiUpdate.getNgayTao());
+                diaChiNew.setNgaySua(diaChiUpdate.getNgaySua());
+                diaChiNew.setTaiKhoan(diaChiUpdate.getTaiKhoan());
+                diaChiService.update(diaChiNew);
+            }
+        }
         Date date = new Date();
         DiaChi diaChi = new DiaChi();
         diaChi.setId(idDiaChi);
@@ -146,10 +163,12 @@ public class HomeController {
         diaChi.setQuanHuyen(quanHuyen);
         diaChi.setThanhPho(thanhPho);
         diaChi.setDiaChiCuThe(diaChiCuThe);
+        diaChi.setTrangThai(trangThai);
         diaChi.setNgayTao(date);
         diaChi.setNgaySua(date);
         diaChi.setTaiKhoan(TaiKhoan.builder().id(idTaiKhoan).build());
         diaChiService.update(diaChi);
+
 
         return "redirect:/cart";
     }
@@ -165,15 +184,15 @@ public class HomeController {
         model.addAttribute("listGioHangChiTiet", listGioHangChiTiet);
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         List<DiaChi> diaChi = diaChiService.getAllByTaiKhoan(idTaiKhoan);
-        model.addAttribute("listVoucher",voucherService.fillAllDangDienRa());
-        model.addAttribute("khachHang",khachHang);
-
-        if(khachHang.getLstDiaChi() == null || khachHang.getLstDiaChi().size() == 0){
-           model.addAttribute("checkDiaChi","DiaChiNull");
-       }else {
-           model.addAttribute("checkDiaChi", "DiaChi");
-            model.addAttribute("listDiaChi",diaChi);
-       }
+        model.addAttribute("listVoucher", voucherService.fillAllDangDienRa());
+        model.addAttribute("khachHang", khachHang);
+        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+        if (khachHang.getLstDiaChi() == null || khachHang.getLstDiaChi().size() == 0) {
+            model.addAttribute("checkDiaChi", "DiaChiNull");
+        } else {
+            model.addAttribute("checkDiaChi", "DiaChi");
+            model.addAttribute("listDiaChi", diaChi);
+        }
         return "/customer-template/checkout";
     }
 
@@ -188,13 +207,16 @@ public class HomeController {
             @RequestParam("email") String email,
             @RequestParam("voucher") String voucher,
             @RequestParam("diaChiCuThe") String diaChiCuThe,
-            @RequestParam("ghiChu") String ghiChu
+            @RequestParam("ghiChu") String ghiChu,
+            @RequestParam("phuongXaID") String phuongXaID,
+            @RequestParam("quanHuyenID") String quanHuyenID,
+            @RequestParam("thanhPhoID") String thanhPhoID
     ) {
         String[] optionArray = idGioHangChiTiet.split(",");
         List<String> listIdString = Arrays.asList(optionArray);
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
-        gioHangChiTietService.addHoaDon(listIdString, Long.valueOf(tongTien), Long.valueOf(tongTienAndSale)
-                , hoVaTen, soDienThoai, tienShip, email, voucher, diaChiCuThe, ghiChu,khachHang);
+        gioHangChiTietService.addHoaDon(listIdString, Long.valueOf(tongTien), Long.valueOf(tongTienAndSale), hoVaTen,
+                soDienThoai, tienShip, email, voucher, diaChiCuThe, ghiChu, khachHang, phuongXaID, quanHuyenID, thanhPhoID);
         return "redirect:/thankyou";
     }
 
