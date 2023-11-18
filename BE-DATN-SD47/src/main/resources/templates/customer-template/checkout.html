@@ -197,6 +197,8 @@
                             </tr>
                             </tbody>
                         </table>
+
+                        <!--  radio địa chỉ + hiển thị phí ship-->
                         <script>
                             document.addEventListener('DOMContentLoaded', function () {
                                 // Chọn radio button có ID là "defaultRadio" và gọi sự kiện onchange
@@ -277,17 +279,28 @@
                                         var tongTienAndSale = document.getElementById("tongTienAndSale");
 
                                         //tổng tiền
-                                        var tongTien = document.getElementById("tongTien");
-                                        var tongTienInt = parseInt(tongTien.value);
+                                        var tongTienHang = document.getElementById("totalAmount");
 
-                                        tongTienAndSale.value = `${data.data.total + tongTienInt}`;
-                                        totalElementSale.innerHTML = `${data.data.total + tongTienInt + ' VND'}`;
+                                        //voucher
+                                        var moneyVoucher = document.getElementById("moneyVoucher");
+
+
+                                        var tienVoucher = parseInt(moneyVoucher.innerText);
+                                        var tongTien = document.getElementById("tongTien");
+                                        var tongTienHangInt = parseInt(tongTienHang.innerText);
+
+                                        tongTien.value = `${data.data.total + tongTienHangInt}`;
+                                        tongTienAndSale.value = `${data.data.total + tongTienHangInt - tienVoucher}`;
+                                        totalElementSale.innerHTML = `${data.data.total + tongTienHangInt - tienVoucher + ' VND'}`;
 
                                         console.log(data)
                                     })
                                     .catch(error => console.error('Error:', error));
                             }
                         </script>
+                        <!-- js radio địa chỉ + hiển thị phí ship enđ-->
+
+                        <!-- detail api địa chỉ-->
                         <script th:inline="javascript">
 
                             document.addEventListener('DOMContentLoaded', function () {
@@ -356,7 +369,6 @@
 
                                 // Lấy danh sách id quận/huyện từ một danh sách district
                                 var idQuanHuyenArray = /*[[ ${listDiaChi.![quanHuyen] }]]*/ [];
-
                                 // Lặp qua từng id quận/huyện và gọi API cho mỗi id
                                 idQuanHuyenArray.forEach(idQuanHuyen => {
                                     fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${idQuanHuyen}`, {
@@ -369,7 +381,7 @@
                                         .then(response => response.json())
                                         .then(data => {
                                             // Lấy giá trị id thành phố từ thymeleaf
-                                            var idPhuongXaArray = /*[[ ${khachHang.lstDiaChi.![phuongXa] }]]*/ [];
+                                            var idPhuongXaArray = /*[[ ${listDiaChi.![phuongXa] }]]*/ [];
                                             // Duyệt qua mỗi dòng trong bảng
                                             document.querySelectorAll('.diaChiRow').forEach((row, index) => {
                                                 // Lấy id thành phố cho dòng hiện tại
@@ -377,12 +389,14 @@
 
                                                 // Tìm thành phố trong data.data dựa trên id
                                                 var phuongXa = data.data.find(ward => ward.WardCode == idPhuongXa);
+                                                console.log(phuongXa)
 
                                                 // Đặt tên thành phố vào thẻ có class là phuongXaColumn trong dòng hiện tại
                                                 var phuongXaColumn = row.querySelector('.phuongXaColumn');
                                                 if (phuongXaColumn && phuongXa) {
                                                     phuongXaColumn.innerText = phuongXa.WardName;
                                                 }
+
                                             });
                                         })
                                         .catch(error => {
@@ -392,13 +406,16 @@
                             });
 
                         </script>
+                        <!-- detail api địa chỉ end-->
+
+
                         <form th:action="@{/checkout/add}" method="post" id="form1" class="p-3 p-lg-5 border">
                             <input type="text" name="idGioHangChiTiet" id="idGioHangChiTiet">
                             <input type="text" name="tongTien" id="tongTien">
                             <input type="text" name="tienShip" id="tienShip">
                             <input type="text" name="tongTienAndSale" id="tongTienAndSale">
                             <input type="text" th:value="${khachHang.email}" name="email">
-                            <input type="text" th:value="1" name="voucher">
+                            <input type="text" name="voucher" id="voucherID">
 
                             <div class="form-group row">
                                 <div class="col-md-12">
@@ -658,19 +675,20 @@
                 <div class="col-md-5">
                     <div class="row mb-5">
                         <div class="col-md-12">
-                            <h2 class="h3 mb-3 text-black">Mã giảm giá</h2>
+                            <h2 class="h3 mb-3 text-black">Voucher</h2>
                             <div class="p-3 p-lg-5 border">
-                                <div class="input-group w-75">
-                                    <input type="text" class="form-control" id="c_code" placeholder="Coupon Code"
-                                           aria-label="Coupon Code" aria-describedby="button-addon2"/>
-                                    <div class="input-group-append" >
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="c_code" disabled
+                                               aria-label="Coupon Code" aria-describedby="button-addon2"/>
+                                    </div>
+                                    <div class="col-md-6">
                                         <button class="btn btn-primary btn-sm" type="button"
                                                 onclick="checkAndDisplayVouchers()"
                                                 data-bs-toggle="modal" data-bs-target="#voucher">
                                             Chọn voucher
                                         </button>
-
-
                                         <!-- Modal -->
                                         <div class="modal fade" id="voucher" tabindex="-1"
                                              aria-labelledby="voucherLabel" aria-hidden="true">
@@ -686,31 +704,52 @@
                                                              th:each="voucher : ${listVoucher}">
                                                             <div class="row g-0">
                                                                 <div class="col-md-3">
-                                                                    <div class="card-body" style="margin-left: 5px;margin-top: 15px">
-                                                                        <img src="../../static/img/logo.png" style="margin-left: 15px" class="img-fluid rounded-start" alt="...">
+                                                                    <div class="card-body"
+                                                                         style="margin-left: 5px;margin-top: 15px">
+                                                                        <img src="../../static/img/logo.png"
+                                                                             style="margin-left: 15px"
+                                                                             class="img-fluid rounded-start"
+                                                                             alt="...">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-7">
                                                                     <div class="card-body">
-                                                                        <h5 class="card-title" style="margin-bottom: -3px" th:text="${'Giảm '+ voucher.phanTramGiam + '%'}"></h5>
-                                                                        <small class="text-body-secondary"  style="display: block" th:text="${'Đơn Tối Thiểu '+voucher.giaTriDonToiThieu + ' VND'}"></small>
-                                                                        <small class="text-body-secondary" style="display: block" th:text="${'Số Lượng '+voucher.soLuong}"></small>
-                                                                        <small class="text-body-secondary" style="display: block" th:text="${'Hạn Sử Dụng '+voucher.ngayKetThuc}"></small>
+                                                                        <h5 class="card-title"
+                                                                            style="margin-bottom: -3px"
+                                                                            th:text="${'Giảm '+ voucher.phanTramGiam + '%'}"></h5>
+                                                                        <small class="text-body-secondary"
+                                                                               style="display: block"
+                                                                               th:text="${'Đơn Tối Thiểu '+voucher.giaTriDonToiThieu + ' VND'}"></small>
+                                                                        <small class="text-body-secondary"
+                                                                               style="display: block"
+                                                                               th:text="${'Số Lượng '+voucher.soLuong}"></small>
+                                                                        <small class="text-body-secondary"
+                                                                               style="display: block"
+                                                                               th:text="${'Hạn Sử Dụng '+voucher.ngayKetThuc}"></small>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-2">
                                                                     <div class="card-body">
-                                                                        <input type="radio"  style="margin-top: 35px" name="voucherRadio" th:data-index="${voucher.id + ' ' +voucher.phanTramGiam}"
+                                                                        <input type="radio" style="margin-top: 35px"
+                                                                               name="voucherRadio"
+                                                                               th:data-index="${voucher.id + ' ' +voucher.phanTramGiam}"
                                                                                onchange="handleRadioVoucher(this)">
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-md-12">
+                                                                    <small class="text-body-secondary"
+                                                                           style=" display: none;margin-left: 50px;color: red"
+                                                                           id="thongBaoThieuTien"></small>
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                        <!--  css + js chọn voucher-->
                                                         <style>
                                                             .muted-radio {
                                                                 opacity: 0.5; /* hoặc bất kỳ kiểu định dạng nào bạn muốn để làm mờ */
                                                                 pointer-events: none; /* Ngăn chặn sự kiện click */
                                                             }
+
                                                             .muted-card {
                                                                 opacity: 0.5; /* hoặc kiểu định dạng mờ khác */
                                                             }
@@ -723,35 +762,63 @@
                                                                 var numbersArray = index.split(' ');
 
                                                                 // Chuyển đổi các phần tử thành số nguyên
-                                                                var firstNumber = parseInt(numbersArray[0], 10);
-                                                                var secondNumber = parseInt(numbersArray[1], 10);
+                                                                var idVoucher = parseInt(numbersArray[0], 10);
+                                                                var phamTramGiam = parseInt(numbersArray[1], 10);
 
                                                                 // In ra kết quả
-                                                                console.log('Số thứ nhất:', firstNumber);
-                                                                console.log('Số thứ hai:', secondNumber);
+                                                                console.log('Số thứ nhất:', idVoucher);
+                                                                console.log('Số thứ hai:', phamTramGiam);
 
-                                                                var totalAmountAndSale = document.getElementById("totalAmountAndSale");
+                                                                var voucher1 = document.getElementById("voucherID");
+                                                                voucher1.value = idVoucher
+
                                                                 var moneyVoucher = document.getElementById("moneyVoucher");
-                                                                var tongTienInt = parseInt(totalAmountAndSale.value);
+                                                                //tổng tiền khi giảm
+                                                                var totalElementSale = document.getElementById("totalAmountAndSale");
 
-                                                                moneyVoucher.innerText = tongTienInt + secondNumber
+                                                                //tổng tiền khi giảm input
+                                                                var tongTienAndSale = document.getElementById("tongTienAndSale");
 
+                                                                //tổng tiền
+                                                                var tongTienHang = document.getElementById("totalAmount");
+
+                                                                var shippingFeeResult = document.getElementById("shippingFeeResult");
+
+                                                                var detailVoucher = document.getElementById("c_code");
+
+
+                                                                var shippingFeeResultInt = parseInt(shippingFeeResult.innerText);
+                                                                var tongTien = document.getElementById("tongTien");
+                                                                var tongTienHangInt = parseInt(tongTienHang.innerText);
+
+                                                                detailVoucher.value = -(tongTienHangInt * phamTramGiam) / 100 + ' VND';
+                                                                moneyVoucher.innerText = (tongTienHangInt * phamTramGiam) / 100 + ' VND';
+
+                                                                tongTien.value = shippingFeeResultInt + tongTienHangInt;
+                                                                tongTienAndSale.value = shippingFeeResultInt + tongTienHangInt - (tongTienHangInt * phamTramGiam) / 100;
+                                                                totalElementSale.innerHTML = shippingFeeResultInt + tongTienHangInt - ((tongTienHangInt * phamTramGiam) / 100) + ' VND';
 
                                                             }
+
                                                             function checkAndDisplayVouchers() {
                                                                 // Lấy giá trị totalAmount từ #totalAmount
                                                                 var totalAmount = parseFloat(document.getElementById('totalAmount').innerText.replace(' VND', '').trim());
                                                                 console.log(totalAmount)
+
                                                                 // Lặp qua danh sách voucher và kiểm tra điều kiện
-                                                                document.querySelectorAll('.card.mb-3').forEach(function(card) {
+                                                                document.querySelectorAll('.card.mb-3').forEach(function (card) {
                                                                     var voucherGiaTriDonToiThieu = parseFloat(card.querySelector('.text-body-secondary').innerText.replace('Đơn Tối Thiểu ', '').replace(' VND', '').trim());
                                                                     var radio = card.querySelector('input[name="voucherRadio"]');
+                                                                    var thongBao = card.querySelector('#thongBaoThieuTien');
 
                                                                     // Nếu giá trị voucherGiaTriDonToiThieu nhỏ hơn totalAmount, làm mờ radio button
                                                                     if (voucherGiaTriDonToiThieu > totalAmount) {
                                                                         radio.classList.add('muted-radio');
                                                                         card.classList.add('muted-card');
-                                                                        console.log(123)
+
+                                                                        // Thêm thông báo cho mỗi thẻ voucher không đủ điều kiện
+                                                                        thongBao.style.display = 'block';
+                                                                        thongBao.innerText += 'Mua thêm ' + (voucherGiaTriDonToiThieu - totalAmount) + ' sản phẩm để sử dụng Voucher cho mã ';
                                                                     } else {
                                                                         radio.classList.remove('muted-radio');
                                                                         card.classList.remove('muted-card');
@@ -763,6 +830,8 @@
                                                             }
 
                                                         </script>
+                                                        <!--  css + js chọn voucher-->
+
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
