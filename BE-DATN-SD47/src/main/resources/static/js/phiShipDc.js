@@ -118,10 +118,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (selectedOption) {
                     selectedOption.selected = true;
                     // Kiểm tra nếu giá trị thành phố đã được chọn
-                    if (selectedWardValue) {
-                        // Gọi hàm để tải và populate quận/huyện dựa trên ID của thành phố
-                        populateWard(selectedWardValue);
-                    }
+                    // if (selectedWardValue) {
+                    //     // Gọi hàm để tải và populate quận/huyện dựa trên ID của thành phố
+                    //     populateWard(selectedWardValue);
+                    // }
                 }
 
             })

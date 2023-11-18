@@ -918,10 +918,10 @@
                                                                 <div class="col-md-6">
                                                                     <label for="inputEmail2" class="form-label">
                                                                         <span class="dau-sao">*</span>
-                                                                        Tên khác hàng:
+                                                                        Tên khách hàng:
                                                                     </label>
                                                                     <input type="text" class="form-control"
-                                                                        id="inputHoVaTen">
+                                                                        id="inputHoVaTen" name="inputHoVaTen" th:value="${hoaDon.taiKhoan.hoVaTen}">
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label for="inputPassword3" class="form-label">
@@ -929,7 +929,7 @@
                                                                         Số điện thoại:
                                                                     </label>
                                                                     <input type="text" class="form-control"
-                                                                        id="inputSoDienThoai">
+                                                                        id="inputSoDienThoai" name="inputSoDienThoai"  th:value="${hoaDon.sdtNguoiNhan}">
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label class="form-label">
@@ -1063,6 +1063,8 @@
                                                                 <div class="row">
                                                                     <div class="col">
                                                                         <h6>Giảm giá:</h6>
+                                                                        
+                                                                        <input type="text" value="0" name="giamGia" >
                                                                     </div>
                                                                     <div class="col">
                                                                         <h6 class="thong-tin-gia">0 VND</h6>

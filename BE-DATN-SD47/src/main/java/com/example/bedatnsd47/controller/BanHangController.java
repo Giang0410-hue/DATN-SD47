@@ -20,10 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-
 @Controller
 @RequestMapping("/ban-hang-tai-quay")
-//@HÁ
+// @HÁ
 public class BanHangController {
 
     @Autowired
@@ -73,8 +72,12 @@ public class BanHangController {
             HoaDon hd = new HoaDon();
             hd.setTaiKhoan(khachHangService.getById((long) 1));
             hd.setTrangThai(-1); // view 5 hoa don
-            hd.setNgaySua(timeNow);
+            hd.setNgaySua(new Date());
+            hd.setNgayTao(new Date());
             hd.setTaiKhoan(khachHangService.findKhachLe());
+            hd.setPhiShip((long) 0);
+            hd.setTongTien((long) 0);
+            hd.setTongTienKhiGiam((long) 0);
             hoaDonService.saveOrUpdate(hd);
             hd.setMaHoaDon("HD" + hd.getId());
             hoaDonService.saveOrUpdate(hd);
@@ -92,7 +95,7 @@ public class BanHangController {
 
     @PostMapping("/hoa-don-chi-tiet/add")
     public String addHdct(@RequestParam Long idHoaDon, @RequestParam Long idCtsp) {
-        
+
         Boolean cr = true;
         HoaDonChiTiet hdct = new HoaDonChiTiet();
         HoaDon hoaDon = hoaDonService.findById(idHoaDon);
@@ -133,13 +136,13 @@ public class BanHangController {
     @PostMapping("/hoa-don-chi-tiet/update")
     public String updateSoLuong(@RequestParam Integer soLuongEdit, @RequestParam Long idHdct) {
         HoaDonChiTiet hdct = hoaDonChiTietService.findById(idHdct);
-        if(soLuongEdit==0){
+        if (soLuongEdit == 0) {
             hoaDonChiTietService.deleteById(idHdct);
-        }else{
+        } else {
             hdct.setSoLuong(soLuongEdit);
-        hoaDonChiTietService.saveOrUpdate(hdct);
+            hoaDonChiTietService.saveOrUpdate(hdct);
         }
-        
+
         return "redirect:/ban-hang-tai-quay/hoa-don/" + idhdc;
     }
 
@@ -156,9 +159,12 @@ public class BanHangController {
         HoaDon hd = hoaDonService.findById(idhdc);
         if (idTaiKhoan == -1) {
             hd.setTaiKhoan(khachHangService.findKhachLe());
-
+            
         } else {
-            hd.setTaiKhoan(khachHangService.getById(idTaiKhoan));
+            TaiKhoan kh = khachHangService.getById(idTaiKhoan);
+            hd.setTaiKhoan(kh);
+            hd.setSdtNguoiNhan(kh.getSoDienThoai());
+            
         }
 
         hoaDonService.saveOrUpdate(hd);
@@ -167,7 +173,8 @@ public class BanHangController {
 
     @PostMapping("/hoa-don/thanh-toan")
     public String thanhToanV2(@RequestParam(defaultValue = "off") String treo,
-            @RequestParam(defaultValue = "off") String giaoHang, @RequestParam Long phiShip) {
+            @RequestParam(defaultValue = "off") String giaoHang, @RequestParam Long phiShip,
+            @RequestParam Long giamGia, @RequestParam String inputHoVaTen, @RequestParam String inputSoDienThoai) {
         HoaDon hd = hoaDonService.findById(idhdc);
         switch (hd.getTrangThai()) {
             case -1:
@@ -176,7 +183,8 @@ public class BanHangController {
                 } else if (giaoHang.equals("on")) {
                     hd.setTrangThai(0);
                     hd.setPhiShip(phiShip);
-                    hd.setTongTien(hd.tongTienHoaDon()+phiShip);
+                    hd.setSdtNguoiNhan(inputSoDienThoai);
+                    hd.setNguoiNhan(inputHoVaTen);
                 } else {
                     hd.setTrangThai(3);
                     updateSl(hd);
@@ -200,6 +208,8 @@ public class BanHangController {
                 break;
 
         }
+        hd.setTongTien(hd.tongTienHoaDon() + phiShip);
+        hd.setTongTienKhiGiam(hd.tongTienHoaDon() + phiShip - giamGia);
         hoaDonService.saveOrUpdate(hd);
         return "redirect:/ban-hang-tai-quay/hoa-don/quan-ly";
     }
