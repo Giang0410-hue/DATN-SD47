@@ -10,9 +10,9 @@
     <meta content="" name="keywords">
 
 
-  <!--    thư viện của bảng tích hợp tìm kiếm-->
-  <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
-  <!--    thư viện của bảng tích hợp tìm kiếm end-->
+    <!--    thư viện của bảng tích hợp tìm kiếm-->
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
 
     <!-- Favicons -->
     <div th:replace="~{admin-template/fragment/header :: header}"></div>
@@ -214,7 +214,7 @@
                                                         <div class="modal-content">
                                                             <div class="modal-body">
                                                                 <!-- form search -->
-                                                         
+
                                                                 <table id="example" class="display">
                                                                     <thead>
                                                                         <tr>
@@ -275,22 +275,23 @@
                                                                                         <button type="submit"
                                                                                             class="btn btn-success">Thêm
                                                                                         </button>
+                                                                                       
                                                                                     </td>
                                                                                 </form>
                                                                             </tr>
 
                                                                         </tbody>
-                                                                        <tfoot hidden="hidden">
-                                                                            <tr>
-                                                                                <th>STT</th>
-                                                                                <th>Sản Phẩm</th>
-                                                                                <th>Số Lượng</th>
-                                                                                <th>Giá Bán</th>
-                                                                                <th>Hành Động</th>
-                                                                            </tr>
-                                                                            </tfoot>
+                                                                    <tfoot hidden="hidden">
+                                                                        <tr>
+                                                                            <th>STT</th>
+                                                                            <th>Sản Phẩm</th>
+                                                                            <th>Số Lượng</th>
+                                                                            <th>Giá Bán</th>
+                                                                            <th>Hành Động</th>
+                                                                        </tr>
+                                                                    </tfoot>
                                                                 </table>
-                                                        
+
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
@@ -654,10 +655,14 @@
 
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        
-                                                                        <form action="/ban-hang-tai-quay/hoa-don/add-khach-hang" method="post">
-                                                                            <input type="hidden" name="idTaiKhoan" value="-1">
-                                                                            <button  type="submit" class="btn btn-danger">Bỏ chọn
+
+                                                                        <form
+                                                                            action="/ban-hang-tai-quay/hoa-don/add-khach-hang"
+                                                                            method="post">
+                                                                            <input type="hidden" name="idTaiKhoan"
+                                                                                value="-1">
+                                                                            <button type="submit"
+                                                                                class="btn btn-danger">Bỏ chọn
                                                                             </button>
                                                                         </form>
                                                                         <button type="button" class="btn btn-secondary"
@@ -931,15 +936,29 @@
                                                                         <span class="dau-sao">*</span>
                                                                         Địa chỉ:
                                                                     </label>
-                                                                    <input id="inputThanhPho" type="text"
-                                                                        class="form-control"
-                                                                        placeholder="Tỉnh / Thành Phố">
+                                                                    <select id="citySelect" class="form-control"
+                                                                        name="thanhPho">
+                                                                        <option disabled selected>Chọn Thành Phố
+                                                                        </option>
+                                                                        <!-- Options will be filled dynamically here -->
+                                                                    </select>
                                                                     <br>
-                                                                    <input id="inputQuanHuyen" type="text"
-                                                                        class="form-control" placeholder="Quận / Huyện">
+                                                                    <select id="districtSelect" class="form-control"
+                                                                        name="quanHuyen">
+                                                                        <option value="" disabled selected>Chọn Quận
+                                                                            Huyện</option>
+                                                                        <!-- Options will be filled dynamically here -->
+                                                                    </select>
                                                                     <br>
-                                                                    <input id="inputPhuongXa" type="text"
-                                                                        class="form-control" placeholder="Xã / Phường">
+                                                                    <select id="wardSelect" class="form-control"
+                                                                        name="phuongXa"
+                                                                        onchange="calculateShippingFee()">
+                                                                        <option value="" disabled selected>Chọn Phường /
+                                                                            Xã</option>
+                                                                        <!-- Options will be filled dynamically here -->
+                                                                    </select>
+                                                                    <script th:inline="javascript"
+                                                                        src="../../static/js/phiShipDc.js"></script>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label class="form-label">
@@ -1025,6 +1044,8 @@
                                                                         <h6 class="thong-tin-gia">
                                                                             [[${hoaDon.tongTienHoaDon()}]]
                                                                             VND</h6>
+                                                                        <input th:value="${hoaDon.tongTienHoaDon()}"
+                                                                            type="text" name="tongTienHoaDon">
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -1032,7 +1053,11 @@
                                                                         <h6>Phí vận chuyển:</h6>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <h6 class="thong-tin-gia">0 VND</h6>
+                                                                        <h6 id="phi-van-chuyen" class="thong-tin-gia">[[${hoaDon.phiShip}]]
+                                                                            VND</h6>
+
+
+                                                                        <input  th:value="${hoaDon.phiShip}" name="phiShip" type="text" id="shippingFeeResult">
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -1048,11 +1073,11 @@
                                                                         <h3>Tổng tiền:</h3>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <h6 class="tong-gia">
-                                                                            [[${hoaDon.tongTienHoaDon()}]]
-                                                                            VND
-                                                                        </h6>
+                                                                        <h6 class="thong-tin-gia" id="tongGiaH6"><span
+                                                                                id="tongGiaValue">[[${hoaDon.tongTien}]]</span> VND</h6>
+                                                                                <input  th:value="${hoaDon.tongTien}" type="text" id="tongAll">
                                                                     </div>
+
 
                                                                 </div>
                                                             </div>
@@ -1291,70 +1316,75 @@
         }
     </style>
     <!--    thư viện của bảng tích hợp tìm kiếm-->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
-<script>
-    $(document).ready(function () {
-        var table = $('#example').DataTable({
-            "language": {
-                "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
-                "emptyTable": "Không có kết quả nào được tìm thấy",
-                "zeroRecords": "Không có kết quả phù hợp",
-                "infoEmpty": "Không có dữ liệu để hiển thị"
-            },
-            "initComplete": function (settings, json) {
-                // CSS changes
-                $('#example_filter input[type="search"]').addClass('form-control');
-                $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
-                $('#example_filter label').contents().filter(function () {
-                    return this.nodeType === 3;
-                }).replaceWith(' ');
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                "language": {
+                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                    "emptyTable": "Không có kết quả nào được tìm thấy",
+                    "zeroRecords": "Không có kết quả phù hợp",
+                    "infoEmpty": "Không có dữ liệu để hiển thị"
+                },
+                "initComplete": function (settings, json) {
+                    // CSS changes
+                    $('#example_filter input[type="search"]').addClass('form-control');
+                    $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                    $('#example_filter label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).replaceWith(' ');
 
-                $('#example_length label').contents().filter(function () {
-                    return this.nodeType === 3;
-                }).first().replaceWith('Hiển thị');
-                $('#example_length label').contents().filter(function () {
-                    return this.nodeType === 3;
-                }).last().replaceWith('mục');
+                    $('#example_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).first().replaceWith('Hiển thị');
+                    $('#example_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).last().replaceWith('mục');
 
-                $('#example_length select').addClass('form-select');
-            }
+                    $('#example_length select').addClass('form-select');
+                }
+            });
+
+            table.on('draw.dt', function () {
+                var pageInfo = table.page.info();
+
+                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+                $('#example_info').html(newInfo);
+
+            });
         });
+    </script>
+    <style>
+        /*input tìm kiếm*/
+        #example_filter input[type="search"] {
+            width: 180%;
+            margin-left: -80%;
+            margin-bottom: 10%;
+        }
 
-        table.on('draw.dt', function () {
-            var pageInfo = table.page.info();
+        /*select hiển thị mục*/
+        .dataTables_length label {
+            white-space: nowrap;
+            /* Ngăn các phần tử xuống dòng */
+            display: flex;
+            /* Hiển thị label và select trên cùng một dòng */
+            align-items: center;
+            /* Canh chỉnh label và select theo chiều dọc */
+        }
 
-            var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
-            $('#example_info').html(newInfo);
+        .dataTables_length select {
+            margin-left: 5px;
+            /* Tạo khoảng cách giữa label và select */
+        }
 
-        });
-    });
-</script>
-<style>
-    /*input tìm kiếm*/
-    #example_filter input[type="search"] {
-        width: 180%;
-        margin-left: -80%;
-        margin-bottom: 10%;
-    }
-
-    /*select hiển thị mục*/
-    .dataTables_length label {
-        white-space: nowrap; /* Ngăn các phần tử xuống dòng */
-        display: flex; /* Hiển thị label và select trên cùng một dòng */
-        align-items: center; /* Canh chỉnh label và select theo chiều dọc */
-    }
-
-    .dataTables_length select {
-        margin-left: 5px; /* Tạo khoảng cách giữa label và select */
-    }
-
-    .dataTables_length label:after {
-        /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
-        content: ''; /* Xóa nội dung */
-    }
-</style>
-<!--    thư viện của bảng tích hợp tìm kiếm end-->
+        .dataTables_length label:after {
+            /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
+            content: '';
+            /* Xóa nội dung */
+        }
+    </style>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
 </body>
 
 </html>

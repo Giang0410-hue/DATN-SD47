@@ -164,7 +164,7 @@ public class BanHangController {
 
     @PostMapping("/hoa-don/thanh-toan")
     public String thanhToanV2(@RequestParam(defaultValue = "off") String treo,
-            @RequestParam(defaultValue = "off") String giaoHang) {
+            @RequestParam(defaultValue = "off") String giaoHang, @RequestParam Long phiShip) {
         HoaDon hd = hoaDonService.findById(idhdc);
         switch (hd.getTrangThai()) {
             case -1:
@@ -172,6 +172,8 @@ public class BanHangController {
                     hd.setTrangThai(4);
                 } else if (giaoHang.equals("on")) {
                     hd.setTrangThai(0);
+                    hd.setPhiShip(phiShip);
+                    hd.setTongTien(hd.tongTienHoaDon()+phiShip);
                 } else {
                     hd.setTrangThai(3);
                     updateSl(hd);
