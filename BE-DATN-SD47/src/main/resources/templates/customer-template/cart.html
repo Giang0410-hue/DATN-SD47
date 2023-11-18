@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Glacat</title>
     <meta charset="utf-8"/>
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link href="../../static/img/favicon.png" rel="icon">
-    <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"/>
     <link rel="stylesheet" href="../../static/fonts/icomoon/style.css"/>
 
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css"/>
@@ -24,30 +20,23 @@
 
     <link rel="stylesheet" href="../../static/css/style-customer-template.css"/>
 </head>
+
 <body>
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
         <div class="site-navbar-top">
             <div class="container">
                 <div class="row align-items-center">
-                    <div
-                            class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left"
-                    >
+                    <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
                         <form action="" class="site-block-top-search">
                             <span class="icon icon-search2"></span>
-                            <input
-                                    type="text"
-                                    class="form-control border-0"
-                                    placeholder="Search"
-                            />
+                            <input type="text" class="form-control border-0" placeholder="Search"/>
                         </form>
                     </div>
 
-                    <div
-                            class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center"
-                    >
+                    <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                         <div class="site-logo">
-                            <a href="ban-hang-customer.html" class="js-logo-clone">Glacat</a>
+                            <a href="/home" class="js-logo-clone">Glacat</a>
                         </div>
                     </div>
 
@@ -61,15 +50,14 @@
                                     <a href="#"><span class="icon icon-heart-o"></span></a>
                                 </li>
                                 <li>
-                                    <a href="cart.html" class="site-cart">
+                                    <a href="/cart" class="site-cart">
                                         <span class="icon icon-shopping_cart"></span>
-                                        <span class="count">2</span>
+                                        <span class="count" th:text="${soLuongSPGioHangCT}"></span>
                                     </a>
                                 </li>
                                 <li class="d-inline-block d-md-none ml-md-0">
-                                    <a href="#" class="site-menu-toggle js-menu-toggle"
-                                    ><span class="icon-menu"></span
-                                    ></a>
+                                    <a href="#" class="site-menu-toggle js-menu-toggle"><span
+                                            class="icon-menu"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -77,37 +65,34 @@
                 </div>
             </div>
         </div>
-        <nav
-                class="site-navigation text-right text-md-center"
-                role="navigation"
-        >
+        <nav class="site-navigation text-right text-md-center" role="navigation">
             <div class="container">
                 <ul class="site-menu js-clone-nav d-none d-md-block">
                     <li>
-                        <a href="ban-hang-customer.html">Trang chủ</a>
+                        <a href="/home">Trang chủ</a>
                         <!-- <ul class="dropdown">
+                    <li><a href="#">Menu One</a></li>
+                    <li><a href="#">Menu Two</a></li>
+                    <li><a href="#">Menu Three</a></li>
+                    <li class="has-children">
+                      <a href="#">Sub Menu</a>
+                      <ul class="dropdown">
                         <li><a href="#">Menu One</a></li>
                         <li><a href="#">Menu Two</a></li>
                         <li><a href="#">Menu Three</a></li>
-                        <li class="has-children">
-                          <a href="#">Sub Menu</a>
-                          <ul class="dropdown">
-                            <li><a href="#">Menu One</a></li>
-                            <li><a href="#">Menu Two</a></li>
-                            <li><a href="#">Menu Three</a></li>
-                          </ul>
-                        </li>
-                      </ul> -->
+                      </ul>
+                    </li>
+                  </ul> -->
                     </li>
                     <!-- <li>
-                      <a href="about.html">Về chúng tôi</a>
-                      <ul class="dropdown">
-                      <li><a href="#">Menu One</a></li>
-                      <li><a href="#">Menu Two</a></li>
-                      <li><a href="#">Menu Three</a></li>
-                    </ul>
-                    </li> -->
-                    <li><a href="shop.html">Sản phẩm</a></li>
+                  <a href="about.html">Về chúng tôi</a>
+                  <ul class="dropdown">
+                  <li><a href="#">Menu One</a></li>
+                  <li><a href="#">Menu Two</a></li>
+                  <li><a href="#">Menu Three</a></li>
+                </ul>
+                </li> -->
+                    <li><a href="/shop">Sản phẩm</a></li>
                     <li><a href="contact.html">Liên hệ</a></li>
                 </ul>
             </div>
@@ -118,7 +103,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 mb-0">
-                    <a href="ban-hang-customer.html">Home</a> <span class="mx-2 mb-0">/</span>
+                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>
                     <strong class="text-black">Cart</strong>
                 </div>
             </div>
@@ -126,106 +111,116 @@
     </div>
 
     <div class="site-section">
-        <div class="container">
-            <div class="row mb-5">
+        <div class="container" style="max-width: 90%;">
+            <div class="row mb-3">
                 <form class="col-md-12" method="post">
                     <div class="site-blocks-table">
-                        <table class="table table-bordered">
+                        <!--                        <table class="table table-bordered">-->
+                        <table class="table">
                             <thead>
                             <tr>
-                                <th class="product-thumbnail">Image</th>
-                                <th class="product-name">Product</th>
-                                <th class="product-price">Price</th>
-                                <th class="product-quantity">Quantity</th>
-                                <th class="product-total">Total</th>
-                                <th class="product-remove">Remove</th>
+                                <th class="product-price">
+                                    <input class="form-check-input" type="checkbox" id="selectAll" value=""
+                                           style="margin: auto">
+                                </th>
+                                <th class="product-thumbnail">Ảnh</th>
+                                <th class="product-name">Sản Phẩm</th>
+                                <th class="product-name">Phân Loại</th>
+                                <th class="product-quantity">Số Lượng</th>
+                                <th class="product-quantity">Số Tiền</th>
+                                <th class="product-remove">Thao Tác</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
+                            <tr th:each="gioHangCT : ${listGioHangChiTiet}">
+                                <td class="product-price">
+                                    <input class="form-check-input" name="options[]" id="checkboxID" type="checkbox"
+                                           th:value="${gioHangCT.id}"
+                                           style="margin: auto">
+                                </td>
                                 <td class="product-thumbnail">
-                                    <img src="../../static/img/giay1.webp"
-                                         alt="Image"
-                                         class="img-fluid"
-                                    />
+                                    <img th:src="@{'../../../static/img/' + ${gioHangCT.chiTietSanPham.sanPham.listHinhAnhSanPham[0].url}}"
+                                         alt="Image" class="img-fluid"/>
                                 </td>
                                 <td class="product-name">
-                                    <h2 class="h5 text-black">Top Up T-Shirt</h2>
+                                    <h2 class="h5 text-black" th:text="${gioHangCT.chiTietSanPham.sanPham.ten}"></h2>
                                 </td>
-                                <td>$49.00</td>
-                                <td>
-                                    <div class="input-group mb-3" style="max-width: 120px">
-                                        <div class="input-group-prepend">
-                                            <button
-                                                    class="btn btn-outline-primary js-btn-minus"
-                                                    type="button"
-                                            >
-                                                &minus;
-                                            </button>
-                                        </div>
-                                        <input
-                                                type="text"
-                                                class="form-control text-center"
-                                                value="1"
-                                                placeholder=""
-                                                aria-label="Example text with button addon"
-                                                aria-describedby="button-addon1"
-                                        />
-                                        <div class="input-group-append">
-                                            <button
-                                                    class="btn btn-outline-primary js-btn-plus"
-                                                    type="button"
-                                            >
-                                                &plus;
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>$49.00</td>
-                                <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
-                            </tr>
+                                <td class="product-name">
+                                    <p>Kích Thước:
+                                        <span th:text="${gioHangCT.chiTietSanPham.kichCo.ten}"></span>
+                                    </p>
+                                    <p>Màu Sắc:
+                                        <span th:text="${gioHangCT.chiTietSanPham.mauSac.ten}"></span>
+                                    </p>
+                                    <p>Loại Đế:
+                                        <span th:text="${gioHangCT.chiTietSanPham.loaiDe.ten}"></span>
+                                    </p>
 
-                            <tr>
-                                <td class="product-thumbnail">
-                                    <img src="../../static/img/giay2.jpg"
-                                         alt="Image"
-                                         class="img-fluid"
-                                    />
                                 </td>
-                                <td class="product-name">
-                                    <h2 class="h5 text-black">Polo Shirt</h2>
-                                </td>
-                                <td>$49.00</td>
                                 <td>
                                     <div class="input-group mb-3" style="max-width: 120px">
                                         <div class="input-group-prepend">
-                                            <button
-                                                    class="btn btn-outline-primary js-btn-minus"
-                                                    type="button"
-                                            >
+                                            <button class="btn btn-outline-primary js-btn-minus" type="button">
                                                 &minus;
                                             </button>
                                         </div>
-                                        <input
-                                                type="text"
-                                                class="form-control text-center"
-                                                value="1"
-                                                placeholder=""
-                                                aria-label="Example text with button addon"
-                                                aria-describedby="button-addon1"
-                                        />
+                                        <input type="text" min="1"
+                                               th:max="${gioHangCT.chiTietSanPham.soLuong}"
+                                               oninput="limitInput(this)"
+                                               step="1"
+                                               class="form-control text-center" style="width: 50px;"
+                                               th:value="${gioHangCT.soLuong}"
+                                               th:id="${'soLuong_' + gioHangCT.id}+'_'+${gioHangCT.chiTietSanPham.soLuong}"
+                                               placeholder="" aria-label="Example text with button addon"
+                                               aria-describedby="button-addon1"/>
+
                                         <div class="input-group-append">
-                                            <button
-                                                    class="btn btn-outline-primary js-btn-plus"
-                                                    type="button"
-                                            >
+                                            <button class="btn btn-outline-primary js-btn-plus" type="button">
                                                 &plus;
                                             </button>
                                         </div>
+                                        <script>
+                                            // Biến để lưu trữ vị trí trang
+                                            var scrollPosition = 0;
+
+                                            // Lấy vị trí trang khi trang được load
+                                            window.onload = function () {
+                                                scrollPosition = window.pageYOffset;
+                                            };
+                                        </script>
+                                        <script>
+                                            function limitInput(inputElement) {
+                                                var minValue = parseInt(inputElement.min, 10);
+                                                var maxValue = parseInt(inputElement.max, 10);
+                                                var stepValue = parseInt(inputElement.step, 10);
+
+                                                // Chuyển giá trị nhập vào thành số nguyên
+                                                var enteredValue = parseInt(inputElement.value, 10);
+
+                                                // Kiểm tra giá trị nhập vào
+                                                if (isNaN(enteredValue)) {
+                                                    // Nếu giá trị không phải là số, đặt giá trị mặc định là giá trị nhỏ nhất
+                                                    inputElement.value = minValue;
+                                                } else if (enteredValue < minValue) {
+                                                    // Nếu giá trị nhỏ hơn giá trị nhỏ nhất, đặt giá trị nhỏ nhất
+                                                    inputElement.value = minValue;
+                                                } else if (enteredValue > maxValue) {
+                                                    // Nếu giá trị lớn hơn giá trị lớn nhất, đặt giá trị lớn nhất
+                                                    inputElement.value = maxValue;
+                                                } else if (enteredValue % stepValue !== 0) {
+                                                    // Nếu giá trị không chia hết cho bước, làm tròn đến giá trị gần nhất chia hết cho bước
+                                                    inputElement.value = Math.round(enteredValue / stepValue) * stepValue;
+                                                }
+                                            }
+                                        </script>
+
                                     </div>
                                 </td>
-                                <td>$49.00</td>
-                                <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
+                                <td th:text="${gioHangCT.tongTien() + ' VNĐ'}"></td>
+                                <td>
+                                    <a th:href="@{/cart/detele/{id}(id=${gioHangCT.id})}"
+                                       class="btn btn-primary btn-sm">X</a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -234,70 +229,52 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    <div class="row mb-5">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <button class="btn btn-primary btn-sm btn-block">
-                                Update Cart
-                            </button>
-                        </div>
-                        <div class="col-md-6">
-                            <button class="btn btn-outline-primary btn-sm btn-block">
-                                Continue Shopping
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label class="text-black h4" for="coupon">Coupon</label>
-                            <p>Enter your coupon code if you have one.</p>
-                        </div>
-                        <div class="col-md-8 mb-3 mb-md-0">
-                            <input
-                                    type="text"
-                                    class="form-control py-3"
-                                    id="coupon"
-                                    placeholder="Coupon Code"
-                            />
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-primary btn-sm">Apply Coupon</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 pl-5">
+                <div class="col-md-12 pl-5" style="float: right">
                     <div class="row justify-content-end">
-                        <div class="col-md-7">
+                        <div class="col-md-3">
                             <div class="row">
                                 <div class="col-md-12 text-right border-bottom mb-5">
-                                    <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <span class="text-black">Subtotal</span>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <strong class="text-black">$230.00</strong>
+                                    <h3 class="text-black h4 text-uppercase">Tổng thanh toán</h3>
                                 </div>
                             </div>
                             <div class="row mb-5">
                                 <div class="col-md-6">
-                                    <span class="text-black">Total</span>
+                                    <span class="text-black">Tổng số tiền</span>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black">$230.00</strong>
+                                    <strong class="text-black" id="tongTienCart">0 VND</strong>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button
-                                            class="btn btn-primary btn-lg py-3 btn-block"
-                                            onclick="window.location='checkout.html'"
-                                    >
-                                        Proceed To Checkout
+                                    <button class="btn btn-primary btn-lg py-3 btn-block"
+                                            onclick="checkOut()">
+                                        Mua hàng
                                     </button>
+                                    <div id="checkMua"></div>
+                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                    <script>
+                                        function checkOut() {
+                                            var checkboxes = document.querySelectorAll("input[name='options[]']");
+                                            // Mảng để lưu trữ giá trị của các checkbox được chọn
+                                            var selectedOptions = [];
+
+                                            checkboxes.forEach(function (checkbox) {
+                                                if (checkbox.checked) {
+                                                    // Nếu checkbox được chọn, thêm giá trị của nó vào mảng
+                                                    selectedOptions.push(encodeURIComponent(checkbox.value));
+                                                }
+                                            });
+                                            if(selectedOptions.join(',')==''){
+                                                alert("Bạn vẫn chưa chọn sản phẩm nào để mua")
+                                                return
+                                            }
+
+                                            // Chuyển đến đường dẫn checkout và truyền giá trị mã hóa thông qua tham số
+                                            window.location.href = 'checkout?options=' + selectedOptions.join(',');
+                                        }
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -307,6 +284,7 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <footer class="site-footer border-top">
         <div class="container">
             <div class="row">
@@ -342,10 +320,8 @@
                 <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
                     <h3 class="footer-heading mb-4">Promo</h3>
                     <a href="#" class="block-6">
-                        <img src="../../static/img/hero_1.jpg"
-                             alt="Image placeholder"
-                             class="img-fluid rounded mb-4"
-                        />
+                        <img src="../../static/img/hero_1.jpg" alt="Image placeholder"
+                             class="img-fluid rounded mb-4"/>
                         <h3 class="font-weight-light mb-0">
                             Finding Your Perfect Shoes
                         </h3>
@@ -368,21 +344,11 @@
 
                     <div class="block-7">
                         <form action="#" method="post">
-                            <label for="email_subscribe" class="footer-heading"
-                            >Subscribe</label
-                            >
+                            <label for="email_subscribe" class="footer-heading">Subscribe</label>
                             <div class="form-group">
-                                <input
-                                        type="text"
-                                        class="form-control py-4"
-                                        id="email_subscribe"
-                                        placeholder="Email"
-                                />
-                                <input
-                                        type="submit"
-                                        class="btn btn-sm btn-primary"
-                                        value="Send"
-                                />
+                                <input type="text" class="form-control py-4" id="email_subscribe"
+                                       placeholder="Email"/>
+                                <input type="submit" class="btn btn-sm btn-primary" value="Send"/>
                             </div>
                         </form>
                     </div>
@@ -393,21 +359,12 @@
                     <p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;
-                        <script
-                                data-cfasync="false"
-                                src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
-                        ></script>
                         <script>
                             document.write(new Date().getFullYear());
                         </script>
                         All rights reserved | This template is made with
                         <i class="icon-heart" aria-hidden="true"></i> by
-                        <a
-                                href="https://colorlib.com"
-                                target="_blank"
-                                class="text-primary"
-                        >Colorlib</a
-                        >
+                        <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>
@@ -415,15 +372,16 @@
         </div>
     </footer>
 </div>
-
 <script src="../../static/js/jquery-3.3.1.min.js"></script>
 <script src="../../static/js/jquery-ui.js"></script>
 <script src="../../static/js/popper.min.js"></script>
 <script src="../../static/js/bootstrap.min.js"></script>
 <script src="../../static/js/owl.carousel.min.js"></script>
+<script src="../../static/js/mainn.js"></script>
 <script src="../../static/js/jquery.magnific-popup.min.js"></script>
 <script src="../../static/js/aos.js"></script>
 
 <script src="../../static/js/main.js"></script>
 </body>
+
 </html>

@@ -32,4 +32,6 @@ public interface NhanVienService {
 
     boolean checkEmail(String email);
 
+    public void sendEmail(TaiKhoan taiKhoan, String path,String random);
+
 }

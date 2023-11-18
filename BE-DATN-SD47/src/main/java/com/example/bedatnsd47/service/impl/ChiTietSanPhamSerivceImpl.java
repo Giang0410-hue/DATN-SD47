@@ -27,6 +27,11 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     }
 
     @Override
+    public List<ChiTietSanPham> getAllCtspOneSanPham() {
+        return repository.fillAllCtspOneSanPham();
+    }
+
+    @Override
     public List<ChiTietSanPham> getAllDangHoatDong() {
 
         return repository.fillAllDangHoatDong();
@@ -47,17 +52,70 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
             List<String> listSoLuong, List<String> listDonGia) {
 
         List<ChiTietSanPham> chiTietSanPhamList = new ArrayList<>();
+        List<ChiTietSanPham> listCtspCheck = repository.findAll();
+        for (int i = 0; i < listSanPham.size(); i++) {
+            ChiTietSanPham chiTietSanPham = new ChiTietSanPham();
+            boolean isUpdated = false;
+
+            for (ChiTietSanPham listCheck : listCtspCheck) {
+                if (listCheck.getSanPham().getId().equals(Long.valueOf(listSanPham.get(i))) &&
+                        listCheck.getKichCo().getId().equals(Long.valueOf(listKichCo.get(i))) &&
+                        listCheck.getMauSac().getId().equals(Long.valueOf(listMauSac.get(i))) &&
+                        listCheck.getLoaiDe().getId().equals(Long.valueOf(listLoaiDe.get(i)))
+                ) {
+                    int soLuongMoi = Integer.parseInt(listSoLuong.get(i));
+                    listCheck.setSoLuong(listCheck.getSoLuong() + soLuongMoi);
+                    listCheck.setGiaHienHanh(Long.valueOf(listDonGia.get(i)));
+                    listCheck.setTrangThai(0);
+
+                    ChiTietSanPham updatedChiTietSanPham = repository.save(listCheck);
+                    chiTietSanPhamList.add(updatedChiTietSanPham);
+
+                    isUpdated = true;
+
+                    break;
+                }
+            }
+
+            if (!isUpdated) {
+                chiTietSanPham.setSanPham(SanPham.builder().id(Long.valueOf(listSanPham.get(i))).build());
+                chiTietSanPham.setKichCo(KichCo.builder().id(Long.valueOf(listKichCo.get(i))).build());
+                chiTietSanPham.setMauSac(MauSac.builder().id(Long.valueOf(listMauSac.get(i))).build());
+                chiTietSanPham.setLoaiDe(LoaiDe.builder().id(Long.valueOf(listLoaiDe.get(i))).build());
+                chiTietSanPham.setSoLuong(Integer.parseInt(listSoLuong.get(i)));
+                chiTietSanPham.setGiaHienHanh(Long.valueOf(listDonGia.get(i)));
+                chiTietSanPham.setTrangThai(0);
+
+                if (chiTietSanPham.getSoLuong() > 0) {
+                    ChiTietSanPham savedChiTietSanPham = repository.save(chiTietSanPham);
+                    chiTietSanPhamList.add(savedChiTietSanPham);
+                }
+            }
+
+        }
+
+        return chiTietSanPhamList;
+    }
+
+    @Override
+    public List<ChiTietSanPham> updateAllCtsp(
+            List<String> listIdChiTietSp, List<String> listSanPham,
+            List<String> listKichCo, List<String> listMauSac,
+            List<String> listLoaiDe, List<String> listTrangThai,
+            List<String> listSoLuong, List<String> listDonGia) {
+
+        List<ChiTietSanPham> chiTietSanPhamList = new ArrayList<>();
 
         for (int i = 0; i < listSanPham.size(); i++) {
             ChiTietSanPham chiTietSanPham = new ChiTietSanPham();
+            chiTietSanPham.setId(Long.valueOf(listIdChiTietSp.get(i)));
             chiTietSanPham.setSanPham(SanPham.builder().id(Long.valueOf(listSanPham.get(i))).build());
             chiTietSanPham.setKichCo(KichCo.builder().id(Long.valueOf(listKichCo.get(i))).build());
             chiTietSanPham.setMauSac(MauSac.builder().id(Long.valueOf(listMauSac.get(i))).build());
             chiTietSanPham.setLoaiDe(LoaiDe.builder().id(Long.valueOf(listLoaiDe.get(i))).build());
+            chiTietSanPham.setTrangThai(Integer.parseInt(listTrangThai.get(i)));
             chiTietSanPham.setSoLuong(Integer.parseInt(listSoLuong.get(i)));
             chiTietSanPham.setGiaHienHanh(Long.valueOf(listDonGia.get(i)));
-            chiTietSanPham.setTrangThai(0);
-
             ChiTietSanPham savedChiTietSanPham = repository.save(chiTietSanPham);
             chiTietSanPhamList.add(savedChiTietSanPham);
         }
@@ -87,17 +145,29 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     }
 
     @Override
-    public boolean checkTenTrung(String ten) {
+    public List<ChiTietSanPham> getAllById(Long id) {
 
-        return false;
+        return repository.fillAllChiTietSpShop(id);
 
     }
 
     @Override
-    public boolean checkTenTrungSua(String ma, String ten) {
+    public List<ChiTietSanPham> getAllbyIdSPAndIdMS(Long idSanPham, Long idMauSac) {
 
-        return false;
+        return repository.fillAllChiTietSpMauSac(idSanPham, idMauSac);
 
+    }
+
+    @Override
+    public List<ChiTietSanPham> getAllCtspByIdSanPham(Long idSanPham) {
+
+        return repository.fillAllChiTietSpBySanPham(idSanPham);
+
+    }
+
+    @Override
+    public List<ChiTietSanPham> fillAllDangHoatDongLonHon0() {
+        return repository.fillAllDangHoatDongLonHon0();
     }
 
 }

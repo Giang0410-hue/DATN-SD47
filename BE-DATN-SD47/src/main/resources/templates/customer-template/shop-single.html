@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Glacat</title>
     <meta charset="utf-8"/>
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link href="../../static/img/favicon.png" rel="icon">
-    <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"
-    />
-    <link rel="stylesheet" href="../../static/./css/styles.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"/>
     <link rel="stylesheet" href="../../static/fonts/icomoon/style.css"/>
 
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css"/>
@@ -24,31 +19,27 @@
     <link rel="stylesheet" href="../../static/css/aos.css"/>
     <link rel="stylesheet" href="../../static/css/style-customer-template.css"/>
 
+
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
+
 <body>
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
         <div class="site-navbar-top">
             <div class="container">
                 <div class="row align-items-center">
-                    <div
-                            class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left"
-                    >
+                    <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
                         <form action="" class="site-block-top-search">
                             <span class="icon icon-search2"></span>
-                            <input
-                                    type="text"
-                                    class="form-control border-0"
-                                    placeholder="Search"
-                            />
+                            <input type="text" class="form-control border-0" placeholder="Search"/>
                         </form>
                     </div>
 
-                    <div
-                            class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center"
-                    >
+                    <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                         <div class="site-logo">
-                            <a href="ban-hang-customer.html" class="js-logo-clone">Glacat</a>
+                            <a href="/home" class="js-logo-clone">Glacat</a>
                         </div>
                     </div>
 
@@ -62,15 +53,14 @@
                                     <a href="#"><span class="icon icon-heart-o"></span></a>
                                 </li>
                                 <li>
-                                    <a href="cart.html" class="site-cart">
+                                    <a href="/cart" class="site-cart">
                                         <span class="icon icon-shopping_cart"></span>
-                                        <span class="count">2</span>
+                                        <span class="count" th:text="${soLuongSPGioHangCT}"></span>
                                     </a>
                                 </li>
                                 <li class="d-inline-block d-md-none ml-md-0">
-                                    <a href="#" class="site-menu-toggle js-menu-toggle"
-                                    ><span class="icon-menu"></span
-                                    ></a>
+                                    <a href="#" class="site-menu-toggle js-menu-toggle"><span
+                                            class="icon-menu"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -78,37 +68,34 @@
                 </div>
             </div>
         </div>
-        <nav
-                class="site-navigation text-right text-md-center"
-                role="navigation"
-        >
+        <nav class="site-navigation text-right text-md-center" role="navigation">
             <div class="container">
                 <ul class="site-menu js-clone-nav d-none d-md-block">
                     <li>
-                        <a href="ban-hang-customer.html">Trang chủ</a>
+                        <a href="/home">Trang chủ</a>
                         <!-- <ul class="dropdown">
+                    <li><a href="#">Menu One</a></li>
+                    <li><a href="#">Menu Two</a></li>
+                    <li><a href="#">Menu Three</a></li>
+                    <li class="has-children">
+                      <a href="#">Sub Menu</a>
+                      <ul class="dropdown">
                         <li><a href="#">Menu One</a></li>
                         <li><a href="#">Menu Two</a></li>
                         <li><a href="#">Menu Three</a></li>
-                        <li class="has-children">
-                          <a href="#">Sub Menu</a>
-                          <ul class="dropdown">
-                            <li><a href="#">Menu One</a></li>
-                            <li><a href="#">Menu Two</a></li>
-                            <li><a href="#">Menu Three</a></li>
-                          </ul>
-                        </li>
-                      </ul> -->
+                      </ul>
+                    </li>
+                  </ul> -->
                     </li>
                     <!-- <li>
-                      <a href="about.html">Về chúng tôi</a>
-                      <ul class="dropdown">
-                      <li><a href="#">Menu One</a></li>
-                      <li><a href="#">Menu Two</a></li>
-                      <li><a href="#">Menu Three</a></li>
-                    </ul>
-                    </li> -->
-                    <li><a href="shop.html">Sản phẩm</a></li>
+                  <a href="about.html">Về chúng tôi</a>
+                  <ul class="dropdown">
+                  <li><a href="#">Menu One</a></li>
+                  <li><a href="#">Menu Two</a></li>
+                  <li><a href="#">Menu Three</a></li>
+                </ul>
+                </li> -->
+                    <li><a href="/shop">Sản phẩm</a></li>
                     <li><a href="contact.html">Liên hệ</a></li>
                 </ul>
             </div>
@@ -119,172 +106,785 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 mb-0">
-                    <a href="ban-hang-customer.html">Home</a> <span class="mx-2 mb-0">/</span>
+                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>
                     <strong class="text-black">Giày Adidas</strong>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="site-section">
-        <div class="container">
+    <div class="container">
+        <div class="single-product">
             <div class="row">
-                <div class="col-md-6">
-                    <img src="../../static/img/giay7.webp" alt="Image" class="img-fluid"/>
-                </div>
-                <div class="col-md-6">
-                    <h2 class="text-black">Giày Adidas</h2>
-                    <p>Mã:ABCD</p>
-                    <p>Còn 10 sản phẩm</p>
-                    <!-- <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Pariatur, vitae, explicabo? Incidunt facere, natus soluta
-                      dolores iusto! Molestiae expedita veritatis nesciunt doloremque
-                      sint asperiores fuga voluptas, distinctio, aperiam, ratione
-                      dolore.
-                    </p>
-                    <p class="mb-4">
-                      Ex numquam veritatis debitis minima quo error quam eos dolorum
-                      quidem perferendis. Quos repellat dignissimos minus, eveniet nam
-                      voluptatibus molestias omnis reiciendis perspiciatis illum hic
-                      magni iste, velit aperiam quis.
-                    </p> -->
-                    <p><strong class="text-primary h4">$50.00</strong></p>
-                    <h2>Kích cỡ</h2>
-                    <div class="mb-1 d-flex">
-                        <label for="option-md" class="d-flex mr-3 mb-3">
-                  <span
-                          class="d-inline-block mr-2"
-                          style="top: -2px; position: relative"
-                  >
-                    <button
-                            class="button"
-                            id="group1_button1"
-                            onclick="toggleButton('group1_button1', 'group1')"
-                    >
-                      38
-                    </button>
-                  </span>
-                            <!-- <span class="d-inline-block text-black">Medium</span> -->
-                        </label>
-
-                        <label for="option-md" class="d-flex mr-3 mb-3">
-                  <span
-                          class="d-inline-block mr-2"
-                          style="top: -2px; position: relative"
-                  >
-                    <button
-                            class="button"
-                            id="group1_button2"
-                            onclick="toggleButton('group1_button2', 'group1')"
-                    >
-                      39
-                    </button>
-                  </span>
-                            <!-- <span class="d-inline-block text-black">Medium</span> -->
-                        </label>
-                        <label for="option-md" class="d-flex mr-3 mb-3">
-                  <span
-                          class="d-inline-block mr-2"
-                          style="top: -2px; position: relative"
-                  >
-                    <button
-                            class="button"
-                            id="group1_button3"
-                            onclick="toggleButton('group1_button3', 'group1')"
-                    >
-                      40
-                    </button>
-                  </span>
-                            <!-- <span class="d-inline-block text-black">Medium</span> -->
-                        </label>
-                        <label for="option-md" class="d-flex mr-3 mb-3">
-                  <span
-                          class="d-inline-block mr-2"
-                          style="top: -2px; position: relative"
-                  >
-                    <button
-                            class="button"
-                            id="group1_button4"
-                            onclick="toggleButton('group1_button4', 'group1')"
-                    >
-                      41
-                    </button>
-                  </span>
-                            <!-- <span class="d-inline-block text-black">Medium</span> -->
-                        </label>
-                    </div>
-                    <h2>Màu sắc</h2>
-                    <div class="mb-1 d-flex">
-                        <label for="option-md" class="d-flex mr-3 mb-3">
-                  <span
-                          class="d-inline-block mr-2"
-                          style="top: -2px; position: relative"
-                  >
-                    <button
-                            class="button"
-                            id="group2_button1"
-                            onclick="toggleButton('group2_button1', 'group2')"
-                    >
-                      Black
-                    </button>
-                  </span>
-                            <!-- <span class="d-inline-block text-black">Medium</span> -->
-                        </label>
-
-                        <label for="option-md" class="d-flex mr-3 mb-3">
-                  <span
-                          class="d-inline-block mr-2"
-                          style="top: -2px; position: relative"
-                  >
-                    <button
-                            class="button"
-                            id="group2_button2"
-                            onclick="toggleButton('group2_button2', 'group2')"
-                    >
-                      White
-                    </button>
-                  </span>
-                            <!-- <span class="d-inline-block text-black">Medium</span> -->
-                        </label>
-                    </div>
-                    <div class="mb-5">
-                        <div class="input-group mb-3" style="max-width: 120px">
-                            <div class="input-group-prepend">
-                                <button
-                                        class="btn btn-outline-primary js-btn-minus"
-                                        type="button"
-                                >
-                                    &minus;
-                                </button>
-                            </div>
-                            <input
-                                    type="text"
-                                    class="form-control text-center"
-                                    value="1"
-                                    placeholder=""
-                                    aria-label="Example text with button addon"
-                                    aria-describedby="button-addon1"
-                            />
-                            <div class="input-group-append">
-                                <button
-                                        class="btn btn-outline-primary js-btn-plus"
-                                        type="button"
-                                >
-                                    &plus;
-                                </button>
-                            </div>
+                <div class="col-6">
+                    <div class="product-image">
+                        <div class="product-image-main" style="background-color: white">
+                            <img th:if="${not #lists.isEmpty(chiTietSp.sanPham.listHinhAnhSanPham)}"
+                                 th:src="@{'../../../static/img/' + ${chiTietSp.sanPham.listHinhAnhSanPham[0].url}}"
+                                 alt="" id="product-main-image"/>
+                        </div>
+                        <div class="product-image-slider">
+                            <img th:each="anh : ${chiTietSp.sanPham.listHinhAnhSanPham}"
+                                 th:src="@{'../../../static/img/' + ${anh.url}}" alt="" class="image-list"/>
                         </div>
                     </div>
-                    <p>
-                        <a href="cart.html" class="buy-now btn btn-sm btn-primary"
-                        >Thêm vào giỏ hàng</a
-                        >
-                    </p>
+                    <script>
+                        const sliderMainImage = document.getElementById("product-main-image");
+                        const sliderImageList = document.getElementsByClassName("image-list");
+                        console.log(sliderImageList);
+
+                        sliderImageList[0].onclick = function () {
+                            sliderMainImage.src = sliderImageList[0].src;
+                            console.log(sliderMainImage.src);
+                        };
+
+                        sliderImageList[1].onclick = function () {
+                            sliderMainImage.src = sliderImageList[1].src;
+                            console.log(sliderMainImage.src);
+                        };
+
+                        sliderImageList[2].onclick = function () {
+                            sliderMainImage.src = sliderImageList[2].src;
+                            console.log(sliderMainImage.src);
+                        };
+
+                        sliderImageList[3].onclick = function () {
+                            sliderMainImage.src = sliderImageList[3].src;
+                            console.log(sliderMainImage.src);
+                        };
+                        sliderImageList[4].onclick = function () {
+                            sliderMainImage.src = sliderImageList[4].src;
+                            console.log(sliderMainImage.src);
+                        };
+                    </script>
+                </div>
+                <div class="col-6">
+                    <div class="product">
+                        <div class="product-title">
+                            <h2 th:text="${chiTietSp.sanPham.ten}"></h2>
+                            <input hidden id="idSanPhamAn" th:value="${chiTietSp.sanPham.id}">
+                        </div>
+                        <div class="product-rating">
+                            <span><i class="bx bxs-star"></i></span>
+                            <span><i class="bx bxs-star"></i></span>
+                            <span><i class="bx bxs-star"></i></span>
+                            <span><i class="bx bxs-star"></i></span>
+                            <span><i class="bx bxs-star"></i></span>
+                            <span class="review">(47 Review)</span>
+                        </div>
+                        <div class="product-price">
+                                <span class="offer-price" id="giaHienThi"
+                                      th:text="${chiTietSp.giaHienHanh}+' VND'"></span>
+                        </div>
+
+                        <div class="product-details">
+                            <h3>Mô tả</h3>
+                            <p th:text="${chiTietSp.sanPham.moTa}"></p>
+                        </div>
+                        <div th:each="chiTietSPs,iterStat : ${listChiTietSp}">
+
+                        </div>
+                        <div class="product-size">
+                            <h4>Màu Sắc</h4>
+                            <div class="size-layout" th:each="chiTietSPs,iterStat : ${listChiTietSp}">
+                                <input type="radio" name="mauSac" th:value="${chiTietSPs.mauSac.id}"
+                                       th:id="${iterStat.index}+6" class="size-input">
+                                <label th:for="${iterStat.index}+6" class="size"
+                                       th:text="${chiTietSPs.mauSac.ten}"></label>
+                            </div>
+                            <h4 id="labelKichThuoc" style="display: none">Kích Thước</h4>
+                        </div>
+
+                        <!-- Thêm thẻ script trước khi sử dụng Axios -->
+                        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+                        <script>
+                            document.querySelectorAll('input[name="mauSac"]').forEach(function (input) {
+                                input.addEventListener('change', function () {
+                                    var idMauSac = this.value; // Lấy giá trị idMauSac khi màu sắc được chọn
+                                    var idSanPhamAn = document.getElementById("idSanPhamAn");
+                                    idSanPham = idSanPhamAn.value;
+                                    console.log(idSanPham + 'id sản phẩm');
+                                    console.log(idMauSac + 'id màu sắc');
+                                    document.getElementById('so-luong-ton').style.display = 'none';
+                                    getAllbyIdSPAndIdMS(idSanPham, idMauSac); // Gọi hàm để lấy danh sách kích cỡ
+
+                                    var soLuong = document.getElementById('soLuong');
+                                    soLuong.value = '';
+                                    var rqIdChiTietSp = document.getElementById('idChiTietSp');
+                                    rqIdChiTietSp.value = '';
+
+                                });
+                            });
+
+                            // Định nghĩa hàm để lấy danh sách kích cỡ bằng idMauSac
+                            function getAllbyIdSPAndIdMS(idSanPham, idMauSac) {
+                                var xhr = new XMLHttpRequest();
+                                xhr.open('GET', '/chi-tiet-san-pham/' + idSanPham + '/' + idMauSac, true);
+                                xhr.setRequestHeader('Content-Type', 'application/json');
+
+                                xhr.onreadystatechange = function () {
+                                    if (xhr.readyState === 4) {
+                                        if (xhr.status === 200) {
+                                            var listChiTietSpByMauSac = JSON.parse(xhr.responseText); // Chuyển từ JSON thành danh sách
+                                            console.log(listChiTietSpByMauSac);
+                                            displaylistChiTietSpByMauSac(listChiTietSpByMauSac);
+                                        } else {
+                                            console.error('Lỗi trong quá trình lấy danh sách kích cỡ.');
+                                        }
+                                    }
+                                };
+
+                                xhr.send();
+                            }
+
+
+                            function displaylistChiTietSpByMauSac(listChiTietSpByMauSac) {
+                                // Hiển thị danh sách kích cỡ trên trang web
+                                var kichCoContainer = document.getElementById('kichCoContainer');
+                                var labelKichThuoc = document.getElementById('labelKichThuoc');
+                                labelKichThuoc.style.display = 'block';
+                                kichCoContainer.className = 'product-size';
+                                kichCoContainer.innerHTML = ''; // Xóa nội dung cũ
+
+                                listChiTietSpByMauSac.forEach(function (chiTietSp, index) {
+
+                                    var kichCoElement = document.createElement('div');
+                                    console.log(chiTietSp)
+                                    // Tạo phần tử input
+                                    var input = document.createElement('input');
+                                    input.type = 'radio';
+                                    input.name = 'size';
+                                    input.className = 'size-input';
+                                    input.value = chiTietSp.kichCo.ten; // Đặt giá trị tên kích cỡ vào value
+                                    input.id = index; // Đặt giá trị id từ mauSac.id
+
+                                    // Tạo phần tử label
+                                    var label = document.createElement('label');
+                                    label.htmlFor = index; // Sử dụng mauSac.id làm htmlFor
+                                    label.className = 'size';
+                                    label.innerText = chiTietSp.kichCo.ten; // Hiển thị tên kích cỡ
+
+                                    // Thêm input và label vào phần tử div
+                                    kichCoElement.className = 'size-layout'
+                                    kichCoElement.appendChild(input);
+                                    kichCoElement.appendChild(label);
+                                    kichCoContainer.appendChild(kichCoElement);
+
+                                    // Sự kiện change cho input
+                                    input.addEventListener('change', function () {
+                                        // Điều này xảy ra khi người dùng chọn một kích cỡ
+                                        // Lấy số lượng từ listChiTietSpByMauSac
+
+                                        var soLuongHienThi = chiTietSp.soLuong;
+                                        var giaHienThi = chiTietSp.giaHienHanh;
+                                        var idCTSP = chiTietSp.id;
+
+                                        var divSoLuongCon = document.getElementById('so-luong-ton');
+                                        var rqIdChiTietSp = document.getElementById('idChiTietSp');
+                                        var inputSoLuong = document.getElementById('soLuong');
+                                        var spanGia = document.getElementById('giaHienThi');
+
+                                        // Hiển thị thông tin (ở đây là cần thay thế số lượng trên trang web)
+                                        spanGia.innerText = giaHienThi + ' VND';
+
+                                        rqIdChiTietSp.value = idCTSP;
+
+                                        inputSoLuong.value = 1;
+                                        inputSoLuong.max = soLuongHienThi
+
+                                        divSoLuongCon.style.display = 'block';
+                                        divSoLuongCon.innerText = soLuongHienThi + ' sản phẩm có sẵn';
+                                        divSoLuongCon.style = 'color: red';
+                                    });
+
+                                });
+
+                            }
+
+                            function limitInput(inputElement) {
+                                var minValue = parseInt(inputElement.min, 10);
+                                var maxValue = parseInt(inputElement.max, 10);
+                                var stepValue = parseInt(inputElement.step, 10);
+
+                                // Chuyển giá trị nhập vào thành số nguyên
+                                var enteredValue = parseInt(inputElement.value, 10);
+
+                                // Kiểm tra giá trị nhập vào
+                                if (isNaN(enteredValue)) {
+                                    // Nếu giá trị không phải là số, đặt giá trị mặc định là giá trị nhỏ nhất
+                                    inputElement.value = minValue;
+                                } else if (enteredValue < minValue) {
+                                    // Nếu giá trị nhỏ hơn giá trị nhỏ nhất, đặt giá trị nhỏ nhất
+                                    inputElement.value = minValue;
+                                } else if (enteredValue > maxValue) {
+                                    // Nếu giá trị lớn hơn giá trị lớn nhất, đặt giá trị lớn nhất
+                                    inputElement.value = maxValue;
+                                } else if (enteredValue % stepValue !== 0) {
+                                    // Nếu giá trị không chia hết cho bước, làm tròn đến giá trị gần nhất chia hết cho bước
+                                    inputElement.value = Math.round(enteredValue / stepValue) * stepValue;
+                                }
+                            }
+
+
+                            function themVaoGioHang() {
+
+                                var fillErro = document.getElementById('so-luong-ton');
+
+                                var mauSacInputs = document.getElementsByName('mauSac');
+
+                                var isMauSacSelected = false;
+
+                                for (var i = 0; i < mauSacInputs.length; i++) {
+                                    if (mauSacInputs[i].checked) {
+                                        isMauSacSelected = true;
+                                        break; // Ngừng lặp nếu đã có kích thước được chọn
+                                    }
+                                }
+
+                                if (!isMauSacSelected) {
+                                    console.log("Vui lòng chọn một màu sắc.");
+                                    fillErro.innerHTML = '';
+                                    fillErro.innerText = 'Vui lòng chọn Phân loại hàng';
+                                    fillErro.style = 'color: red'
+                                    return false;
+                                }
+
+                                var sizeInputs = document.getElementsByName('size');
+
+                                var isSizeSelected = false;
+
+                                for (var i = 0; i < sizeInputs.length; i++) {
+                                    if (sizeInputs[i].checked) {
+                                        isSizeSelected = true;
+                                        break; // Ngừng lặp nếu đã có kích thước được chọn
+                                    }
+                                }
+
+                                if (!isSizeSelected) {
+                                    console.log("Vui lòng chọn một màu sắc.");
+                                    fillErro.innerHTML = '';
+                                    fillErro.innerText = 'Vui lòng chọn Phân loại hàng';
+                                    fillErro.style = 'color: red';
+                                    return false;
+                                }
+
+                                var soLuong = document.getElementById('soLuong');
+                                var soLuongAdd = soLuong.value;
+
+                                var rqIdChiTietSp = document.getElementById('idChiTietSp');
+                                var rqIdChiTietSp = rqIdChiTietSp.value;
+
+                                // Lấy URL cần gửi phương thức POST
+                                var url = '/gio-hang-chi-tiet/add/' + rqIdChiTietSp + '/' + soLuongAdd; // Thay thế bằng URL thực tế
+
+                                // Thực hiện phương thức POST
+                                fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    }
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            // Xử lý kết quả nếu cần
+                                            console.log('Đã thêm vào giỏ hàng');
+                                        } else {
+                                            throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error(error);
+                                    });
+                            }
+
+                            function themVaoGioHangNhanh() {
+
+                                var fillErro = document.getElementById('so-luong-ton');
+
+                                var mauSacInputs = document.getElementsByName('mauSac');
+
+                                var isMauSacSelected = false;
+
+                                for (var i = 0; i < mauSacInputs.length; i++) {
+                                    if (mauSacInputs[i].checked) {
+                                        isMauSacSelected = true;
+                                        break; // Ngừng lặp nếu đã có kích thước được chọn
+                                    }
+                                }
+
+                                if (!isMauSacSelected) {
+                                    console.log("Vui lòng chọn một màu sắc.");
+                                    fillErro.innerHTML = '';
+                                    fillErro.innerText = 'Vui lòng chọn Phân loại hàng';
+                                    fillErro.style = 'color: red'
+                                    return false;
+                                }
+
+                                var sizeInputs = document.getElementsByName('size');
+
+                                var isSizeSelected = false;
+
+                                for (var i = 0; i < sizeInputs.length; i++) {
+                                    if (sizeInputs[i].checked) {
+                                        isSizeSelected = true;
+                                        break; // Ngừng lặp nếu đã có kích thước được chọn
+                                    }
+                                }
+
+                                if (!isSizeSelected) {
+                                    console.log("Vui lòng chọn một màu sắc.");
+                                    fillErro.innerHTML = '';
+                                    fillErro.innerText = 'Vui lòng chọn Phân loại hàng';
+                                    fillErro.style = 'color: red';
+                                    return false;
+                                }
+
+                                var soLuong = document.getElementById('soLuong');
+                                var soLuongAdd = soLuong.value;
+
+                                var rqIdChiTietSp = document.getElementById('idChiTietSp');
+                                var rqIdChiTietSp = rqIdChiTietSp.value;
+
+                                // Lấy URL cần gửi phương thức POST
+                                var url = '/gio-hang-chi-tiet/add-fast/' + rqIdChiTietSp + '/' + soLuongAdd; // Thay thế bằng URL thực tế
+
+                                // Thực hiện phương thức POST
+                                fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    }
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            // Xử lý kết quả nếu cần
+                                            console.log('Đã thêm vào giỏ hàng');
+                                            window.location.href = '/cart?checkGHCT=true';
+                                        } else {
+                                            throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error(error);
+                                    });
+                            }
+
+
+                        </script>
+                        <!-- Thêm một phần tử để hiển thị danh sách kích cỡ -->
+                        <div id="kichCoContainer">
+                        </div>
+                        <div class="product-size">
+                            <h4>Số lượng</h4>
+                            <input type="number" name="soLuong" id="soLuong" class="form-control" min="1" step="1" oninput="limitInput(this)">
+                            <input type="hidden" name="idChiTietSp" id="idChiTietSp">
+                            <span id="so-luong-ton"></span>
+                        </div>
+
+                        <span class="divider"></span>
+
+                        <div class="product-btn-group">
+                            <button onclick="themVaoGioHangNhanh()" class="button buy-now"><i class='bx bxs-zap'></i>Mua Ngay</button>
+                            <button onclick="themVaoGioHang()" class="button add-cart">
+                                <i class='bx bxs-cart'></i> Thêm vào giỏ
+                            </button>
+                            <div class="button heart"><i class='bx bxs-heart'></i> Add to Wishlist</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        /** Poppins Font **/
+
+
+        * gobal layout * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-color: #5344db;
+            --accent-color: #5344db;
+            --grey: #484848;
+            --bg-grey: #efefef;
+            --shadow: #949494;
+        }
+
+        .single-product {
+            width: 1080px;
+            position: relative;
+        }
+
+        /** Breadcrumb **/
+
+        .single-product .breadcrumb {
+            background: #48484810;
+            padding: 8px 4px;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .breadcrumb span {
+            display: inline-flex;
+            flex-direction: row;
+            gap: 8px;
+            margin-left: 8px;
+        }
+
+        .breadcrumb span:not(:last-child)::after {
+            content: '/';
+        }
+
+        .breadcrumb span a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        /** product image **/
+
+        .single-product .product-image {
+            width: 100%;
+        }
+
+        .product-image .product-image-main {
+            position: relative;
+            display: block;
+            height: 480px;
+            background: var(--bg-grey);
+            padding: 10px;
+        }
+
+        .product-image-main img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .product-image-slider {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .product-image-slider img {
+            width: 90px;
+            height: 90px;
+            background: var(--bg-grey);
+            padding: 6px;
+            cursor: pointer;
+        }
+
+        /** product title **/
+
+        .product-title {
+            margin-top: 20px;
+
+        }
+
+        .product-title h2 {
+            font-size: 32px;
+            line-height: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02rem;
+        }
+
+        /** product rating **/
+        .product-rating {
+            display: flex;
+            margin-top: 4px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .product-rating span:not(:last-child) {
+            color: #ffc600;
+        }
+
+        .product-rating .review {
+            color: var(--grey);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /** Product price **/
+        .product-price {
+            display: flex;
+            position: relative;
+            margin: 10px 0;
+            align-items: center;
+        }
+
+        .product-price .offer-price {
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        .product-price .sale-price {
+            font-size: 22px;
+            font-weight: 500;
+            text-decoration: line-through;
+            color: var(--grey);
+            margin-left: 12px;
+        }
+
+        /** Product Details **/
+        .product-details {
+            margin: 10px 0;
+        }
+
+        .product-details h3 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .product-details p {
+            margin: 5px 0;
+            font-size: 14px;
+            line-height: 1.2rem;
+        }
+
+        /** Product size **/
+        .product-size {
+            margin: 10px 0;
+        }
+
+        .product-size h4 {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .product-size .size-layout {
+            margin: 5px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .product-size .size-layout .size-input {
+            display: none;
+        }
+
+        .product-size .size-layout .size {
+            background: var(--bg-grey);
+            padding: 10px 18px;
+            border: 1px solid var(--bg-grey);
+            border-radius: 4px;
+            margin-left: 0px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .product-size .size-layout .size:hover {
+            border: 1px solid var(--grey);
+        }
+
+        .product-size .size-layout input[type="radio"]:checked + .size {
+            background-color: rgb(0, 0, 0);
+            border: 1px solid var(--grey);
+            color: var(--bg-grey);
+            box-shadow: 0 3px 6px var(--shadow);
+
+        }
+
+
+        /** Product Color **/
+        .product-color {
+            margin: 10px 0;
+            justify-content: center;
+        }
+
+        .product-color h4 {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .product-color .color-layout {
+            margin: 5px 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .product-color .color-layout label {
+            border-radius: 4px;
+            cursor: pointer;
+            content: '';
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+        }
+
+        .product-color .color-layout .black {
+
+            background-color: black;
+        }
+
+        .product-color .color-layout .red {
+            background-color: red;
+        }
+
+        .product-color .color-layout .blue {
+            background-color: blue;
+        }
+
+        .product-color .color-layout input[type="radio"]:checked + label {
+            box-shadow: 0 3px 6px var(--shadow);
+        }
+
+        .product-color .color-layout .color-input {
+            display: none;
+        }
+
+
+        /** divider **/
+        .divider {
+            display: block;
+            height: 1px;
+            width: 100%;
+            background: #48484830;
+            margin: 20px 0;
+        }
+
+        /** product Button Group **/
+
+        .product-btn-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .product-btn-group .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 10px 24px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .product-btn-group .buy-now {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: 1px solid var(--accent-color);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .product-btn-group .buy-now i {
+            font-size: 20px;
+        }
+
+        .product-btn-group .buy-now:hover {
+            box-shadow: 0 3px 6px var(--shadow);
+        }
+
+        .product-btn-group .add-cart {
+
+            background-color: var(--bg-grey);
+            color: var(--grey);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .product-btn-group .add-cart i {
+            font-size: 20px;
+        }
+
+        .product-btn-group .add-cart:hover {
+            box-shadow: 0 3px 6px var(--shadow);
+            background: var(--grey);
+            color: #fff;
+        }
+
+        .product-btn-group .heart {
+            color: var(--grey);
+            cursor: pointer;
+        }
+
+        .product-btn-group .heart i {
+            font-size: 20px;
+        }
+
+        .product-btn-group .heart:hover {
+            color: var(--accent-color);
+        }
+
+
+        /** Responsive Mobile **/
+        @media screen and (max-width: 520px) {
+            .container {
+                padding: 20px;
+                height: auto;
+            }
+
+            .row {
+                display: block;
+            }
+
+            .col-6 {
+                width: 100%;
+                display: block;
+            }
+
+            .single-product {
+                width: 100%;
+                position: relative;
+            }
+
+            .product-image .product-image-main {
+                width: 100%;
+                height: 280px;
+            }
+
+            .product-image-slider {
+                gap: 5px;
+            }
+
+            .product-title h2 {
+                font-size: 24px;
+                line-height: 1.6rem;
+            }
+
+            .product-size {
+                display: block;
+            }
+
+            .product-size .size-layout {
+                display: block;
+                margin: 10px 0;
+
+            }
+
+            .product-size .size-layout .size {
+                padding: 6px 10px;
+            }
+
+            .product-btn-group {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /** Responsive Tablet **/
+        @media (min-width: 520px) and (max-width: 1080px) {
+            .container {
+                display: block;
+                height: auto;
+                padding: 20px;
+            }
+
+        }
+    </style>
 
     <div class="site-section block-3 site-blocks-2 bg-light">
         <div class="container">
@@ -299,11 +899,7 @@
                         <div class="item">
                             <div class="block-4 text-center">
                                 <figure class="block-4-image">
-                                    <img
-                                            src="images/cloth_1.jpg"
-                                            alt="Image placeholder"
-                                            class="img-fluid"
-                                    />
+                                    <img src="../../static/img/giay1.webp" alt="Image placeholder" class="img-fluid"/>
                                 </figure>
                                 <div class="block-4-text p-4">
                                     <h3><a href="#">Tank Top</a></h3>
@@ -315,11 +911,7 @@
                         <div class="item">
                             <div class="block-4 text-center">
                                 <figure class="block-4-image">
-                                    <img
-                                            src="images/shoe_1.jpg"
-                                            alt="Image placeholder"
-                                            class="img-fluid"
-                                    />
+                                    <img src="../../static/img/giay1.webp" alt="Image placeholder" class="img-fluid"/>
                                 </figure>
                                 <div class="block-4-text p-4">
                                     <h3><a href="#">Corater</a></h3>
@@ -331,11 +923,7 @@
                         <div class="item">
                             <div class="block-4 text-center">
                                 <figure class="block-4-image">
-                                    <img
-                                            src="images/cloth_2.jpg"
-                                            alt="Image placeholder"
-                                            class="img-fluid"
-                                    />
+                                    <img src="../../static/img/giay1.webp" alt="Image placeholder" class="img-fluid"/>
                                 </figure>
                                 <div class="block-4-text p-4">
                                     <h3><a href="#">Polo Shirt</a></h3>
@@ -347,11 +935,7 @@
                         <div class="item">
                             <div class="block-4 text-center">
                                 <figure class="block-4-image">
-                                    <img
-                                            src="images/cloth_3.jpg"
-                                            alt="Image placeholder"
-                                            class="img-fluid"
-                                    />
+                                    <img src="../../static/img/giay1.webp" alt="Image placeholder" class="img-fluid"/>
                                 </figure>
                                 <div class="block-4-text p-4">
                                     <h3><a href="#">T-Shirt Mockup</a></h3>
@@ -363,11 +947,7 @@
                         <div class="item">
                             <div class="block-4 text-center">
                                 <figure class="block-4-image">
-                                    <img
-                                            src="images/shoe_1.jpg"
-                                            alt="Image placeholder"
-                                            class="img-fluid"
-                                    />
+                                    <img src="../../static/img/giay1.webp" alt="Image placeholder" class="img-fluid"/>
                                 </figure>
                                 <div class="block-4-text p-4">
                                     <h3><a href="#">Corater</a></h3>
@@ -417,10 +997,8 @@
                 <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
                     <h3 class="footer-heading mb-4">Promo</h3>
                     <a href="#" class="block-6">
-                        <img src="../../static/img/hero_1.jpg"
-                             alt="Image placeholder"
-                             class="img-fluid rounded mb-4"
-                        />
+                        <img src="../../static/img/hero_1.jpg" alt="Image placeholder"
+                             class="img-fluid rounded mb-4"/>
                         <h3 class="font-weight-light mb-0">
                             Finding Your Perfect Shoes
                         </h3>
@@ -443,21 +1021,11 @@
 
                     <div class="block-7">
                         <form action="#" method="post">
-                            <label for="email_subscribe" class="footer-heading"
-                            >Subscribe</label
-                            >
+                            <label for="email_subscribe" class="footer-heading">Subscribe</label>
                             <div class="form-group">
-                                <input
-                                        type="text"
-                                        class="form-control py-4"
-                                        id="email_subscribe"
-                                        placeholder="Email"
-                                />
-                                <input
-                                        type="submit"
-                                        class="btn btn-sm btn-primary"
-                                        value="Send"
-                                />
+                                <input type="text" class="form-control py-4" id="email_subscribe"
+                                       placeholder="Email"/>
+                                <input type="submit" class="btn btn-sm btn-primary" value="Send"/>
                             </div>
                         </form>
                     </div>
@@ -468,21 +1036,14 @@
                     <p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;
-                        <script
-                                data-cfasync="false"
-                                src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
-                        ></script>
+
+
                         <script>
                             document.write(new Date().getFullYear());
                         </script>
                         All rights reserved | This template is made with
                         <i class="icon-heart" aria-hidden="true"></i> by
-                        <a
-                                href="https://colorlib.com"
-                                target="_blank"
-                                class="text-primary"
-                        >Colorlib</a
-                        >
+                        <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>
@@ -501,4 +1062,5 @@
 <script src="../../static/js/main.js"></script>
 <script src="../../static/js/script.js"></script>
 </body>
+
 </html>

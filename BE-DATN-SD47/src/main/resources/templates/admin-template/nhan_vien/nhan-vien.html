@@ -45,7 +45,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="../ban-hang-tai-quay/home" class="logo d-flex align-items-center">
+        <a href="/ban-hang-tai-quay/hoa-don" class="logo d-flex align-items-center">
             <img src="../../../static/img/logo.png" alt="">
             <span class="d-none d-lg-block">NiceAdmin</span>
         </a>
@@ -61,7 +61,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="../ban-hang-tai-quay/home">
+            <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don">
                 <i class="bi bi-grid"></i>
                 <span>Bán Hàng</span>
             </a>
@@ -107,7 +107,7 @@
         </li><!-- End Components Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="../hoa-don.html">
+            <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
                 <i class="bi bi-envelope"></i>
                 <span>Hóa Đơn</span>
             </a>
@@ -268,42 +268,6 @@
                                                 <span class="check-loi" th:text="${checkEmailTrung}"></span>
                                             </div>
 
-                                            <div class="col-md-4">
-                                                <label class="form-label"><span
-                                                        class="dau-sao">*</span>Xã/phường</label>
-                                                <input type="text" class="form-control" placeholder="Nhập thành phố"
-                                                       th:field="*{thanhPho}">
-                                                <span class="check-loi" th:errors="*{thanhPho}"></span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label"><span
-                                                        class="dau-sao">*</span>Quận/huyện</label>
-                                                <input type="text" class="form-control" placeholder="Nhập quận huyện"
-                                                       th:field="*{quanHuyen}">
-                                                <span class="check-loi" th:errors="*{quanHuyen}"></span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label"><span class="dau-sao">*</span>Tỉnh/thành
-                                                    phố</label>
-                                                <input type="text" class="form-control"
-                                                       placeholder="Nhập tỉnh phường xã" th:field="*{phuongXa}">
-                                                <span class="check-loi" th:errors="*{phuongXa}"></span>
-                                            </div>
-
-
-                                            <div class="col-12">
-                                                <label class="form-label"><span class="dau-sao">*</span>Địa chỉ cụ thể:</label>
-                                                <input type="text" class="form-control"
-                                                       placeholder="Nhập địa chỉ cụ thể" th:field="*{diaChiCuThe}"/>
-                                                <span class="check-loi" th:errors="*{diaChiCuThe}"></span>
-                                            </div>
-                                            <div class="col-12">
-                                                <label class="form-label"><span class="dau-sao">*</span>Mật
-                                                    Khẩu:</label>
-                                                <input type="text" class="form-control"
-                                                       placeholder="Nhập địa chỉ mật khẩu" th:field="*{matKhau}"/>
-                                                <span class="check-loi" th:errors="*{matKhau}"></span>
-                                            </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                                     Đóng

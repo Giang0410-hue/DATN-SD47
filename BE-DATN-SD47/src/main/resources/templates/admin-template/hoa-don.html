@@ -162,7 +162,7 @@
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="ex3-tab-2" data-bs-toggle="tab" href="#ex3-tabs-2"
                                         role="tab" aria-controls="ex3-tabs-2" aria-selected="false">
-                                        Chờ thanh toán
+                                        Chờ giao
                                         <span class="cart">
                                             <span class="cart__count">5</span>
                                         </span>
@@ -171,7 +171,7 @@
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="ex3-tab-3" data-bs-toggle="tab" href="#ex3-tabs-3"
                                         role="tab" aria-controls="ex3-tabs-3" aria-selected="false">
-                                        Chờ giao
+                                        Đang giao
                                         <span class="cart">
                                             <span class="cart__count">5</span>
                                         </span>
@@ -180,7 +180,7 @@
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="ex3-tab-4" data-bs-toggle="tab" href="#ex3-tabs-4"
                                         role="tab" aria-controls="ex3-tabs-4" aria-selected="false">
-                                        Đang giao
+                                        Hoàn thành
                                         <span class="cart">
                                             <span class="cart__count">5</span>
                                         </span>
@@ -189,7 +189,7 @@
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="ex3-tab-5" data-bs-toggle="tab" href="#ex3-tabs-5"
                                         role="tab" aria-controls="ex3-tabs-5" aria-selected="false">
-                                        Hoàn thành
+                                        Chờ thanh toán
                                         <span class="cart">
                                             <span class="cart__count">5</span>
                                         </span>
@@ -256,7 +256,7 @@
                                                     <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
                                                     <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
                                                     <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienHoaDon()}">2.000.000</td>
+                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
                                                     <td th:text="${hd.ngaySua}"></td>
                                                     <td>
                                                         <!-- Button trigger modal
@@ -302,100 +302,6 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel" aria-labelledby="ex3-tab-2">
-                                    <div class="tblHoaDonChoThanhToan">
-                                        <label class="col-sm-5 col-form-label" style="margin-top: 2%;">Nhập tên khách
-                                            hàng,
-                                            số điện thoại:</label>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-10">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Tìm kiếm hóa đơn theo tên khách hàng, số điện thoại">
-                                                    <button type="submit" class="btn btn-primary"><i
-                                                            class="bi bi-arrow-clockwise"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                                                    style="float: right;">
-                                                    Tìm kiếm
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <table class="sanpham-table" style="margin-top: 3%;">
-                                            <thead>
-                                                <tr>
-                                                    <th>
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                    </th>
-                                                    <th scope="col">STT</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Mua</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr th:each="hd, state : ${lstHdChoThanhToan}">
-                                                    <td>
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                    </td>
-                                                    <td th:text="${state.index+1}"></td>
-                                                    <td th:text="${hd.maHoaDon}">HD1</td>
-                                                    <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
-                                                    <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
-                                                    <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienHoaDon()}">2.000.000</td>
-                                                    <td th:text="${hd.ngaySua}"></td>
-                                                    <td>
-                                                        <!-- Button trigger modal
-                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                            data-bs-target="#cho-xac-nhan">
-                                                            <i class="bi bi-eye-fill"></i>
-                                                        </button> -->
-                                                        <a class="btn btn-info"
-                                                            th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
-                                                                class="bi bi-eye-fill"></i></a>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-
-
-
-                                        <div style="float: right;">
-                                            <button type="button" class="btn btn-success">
-                                                <i class="bi bi-check-circle-fill"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger">
-                                                <i class="bi bi-x-circle-fill"></i>
-                                            </button>
-                                        </div>
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">
-                                                        <i class="bi bi-chevron-left"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">
-                                                        <i class="bi bi-chevron-right"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="ex3-tabs-3" role="tabpanel" aria-labelledby="ex3-tab-3">
                                     <div class="tblHoaDonChoGiao">
                                         <label class="col-sm-5 col-form-label" style="margin-top: 2%;">Nhập tên khách
                                             hàng,
@@ -443,7 +349,7 @@
                                                     <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
                                                     <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
                                                     <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienHoaDon()}">2.000.000</td>
+                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
                                                     <td th:text="${hd.ngaySua}"></td>
                                                     <td>
                                                         <!-- Button trigger modal
@@ -489,8 +395,7 @@
                                         </nav>
                                     </div>
                                 </div>
-                                
-                                <div class="tab-pane fade" id="ex3-tabs-4" role="tabpanel" aria-labelledby="ex3-tab-4">
+                                <div class="tab-pane fade" id="ex3-tabs-3" role="tabpanel" aria-labelledby="ex3-tab-3">
                                     <div class="tblHoaDonDangGiao">
                                         <label class="col-sm-5 col-form-label" style="margin-top: 2%;">Nhập tên khách
                                             hàng,
@@ -538,7 +443,7 @@
                                                     <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
                                                     <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
                                                     <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienHoaDon()}">2.000.000</td>
+                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
                                                     <td th:text="${hd.ngaySua}"></td>
                                                     <td>
                                                         <!-- Button trigger modal
@@ -584,7 +489,8 @@
                                         </nav>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="ex3-tabs-5" role="tabpanel" aria-labelledby="ex3-tab-5">
+                                
+                                <div class="tab-pane fade" id="ex3-tabs-4" role="tabpanel" aria-labelledby="ex3-tab-4">
                                     <div class="tblHoaDonHoanThanh">
                                         <label class="col-sm-5 col-form-label" style="margin-top: 2%;">Nhập tên khách
                                             hàng,
@@ -632,7 +538,101 @@
                                                     <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
                                                     <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
                                                     <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienHoaDon()}">2.000.000</td>
+                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
+                                                    <td th:text="${hd.ngaySua}"></td>
+                                                    <td>
+                                                        <!-- Button trigger modal
+                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                            data-bs-target="#cho-xac-nhan">
+                                                            <i class="bi bi-eye-fill"></i>
+                                                        </button> -->
+                                                        <a class="btn btn-info"
+                                                            th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                class="bi bi-eye-fill"></i></a>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+
+
+                                        <div style="float: right;">
+                                            <button type="button" class="btn btn-success">
+                                                <i class="bi bi-check-circle-fill"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger">
+                                                <i class="bi bi-x-circle-fill"></i>
+                                            </button>
+                                        </div>
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">
+                                                        <i class="bi bi-chevron-left"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">
+                                                        <i class="bi bi-chevron-right"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="ex3-tabs-5" role="tabpanel" aria-labelledby="ex3-tab-5">
+                                    <div class="tblHoaDonChoThanhToan">
+                                        <label class="col-sm-5 col-form-label" style="margin-top: 2%;">Nhập tên khách
+                                            hàng,
+                                            số điện thoại:</label>
+                                        <div class="row mb-3">
+                                            <div class="col-sm-10">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Tìm kiếm hóa đơn theo tên khách hàng, số điện thoại">
+                                                    <button type="submit" class="btn btn-primary"><i
+                                                            class="bi bi-arrow-clockwise"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                                                    style="float: right;">
+                                                    Tìm kiếm
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <table class="sanpham-table" style="margin-top: 3%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <input class="form-check-input" type="checkbox" value="">
+                                                    </th>
+                                                    <th scope="col">STT</th>
+                                                    <th scope="col">Mã Hóa Đơn</th>
+                                                    <th scope="col">Khách Hàng</th>
+                                                    <th scope="col">Sô Điện Thoại</th>
+                                                    <th scope="col">Nhân Viên</th>
+                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                    <th scope="col">Ngày Mua</th>
+                                                    <th scope="col">Thao Tác</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="hd, state : ${lstHdChoThanhToan}">
+                                                    <td>
+                                                        <input class="form-check-input" type="checkbox" value="">
+                                                    </td>
+                                                    <td th:text="${state.index+1}"></td>
+                                                    <td th:text="${hd.maHoaDon}">HD1</td>
+                                                    <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
+                                                    <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
+                                                    <td th:text="${hd.nguoiTao}"></td>
+                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
                                                     <td th:text="${hd.ngaySua}"></td>
                                                     <td>
                                                         <!-- Button trigger modal
@@ -726,7 +726,7 @@
                                                     <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
                                                     <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
                                                     <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienHoaDon()}">2.000.000</td>
+                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
                                                     <td th:text="${hd.ngaySua}"></td>
                                                     <td>
                                                         <!-- Button trigger modal
