@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Controller
 @RequestMapping("/admin/voucher")
@@ -19,13 +21,12 @@ public class VoucherController {
     @Autowired
     VoucherService voucherService;
 
-
     private Date currentDate = new Date();
 
     @GetMapping()
     public String hienThi(
             Model model) {
-        model.addAttribute("listVoucher", voucherService.findAll());
+        model.addAttribute("listVoucher", voucherService.fillAll());
         model.addAttribute("voucher", new Voucher());
         return "/admin-template/voucher/voucher";
     }
@@ -71,20 +72,36 @@ public class VoucherController {
             model.addAttribute("checkThongBao", "thaiBai");
             return "/admin-template/voucher/sua-voucher";
         }
-        else if (voucher.getNgayBatDau().after(voucher.getNgayKetThuc())) {
+        else if (voucher.getNgayBatDau().isAfter(voucher.getNgayKetThuc())) {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkNgayKetThuc", "ngayKetThuc");
             model.addAttribute("listVoucher", voucherService.findAll());
             return "/admin-template/voucher/sua-voucher";
         }
-        else if (!voucherService.checkTenTrungSua(voucher.getMaVoucher(), voucher.getTenVoucher())) {
+//        else if (!voucherService.checkTenTrungSua(voucher.getMaVoucher(), voucher.getTenVoucher())) {
+//            model.addAttribute("checkThongBao", "thaiBai");
+//            model.addAttribute("checkTenTrung", "Tên Voucher đã tồn tại");
+//            return "/admin-template/voucher/sua-voucher";
+//        }
+        else if (!voucherService.checkName(voucher.getId(), voucher.getTenVoucher())) {
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Voucher đã tồn tại");
+            model.addAttribute("checkTenTrung", "Tên Voucher đã tồn tại");
             return "/admin-template/voucher/sua-voucher";
-        } else {
+        }
+        else if (!voucherService.checkCode(voucher.getId(), voucher.getMaVoucher())) {
+            model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkMaTrung", "Mã Voucher đã tồn tại");
+            return "/admin-template/voucher/sua-voucher";
+        }
+
+//        else if (!voucherService.checkMaTrungSua(voucher.getTenVoucher(), voucher.getMaVoucher())) {
+//            model.addAttribute("checkThongBao", "thaiBai");
+//            model.addAttribute("checkMaTrung", "Mã Voucher đã tồn tại");
+//            return "/admin-template/voucher/sua-voucher";
+//        }
+        else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             Voucher ms = voucherService.getById(voucher.getId());
-
             voucher.setNgaySua(currentDate);
             voucherService.update(voucher);
             return "redirect:/admin/voucher";
@@ -101,7 +118,7 @@ public class VoucherController {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listVoucher", voucherService.findAll());
             return "/admin-template/voucher/voucher";
-        } else if (voucher.getNgayBatDau().after(voucher.getNgayKetThuc())) {
+        } else if (voucher.getNgayBatDau().isAfter(voucher.getNgayKetThuc())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkNgayKetThuc", "ngayKetThuc");
@@ -124,6 +141,8 @@ public class VoucherController {
             voucher.setNgayTao(currentDate);
             voucher.setTrangThai(2);
             voucherService.update(voucher);
+            System.out.println("Ngay Bat Dau received at controller: " + voucher.getNgayBatDau());
+
             return "redirect:/admin/voucher";
         }
     }

@@ -258,16 +258,20 @@
                                             <div class="col-md-6">
                                                 <label class="form-label">
                                                     <span class="dau-sao">*</span>Ngày bắt đầu:</label>
-                                                <input type="date" class="form-control" th:field="*{ngayBatDau}">
-                                                <span class="check-loi" th:errors="*{ngayBatDau}"></span>
+                                                <input type="datetime-local" class="form-control" th:field="*{ngayBatDau}" onchange="validateDateStart()" id="ngayBatDau">
+                                                <span class="check-loi" th:errors="*{ngayBatDau}" ></span>
+                                                <br>
+                                                <span id="error-message-start" style="color: red;font-size: 14px;font-weight: bold;"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">
                                                     <span class="dau-sao">*</span>Ngày kết
                                                     thúc:</label>
-                                                <input type="date" class="form-control" th:field="*{ngayKetThuc}">
+                                                <input type="datetime-local" class="form-control" th:field="*{ngayKetThuc}" onchange="validateDateEnd()" id="ngayKetThuc">
                                                 <span class="check-loi" th:errors="*{ngayKetThuc}"></span>
                                                 <span class="check-loi" th:if="${checkNgayKetThuc=='ngayKetThuc'}">Ngày kết thúc phải sau ngày tạo</span>
+                                                <br>
+                                                <span id="error-message-end" style="color: red;font-size: 14px;font-weight: bold;"></span>
 
                                             </div>
 <!--                                            <div class="search-trang-thai" style="margin-top: 4%;">-->
@@ -325,6 +329,8 @@
                                 <th>Giảm</th>
                                 <th>Số Lượng</th>
                                 <th>Trạng Thái</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
                                 <th>Hành Động</th>
                             </tr>
                             <thead>
@@ -339,6 +345,8 @@
                                 <td class="trangthaidkd" th:if="${voucher.trangThai==0}">Đang diễn ra</td>
                                 <td class="trangthainkd" th:if="${voucher.trangThai==1}">Đã kết thúc</td>
                                 <td class="trangthainkd" th:if="${voucher.trangThai==2}">Sắp diễn ra</td>
+                                <td th:text="${voucher.ngayBatDau}"></td>
+                                <td th:text="${voucher.ngayKetThuc}"></td>
                                 <td>
                                     <!-- button và model -->
                                     <a th:href="@{/admin/voucher/view-update/{id}(id=${voucher.id})}"
@@ -622,6 +630,32 @@
 
         });
     });
+    function validateDateStart() {
+        var inputDate = new Date(document.getElementById('ngayBatDau').value);
+        var currentDate = new Date();
+
+        if (inputDate < currentDate) {
+            document.getElementById('error-message-start').innerHTML = 'Thời gian không được trong quá khứ';
+            document.getElementById('ngayBatDau').setCustomValidity('Thời gian không được trong quá khứ');
+        } else {
+            document.getElementById('error-message-start').innerHTML = '';
+            document.getElementById('ngayBatDau').setCustomValidity('');
+        }
+
+    }
+    function validateDateEnd() {
+        var inputDate = new Date(document.getElementById('ngayKetThuc').value);
+        var currentDate = new Date();
+
+        if (inputDate < currentDate) {
+            document.getElementById('error-message-end').innerHTML = 'Thời gian không được trong quá khứ';
+            document.getElementById('ngayKetThuc').setCustomValidity('Thời gian không được trong quá khứ');
+        } else {
+            document.getElementById('error-message-end').innerHTML = '';
+            document.getElementById('ngayKetThuc').setCustomValidity('');
+        }
+
+    }
 </script>
 <style>
     /*input tìm kiếm*/
