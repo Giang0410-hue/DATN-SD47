@@ -3,6 +3,7 @@ package com.example.bedatnsd47.service;
 import com.example.bedatnsd47.entity.GioHangChiTiet;
 import com.example.bedatnsd47.entity.HoaDon;
 import com.example.bedatnsd47.entity.HoaDonChiTiet;
+import com.example.bedatnsd47.entity.TaiKhoan;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface GioHangChiTietService {
 
     HoaDonChiTiet addHoaDon(List<String> listStringIdGioHangCT, Long tongTien, Long tongTienSale,
                             String hoVaTen, String soDienThoai, String tienShip, String email,
-                            String voucher, String diaChiCuThe, String ghiChu);
+                            String voucher, String diaChiCuThe, String ghiChu, TaiKhoan taiKhoan);
 
     void deleteById(Long id);
 
