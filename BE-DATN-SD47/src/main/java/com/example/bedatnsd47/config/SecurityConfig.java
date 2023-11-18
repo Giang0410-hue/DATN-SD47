@@ -90,7 +90,7 @@ public class SecurityConfig {
                 .requestMatchers("/products/welcome", "/products/new","/login","/user/shop","/test/**","/register","/saveTaiKhoan","/verify","/quen-mat-khau",
                         "/saveTaiKhoan1","/verify","/reset-mat-khau","/check-ran-dom","/check-random").permitAll()
                 .requestMatchers("/style/","/static/css/**", "/static/fonts/**","/static/img/**","/static/js/**","/static/scss/**","/static/vendor/**").permitAll()
-                .requestMatchers("/user/**").permitAll()
+                .requestMatchers("/**").permitAll()
                 .requestMatchers("/admin/**").permitAll()
                 .and()
                 .authorizeHttpRequests()

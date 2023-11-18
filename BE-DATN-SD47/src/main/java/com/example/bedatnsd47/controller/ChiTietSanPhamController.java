@@ -65,17 +65,7 @@ public class ChiTietSanPhamController {
     @GetMapping()
     public String hienThi(
             Model model) {
-        model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAll());
-        getString(model);
-        model.addAttribute("sanPham", new SanPham());
-        return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
-    }
-
-    @GetMapping("/dang-hoat-dong")
-    public String hienThiAll(
-            Model model
-    ) {
-        model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllDangHoatDong());
+        model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllCtspOneSanPham());
         getString(model);
         model.addAttribute("sanPham", new SanPham());
         return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
@@ -92,11 +82,13 @@ public class ChiTietSanPhamController {
 
     @GetMapping("/view-update/{id}")
     public String viewUpdate(
-            @PathVariable("id")Long id,
+            @PathVariable("id") Long id,
             Model model
     ) {
-        ChiTietSanPham chiTietSanPham = chiTietSanPhamSerivce.getById(id);
-        model.addAttribute("chiTietSP", chiTietSanPham);
+        SanPham sanPham = sanPhamSerivce.getById(id);
+        List<ChiTietSanPham> listChiTietSP = chiTietSanPhamSerivce.getAllCtspByIdSanPham(id);
+        model.addAttribute("sanPhamDetail", sanPham);
+        model.addAttribute("listChiTietSP", listChiTietSP);
         getString(model);
         return "/admin-template/san_pham_chi_tiet/sua-san-pham-chi-tiet";
     }
@@ -113,7 +105,7 @@ public class ChiTietSanPhamController {
             model.addAttribute("checkTab", "true");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkModal", "true");
-            model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAll());
+            model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllCtspOneSanPham());
             getString(model);
 
             return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
@@ -122,7 +114,7 @@ public class ChiTietSanPhamController {
             model.addAttribute("checkModal", "true");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên sản phẩm đã tồn tại");
-            model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAll());
+            model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllCtspOneSanPham());
             getString(model);
             return "/admin-template/san_pham_chi_tiet/san-pham-chi-tiet";
         } else {
@@ -140,22 +132,22 @@ public class ChiTietSanPhamController {
     }
 
     @PostMapping("/update")
-    public String update(@Valid
-                             @ModelAttribute("chiTietSP") ChiTietSanPham chiTietSP,
-                         BindingResult result,
-                         Model model,
-                         RedirectAttributes redirectAttributes
+    public String update(
+            @RequestParam("listIdChiTietSp") List<String> listIdChiTietSp,
+            @RequestParam("listSanPham") List<String> listSanPham,
+            @RequestParam("listKichCo") List<String> listKichCo,
+            @RequestParam("listMauSac") List<String> listMauSac,
+            @RequestParam("listLoaiDe") List<String> listLoaiDe,
+            @RequestParam("listTrangThai") List<String> listTrangThai,
+            @RequestParam("listSoLuong") List<String> listSoLuong,
+            @RequestParam("listDonGia") List<String> listDonGia,
+            RedirectAttributes attributes
 
     ) {
-         if (result.hasErrors()) {
-            model.addAttribute("checkThongBao", "thaiBai");
-             getString(model);
-             return "/admin-template/san_pham_chi_tiet/sua-san-pham-chi-tiet";
-        } else {
-            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            chiTietSanPhamSerivce.update(chiTietSP);
-             return "redirect:/admin/san-pham-chi-tiet";
-        }
+        attributes.addFlashAttribute("checkThongBao", "thanhCong");
+        chiTietSanPhamSerivce.updateAllCtsp(listIdChiTietSp, listSanPham, listKichCo, listMauSac,
+                listLoaiDe, listTrangThai, listSoLuong, listDonGia);
+        return "redirect:/admin/san-pham-chi-tiet";
     }
 
     @PostMapping("/add")
