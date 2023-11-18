@@ -14,6 +14,8 @@ public interface VoucherService {
 
     List<Voucher> fillAllDangDienRa();
 
+    List<Voucher> fillAll();
+
     List<Voucher> fillAllDaKetThuc();
 
     List<Voucher> fillAllSapDienRa();
@@ -28,8 +30,13 @@ public interface VoucherService {
 
     boolean checkTenTrungSua(String ma, String ten);
 
+    boolean checkName(Long id, String ten);
+
+    boolean checkCode(Long id, String ma);
+
     Voucher update(Voucher voucher);
 
     Voucher getById(Long id);
 
+    public void updateVoucherStatus();
 }

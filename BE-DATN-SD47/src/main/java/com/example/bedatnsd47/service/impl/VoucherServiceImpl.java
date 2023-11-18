@@ -1,11 +1,16 @@
 package com.example.bedatnsd47.service.impl;
 
+import com.example.bedatnsd47.entity.ThuongHieu;
 import com.example.bedatnsd47.entity.Voucher;
 import com.example.bedatnsd47.repository.VoucherRepository;
 import com.example.bedatnsd47.service.VoucherService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,7 +21,8 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Override
     public List<Voucher> findAll() {
-        return voucherRepository.findAll();
+        return
+                voucherRepository.findAll();
     }
 
     @Override
@@ -32,6 +38,11 @@ public class VoucherServiceImpl implements VoucherService {
     @Override
     public List<Voucher> fillAllDangDienRa() {
         return voucherRepository.fillAllDangDienRa();
+    }
+
+    @Override
+    public List<Voucher> fillAll() {
+        return voucherRepository.fillAll();
     }
 
     @Override
@@ -57,7 +68,8 @@ public class VoucherServiceImpl implements VoucherService {
                 return false;
             }
         }
-        return true;    }
+        return true;
+    }
 
     @Override
     public boolean checkMaTrungSua(String ma, String ten) {
@@ -94,6 +106,30 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
+    public boolean checkName(Long id, String ten) {
+        for (Voucher sp : voucherRepository.findAll()) {
+            if (sp.getTenVoucher().equalsIgnoreCase(ten)) {
+                if (!sp.getId().equals(id)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkCode(Long id, String ma) {
+        for (Voucher sp : voucherRepository.findAll()) {
+            if (sp.getMaVoucher().equalsIgnoreCase(ma)) {
+                if (!sp.getId().equals(id)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
     public Voucher update(Voucher voucher) {
 
         return voucherRepository.save(voucher);
@@ -106,5 +142,26 @@ public class VoucherServiceImpl implements VoucherService {
         return voucherRepository.findById(id).get();
 
     }
+
+    @Override
+    @Transactional
+    @Scheduled(fixedRate = 60000)
+    public void updateVoucherStatus() {
+        List<Voucher> vouchers = findAll();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        for (Voucher voucher : vouchers) {
+            if (currentDateTime.isBefore(voucher.getNgayBatDau())) {
+                voucher.setTrangThai(2);
+            } else if (currentDateTime.isAfter(voucher.getNgayKetThuc())) {
+                voucher.setTrangThai(1);
+            } else {
+                voucher.setTrangThai(0);
+            }
+
+            // Cập nhật trạng thái
+            update(voucher);
+        }
+    }
+
 
 }
