@@ -130,6 +130,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
+    public TaiKhoan findKhachLe() {
+        return repository.findKhachLe();
+    }
     public void sendEmail(TaiKhoan taiKhoan, String path, String random) {
         String from = "daspabitra55@gmail.com";
         String to = taiKhoan.getEmail();

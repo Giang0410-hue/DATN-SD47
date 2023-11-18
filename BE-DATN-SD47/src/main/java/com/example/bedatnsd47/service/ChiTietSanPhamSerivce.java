@@ -20,6 +20,12 @@ public interface ChiTietSanPhamSerivce {
             List<String> listMauSac, List<String> listLoaiDe,
             List<String> listSoLuong, List<String> listDonGia);
 
+    List<ChiTietSanPham> updateAllCtsp(
+            List<String> listIdChiTietSp, List<String> listSanPham,
+            List<String> listKichCo, List<String> listMauSac,
+            List<String> listLoaiDe, List<String> listTrangThai,
+            List<String> listSoLuong, List<String> listDonGia);
+
     ChiTietSanPham update(ChiTietSanPham chiTietSanPham);
 
     void remove(Long id);
@@ -30,8 +36,8 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> getAllbyIdSPAndIdMS(Long idSanPham,Long idMauSac);
 
-    boolean checkTenTrung(String ten);
+    List<ChiTietSanPham> getAllCtspByIdSanPham(Long idSanPham);
 
-    boolean checkTenTrungSua(String ma, String ten);
+    List<ChiTietSanPham> fillAllDangHoatDongLonHon0();
 
 }

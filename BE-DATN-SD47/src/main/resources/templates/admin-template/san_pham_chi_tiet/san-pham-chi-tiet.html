@@ -187,9 +187,7 @@
                                     <div class="col-md-10">
                                         <label>Trạng thái:</label>
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                            <a href="/admin/san-pham-chi-tiet" class="btn btn-outline-primary">
-                                                Tất cả</a>
-                                            <a href="/admin/san-pham-chi-tiet/dang-hoat-dong"
+                                            <a href="/admin/san-pham-chi-tiet"
                                                class="btn btn-outline-primary">
                                                 Đang hoạt động</a>
                                             <a href="/admin/san-pham-chi-tiet/ngung-hoat-dong"
@@ -212,11 +210,11 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Tên Sản Phẩm</th>
-                                        <th>Số Lượng</th>
+                                        <!--                                        <th>Số Lượng</th>-->
+                                        <!--                                       <th>Kích Cỡ</th>-->
+                                        <!--                                        <th>Màu Sắc</th>-->
+                                        <th>Thương Hiệu</th>
                                         <th>Giá Bán</th>
-                                        <th>Kích Cỡ</th>
-                                        <th>Màu Sắc</th>
-                                        <th>Trạng Thái</th>
                                         <th>Hành Động</th>
                                     </tr>
                                     </thead>
@@ -224,19 +222,21 @@
                                     <tr th:each="chiTietSP,iterStat : ${listChiTietSP}">
                                         <td th:text="${iterStat.index+1}"></td>
                                         <td th:text="${chiTietSP.sanPham.ten}"></td>
-                                        <td th:text="${chiTietSP.soLuong}"></td>
-                                        <td th:text="${chiTietSP.giaHienHanh}"></td>
-                                        <td th:text="${chiTietSP.kichCo.ten}"></td>
-                                        <td th:text="${chiTietSP.loaiDe.ten}"></td>
+                                        <!--                                        <td th:text="${chiTietSP.soLuong}"></td>-->
+                                        <!--                                        <td th:text="${chiTietSP.kichCo.ten}"></td>-->
+                                        <!--                                        <td th:text="${chiTietSP.loaiDe.ten}"></td>-->
+                                        <td th:text="${chiTietSP.sanPham.thuongHieu.ten}"></td>
+                                        <td th:text="${chiTietSP.giaHienHanh+' VNĐ'}"></td>
 
-                                        <td class="trangthaidkd" th:if="${chiTietSP.trangThai==0}">Đang kinh
-                                            doanh
-                                        </td>
-                                        <td class="trangthainkd" th:if="${chiTietSP.trangThai==1}">Ngừng kinh
-                                            doanh
-                                        </td>
+                                        <!--                                        <td class="trangthaidkd" th:if="${chiTietSP.trangThai==0}">Đang kinh-->
+                                        <!--                                            doanh-->
+                                        <!--                                        </td>-->
+                                        <!--                                        <td class="trangthainkd" th:if="${chiTietSP.trangThai==1}">Ngừng kinh-->
+                                        <!--                                            doanh-->
+                                        <!--                                        </td>-->
                                         <td>
-                                            <a th:href="@{/admin/san-pham-chi-tiet/view-update/{id}(id=${chiTietSP.id})}" class="btn btn-info">
+                                            <a th:href="@{/admin/san-pham-chi-tiet/view-update/{id}(id=${chiTietSP.sanPham.id})}"
+                                               class="btn btn-info">
                                                 <i class="bi bi-pencil-fill"></i></i>
                                             </a>
                                         </td>
@@ -246,11 +246,11 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Tên Sản Phẩm</th>
-                                        <th>Số Lượng</th>
+                                        <!--                                        <th>Số Lượng</th>-->
+                                        <th>Thương Hiệu</th>
                                         <th>Giá Bán</th>
-                                        <th>Kích Cỡ</th>
-                                        <th>Màu Sắc</th>
-                                        <th>Trạng Thái</th>
+                                        <!--                                        <th>Kích Cỡ</th>-->
+                                        <!--                                        <th>Màu Sắc</th>-->
                                         <th>Hành Động</th>
                                     </tr>
                                     </tfoot>
@@ -363,8 +363,8 @@
                                         <button type="submit" class="btn btn-success"
                                                 style="float: right;margin-top: 3%;margin-bottom: 2%;">Thêm sản phẩm
                                         </button>
-                                        <!-- js build lấy id sản phẩm -->
 
+                                        <!-- js build lấy id sản phẩm -->
                                         <script>
                                             function checkSelections() {
                                                 var kichCoSelect = document.getElementById("kichCoSelect");
@@ -406,10 +406,10 @@
                                                         const checkDonGia = donGiaInputs[i].value;
                                                         const errorDiv = document.getElementById("checkDonGia" + (i * 2 + 2));
 
-                                                        if (checkDonGia <= 0 || checkDonGia >= 1000000000) {
+                                                        if (checkDonGia <= 10000 || checkDonGia >= 1000000000) {
                                                             hasError = true; // Có lỗi
                                                             errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
-                                                            errorDiv.textContent = (checkDonGia <= 0) ? "Giá phải >= 0" : "Giá phải <= 1000000000"; // Hiển thị thông báo lỗi
+                                                            errorDiv.textContent = (checkDonGia <= 10000) ? "Giá phải >= 10000" : "Giá phải <= 1000000000"; // Hiển thị thông báo lỗi
                                                         } else {
                                                             errorDiv.style.display = "none"; // Ẩn div thông báo lỗi nếu giá trị hợp lệ
                                                         }
@@ -419,7 +419,11 @@
                                                         const checkSoLuong = soLuongInputs[i].value;
                                                         const errorDiv = document.getElementById("checkSoLuong" + (i * 2 + 1));
 
-                                                        if (checkSoLuong < 0 || checkSoLuong >= 100000) {
+                                                        if (checkSoLuong == "") {
+                                                            hasError = true; // Có lỗi
+                                                            errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
+                                                            errorDiv.textContent = "Không được để null"; // Hiển thị thông báo lỗi
+                                                        } else if (checkSoLuong < 0 || checkSoLuong >= 100000) {
                                                             hasError = true; // Có lỗi
                                                             errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
                                                             errorDiv.textContent = (checkSoLuong < 0) ? "Số lượng phải >= 0" : "Số lượng phải <= 100000"; // Hiển thị thông báo lỗi
@@ -600,7 +604,8 @@
                                                     <div class="mb-3">
                                                         <label class="form-label"><span class="dau-sao">*</span>Tên Sản
                                                             Phẩm:</label>
-                                                        <input type="text" class="form-control" placeholder="Nhập tên giày"
+                                                        <input type="text" class="form-control"
+                                                               placeholder="Nhập tên giày"
                                                                th:field="*{ten}">
                                                         <span class="check-loi" th:errors="*{ten}"></span>
                                                         <span class="check-loi" th:text="${checkTenTrung}"></span>
@@ -610,7 +615,8 @@
                                                             Hiệu:</label>
                                                         <select class="form-control" th:field="*{thuongHieu}">
                                                             <option th:each="thuongHieu : ${listThuongHieu}"
-                                                                    th:value="${thuongHieu.id}" th:text="${thuongHieu.ten}">
+                                                                    th:value="${thuongHieu.id}"
+                                                                    th:text="${thuongHieu.ten}">
                                                             </option>
                                                         </select>
                                                     </div>
@@ -623,7 +629,8 @@
                                                         <span class="check-loi" th:errors="*{moTa}"></span>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label class="form-label"><span class="dau-sao">*</span>Ảnh:</label>
+                                                        <label class="form-label"><span
+                                                                class="dau-sao">*</span>Ảnh:</label>
                                                         <div id="drop--area">
                                                             <label for="file--input" class="button-img">
                                                                 Chọn ảnh <i class="bi bi-images"></i>

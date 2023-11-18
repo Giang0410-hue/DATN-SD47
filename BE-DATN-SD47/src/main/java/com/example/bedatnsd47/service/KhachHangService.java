@@ -31,6 +31,7 @@ public interface KhachHangService {
 
     boolean checkEmailSua(Long id,String email);
 
+    TaiKhoan findKhachLe();
     public void sendEmail(TaiKhoan taiKhoan, String path,String random);
 
 }
