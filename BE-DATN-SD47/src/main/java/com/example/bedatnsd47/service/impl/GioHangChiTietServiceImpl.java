@@ -79,7 +79,7 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     @Override
     public HoaDonChiTiet addHoaDon(List<String> listStringIdGioHangCT, Long tongTien, Long tongTienSale,
                                    String hoVaTen, String soDienThoai, String tienShip, String email,
-                                   String voucher, String diaChiCuThe, String ghiChu) {
+                                   String voucher, String diaChiCuThe, String ghiChu, TaiKhoan taiKhoan) {
         Date currentAdd = new Date();
 
         HoaDon hoaDon = new HoaDon();
@@ -98,7 +98,7 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         hoaDon.setTrangThai(0);
         hoaDon.setVoucher(Voucher.builder().id(Long.valueOf(voucher)).build());
 
-        hoaDon.setTaiKhoan(TaiKhoan.builder().id(Long.valueOf(4)).build());
+        hoaDon.setTaiKhoan(taiKhoan);
         repositoryHoaDon.save(hoaDon);
 
         hoaDon.setMaHoaDon("HĐ" + hoaDon.getId());
@@ -120,7 +120,6 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
 
             repository.delete(gioHangChiTiet);
         }
-
 
 
         return null;

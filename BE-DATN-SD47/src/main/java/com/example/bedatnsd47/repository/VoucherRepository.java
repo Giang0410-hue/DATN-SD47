@@ -2,7 +2,9 @@ package com.example.bedatnsd47.repository;
 
 import com.example.bedatnsd47.entity.Voucher;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,6 +20,9 @@ public interface VoucherRepository extends JpaRepository<Voucher, Long> {
 
     @Query(value = "select * from voucher where trang_thai = 2",nativeQuery = true)
     List<Voucher> fillAllSapDienRa();
+
+    @Query(value = "select * from voucher where trang_thai = 0 or trang_thai = 1 or trang_thai =2",nativeQuery = true)
+    List<Voucher> fillAll();
 
     @Query(value = "SELECT MAX(CONVERT(varchar, SUBSTRING(ma_voucher,9,10))) from voucher",nativeQuery = true)
     Integer index();

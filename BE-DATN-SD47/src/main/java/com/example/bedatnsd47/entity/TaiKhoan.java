@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.GroupSequence;
 import jakarta.validation.constraints.NotBlank;
@@ -101,4 +102,7 @@ public class TaiKhoan {
 
     @OneToMany(mappedBy = "taiKhoan")
     List<DiaChi> lstDiaChi;
+
+    @OneToOne(mappedBy = "taiKhoan")
+    GioHang gioHang;
 }
