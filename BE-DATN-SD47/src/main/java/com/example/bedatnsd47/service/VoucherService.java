@@ -6,6 +6,9 @@ import com.example.bedatnsd47.entity.Voucher;
 import java.util.List;
 
 public interface VoucherService {
+
+    Voucher fillByMaVoucher();
+
     List<Voucher> findAll();
 
     Voucher findById(Long id);
