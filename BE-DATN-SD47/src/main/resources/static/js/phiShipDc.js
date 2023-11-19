@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(citySelect)
     console.log(districtSelect)
     console.log(wardSelect)
-    var selectedCityValue = /*[[ ${khacHang.thanhPho} ]]*/ '';
-    var selectedDistrictValue = /*[[ ${khacHang.quanHuyen} ]]*/ '';
-    var selectedWardValue = /*[[ ${khacHang.phuongXa} ]]*/ '';
+    var selectedCityValue = /*[[ ${hoaDon.thanhPho} ]]*/ '';
+    var selectedDistrictValue = /*[[ ${hoaDon.quanHuyen} ]]*/ '';
+    var selectedWardValue = /*[[ ${hoaDon.phuongXa} ]]*/ '';
 
     fetch('https://online-gateway.ghn.vn/shiip/public-api/master-data/province', {
         method: 'GET',

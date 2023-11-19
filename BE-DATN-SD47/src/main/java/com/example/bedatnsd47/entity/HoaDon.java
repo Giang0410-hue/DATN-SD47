@@ -69,7 +69,7 @@ public class HoaDon {
 
     @Column(name = "phuong_xa", length = 50)
     private String phuongXa;
-    
+
     @Column(name = "dia_chi_nguoi_nhan", length = 100)
     private String diaChiNguoiNhan;
 
@@ -119,8 +119,8 @@ public class HoaDon {
         }
         return total;
     }
-    
-    public static String timeFm(LocalDateTime currentTime){
+
+    public static String timeFm(LocalDateTime currentTime) {
         // LocalDateTime currentTime = LocalDateTime.now();
 
         // Định dạng thời gian theo yêu cầu: giờ, phút, ngày, tháng, năm
@@ -129,5 +129,30 @@ public class HoaDon {
         return formattedTime;
     }
 
+    public Long tongTienHoaDonKhiGiam() {
+
+        return this.tongTienHoaDon() + this.getPhiShip();
+    }
+
+    public String getStringTrangThai() {
+        switch (this.trangThai) {
+            case 0:
+                return "Chờ xác nhận";
+            case 1:
+                return "Chờ giao";
+            case 2:
+                return "Đang giao";
+
+            case 3:
+                return "Hoàn thành";
+            case 4:
+                return "Chờ thanh toán";
+                case 5:
+                return "Đã hủy";
+            default:
+                break;
+        }
+        return "";
+    }
 
 }
