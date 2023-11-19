@@ -12,11 +12,13 @@ import com.example.bedatnsd47.service.KhachHangService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.auditing.CurrentDateTimeProvider;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -269,6 +271,7 @@ public class BanHangController {
 
     @GetMapping("/hoa-don/quan-ly")
     public String quanLyHoaDon() {
+        request.setAttribute("lstHdctAll", hoaDonService.findAll());
         request.setAttribute("lstHdChoXacNhan", hoaDonService.find5ByTrangThai(0));
         request.setAttribute("lstHdChoGiao", hoaDonService.find5ByTrangThai(1));
         request.setAttribute("lstHdDangGiao", hoaDonService.find5ByTrangThai(2));
@@ -277,4 +280,6 @@ public class BanHangController {
         request.setAttribute("lstHdHuy", hoaDonService.find5ByTrangThai(5));
         return "/admin-template/hoa-don";
     }
+
+    
 }

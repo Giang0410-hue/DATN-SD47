@@ -151,11 +151,20 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist" style="margin-top: 3%;">
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link active" id="ex3-tab-1" data-bs-toggle="tab" href="#ex3-tabs-1"
-                                        role="tab" aria-controls="ex3-tabs-1" aria-selected="true">
+                                    <a class="nav-link active" id="ex3-tab-0" data-bs-toggle="tab" href="#ex3-tabs-0"
+                                        role="tab" aria-controls="ex3-tabs-0" aria-selected="true">
+                                        Tất cả
+                                        <span class="cart">
+                                            <span class="cart__count">[[${lstHdctAll.size()}]]</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="ex3-tab-1" data-bs-toggle="tab" href="#ex3-tabs-1"
+                                        role="tab" aria-controls="ex3-tabs-1" aria-selected="false">
                                         Chờ xác nhận
                                         <span class="cart">
-                                            <span class="cart__count">5</span>
+                                            <span class="cart__count">[[${lstHdChoXacNhan.size()}]]</span>
                                         </span>
                                     </a>
                                 </li>
@@ -164,7 +173,7 @@
                                         role="tab" aria-controls="ex3-tabs-2" aria-selected="false">
                                         Chờ giao
                                         <span class="cart">
-                                            <span class="cart__count">5</span>
+                                            <span class="cart__count">[[${lstHdChoGiao.size()}]]</span>
                                         </span>
                                     </a>
                                 </li>
@@ -173,7 +182,7 @@
                                         role="tab" aria-controls="ex3-tabs-3" aria-selected="false">
                                         Đang giao
                                         <span class="cart">
-                                            <span class="cart__count">5</span>
+                                            <span class="cart__count">[[${lstHdDangGiao.size()}]]</span>
                                         </span>
                                     </a>
                                 </li>
@@ -182,7 +191,7 @@
                                         role="tab" aria-controls="ex3-tabs-4" aria-selected="false">
                                         Hoàn thành
                                         <span class="cart">
-                                            <span class="cart__count">5</span>
+                                            <span class="cart__count">[[${lstHdHoanThanh.size()}]]</span>
                                         </span>
                                     </a>
                                 </li>
@@ -191,7 +200,7 @@
                                         role="tab" aria-controls="ex3-tabs-5" aria-selected="false">
                                         Chờ thanh toán
                                         <span class="cart">
-                                            <span class="cart__count">5</span>
+                                            <span class="cart__count">[[${lstHdChoThanhToan.size()}]]</span>
                                         </span>
                                     </a>
                                 </li>
@@ -200,14 +209,110 @@
                                         role="tab" aria-controls="ex3-tabs-6" aria-selected="false">
                                         Hủy
                                         <span class="cart">
-                                            <span class="cart__count">5</span>
+                                            <span class="cart__count">[[${lstHdHuy.size()}]]</span>
                                         </span>
                                     </a>
                                 </li>
                             </ul>
 
                             <div class="tab-content" id="ex2-content">
-                                <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel"
+                                <div class="tab-pane fade show active" id="ex3-tabs-0" role="tabpanel"
+                                    aria-labelledby="ex3-tab-1">
+                                    <div class="tblHoaDonAll">
+                                        <label class="col-sm-5 col-form-label" style="margin-top: 2%;">Nhập tên khách
+                                            hàng,
+                                            số điện thoại:</label>
+                                        <div class="row mb-3">
+                                            <div class="col-sm-10">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Tìm kiếm hóa đơn theo tên khách hàng, số điện thoại">
+                                                    <button type="submit" class="btn btn-primary"><i
+                                                            class="bi bi-arrow-clockwise"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                                                    style="float: right;">
+                                                    Tìm kiếm
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <table class="sanpham-table" style="margin-top: 3%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <input class="form-check-input" type="checkbox" value="">
+                                                    </th>
+                                                    <th scope="col">STTs</th>
+                                                    <th scope="col">Mã Hóa Đơn</th>
+                                                    <th scope="col">Loại Hóa Đơn</th>
+                                                    <th scope="col">Khách Hàng</th>
+                                                    <th scope="col">Sô Điện Thoại</th>
+                                                    <th scope="col">Nhân Viên</th>
+                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                    <th scope="col">Ngày Mua</th>
+                                                    <th scope="col">Thao Tác</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="hd, state : ${lstHdctAll}">
+                                                    <td>
+                                                        <input class="form-check-input" type="checkbox" value="">
+                                                    </td>
+                                                    <td th:text="${state.index+1}"></td>
+                                                    <td th:text="${hd.maHoaDon}">HD1</td>
+                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Tại quầy'">Online</td>
+                                                    <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
+                                                    <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
+                                                    <td th:text="${hd.nguoiTao}"></td>
+                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
+                                                    <td th:text="${hd.timeFm(hd.ngaySua)}"></td>
+                                                    <td>
+                                                        <!-- Button trigger modal
+                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                            data-bs-target="#cho-xac-nhan">
+                                                            <i class="bi bi-eye-fill"></i>
+                                                        </button> -->
+                                                        <a class="btn btn-info"
+                                                            th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                class="bi bi-eye-fill"></i></a>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+
+                                        <div style="float: right;">
+                                            <button type="button" class="btn btn-success">
+                                                <i class="bi bi-check-circle-fill"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger">
+                                                <i class="bi bi-x-circle-fill"></i>
+                                            </button>
+                                        </div>
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">
+                                                        <i class="bi bi-chevron-left"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">
+                                                        <i class="bi bi-chevron-right"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show" id="ex3-tabs-1" role="tabpanel"
                                     aria-labelledby="ex3-tab-1">
                                     <div class="tblHoaDonChoXacNhan">
                                         <label class="col-sm-5 col-form-label" style="margin-top: 2%;">Nhập tên khách
@@ -238,6 +343,7 @@
                                                     </th>
                                                     <th scope="col">STT</th>
                                                     <th scope="col">Mã Hóa Đơn</th>
+                                                    <th scope="col">Loại Hóa Đơn</th>
                                                     <th scope="col">Khách Hàng</th>
                                                     <th scope="col">Sô Điện Thoại</th>
                                                     <th scope="col">Nhân Viên</th>
@@ -253,11 +359,12 @@
                                                     </td>
                                                     <td th:text="${state.index+1}"></td>
                                                     <td th:text="${hd.maHoaDon}">HD1</td>
+                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Tại quầy'">Online</td>
                                                     <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
                                                     <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
                                                     <td th:text="${hd.nguoiTao}"></td>
                                                     <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.ngaySua}"></td>
+                                                    <td th:text="${hd.timeFm(hd.ngaySua)}"></td>
                                                     <td>
                                                         <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
@@ -331,6 +438,7 @@
                                                     </th>
                                                     <th scope="col">STT</th>
                                                     <th scope="col">Mã Hóa Đơn</th>
+                                                    <th scope="col">Loại Hóa Đơn</th>
                                                     <th scope="col">Khách Hàng</th>
                                                     <th scope="col">Sô Điện Thoại</th>
                                                     <th scope="col">Nhân Viên</th>
@@ -346,11 +454,12 @@
                                                     </td>
                                                     <td th:text="${state.index+1}"></td>
                                                     <td th:text="${hd.maHoaDon}">HD1</td>
+                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Tại quầy'">Online</td>
                                                     <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
                                                     <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
                                                     <td th:text="${hd.nguoiTao}"></td>
                                                     <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.ngaySua}"></td>
+                                                    <td th:text="${hd.timeFm(hd.ngaySua)}"></td>
                                                     <td>
                                                         <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
@@ -425,6 +534,7 @@
                                                     </th>
                                                     <th scope="col">STT</th>
                                                     <th scope="col">Mã Hóa Đơn</th>
+                                                    <th scope="col">Loại Hóa Đơn</th>
                                                     <th scope="col">Khách Hàng</th>
                                                     <th scope="col">Sô Điện Thoại</th>
                                                     <th scope="col">Nhân Viên</th>
@@ -440,11 +550,12 @@
                                                     </td>
                                                     <td th:text="${state.index+1}"></td>
                                                     <td th:text="${hd.maHoaDon}">HD1</td>
+                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Tại quầy'">Online</td>
                                                     <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
                                                     <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
                                                     <td th:text="${hd.nguoiTao}"></td>
                                                     <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.ngaySua}"></td>
+                                                    <td th:text="${hd.timeFm(hd.ngaySua)}"></td>
                                                     <td>
                                                         <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
@@ -520,6 +631,7 @@
                                                     </th>
                                                     <th scope="col">STT</th>
                                                     <th scope="col">Mã Hóa Đơn</th>
+                                                    <th scope="col">Loại Hóa Đơn</th>
                                                     <th scope="col">Khách Hàng</th>
                                                     <th scope="col">Sô Điện Thoại</th>
                                                     <th scope="col">Nhân Viên</th>
@@ -535,11 +647,12 @@
                                                     </td>
                                                     <td th:text="${state.index+1}"></td>
                                                     <td th:text="${hd.maHoaDon}">HD1</td>
+                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Tại quầy'">Online</td>
                                                     <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
                                                     <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
                                                     <td th:text="${hd.nguoiTao}"></td>
                                                     <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.ngaySua}"></td>
+                                                    <td th:text="${hd.timeFm(hd.ngaySua)}"></td>
                                                     <td>
                                                         <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
@@ -614,6 +727,7 @@
                                                     </th>
                                                     <th scope="col">STT</th>
                                                     <th scope="col">Mã Hóa Đơn</th>
+                                                    <th scope="col">Loại Hóa Đơn</th>
                                                     <th scope="col">Khách Hàng</th>
                                                     <th scope="col">Sô Điện Thoại</th>
                                                     <th scope="col">Nhân Viên</th>
@@ -629,11 +743,12 @@
                                                     </td>
                                                     <td th:text="${state.index+1}"></td>
                                                     <td th:text="${hd.maHoaDon}">HD1</td>
+                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Tại quầy'">Online</td>
                                                     <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
                                                     <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
                                                     <td th:text="${hd.nguoiTao}"></td>
                                                     <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.ngaySua}"></td>
+                                                    <td th:text="${hd.timeFm(hd.ngaySua)}"></td>
                                                     <td>
                                                         <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
@@ -708,6 +823,7 @@
                                                     </th>
                                                     <th scope="col">STT</th>
                                                     <th scope="col">Mã Hóa Đơn</th>
+                                                    <th scope="col">Loại Hóa Đơn</th>
                                                     <th scope="col">Khách Hàng</th>
                                                     <th scope="col">Sô Điện Thoại</th>
                                                     <th scope="col">Nhân Viên</th>
@@ -723,11 +839,12 @@
                                                     </td>
                                                     <td th:text="${state.index+1}"></td>
                                                     <td th:text="${hd.maHoaDon}">HD1</td>
+                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Tại quầy'">Online</td>
                                                     <td th:text="${hd.TaiKhoan.hoVaTen}"></td>
                                                     <td th:text="${hd.TaiKhoan.soDienThoai}">0377463664</td>
                                                     <td th:text="${hd.nguoiTao}"></td>
                                                     <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.ngaySua}"></td>
+                                                    <td th:text="${hd.timeFm(hd.ngaySua)}"></td>
                                                     <td>
                                                         <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"

@@ -18,6 +18,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -117,4 +119,15 @@ public class HoaDon {
         }
         return total;
     }
+    
+    public static String timeFm(LocalDateTime currentTime){
+        // LocalDateTime currentTime = LocalDateTime.now();
+
+        // Định dạng thời gian theo yêu cầu: giờ, phút, ngày, tháng, năm
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+        String formattedTime = currentTime.format(formatter);
+        return formattedTime;
+    }
+
+
 }
