@@ -23,5 +23,5 @@ public interface HoaDonService {
     List<HoaDon> find5ByTrangThai(Integer trangThai);
 
     HoaDon findByMa(String ma);
-
+    List<HoaDon> findAllOrderByNgaySua();
 }
