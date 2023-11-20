@@ -147,7 +147,7 @@ public class VoucherServiceImpl implements VoucherService {
     @Transactional
     @Scheduled(fixedRate = 60000)
     public void updateVoucherStatus() {
-        List<Voucher> vouchers = findAll();
+        List<Voucher> vouchers = voucherRepository.fillAll();
         LocalDateTime currentDateTime = LocalDateTime.now();
         for (Voucher voucher : vouchers) {
             if (currentDateTime.isBefore(voucher.getNgayBatDau())) {
