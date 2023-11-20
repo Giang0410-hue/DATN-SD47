@@ -33,7 +33,7 @@ import java.util.List;
 //@RequestMapping("/home")
 public class HomeController {
 
-    private Long idTaiKhoan = Long.valueOf(4);
+    private Long idTaiKhoan = Long.valueOf(8);
 
     @Autowired
     private ChiTietSanPhamSerivce chiTietSanPhamSerivce;
@@ -204,7 +204,7 @@ public class HomeController {
         String[] optionArray = options.split(",");
         List<String> listIdString = Arrays.asList(optionArray);
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
-        List<GioHangChiTiet> listGioHangChiTiet = gioHangChiTietService.findAllById(listIdString,khachHang.getGioHang().getId());
+        List<GioHangChiTiet> listGioHangChiTiet = gioHangChiTietService.findAllById(listIdString, khachHang.getGioHang().getId());
         model.addAttribute("listGioHangChiTiet", listGioHangChiTiet);
         List<DiaChi> diaChi = diaChiService.getAllByTaiKhoan(idTaiKhoan);
         model.addAttribute("listVoucher", voucherService.fillAllDangDienRa());
@@ -240,18 +240,32 @@ public class HomeController {
             @RequestParam("ghiChu") String ghiChu,
             @RequestParam("phuongXaID") String phuongXaID,
             @RequestParam("quanHuyenID") String quanHuyenID,
-            @RequestParam("thanhPhoID") String thanhPhoID
+            @RequestParam("thanhPhoID") String thanhPhoID,
+            @RequestParam("trangThaiLuuDC") String trangThaiLuuDC
     ) {
         String[] optionArray = idGioHangChiTiet.split(",");
         List<String> listIdString = Arrays.asList(optionArray);
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         Voucher voucherGet = voucherService.fillByMaVoucher();
+        if (trangThaiLuuDC != "0") {
+            Date date = new Date();
+            DiaChi diaChi = new DiaChi();
+            diaChi.setPhuongXa(phuongXaID);
+            diaChi.setQuanHuyen(quanHuyenID);
+            diaChi.setThanhPho(thanhPhoID);
+            diaChi.setDiaChiCuThe(diaChiCuThe);
+            diaChi.setTrangThai(1);
+            diaChi.setNgayTao(date);
+            diaChi.setNgaySua(date);
+            diaChi.setTaiKhoan(TaiKhoan.builder().id(idTaiKhoan).build());
+            diaChiService.save(diaChi);
+        }
         if (voucherGet.getMaVoucher().equalsIgnoreCase(voucher)) {
             gioHangChiTietService.addHoaDon(listIdString, Long.valueOf(tongTien), Long.valueOf(tongTienAndSale), hoVaTen,
-                    soDienThoai, tienShip, email, String.valueOf(voucherGet.getId()), diaChiCuThe, ghiChu, khachHang, phuongXaID, quanHuyenID, thanhPhoID,khachHang.getGioHang().getId());
+                    soDienThoai, tienShip, email, String.valueOf(voucherGet.getId()), diaChiCuThe, ghiChu, khachHang, phuongXaID, quanHuyenID, thanhPhoID, khachHang.getGioHang().getId());
         } else {
             gioHangChiTietService.addHoaDon(listIdString, Long.valueOf(tongTien), Long.valueOf(tongTienAndSale), hoVaTen,
-                    soDienThoai, tienShip, email, voucher, diaChiCuThe, ghiChu, khachHang, phuongXaID, quanHuyenID, thanhPhoID,khachHang.getGioHang().getId());
+                    soDienThoai, tienShip, email, voucher, diaChiCuThe, ghiChu, khachHang, phuongXaID, quanHuyenID, thanhPhoID, khachHang.getGioHang().getId());
         }
         return "redirect:/thankyou";
     }
@@ -315,8 +329,11 @@ public class HomeController {
     }
 
     @GetMapping("/thankyou")
-    public String thankYou() {
-
+    public String thankYou(
+            Model model
+    ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
         return "/customer-template/thankyou";
     }
 
