@@ -6,6 +6,7 @@ import com.example.bedatnsd47.repository.VoucherRepository;
 import com.example.bedatnsd47.service.VoucherService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -109,7 +110,7 @@ public class VoucherServiceImpl implements VoucherService {
     public boolean checkName(Long id, String ten) {
         for (Voucher sp : voucherRepository.findAll()) {
             if (sp.getTenVoucher().equalsIgnoreCase(ten)) {
-                if (!sp.getId().equals(id)){
+                if (!sp.getId().equals(id)) {
                     return false;
                 }
             }
@@ -121,7 +122,7 @@ public class VoucherServiceImpl implements VoucherService {
     public boolean checkCode(Long id, String ma) {
         for (Voucher sp : voucherRepository.findAll()) {
             if (sp.getMaVoucher().equalsIgnoreCase(ma)) {
-                if (!sp.getId().equals(id)){
+                if (!sp.getId().equals(id)) {
                     return false;
                 }
             }
@@ -145,7 +146,7 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Override
     @Transactional
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 100000)
     public void updateVoucherStatus() {
         List<Voucher> vouchers = voucherRepository.fillAll();
         LocalDateTime currentDateTime = LocalDateTime.now();
