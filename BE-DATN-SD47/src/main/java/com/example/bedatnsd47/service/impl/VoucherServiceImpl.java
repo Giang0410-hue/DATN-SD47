@@ -21,6 +21,11 @@ public class VoucherServiceImpl implements VoucherService {
 
 
     @Override
+    public Voucher fillByMaVoucher() {
+        return voucherRepository.getByMaVoucher();
+    }
+
+    @Override
     public List<Voucher> findAll() {
         return
                 voucherRepository.findAll();

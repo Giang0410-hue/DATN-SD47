@@ -11,6 +11,9 @@ import java.util.List;
 @Repository
 public interface GioHangChiTietRepository extends JpaRepository<GioHangChiTiet,Long> {
 
+    @Query(value = "SELECT * FROM gio_hang_chi_tiet WHERE id IN (:listId) AND gio_hang_id = :idGioHang",nativeQuery = true)
+    List<GioHangChiTiet> findAllByIdGHCT(@Param("listId")List<Long> listId,@Param("idGioHang")Long idGioHang);
+
     @Query(value = "select * from gio_hang_chi_tiet where gio_hang_id = :idGioHang and trang_thai = 0 order by ngay_sua desc",nativeQuery = true)
     List<GioHangChiTiet> getfindAllByIdGioHang(@Param("idGioHang")Long idGioHang);
 

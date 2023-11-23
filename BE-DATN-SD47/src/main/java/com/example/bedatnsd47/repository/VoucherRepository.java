@@ -12,6 +12,9 @@ import java.util.List;
 @Repository
 public interface VoucherRepository extends JpaRepository<Voucher, Long> {
 
+    @Query(value = "select * from voucher where ma_voucher = 'vouchernull'",nativeQuery = true)
+    Voucher getByMaVoucher();
+
     @Query(value = "select * from voucher where trang_thai = 0",nativeQuery = true)
     List<Voucher> fillAllDangDienRa();
 

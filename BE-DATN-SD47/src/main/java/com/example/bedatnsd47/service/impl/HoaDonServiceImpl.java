@@ -53,4 +53,9 @@ public class HoaDonServiceImpl implements HoaDonService {
     public HoaDon findByMa(String ma) {
         return hoaDonRepository.findByMa(ma);
     }
+
+    @Override
+    public List<HoaDon> findAllOrderByNgaySua() {
+        return hoaDonRepository.findAllOrderByNgaySua();
+    }
 }
