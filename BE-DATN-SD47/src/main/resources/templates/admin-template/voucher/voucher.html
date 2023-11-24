@@ -258,10 +258,12 @@
                                             <div class="col-md-6">
                                                 <label class="form-label">
                                                     <span class="dau-sao">*</span>Ngày bắt đầu:</label>
-                                                <input type="datetime-local" class="form-control" th:field="*{ngayBatDau}" onchange="validateDateStart()" id="ngayBatDau">
+                                                <input type="datetime-local" class="form-control" th:field="*{ngayBatDau}" onchange="validateDateStart()" id="ngayBatDau" >
                                                 <span class="check-loi" th:errors="*{ngayBatDau}" ></span>
                                                 <br>
                                                 <span id="error-message-start" style="color: red;font-size: 14px;font-weight: bold;"></span>
+<!--                                                <span id="message-start" style="color: red;font-size: 14px;font-weight: bold;"></span>-->
+
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">
@@ -340,11 +342,11 @@
                                 <td th:text="${voucher.maVoucher}"></td>
                                 <td th:text="${voucher.tenVoucher}"></td>
                                 <td th:text="${voucher.giaTriDonToiThieu}"></td>
-                                <td th:text="${voucher.phanTramGiam}"></td>
+                                <td th:text="${voucher.phanTramGiam + '%'}"></td>
                                 <td th:text="${voucher.soLuong}"></td>
                                 <td class="trangthaidkd" th:if="${voucher.trangThai==0}">Đang diễn ra</td>
                                 <td class="trangthainkd" th:if="${voucher.trangThai==1}">Đã kết thúc</td>
-                                <td class="trangthainkd" th:if="${voucher.trangThai==2}">Sắp diễn ra</td>
+                                <td class="trangthaisdr" th:if="${voucher.trangThai==2}">Sắp diễn ra</td>
                                 <td th:text="${voucher.ngayBatDau}"></td>
                                 <td th:text="${voucher.ngayKetThuc}"></td>
                                 <td>
@@ -630,31 +632,70 @@
 
         });
     });
+
     function validateDateStart() {
-        var inputDate = new Date(document.getElementById('ngayBatDau').value);
-        var currentDate = new Date();
+        var inputField = document.getElementById('ngayBatDau');
+        var errorMessage = document.getElementById('error-message-start');
 
-        if (inputDate < currentDate) {
-            document.getElementById('error-message-start').innerHTML = 'Thời gian không được trong quá khứ';
-            document.getElementById('ngayBatDau').setCustomValidity('Thời gian không được trong quá khứ');
+        // Biểu thức chính quy để kiểm tra định dạng yyyy-MM-ddTHH:mm
+        var dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+
+        // Kiểm tra nếu giá trị nhập vào không khớp với biểu thức chính quy
+        if (!dateTimeRegex.test(inputField.value)) {
+            errorMessage.innerHTML = 'Định dạng ngày và giờ không hợp lệ. Vui lòng nhập theo định dạng dd/mm/yyyy --:-- hoặc nhập đúng ngày.';
+            inputField.setCustomValidity('Định dạng ngày và giờ không hợp lệ.');
         } else {
-            document.getElementById('error-message-start').innerHTML = '';
-            document.getElementById('ngayBatDau').setCustomValidity('');
-        }
+            var inputDate = new Date(inputField.value);
+            var currentDate = new Date();
 
+            // Kiểm tra nếu thời gian nằm trong quá khứ
+            if (inputDate < currentDate) {
+                errorMessage.innerHTML = 'Thời gian không được trong quá khứ';
+                inputField.setCustomValidity('Thời gian không được trong quá khứ');
+            } else {
+                errorMessage.innerHTML = '';
+                inputField.setCustomValidity('');
+            }
+        }
     }
+
     function validateDateEnd() {
-        var inputDate = new Date(document.getElementById('ngayKetThuc').value);
-        var currentDate = new Date();
+        var inputField = document.getElementById('ngayKetThuc');
+        var errorMessage = document.getElementById('error-message-end');
 
-        if (inputDate < currentDate) {
-            document.getElementById('error-message-end').innerHTML = 'Thời gian không được trong quá khứ';
-            document.getElementById('ngayKetThuc').setCustomValidity('Thời gian không được trong quá khứ');
+        // Biểu thức chính quy để kiểm tra định dạng yyyy-MM-ddTHH:mm
+        var dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+
+        // Kiểm tra nếu giá trị nhập vào không khớp với biểu thức chính quy
+        if (!dateTimeRegex.test(inputField.value)) {
+            errorMessage.innerHTML = 'Định dạng ngày và giờ không hợp lệ. Vui lòng nhập theo định dạng dd/mm/yyyy --:-- hoặc nhập đúng ngày.';
+            inputField.setCustomValidity('Định dạng ngày và giờ không hợp lệ.');
         } else {
-            document.getElementById('error-message-end').innerHTML = '';
-            document.getElementById('ngayKetThuc').setCustomValidity('');
-        }
+            var inputDate = new Date(inputField.value);
+            var currentDate = new Date();
 
+            // Kiểm tra nếu thời gian nằm trong quá khứ
+            if (inputDate < currentDate) {
+                errorMessage.innerHTML = 'Thời gian không được trong quá khứ';
+                inputField.setCustomValidity('Thời gian không được trong quá khứ');
+            } else {
+                errorMessage.innerHTML = '';
+                inputField.setCustomValidity('');
+            }
+        }
+    }
+    function validateDateStartUpdate() {
+        var inputField = document.getElementById('ngayBatDau');
+        var errorMessage = document.getElementById('error-message-start-update');
+
+        // Biểu thức chính quy để kiểm tra định dạng yyyy-MM-ddTHH:mm
+        var dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+
+        // Kiểm tra nếu giá trị nhập vào không khớp với biểu thức chính quy
+        if (!dateTimeRegex.test(inputField.value)) {
+            errorMessage.innerHTML = 'Định dạng ngày và giờ không hợp lệ. Vui lòng nhập theo định dạng dd/mm/yyyy --:--';
+            inputField.setCustomValidity('Định dạng ngày và giờ không hợp lệ.');
+        }
     }
 </script>
 <style>
