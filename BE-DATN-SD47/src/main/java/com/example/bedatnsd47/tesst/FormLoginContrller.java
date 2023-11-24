@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 @Controller
@@ -38,14 +39,10 @@ public class FormLoginContrller {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    TaiKhoan userInfo = new TaiKhoan();
+    TaiKhoan userInfoStorage = new TaiKhoan();
 
-    String random2 = ranDom();
+    String ranDomMa;
 
-
-    String emailDangKi;
-
-    String tenTaiKhoanDangKi;
 
     @GetMapping("/login")
     public String formLogin() {
@@ -59,46 +56,62 @@ public class FormLoginContrller {
         return "dang-ky";
     }
 
-    @GetMapping("/check-ran-dom")
+    @GetMapping("/xac-minh")
     public String checkRanDOm() {
-        return "admin-template/xac-minh";
+        return "xac-minh";
     }
 
-    @PostMapping("/check-random")
-    public String checkRanDOm1(@RequestParam("ranDom") String ranDom1, Model model) {
 
-        if (ranDom1.equalsIgnoreCase(random2)) {
-            service.addUser(userInfo);
+    @PostMapping("/xac-minh/check")
+    public String checkRanDOm1(
+            @RequestParam("ranDom") String ranDom1,
+            Model model
+    ) {
+
+        if (ranDom1.isEmpty()) {
+            model.addAttribute("checkMaXacMinh", "Bạn chưa nhập mã xác minh!");
+            return "xac-minh";
+        } else if (ranDom1.equalsIgnoreCase(ranDomMa)) {
+            service.addUser(userInfoStorage);
+            System.out.println("thêm tài khoản thành công form check");
             return "redirect:/login";
         } else {
             System.out.println("mã không đúng");
-            model.addAttribute("ma", "mã không đúng");
-            return "admin-template/xac-minh";
+            model.addAttribute("checkMaXacMinh", "Mã xác nhận không đúng!");
+            return "xac-minh";
         }
 
     }
 
 
-    @PostMapping("/saveTaiKhoan1")
-    public String addNewUser1(@RequestParam("email") String email, @RequestParam("username") String username, @RequestParam("password") String password, HttpSession session, Model model, HttpServletRequest request) {
-        emailDangKi = email;
-        tenTaiKhoanDangKi = username;
-        TaiKhoan taiKhoanDk = taiKhoanRepository.findByTenTaiKhoan(tenTaiKhoanDangKi).orElse(null);
-        TaiKhoan emailDk = khachHangRepository.findByEmail(emailDangKi).orElse(null);
-        if (taiKhoanDk != null ) {
+    @PostMapping("/them-tai-khoan")
+    public String addNewUser1(
+            @RequestParam("email") String email,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            HttpSession session,
+            Model model,
+            HttpServletRequest request) {
+        TaiKhoan taiKhoanDk = taiKhoanRepository.findByTenTaiKhoan(username).orElse(null);
+        TaiKhoan emailDk = khachHangRepository.findByEmail(email).orElse(null);
+        if (emailDk != null) {
             System.out.println("Da ton tai");
+            model.addAttribute("checkTrungEmail", "Email đã tồn tại");
             return "dang-ky";
-        } else if (emailDk != null) {
+        } else if (taiKhoanDk != null) {
             System.out.println("Da ton tai");
+            model.addAttribute("checkTrungTenTaiKhoan", "Tên tài khoản đã tồn tại");
             return "dang-ky";
         } else {
+            TaiKhoan userInfo = new TaiKhoan();
+
             String url = request.getRequestURL().toString();
             System.out.println(url);
             url = url.replace(request.getServletPath(), "");
             System.out.println(url);
             // //http://localhost:8080/verify?code=3453sdfsdcsadcsc
-            userInfo.setTenTaiKhoan(tenTaiKhoanDangKi);
-            userInfo.setEmail(emailDangKi);
+            userInfo.setTenTaiKhoan(username);
+            userInfo.setEmail(email);
             VaiTro vaiTro = new VaiTro();
             vaiTro.setId(2L);
             try {
@@ -106,24 +119,32 @@ public class FormLoginContrller {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
                 // Parse the string and set the ngaySinh attribute
-                userInfo.setNgaySinh(dateFormat.parse("01-01-1907"));
+                userInfo.setNgaySinh(dateFormat.parse("01-01-1900"));
             } catch (ParseException e) {
                 // Handle the exception if the date string is not in the expected format
                 e.printStackTrace(); // Or log the error
             }
             userInfo.setHoVaTen(username);
-            userInfo.setSoDienThoai("0000000000");
+            userInfo.setSoDienThoai("0300000000");
             userInfo.setGioiTinh(-1);
             userInfo.setVaiTro(vaiTro);
             userInfo.setMatKhau(password);
+            userInfo.setNgaySua(new Date());
+            userInfo.setNgayTao(new Date());
+            String random2 = ranDom();
+            System.out.println("gửi mã xác nhận");
             service.sendEmail1(userInfo, url, random2);
-            return "redirect:/check-ran-dom";
+            userInfoStorage = userInfo;
+            ranDomMa = random2;
+            return "redirect:/xac-minh";
         }
     }
 
     @GetMapping("/verify")
-    public String verifyAccount(Model m) {
+    public String verifyAccount() {
+
         return "xac-nhan-quen-mat-khau";
+
     }
 
     @PostMapping("/reset-mat-khau")
@@ -134,10 +155,11 @@ public class FormLoginContrller {
             RedirectAttributes redirectAttributes
     ) {
         TaiKhoan taiKhoan = taiKhoanRepository.findByEmail(emailKiemTra);
+        System.out.println(emailKiemTra);
         if (taiKhoan != null) {
             if (matKhauCu.equals(matKhauMoi)) {
                 taiKhoan.setMatKhau(matKhauMoi);
-                service.addUser(taiKhoan);
+                service.updateUser(taiKhoan);
                 System.out.println("Thay đổi mk thành công ");
                 redirectAttributes.addFlashAttribute("thongBao", "Thay đổi mật khẩu thành công.");
                 redirectAttributes.addFlashAttribute("tenTaiKhoan", taiKhoan.getTenTaiKhoan());
@@ -145,7 +167,7 @@ public class FormLoginContrller {
                 return "redirect:/login";
             } else {
                 System.out.println("Mật khẩu không trung khớp");
-                model.addAttribute("thongBao", "Mật khẩu không trùng khớp .");
+                model.addAttribute("thongBao", "Mật khẩu không trùng khớp");
                 return "xac-nhan-quen-mat-khau";
             }
         }
@@ -164,7 +186,6 @@ public class FormLoginContrller {
             @RequestParam("email") String email, Model model,
             RedirectAttributes redirectAttributes,
             HttpServletRequest request) {
-        String xacNhan = "";
         emailKiemTra = email;
         String url = request.getRequestURL().toString();
         TaiKhoan taiKhoan = taiKhoanRepository.findByEmail(emailKiemTra);
@@ -174,8 +195,12 @@ public class FormLoginContrller {
             System.out.println("thanh cong");
             model.addAttribute("email", email);
             return "xac-minh-email-tc";
+        }else if(email.isEmpty()){
+            model.addAttribute("message", "Bạn chưa nhập email");
+            System.out.println("Email null");
+            return "quen-mat-khau";
         } else {
-            model.addAttribute("message", "Email này chưa ứng với tài khoản nào " + xacNhan);
+            model.addAttribute("message", "Email nay sai hoặc  chưa được đăng ký");
             System.out.println("Email nay không tồn tại");
             return "quen-mat-khau";
         }

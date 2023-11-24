@@ -4,6 +4,7 @@ import com.example.bedatnsd47.entity.ChiTietSanPham;
 import com.example.bedatnsd47.entity.DiaChi;
 import com.example.bedatnsd47.entity.GioHangChiTiet;
 import com.example.bedatnsd47.entity.TaiKhoan;
+import com.example.bedatnsd47.entity.VaiTro;
 import com.example.bedatnsd47.entity.Voucher;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import com.example.bedatnsd47.service.DiaChiService;
@@ -14,12 +15,16 @@ import com.example.bedatnsd47.service.KichCoService;
 import com.example.bedatnsd47.service.LoaiDeService;
 import com.example.bedatnsd47.service.MauSacService;
 import com.example.bedatnsd47.service.VoucherService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -247,14 +252,14 @@ public class HomeController {
         List<String> listIdString = Arrays.asList(optionArray);
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         Voucher voucherGet = voucherService.fillByMaVoucher();
-        if (trangThaiLuuDC != "0") {
+        if (trangThaiLuuDC.equals("0")) {
             Date date = new Date();
             DiaChi diaChi = new DiaChi();
             diaChi.setPhuongXa(phuongXaID);
             diaChi.setQuanHuyen(quanHuyenID);
             diaChi.setThanhPho(thanhPhoID);
             diaChi.setDiaChiCuThe(diaChiCuThe);
-            diaChi.setTrangThai(1);
+            diaChi.setTrangThai(0);
             diaChi.setNgayTao(date);
             diaChi.setNgaySua(date);
             diaChi.setTaiKhoan(TaiKhoan.builder().id(idTaiKhoan).build());
@@ -274,7 +279,7 @@ public class HomeController {
     public String shop(
             Model model
     ) {
-        model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllCtspOneSanPham());
+        model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllDangHoatDong());
         model.addAttribute("listMauSac", mauSacService.findAll());
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
@@ -282,6 +287,7 @@ public class HomeController {
         model.addAttribute("listLoaiDe", loaiDeService.findAll());
         return "/customer-template/shop";
     }
+
 
 //    @PostMapping("/gio-hang/add")
 //    public String addGioHang(
@@ -322,10 +328,96 @@ public class HomeController {
         return "/customer-template/shop-single";
     }
 
+
+    @GetMapping("/shop-single/get-so-luong")
+    @ResponseBody
+    public Integer getSoLuongGHCT(
+    ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        Integer soLuong = gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId());
+        return soLuong;
+    }
+
+    @GetMapping("/shop-single/check-so-luong/{idCTSP}")
+    @ResponseBody
+    public Integer checkSoLuongSpEndGHCT(
+            @PathVariable String idCTSP
+    ) {
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietService.fillByIdCTSP(Long.valueOf(idCTSP));
+        Integer soLuongCheck = gioHangChiTiet.getSoLuong();
+        return soLuongCheck;
+    }
+
     @GetMapping("/about")
     public String about() {
 
         return "/customer-template/about";
+    }
+
+    @GetMapping("/thong-tin-khach-hang")
+    public String info(
+            Model model
+    ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        model.addAttribute("khachHang", khachHang);
+        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+        return "/customer-template/thong-tin-khach-hang";
+    }
+
+    @PostMapping("/thong-tin-khach-hang/update")
+    public String updateInfo(
+            @Valid @ModelAttribute("khachHang") TaiKhoan khachHang,
+            BindingResult result,
+            Model model
+    ) {
+        if (result.hasErrors()) {
+            TaiKhoan kh = khachHangService.getById(idTaiKhoan);
+            model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(kh.getGioHang().getId()));
+            return "/customer-template/thong-tin-khach-hang";
+        } else if (!khachHang.isValidNgaySinh()) {
+            TaiKhoan kh = khachHangService.getById(idTaiKhoan);
+            model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(kh.getGioHang().getId()));
+            model.addAttribute("checkNgaySinh", "Năm sinh phải lớn 1900");
+            return "/customer-template/thong-tin-khach-hang";
+        } else if (!khachHangService.checkEmailSua(khachHang.getId(), khachHang.getEmail())) {
+            TaiKhoan kh = khachHangService.getById(idTaiKhoan);
+            model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(kh.getGioHang().getId()));
+            model.addAttribute("checkEmailTrung", "Email đã được đăng ký");
+            return "/customer-template/thong-tin-khach-hang";
+        } else {
+            khachHang.setNgaySua(new Date());
+            khachHang.setVaiTro(VaiTro.builder().id(Long.valueOf(2)).build());
+            khachHangService.update(khachHang);
+        }
+        return "redirect:/thong-tin-khach-hang";
+    }
+
+    @GetMapping("/dia-chi")
+    public String diaChiKhachHang(
+            Model model
+    ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+
+        return "/customer-template/dia-chi";
+    }
+
+    @GetMapping("/doi-mat-khau")
+    public String doiMatKhau(
+            Model model
+    ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+        return "/customer-template/doi-mat-khau-khach-hang";
+    }
+
+    @GetMapping("/don-mua")
+    public String đonMua(
+            Model model
+    ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+        return "/customer-template/don-mua";
     }
 
     @GetMapping("/thankyou")

@@ -42,22 +42,26 @@
 
                     <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                         <div class="site-top-icons">
-                            <ul>
-                                <li>
-                                    <a href="#"><span class="icon icon-person"></span></a>
+                            <ul class="nav nav-pills" style="margin-left: 54%">
+                                <li class="nav-item dropdown" >
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                       role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="/don-mua">Đơn Mua</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/logout}">Đăng Xuất</a></li>
+                                    </ul>
                                 </li>
-                                <li>
-                                    <a href="#"><span class="icon icon-heart-o"></span></a>
+
+                                <li class="nav-item" style="margin-left: -15%">
+                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>
                                 </li>
-                                <li>
-                                    <a href="/cart" class="site-cart">
+                                <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
+                                    <a class="site-cart" href="/cart">
                                         <span class="icon icon-shopping_cart"></span>
                                         <span class="count" th:text="${soLuongSPGioHangCT}"></span>
                                     </a>
-                                </li>
-                                <li class="d-inline-block d-md-none ml-md-0">
-                                    <a href="#" class="site-menu-toggle js-menu-toggle"><span
-                                            class="icon-menu"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -114,8 +118,8 @@
         <div class="pf-filter-item">
             <form class="pf-controls" id="pf-Filters">
                 <fieldset class="filter-group pf-search">
-                    <h4>Search</h4>
-                    <input type="text" class="live-search-box" id="pf-search-id" placeholder="Search ..."/>
+                    <h4>Tìm kiếm</h4>
+                    <input type="text" class="live-search-box" id="pf-search-id" placeholder="Tìm kiếm ..."/>
                 </fieldset>
                 <fieldset class="filter-group pf-checkboxes">
                     <h4>Màu Sắc</h4>
@@ -138,50 +142,79 @@
                         <label th:text="${loaiDe.ten}"></label>
                     </div>
                 </fieldset>
-                <!-- <button id="pf-Reset">Clear Filters</button> -->
-
-                <fieldset class="filter-group pf-search">
-                    <input type="reset" id="pf-reset-form" class="pf-reset" value="Reset"/>
-                </fieldset>
+                <button id="pf-Reset">Xóa bộ lọc</button>
             </form>
         </div>
         <div class="pf-wrapper">
-            <div id="pf-Container" class="pf-container live-search-list">
+            <!--                        <div id="pf-Container" class="pf-container live-search-list">-->
+            <!--&lt;!&ndash;                            <div class="fail-message" style="display:none;"></div>&ndash;&gt;-->
+            <!--                            <div th:each="chiTiepSp : ${listChiTietSP}" class="pf-card">-->
+            <!--                                <a style=" color: inherit;" >-->
 
-                <div class="fail-message" style="display:none;"></div>
-                <div th:each="chiTiepSp : ${listChiTietSP}" class="pf-card">
-                    <a style=" color: inherit;" th:href="@{/shop-single/{id}(id=${chiTiepSp.sanPham.id})}">
-                        <input type="hidden" th:value="${chiTiepSp.sanPham.ten}">
-                        <input type="hidden" th:value="${chiTiepSp.sanPham.id}">
-                        <div class="pf-card-header" style="object-fit: cover">
-                            <div id="carouselExampleSlidesOnly" class="carousel slide"
-                                 data-bs-ride="carousel" style=" width: 200px;height: 200px;margin: auto">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active" data-bs-interval="1">
-                                    </div>
-                                    <div th:each="anh : ${chiTiepSp.sanPham.listHinhAnhSanPham}"
-                                         class="carousel-item" data-bs-interval="1500">
-                                        <img th:src="@{'../../../static/img/' + ${anh.url}}"
+            <!--                                    &lt;!&ndash;                        <div class="pf-card-header" style="object-fit: cover">&ndash;&gt;-->
+            <!--                                    &lt;!&ndash;                            <div id="carouselExampleSlidesOnly" class="carousel slide"&ndash;&gt;-->
+            <!--                                    &lt;!&ndash;                                 data-bs-ride="carousel" style=" width: 200px;height: 200px;margin: auto">&ndash;&gt;-->
+            <!--                                    &lt;!&ndash;                                <div class="carousel-inner">&ndash;&gt;-->
+            <!--                                    &lt;!&ndash;                                    <div class="carousel-item active" data-bs-interval="1">&ndash;&gt;-->
+            <!--                                    &lt;!&ndash;                                    </div>&ndash;&gt;-->
+            <!--                                    <div th:each="anh : ${chiTiepSp.sanPham.listHinhAnhSanPham[0]}" style="height: 70%">-->
+            <!--                                        <img th:src="@{'../../../static/img/ImgShoe/' + ${anh.url}}"-->
+            <!--                                             th:data-segment="${chiTiepSp.mauSac.ten}"-->
+            <!--                                             th:data-seating="${chiTiepSp.kichCo.ten}"-->
+            <!--                                             th:data-power="${chiTiepSp.loaiDe.ten}"-->
+            <!--                                             class="d-block w-100" alt="...">-->
+            <!--                                    </div>-->
+            <!--                                    &lt;!&ndash;                                </div>&ndash;&gt;-->
+            <!--                                    &lt;!&ndash;                            </div>&ndash;&gt;-->
+            <!--                                    &lt;!&ndash;                        </div>&ndash;&gt;-->
+            <!--&lt;!&ndash;                                    <div class="pf-card-body">&ndash;&gt;-->
+            <!--&lt;!&ndash;                                        <p class="pf-item-title" th:text="${chiTiepSp.sanPham.ten}"></p>&ndash;&gt;-->
+            <!--&lt;!&ndash;                                        <p>&ndash;&gt;-->
+            <!--&lt;!&ndash;                                            Giá:&ndash;&gt;-->
+            <!--&lt;!&ndash;                                            <span th:text="${chiTiepSp.giaHienHanh + ' VNĐ'}"></span>&ndash;&gt;-->
+            <!--&lt;!&ndash;                                        </p>&ndash;&gt;-->
+            <!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
+            <!--                                </a>-->
+
+            <!--                            </div>-->
+
+            <!--                        </div> &lt;!&ndash; pf-Container end &ndash;&gt;-->
+
+
+            <!-- Start Product Section -->
+            <div class="product-section">
+                <div class="container">
+                    <div class="row" style="margin-top: -13%">
+                        <div id="pf-Container" class="pf-container live-search-list">
+                            <div class="fail-message" style="text-align: center;margin-top: 20%;display: none"></div>
+                            <div class="pf-card" th:each="chiTiepSp : ${listChiTietSP}"
+                                 style="margin-top: 5%">
+                                <a class="product-item" th:href="@{/shop-single/{id}(id=${chiTiepSp.sanPham.id})}">
+                                    <input type="hidden" th:value="${chiTiepSp.sanPham.ten}">
+                                    <input type="hidden" th:value="${chiTiepSp.sanPham.id}">
+                                    <div class="product-thumbnail-container">
+                                        <img th:each="anh : ${chiTiepSp.sanPham.listHinhAnhSanPham[0]}"
+                                             th:src="@{'../../../static/img/ImgShoe/' + ${anh.url}}"
                                              th:data-segment="${chiTiepSp.mauSac.ten}"
                                              th:data-seating="${chiTiepSp.kichCo.ten}"
                                              th:data-power="${chiTiepSp.loaiDe.ten}"
-                                             class="d-block w-100" alt="...">
+                                             class="img-fluid product-thumbnail">
                                     </div>
-                                </div>
+                                    <div class="product-info-container">
+                                        <h3 class="product-title"
+                                            th:text="${chiTiepSp.sanPham.ten+' ['+chiTiepSp.mauSac.ten+ ' - ' +chiTiepSp.kichCo.ten}+']'"></h3>
+                                        <strong class="product-price"
+                                                th:text="${chiTiepSp.giaHienHanh + ' VNĐ'}"></strong>
+                                        <span class="icon-cross">
+							                 <img src="../../static/img/plus-black.png" class="img-fluid">
+						                </span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
-                        <div class="pf-card-body">
-                            <p class="pf-item-title" th:text="${chiTiepSp.sanPham.ten}"></p>
-                            <p>
-                                Giá:
-                                <span th:text="${chiTiepSp.giaHienHanh + ' VNĐ'}"></span>
-                            </p>
-                        </div>
-                    </a>
-
+                    </div>
                 </div>
-
-            </div> <!-- pf-Container end -->
+            </div>
         </div>
     </div>
 
@@ -277,6 +310,7 @@
         width: 100%;
         height: 100%;
         padding: 0 30px;
+        margin-left: 3%;
         display: table;
     }
 
@@ -388,7 +422,7 @@
         width: 10px;
         height: 10px;
         border-radius: 2px;
-        background: #68b8c4;
+        background: black;
         opacity: 0;
         pointer-events: none;
     }
@@ -399,34 +433,6 @@
 
     .productfinder .pf-checkbox input:focus ~ label:before {
         background: #eee;
-    }
-
-    .productfinder .pf-reset {
-        position: relative;
-        padding: .3em 1em;
-        border: 2px solid #014189;
-        color: #014189;
-        opacity: 0.9;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-        background-color: transparent;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-        font-size: 20px;
-        font-weight: 500;
-        line-height: 1.7em !important;
-        -webkit-transition: all .2s;
-        -moz-transition: all .2s;
-        transition: all .2s;
-    }
-
-    .productfinder .pf-reset:hover,
-    .productfinder .pf-reset:focus {
-        opacity: 1;
-        background: #014189;
-        color: #fff;
     }
 
     .productfinder .pf-container .fail-message {
@@ -465,7 +471,7 @@
     .productfinder .pf-container .pf-card {
         text-align: center;
         border: 1px solid transparent;
-        box-shadow: 0 0 15px rgba(1, 65, 137, 0.23);
+        /*box-shadow: 0 0 15px rgba(1, 65, 137, 0.23);*/
         padding: 10px;
         margin: 10px;
         position: relative;
@@ -478,77 +484,8 @@
     .productfinder .pf-container .pf-card img {
         max-width: 100%;
         height: auto;
-    }
+        border-radius: 10px;
 
-    .productfinder .pf-container .pf-card .pf-card-body .pf-item-title {
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-
-    .productfinder .pf-container .pf-card .pf-card-body p:not(.pf-item-title) {
-        padding-bottom: 0;
-        /*display: none;*/
-    }
-
-    .productfinder .pf-container .pf-card .pf-card-footer {
-    }
-
-    .productfinder .pf-container .et-social-icons {
-        margin-bottom: 25px;
-        float: none;
-    }
-
-    .productfinder .pf-container .et-social-icons li {
-        margin-left: 0;
-        margin-right: 20px;
-    }
-
-    .productfinder .pf-container .pf-card-footer {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 35px;
-    }
-
-    .productfinder .pf-container .pf-card-footer a {
-        border: 1px solid;
-        background: #014189;
-        padding: 5px 15px;
-        font-size: 12px;
-        color: #fff;
-    }
-
-    .productfinder .pf-container h6 {
-        font-size: 15px;
-        font-weight: bold;
-        color: #ffffff;
-    }
-
-    .productfinder .pf-container .custom-main-footer-list {
-        list-style: none;
-        padding-left: 0;
-    }
-
-    @media (max-width: 1080px) {
-        .productfinder .pf-container > div {
-            width: 30%;
-            float: left;
-        }
-    }
-
-    @media (max-width: 767px) {
-        .productfinder .pf-container > div {
-            width: 50%;
-            float: left;
-        }
-    }
-
-    @media (max-width: 560px) {
-        .productfinder .pf-container > div {
-            width: 100%;
-            float: left;
-        }
     }
 </style>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
@@ -615,31 +552,39 @@
             }
 
             if (jQuery('div.pf-card:visible').length == 0) {
-                jQuery('div.fail-message').show().text("No items were found matching the selected filters");
+                    jQuery($(".fail-message")).show().text("Không tìm thấy mục nào phù hợp với bộ lọc đã chọn");
             }
         });
 
         /* search products */
-        var highlight = function (string) {
-            jQuery(".pf-Container .pf-card.match").each(function () {
-                var matchStart = jQuery(this).text().toLowerCase().indexOf("" + string.toLowerCase() + "");
-                var matchEnd = matchStart + string.length - 1;
-                var beforeMatch = jQuery(this).text().slice(0, matchStart);
-                var matchText = jQuery(this).text().slice(matchStart, matchEnd + 1);
-                var afterMatch = jQuery(this).text().slice(matchEnd + 1);
-            });
-        };
+        // var highlight = function (string) {
+        //     console.log("highlight open")
+        //
+        //     jQuery($("#pf-Container .pf-card")).each(function () {
+        //         console.log("highlight open123")
+        //         var matchStart = jQuery(this).text().toLowerCase().indexOf("" + string.toLowerCase() + "");
+        //         var matchEnd = matchStart + string.length - 1;
+        //         var beforeMatch = jQuery(this).text().slice(0, matchStart);
+        //         var matchText = jQuery(this).text().slice(matchStart, matchEnd + 1);
+        //         var afterMatch = jQuery(this).text().slice(matchEnd + 1);
+        //     });
+        // };
         jQuery("#pf-search-id").on("keyup click input", function () {
+            var formId = document.getElementById('pf-Filters');
+            jQuery(formId).find("input:radio, input:checkbox").prop('checked', false);
+            jQuery($("#pf-Container")).find(".pf-card").show();
+
             if (this.value.length > 0) {
-                jQuery(".pf-Container .pf-card").removeClass("match").hide().filter(function () {
-                    return jQuery(this).text().toLowerCase().replace(/([,.@€$&*®™])+/g, '').indexOf(jQuery("#pf-search-id").val().toLowerCase()) != -1;
-                }).addClass("match").show();
-                highlight(this.value);
-                jQuery(".pf-Container").show();
+                jQuery($("#pf-Container .pf-card")).hide().filter(function () {
+                    return jQuery(this).find('.product-title').text().toLowerCase().replace(/([,.@€$&*®™])+/g, '').indexOf(jQuery("#pf-search-id").val().toLowerCase()) != -1;
+                }).show();
+                // highlight(this.value);
+                jQuery($("#pf-Container")).show();
             } else {
-                jQuery(".pf-Container .pf-card").removeClass("match").hide();
+                jQuery($("#pf-Container")).show();
             }
         });
+
 
         /* reset filter & search products */
         jQuery('#pf-reset-form').on('click', function () {
@@ -648,7 +593,6 @@
             jQuery(formId).find("input:text").val('');
             jQuery(formId).find("input:radio, input:checkbox").prop('checked', false);
             jQuery(".pf-Container").find(".pf-card").show();
-
         });
     });
 </script>

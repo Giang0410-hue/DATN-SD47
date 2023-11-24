@@ -58,7 +58,7 @@ public class TaiKhoan {
             Calendar cal = Calendar.getInstance();
             cal.setTime(ngaySinh);
             int year = cal.get(Calendar.YEAR);
-            return year >= 1905;
+            return year >= 1900;
         }
         return true; // Truong ngaySinh co the de trong
     }
@@ -69,7 +69,7 @@ public class TaiKhoan {
 
     @Column(name = "so_dien_thoai", length = 15)
     @NotBlank(message = "Số điện thoai không được trống")
-    @Pattern(regexp = "^0\\d{9,10}", message = "SĐT phải là số và bắt đầu bằng 0 và có 10-11 số")
+    @Pattern(regexp = "^(0[35789][0-9]{8,9})$", message = "Số điện thoại không hợp lệ")
     private String soDienThoai;
 
     @Column(name = "email", length = 255)
@@ -79,9 +79,10 @@ public class TaiKhoan {
 
     @Column(name = "ten_tai_khoan", length = 100)
     @NotBlank(message = "Tên tài khoản không được trống")
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Tên tài khoản không hợp lệ")
     private String tenTaiKhoan;
 
-    @Column(name = "mat_khau", length = 30)
+    @Column(name = "mat_khau")
 //    @NotBlank(message = "Mật khẩu không được trống")
     private String matKhau;
 

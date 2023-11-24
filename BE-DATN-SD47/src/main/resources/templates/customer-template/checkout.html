@@ -48,22 +48,26 @@
 
                     <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                         <div class="site-top-icons">
-                            <ul>
-                                <li>
-                                    <a href="#"><span class="icon icon-person"></span></a>
+                            <ul class="nav nav-pills" style="margin-left: 54%">
+                                <li class="nav-item dropdown" >
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                       role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="/don-mua">Đơn Mua</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/logout}">Đăng Xuất</a></li>
+                                    </ul>
                                 </li>
-                                <li>
-                                    <a href="#"><span class="icon icon-heart-o"></span></a>
+
+                                <li class="nav-item" style="margin-left: -15%">
+                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>
                                 </li>
-                                <li>
-                                    <a href="/cart" class="site-cart">
+                                <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
+                                    <a class="site-cart" href="/cart">
                                         <span class="icon icon-shopping_cart"></span>
                                         <span class="count" th:text="${soLuongSPGioHangCT}"></span>
                                     </a>
-                                </li>
-                                <li class="d-inline-block d-md-none ml-md-0">
-                                    <a href="#" class="site-menu-toggle js-menu-toggle"><span
-                                            class="icon-menu"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -138,7 +142,7 @@
                             <tr th:each="gioHangCT : ${listGioHangChiTiet}">
                                 <td class="product-thumbnail">
                                     <input type="hidden" name="allIDGioHangCT" th:value="${gioHangCT.id}">
-                                    <img th:src="@{'../../../static/img/' + ${gioHangCT.chiTietSanPham.sanPham.listHinhAnhSanPham[0].url}}"
+                                    <img th:src="@{'../../../static/img/ImgShoe/' + ${gioHangCT.chiTietSanPham.sanPham.listHinhAnhSanPham[0].url}}"
                                          alt="Image" class="img-fluid"/>
                                 </td>
                                 <td class="product-name">
@@ -1069,6 +1073,7 @@
                             <input type="hidden" name="phuongXaID" id="phuongXaID">
                             <input type="hidden" id="diaChiCuTheAll" class="form-control"
                                    name="diaChiCuThe"/>
+                            <input type="hidden" name="trangThaiLuuDC" value="1">
 
                             <div class="form-group row">
                                 <div class="col-md-12">
@@ -1370,7 +1375,7 @@
                                 </div>
                             </div>
                             <div class="form-check">
-                                <input type="text" name="trangThaiLuuDC" id="trangThaiAdDiaChiHidden" value="1">
+                                <input type="hidden" name="trangThaiLuuDC" id="trangThaiAdDiaChiHidden" value="1">
                                 <input class="form-check-input" type="checkbox"
                                        id="defaultCheckLuuDiaChi"
                                        onclick="trangThaiLuuDiaChi()">
