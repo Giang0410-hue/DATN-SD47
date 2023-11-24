@@ -1,5 +1,5 @@
 /**
-* Template Name: NiceAdmin
+* Template Name: Glacat
 * Updated: May 30 2023 with Bootstrap v5.3.0
 * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
 * Author: BootstrapMade.com
@@ -1283,6 +1283,7 @@ table thead tr {
     display: inline-block;
 }
 
+
 table tbody tr {
     height: 48px;
     border-bottom: 1px solid #E3F1D5;
@@ -1566,7 +1567,6 @@ table th {
     border-radius: 50px;
     color: black;
     background-color: #fffd83;
-
     padding: 3px 10px;
     margin: 20px 10px;
     display: inline-block;

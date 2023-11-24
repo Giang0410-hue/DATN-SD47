@@ -10,9 +10,9 @@
     <meta content="" name="keywords">
 
 
-  <!--    thư viện của bảng tích hợp tìm kiếm-->
-  <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
-  <!--    thư viện của bảng tích hợp tìm kiếm end-->
+    <!--    thư viện của bảng tích hợp tìm kiếm-->
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
 
     <!-- Favicons -->
     <div th:replace="~{admin-template/fragment/header :: header}"></div>
@@ -147,8 +147,10 @@
                             <div class="form-tao-moi">
                                 <div class="row g-3">
                                     <div th:if="${hoaDon.trangThai ==-1}" class="col-12">
+
                                         <div class="tao-hd">
                                             <!-- <button type="button" class="btn btn-success">Tạo hóa đơn</button> -->
+
                                             <a id="postLink" class="btn btn-success">Tạo Hóa đơn</a>
                                             <script>
                                                 document.getElementById("postLink").addEventListener("click", function (event) {
@@ -183,28 +185,34 @@
                                         </div>
                                     </div>
 
-                                    <h1 th:if="${hoaDon.trangThai !=-1}">
-                                        #[[${hoaDon.maHoaDon}]]
-                                    </h1>
+                                    <div th:if="${hoaDon.trangThai !=-1}">
+                                        <h1 style="text-align: center;">#[[${hoaDon.maHoaDon}]]</h1>
+                                        <a class="btn btn-link" style="float: left;margin-top: 1%;"
+                                            href="/ban-hang-tai-quay/hoa-don/quan-ly">
+                                            <i class=" bi bi-arrow-left-circle-fill"></i>
+                                        </a>
+                                    </div>
+
 
 
                                     <div class="col-12">
                                         <div> <!-- div tổng của hóa đơn chi tiết -->
 
                                             <div class="them-moi-sp">
-                                                <a class="btn btn-danger"
-                                                    th:href="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
-                                                    role="button">Xóa
-                                                    hóa đơn</a>
 
-                                                <!-- Button trigger modal -->
-
-
-
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    th:data-bs-target="${'#addsp'+hoaDon.id}">
-                                                    Thêm sản phẩm
-                                                </button>
+                                                <div
+                                                    th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=3&&hoaDon.trangThai!=5}">
+                                                    
+                                                    <a class="btn btn-danger"
+                                                        th:href="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
+                                                        role="button">Hủy
+                                                        hóa đơn</a>
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                        th:data-bs-target="${'#addsp'+hoaDon.id}">
+                                                        Thêm sản phẩm
+                                                    </button>
+                                                </div>
                                                 <!-- Modal -->
 
 
@@ -214,7 +222,11 @@
                                                         <div class="modal-content">
                                                             <div class="modal-body">
                                                                 <!-- form search -->
-                                                         
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5" style="margin: auto;">
+                                                                        Danh sách sản phẩm
+                                                                    </h1>
+                                                                </div>
                                                                 <table id="example" class="display">
                                                                     <thead>
                                                                         <tr>
@@ -240,8 +252,9 @@
                                                                                     <td>
                                                                                         <div class="row">
                                                                                             <div class="col-4">
-                                                                                                <img src="../../static/img/card.jpg"
-                                                                                                    class="fixed-image">
+                                                                                                <img class="fixed-image"
+                                                                                                    th:src="@{'../../../static/img/' + ${ctsp.sanPham.listHinhAnhSanPham[0].url}}"
+                                                                                                    alt="Image">
                                                                                             </div>
                                                                                             <div class="col-8">
                                                                                                 <div
@@ -275,22 +288,23 @@
                                                                                         <button type="submit"
                                                                                             class="btn btn-success">Thêm
                                                                                         </button>
+
                                                                                     </td>
                                                                                 </form>
                                                                             </tr>
 
                                                                         </tbody>
-                                                                        <tfoot hidden="hidden">
-                                                                            <tr>
-                                                                                <th>STT</th>
-                                                                                <th>Sản Phẩm</th>
-                                                                                <th>Số Lượng</th>
-                                                                                <th>Giá Bán</th>
-                                                                                <th>Hành Động</th>
-                                                                            </tr>
-                                                                            </tfoot>
+                                                                    <tfoot hidden="hidden">
+                                                                        <tr>
+                                                                            <th>STT</th>
+                                                                            <th>Sản Phẩm</th>
+                                                                            <th>Số Lượng</th>
+                                                                            <th>Giá Bán</th>
+                                                                            <th>Hành Động</th>
+                                                                        </tr>
+                                                                    </tfoot>
                                                                 </table>
-                                                        
+
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
@@ -318,7 +332,9 @@
                                                             <th scope="col">Sản phẩm</th>
                                                             <th scope="col">Số lượng</th>
                                                             <th scope="col">Tổng tiền</th>
-                                                            <th scope="col">Thao tác</th>
+                                                            <th scope="col"
+                                                                th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=3&&hoaDon.trangThai!=5}">
+                                                                Thao tác</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -334,7 +350,7 @@
                                                                 <td>
                                                                     <div class="row">
                                                                         <div class="col-4">
-                                                                            <img src="../../static/img/card.jpg"
+                                                                            <img th:src="@{'../../../static/img/' + ${obj.ChiTietSanPham.SanPham.listHinhAnhSanPham[0].url}}"
                                                                                 class="fixed-image">
                                                                         </div>
 
@@ -360,7 +376,8 @@
                                                                         [[${obj.tongTien()}]] VND
                                                                     </div>
                                                                 </td>
-                                                                <td>
+                                                                <td
+                                                                    th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=3&&hoaDon.trangThai!=5}">
                                                                     <div class="button-table">
                                                                         <!-- delete Hóa đơn chi tiết -->
 
@@ -478,8 +495,11 @@
                                                 </table>
                                                 <!-- Check giỏ hàng trống -->
                                                 <div th:if="${#lists.size(hoaDon.lstHoaDonChiTiet) ==0}">
-                                                    <h3 style="text-align: center; color: red">KHÔNG CÓ GÌ ĐỂ MẶC HẾT
-                                                    </h3>
+                                                    <!-- giỏ hàng trống -->
+                                                    <div class="cart-no-product">
+                                                        <img src="/../static/img/cart.png" alt="">
+                                                        <span>Không có sản phẩm nào trong giỏ</span>
+                                                    </div>
                                                     <input type="hidden">
                                                 </div>
                                             </div>
@@ -522,10 +542,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="" th:each=" taiKhoan: ${lstTaiKhoan}">
-                                                        <!-- Button trigger modal -->
 
-
-                                                        <!-- Modal -->
                                                         <div class="modal fade" th:id="chonKhachHangModal" tabindex="-1"
                                                             aria-labelledby="chonKhachHangModalLabel"
                                                             aria-hidden="true">
@@ -539,33 +556,9 @@
                                                                         </h1>
                                                                     </div>
                                                                     <div class="modal-body">
-
                                                                         <!-- form tìm kiếm khách hàng -->
-
-                                                                        <label class="col-sm-5 col-form-label">Nhập
-                                                                            tên, số điện
-                                                                            thoại, email</label>
                                                                         <div class="row mb-3">
-                                                                            <div class="col-sm-8">
-                                                                                <div class="input-group">
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        placeholder="Tìm kiếm khách hàng theo tên, số điện thoại, email">
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-primary">
-                                                                                        <i
-                                                                                            class="bi bi-arrow-clockwise"></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-2">
-                                                                                <button type="submit"
-                                                                                    class="btn btn-primary"
-                                                                                    style="margin-left:30%;">Tìm
-                                                                                    kiếm
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="col-sm-2">
+                                                                            <div class="col-sm-2 offset-10">
                                                                                 <button type="button"
                                                                                     class="btn btn-primary"
                                                                                     data-bs-toggle="modal"
@@ -579,7 +572,7 @@
 
                                                                         <!-- table khách hàng -->
 
-                                                                        <table>
+                                                                        <table id="example1" class="display">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>STT</th>
@@ -623,41 +616,30 @@
                                                                                     </tr>
 
                                                                                 </tbody>
+                                                                            <tfoot hidden="hidden">
+                                                                                <tr>
+                                                                                    <th>STT</th>
+                                                                                    <th>Tên Khách Hàng</th>
+                                                                                    <th>Số Điện Thoại</th>
+                                                                                    <th>Email</th>
+                                                                                    <th>Hành Động</th>
+                                                                                </tr>
+                                                                            </tfoot>
                                                                         </table>
 
 
-                                                                        <nav aria-label="Page navigation example">
-                                                                            <ul class="pagination">
-                                                                                <li class="page-item">
-                                                                                    <a class="page-link" href="#">
-                                                                                        <i
-                                                                                            class="bi bi-chevron-left"></i>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li class="page-item"><a
-                                                                                        class="page-link" href="#">1</a>
-                                                                                </li>
-                                                                                <li class="page-item"><a
-                                                                                        class="page-link" href="#">2</a>
-                                                                                </li>
-                                                                                <li class="page-item"><a
-                                                                                        class="page-link" href="#">3</a>
-                                                                                </li>
-                                                                                <li class="page-item">
-                                                                                    <a class="page-link" href="#">
-                                                                                        <i
-                                                                                            class="bi bi-chevron-right"></i>
-                                                                                    </a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </nav>
+
 
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        
-                                                                        <form action="/ban-hang-tai-quay/hoa-don/add-khach-hang" method="post">
-                                                                            <input type="hidden" name="idTaiKhoan" value="-1">
-                                                                            <button  type="submit" class="btn btn-danger">Bỏ chọn
+
+                                                                        <form
+                                                                            action="/ban-hang-tai-quay/hoa-don/add-khach-hang"
+                                                                            method="post">
+                                                                            <input type="hidden" name="idTaiKhoan"
+                                                                                value="-1">
+                                                                            <button type="submit"
+                                                                                class="btn btn-danger">Bỏ chọn
                                                                             </button>
                                                                         </form>
                                                                         <button type="button" class="btn btn-secondary"
@@ -787,8 +769,10 @@
                                                 <div class="row g-3" style=" margin-bottom: 2%;">
 
                                                     <!-- Button trigger modal -->
-                                                    <div class="col-sm-12" id="">
-                                                        <button type="button" class="btn btn-primary"
+                                                    <div class="col-sm-12">
+                                                        <button
+                                                            th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=3&&hoaDon.trangThai!=5}"
+                                                            id="checkBtnGiaoHang" type="button" class="btn btn-primary"
                                                             data-bs-toggle="modal" style="float: right;"
                                                             data-bs-target="#chonDiaChiModal">
                                                             Chọn địa chỉ
@@ -837,7 +821,7 @@
                                                                     </form>
 
 
-                                                                    <!-- table khách hàng -->
+                                                                    <!-- table DC -->
                                                                     <table>
                                                                         <thead>
                                                                             <tr>
@@ -904,7 +888,7 @@
                                                 <form action="/ban-hang-tai-quay/hoa-don/thanh-toan" class="row g-3"
                                                     method="post">
                                                     <div class="col">
-                                                        <div id="" class="thong-tin-kh ">
+                                                        <div id="checkGiaoHang" class="thong-tin-kh ">
                                                             <div class="row g-3">
                                                                 <h4 style="font-family: Arial, sans-serif;font-size: 15px;
                                                         font-weight: bold;
@@ -913,10 +897,11 @@
                                                                 <div class="col-md-6">
                                                                     <label for="inputEmail2" class="form-label">
                                                                         <span class="dau-sao">*</span>
-                                                                        Tên khác hàng:
+                                                                        Tên khách hàng:
                                                                     </label>
                                                                     <input type="text" class="form-control"
-                                                                        id="inputHoVaTen">
+                                                                        id="inputHoVaTen" name="inputHoVaTen"
+                                                                        th:value="${hoaDon.nguoiNhan}">
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label for="inputPassword3" class="form-label">
@@ -924,38 +909,280 @@
                                                                         Số điện thoại:
                                                                     </label>
                                                                     <input type="text" class="form-control"
-                                                                        id="inputSoDienThoai">
+                                                                        id="inputSoDienThoai" name="inputSoDienThoai"
+                                                                        th:value="${hoaDon.sdtNguoiNhan}">
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label class="form-label">
                                                                         <span class="dau-sao">*</span>
                                                                         Địa chỉ:
                                                                     </label>
-                                                                    <input id="inputThanhPho" type="text"
-                                                                        class="form-control"
-                                                                        placeholder="Tỉnh / Thành Phố">
+
+                                                                    <select id="citySelect" class="form-control"
+                                                                        name="thanhPho">
+                                                                        <option disabled selected>Chọn Thành Phố
+                                                                        </option>
+                                                                        <!-- Options will be filled dynamically here -->
+                                                                    </select>
                                                                     <br>
-                                                                    <input id="inputQuanHuyen" type="text"
-                                                                        class="form-control" placeholder="Quận / Huyện">
+                                                                    <select id="districtSelect" class="form-control"
+                                                                        name="quanHuyen">
+                                                                        <option value="" disabled selected>Chọn Quận
+                                                                            Huyện</option>
+                                                                        <!-- Options will be filled dynamically here -->
+                                                                    </select>
                                                                     <br>
-                                                                    <input id="inputPhuongXa" type="text"
-                                                                        class="form-control" placeholder="Xã / Phường">
+                                                                    <select id="wardSelect" class="form-control"
+                                                                        name="phuongXa"
+                                                                        onchange="calculateShippingFee()">
+                                                                        <option value="" disabled selected>Chọn Phường /
+                                                                            Xã</option>
+                                                                        <!-- Options will be filled dynamically here -->
+                                                                    </select>
+                                                                    <!-- phishipjs -->
+                                                                    <script th:inline="javascript">
+                                                                        document.addEventListener('DOMContentLoaded', function () {
+                                                                            var citySelect = document.getElementById('citySelect');
+                                                                            var districtSelect = document.getElementById('districtSelect');
+                                                                            var wardSelect = document.getElementById('wardSelect');
+                                                                            console.log(citySelect)
+                                                                            console.log(districtSelect)
+                                                                            console.log(wardSelect)
+                                                                            var selectedCityValue = /*[[ ${hoaDon.thanhPho} ]]*/ '';
+                                                                            var selectedDistrictValue = /*[[ ${hoaDon.quanHuyen} ]]*/ '';
+                                                                            var selectedWardValue = /*[[ ${hoaDon.phuongXa} ]]*/ '';
+
+                                                                            fetch('https://online-gateway.ghn.vn/shiip/public-api/master-data/province', {
+                                                                                method: 'GET',
+                                                                                headers: {
+                                                                                    'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+                                                                                    'Content-Type': 'application/json',
+                                                                                },
+                                                                            })
+                                                                                .then(response => response.json())
+                                                                                .then(data => {
+                                                                                    // Xử lý dữ liệu khi API trả về thành công
+                                                                                    populateSelect(citySelect, data.data, 'ProvinceID', 'ProvinceName');
+
+                                                                                    // Tìm option có giá trị là selectedCityValue và đặt nó làm được chọn
+                                                                                    var selectedOption = citySelect.querySelector(`option[value="${selectedCityValue}"]`);
+                                                                                    if (selectedOption) {
+                                                                                        selectedOption.selected = true;
+                                                                                        // Kiểm tra nếu giá trị thành phố đã được chọn
+                                                                                        if (selectedCityValue) {
+                                                                                            // Gọi hàm để tải và populate quận/huyện dựa trên ID của thành phố
+                                                                                            populateDistricts(selectedCityValue);
+                                                                                        }
+                                                                                    }
+
+                                                                                })
+                                                                                .catch(error => {
+                                                                                    console.error('Lỗi khi tải dữ liệu thành phố:', error);
+                                                                                });
+
+                                                                            // Sự kiện khi chọn thành phố
+                                                                            citySelect.addEventListener('change', function () {
+                                                                                // Lấy ID của thành phố đã chọn
+                                                                                var selectedCityId = this.value;
+
+                                                                                console.log(selectedCityId);
+                                                                                // Kiểm tra nếu giá trị thành phố đã được chọn
+                                                                                if (selectedCityId) {
+                                                                                    // Xóa hết các quận/huyện hiện tại trước khi tải mới
+                                                                                    districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>';
+                                                                                    // Gọi hàm để tải và populate quận/huyện dựa trên ID của thành phố
+                                                                                    populateDistricts(selectedCityId);
+                                                                                }
+                                                                            });
+
+                                                                            // Sự kiện khi chọn thành phố
+                                                                            districtSelect.addEventListener('change', function () {
+                                                                                // Lấy ID của thành phố đã chọn
+                                                                                var selectedDistrictId = this.value;
+
+                                                                                console.log(selectedDistrictId);
+                                                                                // Kiểm tra nếu giá trị thành phố đã được chọn
+                                                                                if (selectedDistrictId) {
+                                                                                    // Xóa hết các quận/huyện hiện tại trước khi tải mới
+                                                                                    wardSelect.innerHTML = '<option value="">Chọn xã/phường</option>';
+                                                                                    // Gọi hàm để tải và populate quận/huyện dựa trên ID của thành phố
+                                                                                    populateWard(selectedDistrictId);
+                                                                                }
+                                                                            });
+
+                                                                            // Hàm để tải và populate quận/huyện
+                                                                            function populateDistricts(selectedCityId) {
+                                                                                fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${selectedCityId}`, {
+                                                                                    method: 'GET',
+                                                                                    headers: {
+                                                                                        'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+                                                                                        'Content-Type': 'application/json',
+                                                                                    },
+                                                                                })
+                                                                                    .then(response => response.json())
+                                                                                    .then(data => {
+                                                                                        // Xử lý dữ liệu khi API trả về thành công
+                                                                                        populateSelect(districtSelect, data.data, 'DistrictID', 'DistrictName');
+
+                                                                                        // Tìm option có giá trị là selectedCityValue và đặt nó làm được chọn
+                                                                                        var selectedOption = districtSelect.querySelector(`option[value="${selectedDistrictValue}"]`);
+                                                                                        if (selectedOption) {
+                                                                                            selectedOption.selected = true;
+                                                                                            // Kiểm tra nếu giá trị thành phố đã được chọn
+                                                                                            if (selectedDistrictValue) {
+                                                                                                // Gọi hàm để tải và populate quận/huyện dựa trên ID của thành phố
+                                                                                                populateWard(selectedDistrictValue);
+                                                                                            }
+                                                                                        }
+
+                                                                                    })
+                                                                                    .catch(error => {
+                                                                                        console.error('Lỗi khi tải dữ liệu quận:', error);
+                                                                                    });
+                                                                            }
+
+                                                                            // Hàm để tải và populate xã phường
+                                                                            function populateWard(selectedDistrictId) {
+                                                                                fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${selectedDistrictId}`, {
+                                                                                    method: 'GET',
+                                                                                    headers: {
+                                                                                        'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+                                                                                        'Content-Type': 'application/json',
+                                                                                    },
+                                                                                })
+                                                                                    .then(response => response.json())
+                                                                                    .then(data => {
+                                                                                        // Xử lý dữ liệu khi API trả về thành công
+                                                                                        populateSelect(wardSelect, data.data, 'WardCode', 'WardName');
+
+                                                                                        // Tìm option có giá trị là selectedCityValue và đặt nó làm được chọn
+                                                                                        var selectedOption = wardSelect.querySelector(`option[value="${selectedWardValue}"]`);
+                                                                                        if (selectedOption) {
+                                                                                            selectedOption.selected = true;
+                                                                                            // Kiểm tra nếu giá trị thành phố đã được chọn
+                                                                                            // if (selectedWardValue) {
+                                                                                            //     // Gọi hàm để tải và populate quận/huyện dựa trên ID của thành phố
+                                                                                            //     populateWard(selectedWardValue);
+                                                                                            // }
+                                                                                        }
+
+                                                                                    })
+                                                                                    .catch(error => {
+                                                                                        console.error('Lỗi khi tải dữ liệu quận:', error);
+                                                                                    });
+                                                                            }
+
+                                                                            // Hàm để populate dropdown
+                                                                            function populateSelect(select, data, idKey, textKey) {
+                                                                                // select.innerHTML = '<option value="">Chọn thành phố</option>';
+                                                                                data.forEach(item => {
+                                                                                    var option = document.createElement('option');
+                                                                                    option.value = item[idKey];
+                                                                                    option.text = item[textKey];
+                                                                                    select.appendChild(option);
+                                                                                });
+                                                                            }
+                                                                        });
+                                                                        function calculateShippingFee() {
+                                                                            var citySelect = document.getElementById('citySelect').value;
+                                                                            var districtSelect = document.getElementById('districtSelect').value;
+                                                                            var wardSelect = document.getElementById('wardSelect').value;
+                                                                            const shippingInfo = {
+                                                                                // weight: parseFloat(weight),
+                                                                                service_type_id: 2,
+                                                                                // from_district_id: 3440,
+                                                                                to_district_id: Number(districtSelect),
+                                                                                to_ward_code: wardSelect,
+                                                                                height: 30, //cao cm
+                                                                                length: 30, //chieu dai cm
+                                                                                weight: 1000, //can nang (g)
+                                                                                width: 30, //rong cm
+                                                                                insurance_value: 0,
+                                                                                coupon: null,
+                                                                                items: [
+                                                                                    {
+                                                                                        "name": "TEST1",
+                                                                                        "quantity": 1,
+                                                                                        "height": 20,
+                                                                                        "weight": 1,
+                                                                                        "length": 20,
+                                                                                        "width": 20
+                                                                                    }
+                                                                                ]
+                                                                            };
+                                                                            console.log(shippingInfo)
+
+                                                                            fetch('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee', {
+                                                                                method: 'POST',
+                                                                                headers: {
+                                                                                    'Content-Type': 'application/json',
+                                                                                    'Token': '0c4a5894-7fc8-11ee-96dc-de6f804954c9', // Replace with your GHN API token
+                                                                                    // 'shop_id': 4689281
+                                                                                },
+                                                                                body: JSON.stringify(shippingInfo)
+                                                                            })
+                                                                                .then(response => response.json())
+                                                                                .then(data => {
+                                                                                    const shippingFeeResult = document.getElementById('shippingFeeResult');
+                                                                                    shippingFeeResult.value = `${data.data.total}`; // Thay đổi ở đây
+                                                                                    const shippingFeeResult2 = document.getElementById('phi-van-chuyen');
+                                                                                    shippingFeeResult2.innerHTML = `${data.data.total} VND`;
+                                                                                    console.log(data)
+                                                                                    const phiShipInput = document.getElementById('shippingFeeResult');
+
+                                                                                    // Lấy thẻ <h6> có class là tong-gia
+                                                                                    const tongGiaElement = document.querySelector('.tong-gia');
+                                                                                    const shippingFeeResultInput = document.getElementById('shippingFeeResult');
+                                                                                    const tongTienHoaDonInput = document.querySelector('input[name="tongTienHoaDon"]');
+                                                                                    const tongGiaValue = document.getElementById('tongGiaValue');
+                                                                                    const tongAll = document.getElementById('tongAll');
+                                                                                    // Hàm cộng giá trị từ hai ô input và cập nhật nội dung của thẻ <h6>
+                                                                                    function congHaiInputVaCapNhatTongGia() {
+                                                                                        // Lấy giá trị từ hai ô input
+                                                                                        const tongTienHoaDon = parseFloat(tongTienHoaDonInput.value);
+                                                                                        const shippingFee = parseFloat(shippingFeeResultInput.value);
+
+                                                                                        // Kiểm tra nếu ô input shippingFee không có giá trị hợp lệ thì gán giá trị mặc định là 0
+                                                                                        const phiShip = isNaN(shippingFee) ? 0 : shippingFee;
+
+                                                                                        // Thực hiện phép cộng
+                                                                                        const tongGia = tongTienHoaDon + phiShip;
+
+                                                                                        // Hiển thị kết quả trong thẻ <h6>
+                                                                                        tongGiaValue.textContent = tongGia.toFixed(0); // Giữ hai chữ số sau dấu thập phân
+                                                                                        tongAll.value = tongGia.toFixed(0);
+                                                                                    }
+
+                                                                                    // Gọi hàm khi giá trị trong ô input thay đổi
+                                                                                    shippingFeeResultInput.addEventListener('input', congHaiInputVaCapNhatTongGia);
+                                                                                    tongTienHoaDonInput.addEventListener('input', congHaiInputVaCapNhatTongGia);
+
+                                                                                    // Gọi hàm lần đầu để hiển thị kết quả ban đầu
+                                                                                    congHaiInputVaCapNhatTongGia();
+
+
+                                                                                })
+                                                                                .catch(error => console.error('Error:', error));
+                                                                        }
+                                                                    </script>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label class="form-label">
                                                                         <span class="dau-sao">*</span>
                                                                         Địa chỉ cụ thể:
                                                                     </label>
-                                                                    <textarea id="inputDiaChiCuThe" class="form-control"
-                                                                        rows="6"></textarea>
+                                                                    <textarea name="inputDcct" id="inputDiaChiCuThe"
+                                                                        class="form-control"
+                                                                        rows="6">[[${hoaDon.diaChiNguoiNhan}]]</textarea>
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <label class="form-label">
                                                                         <span class="dau-sao">*</span>
                                                                         Ghi chú:
                                                                     </label>
-                                                                    <textarea id="inputGhiChu" class="form-control"
-                                                                        rows="3"></textarea>
+                                                                    <textarea name="inputGhiChu" id="inputGhiChu"
+                                                                        class="form-control"
+                                                                        rows="3">[[${hoaDon.ghiChu}]]</textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -976,10 +1203,34 @@
                                                                             <input class="form-check-input"
                                                                                 type="checkbox" role="switch"
                                                                                 id="toggleVisibility" name="giaoHang">
+                                                                            <script>
+                                                                                const toggleVisibility = document.getElementById('toggleVisibility');
+                                                                                // if('[[${hoaDon.phiShip}]]'==0&&'[[${hoaDon.trangThai}]]==3'){
+                                                                                //     toggleVisibility.disabled=true
+                                                                                // }
+                                                                                if ('[[${hoaDon.phiShip}]]' == 0) {
+                                                                                    toggleVisibility.checked = false;
+                                                                                    document.getElementById('checkGiaoHang').style.display = 'none'
+                                                                                    document.getElementById('checkBtnGiaoHang').style.display = 'none'
+                                                                                } else {
+                                                                                    toggleVisibility.checked = true;
+                                                                                    toggleVisibility.disabled =true;
+                                                                                }
+                                                                                toggleVisibility.addEventListener('change', function () {
+                                                                                    const checkGiaoHang = document.getElementById('checkGiaoHang')
+                                                                                    if (this.checked) {
+                                                                                        console.log('Checkbox is checked');
+                                                                                        checkGiaoHang.style.display = 'block';
+                                                                                        checkBtnGiaoHang.style.display = 'block';
+                                                                                    } else {
+                                                                                        console.log('Checkbox is unchecked');
+                                                                                        checkGiaoHang.style.display = 'none';
+                                                                                        checkBtnGiaoHang.style.display = 'none';
 
+                                                                                    }
+                                                                                });
+                                                                            </script>
                                                                         </div>
-
-
                                                                     </div>
 
 
@@ -1025,6 +1276,8 @@
                                                                         <h6 class="thong-tin-gia">
                                                                             [[${hoaDon.tongTienHoaDon()}]]
                                                                             VND</h6>
+                                                                        <input th:value="${hoaDon.tongTienHoaDon()}"
+                                                                            type="hidden" name="tongTienHoaDon">
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -1032,12 +1285,21 @@
                                                                         <h6>Phí vận chuyển:</h6>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <h6 class="thong-tin-gia">0 VND</h6>
+                                                                        <h6 id="phi-van-chuyen" class="thong-tin-gia">
+                                                                            [[${hoaDon.phiShip}]]
+                                                                            VND</h6>
+
+
+                                                                        <input th:value="${hoaDon.phiShip}"
+                                                                            name="phiShip" type="hidden"
+                                                                            id="shippingFeeResult">
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col">
                                                                         <h6>Giảm giá:</h6>
+
+                                                                        <input type="hidden" value="0" name="giamGia">
                                                                     </div>
                                                                     <div class="col">
                                                                         <h6 class="thong-tin-gia">0 VND</h6>
@@ -1048,11 +1310,14 @@
                                                                         <h3>Tổng tiền:</h3>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <h6 class="tong-gia">
-                                                                            [[${hoaDon.tongTienHoaDon()}]]
-                                                                            VND
-                                                                        </h6>
+                                                                        <h6 class="thong-tin-gia" id="tongGiaH6"><span
+                                                                                id="tongGiaValue">[[${hoaDon.tongTienHoaDonKhiGiam()}]]</span>
+                                                                            VND</h6>
+                                                                        <input
+                                                                            th:value="${hoaDon.tongTienHoaDonKhiGiam()}"
+                                                                            type="hidden" id="tongAll">
                                                                     </div>
+
 
                                                                 </div>
                                                             </div>
@@ -1265,7 +1530,7 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>Glacat</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
             <!-- All the links in the footer should remain intact. -->
@@ -1291,70 +1556,111 @@
         }
     </style>
     <!--    thư viện của bảng tích hợp tìm kiếm-->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
-<script>
-    $(document).ready(function () {
-        var table = $('#example').DataTable({
-            "language": {
-                "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
-                "emptyTable": "Không có kết quả nào được tìm thấy",
-                "zeroRecords": "Không có kết quả phù hợp",
-                "infoEmpty": "Không có dữ liệu để hiển thị"
-            },
-            "initComplete": function (settings, json) {
-                // CSS changes
-                $('#example_filter input[type="search"]').addClass('form-control');
-                $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
-                $('#example_filter label').contents().filter(function () {
-                    return this.nodeType === 3;
-                }).replaceWith(' ');
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                "language": {
+                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                    "emptyTable": "Không có kết quả nào được tìm thấy",
+                    "zeroRecords": "Không có kết quả phù hợp",
+                    "infoEmpty": "Không có dữ liệu để hiển thị"
+                },
+                "initComplete": function (settings, json) {
+                    // CSS changes
+                    $('#example_filter input[type="search"]').addClass('form-control');
+                    $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                    $('#example_filter label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).replaceWith(' ');
 
-                $('#example_length label').contents().filter(function () {
-                    return this.nodeType === 3;
-                }).first().replaceWith('Hiển thị');
-                $('#example_length label').contents().filter(function () {
-                    return this.nodeType === 3;
-                }).last().replaceWith('mục');
+                    $('#example_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).first().replaceWith('Hiển thị');
+                    $('#example_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).last().replaceWith('mục');
 
-                $('#example_length select').addClass('form-select');
-            }
+                    $('#example_length select').addClass('form-select');
+                }
+            });
+
+            table.on('draw.dt', function () {
+                var pageInfo = table.page.info();
+
+                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+                $('#example_info').html(newInfo);
+
+            });
         });
 
-        table.on('draw.dt', function () {
-            var pageInfo = table.page.info();
+        $(document).ready(function () {
+            var table = $('#example1').DataTable({
+                "language": {
+                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                    "emptyTable": "Không có kết quả nào được tìm thấy",
+                    "zeroRecords": "Không có kết quả phù hợp",
+                    "infoEmpty": "Không có dữ liệu để hiển thị"
+                },
+                "initComplete": function (settings, json) {
+                    // CSS changes
+                    $('#example1_filter input[type="search"]').addClass('form-control');
+                    $('#example1_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                    $('#example1_filter label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).replaceWith(' ');
 
-            var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
-            $('#example_info').html(newInfo);
+                    $('#example1_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).first().replaceWith('Hiển thị');
+                    $('#example1_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).last().replaceWith('mục');
 
+                    $('#example1_length select').addClass('form-select');
+                }
+            });
+
+            table.on('draw.dt', function () {
+                var pageInfo = table.page.info();
+
+                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+                $('#example1_info').html(newInfo);
+
+            });
         });
-    });
-</script>
-<style>
-    /*input tìm kiếm*/
-    #example_filter input[type="search"] {
-        width: 180%;
-        margin-left: -80%;
-        margin-bottom: 10%;
-    }
+    </script>
+    <style>
+        /*input tìm kiếm*/
+        #example_filter input[type="search"] {
+            width: 180%;
+            margin-left: -80%;
+            margin-bottom: 10%;
+        }
 
-    /*select hiển thị mục*/
-    .dataTables_length label {
-        white-space: nowrap; /* Ngăn các phần tử xuống dòng */
-        display: flex; /* Hiển thị label và select trên cùng một dòng */
-        align-items: center; /* Canh chỉnh label và select theo chiều dọc */
-    }
+        /*select hiển thị mục*/
+        .dataTables_length label {
+            white-space: nowrap;
+            /* Ngăn các phần tử xuống dòng */
+            display: flex;
+            /* Hiển thị label và select trên cùng một dòng */
+            align-items: center;
+            /* Canh chỉnh label và select theo chiều dọc */
+        }
 
-    .dataTables_length select {
-        margin-left: 5px; /* Tạo khoảng cách giữa label và select */
-    }
+        .dataTables_length select {
+            margin-left: 5px;
+            /* Tạo khoảng cách giữa label và select */
+        }
 
-    .dataTables_length label:after {
-        /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
-        content: ''; /* Xóa nội dung */
-    }
-</style>
-<!--    thư viện của bảng tích hợp tìm kiếm end-->
+        .dataTables_length label:after {
+            /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
+            content: '';
+            /* Xóa nội dung */
+        }
+    </style>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
 </body>
 
 </html>

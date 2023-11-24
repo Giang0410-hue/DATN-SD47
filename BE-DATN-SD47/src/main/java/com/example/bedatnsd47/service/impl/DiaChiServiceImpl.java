@@ -80,4 +80,10 @@ public class DiaChiServiceImpl implements DiaChiService {
         return diaChiRepository.findById(id).get();
 
     }
+
+    @Override
+    public List<DiaChi> getAllTrangThai(Integer trangThai) {
+        return diaChiRepository.fillAllByTrangThai(trangThai);
+    }
+
 }

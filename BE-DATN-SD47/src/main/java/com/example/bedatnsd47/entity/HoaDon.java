@@ -11,16 +11,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
-
-
 
 @Getter
 @Setter
@@ -60,6 +61,14 @@ public class HoaDon {
 
     @Column(name = "sdt_nguoi_nhan", length = 15)
     private String sdtNguoiNhan;
+    @Column(name = "thanh_pho", length = 50)
+    private String thanhPho;
+
+    @Column(name = "quan_huyen", length = 50)
+    private String quanHuyen;
+
+    @Column(name = "phuong_xa", length = 50)
+    private String phuongXa;
 
     @Column(name = "dia_chi_nguoi_nhan", length = 100)
     private String diaChiNguoiNhan;
@@ -88,26 +97,62 @@ public class HoaDon {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(fetch = FetchType.LAZY )
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "voucher_id", referencedColumnName = "id")
     private Voucher voucher;
 
-    @ManyToOne(fetch = FetchType.LAZY )
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tai_khoan_id", referencedColumnName = "id")
     private TaiKhoan taiKhoan;
 
     @OneToMany(mappedBy = "hoaDon")
     private List<HoaDonChiTiet> lstHoaDonChiTiet;
 
-    @ManyToOne(fetch = FetchType.LAZY )
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "phuong_thuc_thanh_toan_id", referencedColumnName = "id")
     private PhuongThucThanhToan phuongThucThanhToan;
 
-    public Long tongTienHoaDon (){
-        Long total =  (long) 0;
+    public Long tongTienHoaDon() {
+        Long total = (long) 0;
         for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
-            total+=hoaDonChiTiet.tongTien();
+            total += hoaDonChiTiet.tongTien();
         }
         return total;
     }
+
+    public static String timeFm(LocalDateTime currentTime) {
+        // LocalDateTime currentTime = LocalDateTime.now();
+
+        // Định dạng thời gian theo yêu cầu: giờ, phút, ngày, tháng, năm
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+        String formattedTime = currentTime.format(formatter);
+        return formattedTime;
+    }
+
+    public Long tongTienHoaDonKhiGiam() {
+
+        return this.tongTienHoaDon() + this.getPhiShip();
+    }
+
+    public String getStringTrangThai() {
+        switch (this.trangThai) {
+            case 0:
+                return "Chờ xác nhận";
+            case 1:
+                return "Chờ giao";
+            case 2:
+                return "Đang giao";
+
+            case 3:
+                return "Hoàn thành";
+            case 4:
+                return "Chờ thanh toán";
+                case 5:
+                return "Đã hủy";
+            default:
+                break;
+        }
+        return "";
+    }
+
 }

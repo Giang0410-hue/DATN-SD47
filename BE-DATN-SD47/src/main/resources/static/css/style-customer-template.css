@@ -1,9 +1,10 @@
 /* Base */
 body {
     line-height: 1.7;
-    color: #8c92a0;
+    color: black;
     font-weight: 300;
     font-size: 16px;
+    font-family: "Open Sans", sans-serif;
 }
 
 ::-moz-selection {
@@ -184,7 +185,7 @@ a:hover {
     background: #fff;
     margin-bottom: 0px;
     z-index: 1999;
-    position: relative;
+    /*position: relative;*/
 }
 
 .site-navbar.transparent {
@@ -1062,6 +1063,266 @@ a:hover {
     font-weight: bold;
 
 }
-.product{
+
+.product {
     color: black;
 }
+.product-info-container {
+    width: 100%;
+    max-width: 300px;
+    height: 110px; /* Chỉnh chiều cao của khung theo mong muốn */
+    padding: 10px;
+    box-sizing: border-box;
+    word-wrap: break-word; /* Cho phép chữ xuống dòng nếu quá dài */
+    overflow: hidden; /* Ẩn nội dung vượt quá chiều cao khung */
+}
+
+.product-title {
+    overflow: hidden; /* Ẩn phần chữ tràn */
+    text-overflow: ellipsis; /* Hiển thị dấu elipsis (...) nếu chữ tràn */
+}
+
+
+.product-thumbnail-container {
+    width: 100%; /* Chiều rộng của khung chứa ảnh */
+    height: 250px; /* Chiều cao của khung chứa ảnh */
+    overflow: hidden; /* Đảm bảo ảnh không vượt qua khung */
+}
+
+.product-thumbnail {
+    width: 100%; /* Ảnh chiếm toàn bộ chiều rộng của khung */
+    height: auto; /* Tự động tính chiều cao dựa trên tỉ lệ khung */
+    object-fit: cover; /* Ảnh sẽ được định hình để vừa khớp với khung mà không làm thay đổi tỉ lệ khung */
+    border: none; /* Thêm dòng này để ẩn đường viền (border) */
+}
+
+.product-section {
+    padding: 7rem 0;
+}
+
+.product-section .product-item {
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    padding-bottom: 20px;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.product-section .product-item .product-thumbnail {
+    margin-bottom: 30px;
+    position: relative;
+    top: 0;
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease;
+}
+
+.product-section .product-item h3 {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.product-section .product-item strong {
+    font-weight: 800 !important;
+    font-size: 18px !important;
+}
+
+.product-section .product-item h3, .product-section .product-item strong {
+    color: #2f2f2f;
+    text-decoration: none;
+}
+
+.product-section .product-item .icon-cross {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    bottom: 15px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    margin-bottom: -17.5px;
+    border-radius: 50%;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease;
+}
+
+.product-section .product-item .icon-cross img {
+    position: absolute;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.product-section .product-item:before {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    content: "";
+    background: #dce5e4;
+    height: 0%;
+    z-index: -1;
+    border-radius: 10px;
+    -webkit-transition: .1s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease;
+}
+
+.product-section .product-item:hover .product-thumbnail {
+    top: -25px;
+}
+
+.product-section .product-item:hover .icon-cross {
+    bottom: 0;
+    opacity: 1;
+    visibility: visible;
+}
+
+.product-section .product-item:hover:before {
+    height: 70%;
+}
+
+
+
+
+
+
+
+
+
+
+
+.sidebar-nav {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.sidebar-nav .nav-item {
+    margin-bottom: 5px;
+}
+
+.sidebar-nav .nav-heading {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #899bbd;
+    font-weight: 600;
+    margin: 10px 0 5px 15px;
+}
+
+.sidebar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4154f1;
+    transition: 0.3s;
+    background: #f6f9ff;
+    padding: 10px 15px;
+    border-radius: 4px;
+}
+
+.sidebar-nav .nav-link i {
+    font-size: 16px;
+    margin-right: 10px;
+    color: #4154f1;
+}
+
+.sidebar-nav .nav-link.collapsed {
+    color: #012970;
+    background: #fff;
+}
+
+.sidebar-nav .nav-link.collapsed i {
+    color: #899bbd;
+}
+
+.sidebar-nav .nav-link:hover {
+    color: #4154f1;
+    background: #f6f9ff;
+}
+
+.sidebar-nav .nav-link:hover i {
+    color: #4154f1;
+}
+
+.sidebar-nav .nav-link .bi-chevron-down {
+    margin-right: 0;
+    transition: transform 0.2s ease-in-out;
+}
+
+.sidebar-nav .nav-link:not(.collapsed) .bi-chevron-down {
+    transform: rotate(180deg);
+}
+
+.sidebar-nav .nav-content {
+    padding: 5px 0 0 0;
+    margin: 0;
+    list-style: none;
+}
+
+.sidebar-nav .nav-content a {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #012970;
+    transition: 0.3s;
+    padding: 10px 0 10px 40px;
+    transition: 0.3s;
+}
+
+.sidebar-nav .nav-content a i {
+    font-size: 6px;
+    margin-right: 8px;
+    line-height: 0;
+    border-radius: 50%;
+}
+
+.sidebar-nav .nav-content a:hover,
+.sidebar-nav .nav-content a.active {
+    color: #4154f1;
+}
+
+.sidebar-nav .nav-content a.active i {
+    background-color: #4154f1;
+}
+
+/*.cart {*/
+/*    position: relative;*/
+/*    display: block;*/
+/*    width: 30px;*/
+/*}*/
+
+/*.cart__count {*/
+/*    position: absolute;*/
+/*    right: -105px;*/
+/*    top: -33px;*/
+/*    display: inline-block;*/
+/*    width: 20px; !* Giảm chiều rộng *!*/
+/*    height: 20px; !* Giảm chiều cao *!*/
+/*    line-height: 20px; !* Giữ cho nội dung ở giữa *!*/
+/*    color: #fff;*/
+/*    background-color: crimson;*/
+/*    border-radius: 50%; !* Sửa thành 50% để làm cho nó trở thành hình tròn *!*/
+/*    text-align: center; !* Đảm bảo nội dung ở giữa theo cả chiều dọc và ngang *!*/
+/*    font-size: 12px; !* Điều chỉnh kích thước chữ *!*/
+/*    font-weight: bold; !* Để làm nổi bật chữ *!*/
+/*}*/

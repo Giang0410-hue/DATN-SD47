@@ -53,6 +53,13 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     }
 
     @Override
+    public GioHangChiTiet fillByIdCTSP(Long idCTSP) {
+
+        return repository.fillByIdCTSP(idCTSP);
+
+    }
+
+    @Override
     public Integer soLuongSPGioHangCT(Long idGioHang) {
 
         return repository.soLuongSpTrongGioHangCT(idGioHang);
@@ -60,7 +67,7 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     }
 
     @Override
-    public List<GioHangChiTiet> findAllById(List<String> listIdString) {
+    public List<GioHangChiTiet> findAllById(List<String> listIdString,Long idGioHang) {
         List<Long> listIdLong = new ArrayList<>();
         for (String str : listIdString) {
             try {
@@ -72,19 +79,20 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
             }
         }
 
-        return repository.findAllById(listIdLong);
+        return repository.findAllByIdGHCT(listIdLong,idGioHang);
 
     }
 
     @Override
     public HoaDonChiTiet addHoaDon(List<String> listStringIdGioHangCT, Long tongTien, Long tongTienSale,
                                    String hoVaTen, String soDienThoai, String tienShip, String email,
-                                   String voucher, String diaChiCuThe, String ghiChu) {
+                                   String voucher, String diaChiCuThe, String ghiChu, TaiKhoan taiKhoan,
+                                   String phuongXaID, String quanHuyenID, String thanhPhoID,Long idGioHang) {
         Date currentAdd = new Date();
 
         HoaDon hoaDon = new HoaDon();
         hoaDon.setMaHoaDon("HĐ" + hoaDon.getId());
-        hoaDon.setLoaiHoaDon(2);
+        hoaDon.setLoaiHoaDon(1);
         hoaDon.setPhiShip(Long.valueOf(tienShip));
         hoaDon.setTongTien(tongTien);
         hoaDon.setTongTienKhiGiam(tongTienSale);
@@ -96,9 +104,12 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         hoaDon.setNgayTao(currentAdd);
         hoaDon.setNgaySua(currentAdd);
         hoaDon.setTrangThai(0);
+        hoaDon.setPhuongXa(phuongXaID);
+        hoaDon.setQuanHuyen(quanHuyenID);
+        hoaDon.setThanhPho(thanhPhoID);
         hoaDon.setVoucher(Voucher.builder().id(Long.valueOf(voucher)).build());
 
-        hoaDon.setTaiKhoan(TaiKhoan.builder().id(Long.valueOf(4)).build());
+        hoaDon.setTaiKhoan(taiKhoan);
         repositoryHoaDon.save(hoaDon);
 
         hoaDon.setMaHoaDon("HĐ" + hoaDon.getId());
@@ -106,7 +117,7 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         repositoryHoaDon.save(hoaDon);
 
 
-        List<GioHangChiTiet> listGioHangChiTiet = this.findAllById(listStringIdGioHangCT);
+        List<GioHangChiTiet> listGioHangChiTiet = this.findAllById(listStringIdGioHangCT,idGioHang);
         HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
 
         for (GioHangChiTiet gioHangChiTiet : listGioHangChiTiet) {
@@ -115,12 +126,8 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
             hoaDonChiTiet.setHoaDon(HoaDon.builder().id(hoaDon.getId()).build());
             hoaDonChiTiet.setChiTietSanPham(gioHangChiTiet.getChiTietSanPham());
             repositoryHoaDonChiTiet.save(hoaDonChiTiet);
-
-            gioHangChiTiet.setTrangThai(1);
-
             repository.delete(gioHangChiTiet);
         }
-
 
 
         return null;

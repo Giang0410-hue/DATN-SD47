@@ -73,6 +73,9 @@ public class NhanVienServiceImpl implements NhanVienService {
     public boolean checkTenTrung(String ten) {
 
         for (TaiKhoan sp : repository.findAll()) {
+            if (sp.getGioiTinh() == null) {
+                continue;
+            }
             if (sp.getTenTaiKhoan().equalsIgnoreCase(ten)) {
                 return false;
             }
@@ -85,6 +88,9 @@ public class NhanVienServiceImpl implements NhanVienService {
     public boolean checkTenTrungSua(String id, String ten) {
 
         for (TaiKhoan tk : repository.findAll()) {
+            if (tk.getGioiTinh() == null) {
+                continue;
+            }
             if (tk.getTenTaiKhoan().equalsIgnoreCase(ten)) {
                 if (!tk.getId().equals(id)) {
                     return false;
@@ -99,6 +105,9 @@ public class NhanVienServiceImpl implements NhanVienService {
     public boolean checkTenTkTrungSua(Long id, String ten) {
 
         for (TaiKhoan sp : repository.findAll()) {
+            if (sp.getGioiTinh() == null) {
+                continue;
+            }
             if (sp.getTenTaiKhoan().equalsIgnoreCase(ten)) {
                 if (!sp.getId().equals(id)) {
                     return false;
@@ -112,6 +121,9 @@ public class NhanVienServiceImpl implements NhanVienService {
     public boolean checkTenTaiKhoanTrung(String ten) {
 
         for (TaiKhoan sp : repository.findAll()) {
+            if (sp.getGioiTinh() == null) {
+                continue;
+            }
             if (sp.getTenTaiKhoan().equalsIgnoreCase(ten)) {
                 return false;
             }
@@ -123,6 +135,9 @@ public class NhanVienServiceImpl implements NhanVienService {
     public boolean checkEmailSua(Long id, String email) {
 
         for (TaiKhoan sp : repository.findAll()) {
+            if (sp.getGioiTinh() == null) {
+                continue;
+            }
             if (sp.getEmail().equalsIgnoreCase(email)) {
                 if (!sp.getId().equals(id)) {
                     return false;
@@ -137,6 +152,9 @@ public class NhanVienServiceImpl implements NhanVienService {
     @Override
     public boolean checkEmail(String email) {
         for (TaiKhoan sp : repository.findAll()) {
+            if (sp.getGioiTinh() == null) {
+                continue;
+            }
             if (sp.getEmail().equalsIgnoreCase(email)) {
                 return false;
             }
@@ -148,15 +166,20 @@ public class NhanVienServiceImpl implements NhanVienService {
     public void sendEmail(TaiKhoan taiKhoan, String path, String random) {
         String from = "daspabitra55@gmail.com";
         String to = taiKhoan.getEmail();
-        String subject = "Account Verfication";
-        String content =   "Tài khoản  " + taiKhoan.getTenTaiKhoan() + "<br>"+ "Mật khẩu   " + random ;
-
+        String subject = "Chào mừng bạn đến với Glacat - Tài khoản Nhân viên mới đã được tạo";
+        String content =
+                "Chào bạn," + "<br>" +
+                "Chúc mừng! Tài khoản nhân viên mới của bạn tại Glacat đã được tạo thành công. Dưới đây là thông tin đăng nhập của bạn:" + "<br>" +
+                "- Tài khoản:  " + taiKhoan.getTenTaiKhoan() + "<br>" +
+                "- Mật khẩu:   " + random +
+                "<br>" +
+                "Cảm ơn bạn đã gia nhập đội ngũ của chúng tôi! Nếu bạn có bất kỳ câu hỏi hoặc cần sự hỗ trợ, đừng ngần ngại liên hệ với chúng tôi.";
         try {
 
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
 
-            helper.setFrom(from, "Becoder");
+            helper.setFrom(from, "Glacat");
             helper.setTo(to);
             helper.setSubject(subject);
 

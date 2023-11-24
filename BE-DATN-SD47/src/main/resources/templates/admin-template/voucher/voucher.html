@@ -47,7 +47,7 @@
     <div class="d-flex align-items-center justify-content-between">
         <a href="/ban-hang-tai-quay/hoa-don" class="logo d-flex align-items-center">
             <img src="../../../static/img/logo.png" alt="">
-            <span class="d-none d-lg-block">NiceAdmin</span>
+            <span class="d-none d-lg-block">Glacat</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -258,16 +258,22 @@
                                             <div class="col-md-6">
                                                 <label class="form-label">
                                                     <span class="dau-sao">*</span>Ngày bắt đầu:</label>
-                                                <input type="date" class="form-control" th:field="*{ngayBatDau}">
-                                                <span class="check-loi" th:errors="*{ngayBatDau}"></span>
+                                                <input type="datetime-local" class="form-control" th:field="*{ngayBatDau}" onchange="validateDateStart()" id="ngayBatDau" >
+                                                <span class="check-loi" th:errors="*{ngayBatDau}" ></span>
+                                                <br>
+                                                <span id="error-message-start" style="color: red;font-size: 14px;font-weight: bold;"></span>
+<!--                                                <span id="message-start" style="color: red;font-size: 14px;font-weight: bold;"></span>-->
+
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">
                                                     <span class="dau-sao">*</span>Ngày kết
                                                     thúc:</label>
-                                                <input type="date" class="form-control" th:field="*{ngayKetThuc}">
+                                                <input type="datetime-local" class="form-control" th:field="*{ngayKetThuc}" onchange="validateDateEnd()" id="ngayKetThuc">
                                                 <span class="check-loi" th:errors="*{ngayKetThuc}"></span>
                                                 <span class="check-loi" th:if="${checkNgayKetThuc=='ngayKetThuc'}">Ngày kết thúc phải sau ngày tạo</span>
+                                                <br>
+                                                <span id="error-message-end" style="color: red;font-size: 14px;font-weight: bold;"></span>
 
                                             </div>
 <!--                                            <div class="search-trang-thai" style="margin-top: 4%;">-->
@@ -325,6 +331,8 @@
                                 <th>Giảm</th>
                                 <th>Số Lượng</th>
                                 <th>Trạng Thái</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
                                 <th>Hành Động</th>
                             </tr>
                             <thead>
@@ -334,11 +342,13 @@
                                 <td th:text="${voucher.maVoucher}"></td>
                                 <td th:text="${voucher.tenVoucher}"></td>
                                 <td th:text="${voucher.giaTriDonToiThieu}"></td>
-                                <td th:text="${voucher.phanTramGiam}"></td>
+                                <td th:text="${voucher.phanTramGiam + '%'}"></td>
                                 <td th:text="${voucher.soLuong}"></td>
                                 <td class="trangthaidkd" th:if="${voucher.trangThai==0}">Đang diễn ra</td>
                                 <td class="trangthainkd" th:if="${voucher.trangThai==1}">Đã kết thúc</td>
-                                <td class="trangthainkd" th:if="${voucher.trangThai==2}">Sắp diễn ra</td>
+                                <td class="trangthaisdr" th:if="${voucher.trangThai==2}">Sắp diễn ra</td>
+                                <td th:text="${voucher.ngayBatDau}"></td>
+                                <td th:text="${voucher.ngayKetThuc}"></td>
                                 <td>
                                     <!-- button và model -->
                                     <a th:href="@{/admin/voucher/view-update/{id}(id=${voucher.id})}"
@@ -556,7 +566,7 @@
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
-        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>Glacat</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
         <!-- All the links in the footer should remain intact. -->
@@ -622,6 +632,71 @@
 
         });
     });
+
+    function validateDateStart() {
+        var inputField = document.getElementById('ngayBatDau');
+        var errorMessage = document.getElementById('error-message-start');
+
+        // Biểu thức chính quy để kiểm tra định dạng yyyy-MM-ddTHH:mm
+        var dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+
+        // Kiểm tra nếu giá trị nhập vào không khớp với biểu thức chính quy
+        if (!dateTimeRegex.test(inputField.value)) {
+            errorMessage.innerHTML = 'Định dạng ngày và giờ không hợp lệ. Vui lòng nhập theo định dạng dd/mm/yyyy --:-- hoặc nhập đúng ngày.';
+            inputField.setCustomValidity('Định dạng ngày và giờ không hợp lệ.');
+        } else {
+            var inputDate = new Date(inputField.value);
+            var currentDate = new Date();
+
+            // Kiểm tra nếu thời gian nằm trong quá khứ
+            if (inputDate < currentDate) {
+                errorMessage.innerHTML = 'Thời gian không được trong quá khứ';
+                inputField.setCustomValidity('Thời gian không được trong quá khứ');
+            } else {
+                errorMessage.innerHTML = '';
+                inputField.setCustomValidity('');
+            }
+        }
+    }
+
+    function validateDateEnd() {
+        var inputField = document.getElementById('ngayKetThuc');
+        var errorMessage = document.getElementById('error-message-end');
+
+        // Biểu thức chính quy để kiểm tra định dạng yyyy-MM-ddTHH:mm
+        var dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+
+        // Kiểm tra nếu giá trị nhập vào không khớp với biểu thức chính quy
+        if (!dateTimeRegex.test(inputField.value)) {
+            errorMessage.innerHTML = 'Định dạng ngày và giờ không hợp lệ. Vui lòng nhập theo định dạng dd/mm/yyyy --:-- hoặc nhập đúng ngày.';
+            inputField.setCustomValidity('Định dạng ngày và giờ không hợp lệ.');
+        } else {
+            var inputDate = new Date(inputField.value);
+            var currentDate = new Date();
+
+            // Kiểm tra nếu thời gian nằm trong quá khứ
+            if (inputDate < currentDate) {
+                errorMessage.innerHTML = 'Thời gian không được trong quá khứ';
+                inputField.setCustomValidity('Thời gian không được trong quá khứ');
+            } else {
+                errorMessage.innerHTML = '';
+                inputField.setCustomValidity('');
+            }
+        }
+    }
+    function validateDateStartUpdate() {
+        var inputField = document.getElementById('ngayBatDau');
+        var errorMessage = document.getElementById('error-message-start-update');
+
+        // Biểu thức chính quy để kiểm tra định dạng yyyy-MM-ddTHH:mm
+        var dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+
+        // Kiểm tra nếu giá trị nhập vào không khớp với biểu thức chính quy
+        if (!dateTimeRegex.test(inputField.value)) {
+            errorMessage.innerHTML = 'Định dạng ngày và giờ không hợp lệ. Vui lòng nhập theo định dạng dd/mm/yyyy --:--';
+            inputField.setCustomValidity('Định dạng ngày và giờ không hợp lệ.');
+        }
+    }
 </script>
 <style>
     /*input tìm kiếm*/

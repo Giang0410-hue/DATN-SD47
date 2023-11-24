@@ -43,7 +43,7 @@
     <div class="d-flex align-items-center justify-content-between">
         <a href="/ban-hang-tai-quay/hoa-don" class="logo d-flex align-items-center">
             <img src="../../../static/img/logo.png" alt="">
-            <span class="d-none d-lg-block">NiceAdmin</span>
+            <span class="d-none d-lg-block">Glacat</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -164,9 +164,18 @@
                                       th:action="@{/admin/voucher/update}" method="post"
                                       enctype="multipart/form-data"
                                       th:object="${voucher}">
-                                    <input hidden type="text" th:field="*{id}" >
+                                    <input hidden type="text" th:field="*{id}">
                                     <input hidden type="date" th:field="*{ngayTao}">
-                                    <input hidden type="text" th:field="*{maVoucher}">
+                                    <!--                                    <input hidden type="text" th:field="*{maVoucher}">-->
+                                    <input hidden type="text" th:field="*{trangThai}">
+                                    <div class="col-md-12">
+                                        <label class="form-label">
+                                            <span class="dau-sao">*</span>Mã voucher:</label>
+                                        <input type="text" class="form-control" placeholder="Nhập mã voucher"
+                                               th:field="*{maVoucher}">
+                                        <span class="check-loi" th:errors="*{maVoucher}"></span>
+                                        <span class="check-loi" th:text="${checkMaTrung}"></span>
+                                    </div>
                                     <div class="col-md-6">
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Tên voucher:</label>
@@ -178,7 +187,7 @@
                                     <div class="col-md-6">
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Số lượng:</label>
-                                        <input type="text" class="form-control" placeholder="Nhập số lượng"
+                                        <input type="number" class="form-control" placeholder="Nhập số lượng"
                                                min="0" th:field="*{soLuong}">
                                         <span class="check-loi" th:errors="*{soLuong}"></span>
                                     </div>
@@ -186,7 +195,7 @@
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Phần trăm
                                             giảm:</label>
-                                        <input type="text" class="form-control"
+                                        <input type="number" class="form-control"
                                                placeholder="Nhập phần trăm giảm"
                                                th:field="*{phanTramGiam}">
                                         <span class="check-loi" th:errors="*{phanTramGiam}"></span>
@@ -195,7 +204,7 @@
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Giá đơn tối
                                             thiểu:</label>
-                                        <input type="text" class="form-control"
+                                        <input type="number" class="form-control"
                                                placeholder="Nhập giá đơn tối thiểu" min="1"
                                                th:field="*{giaTriDonToiThieu}">
                                         <span class="check-loi" th:errors="*{giaTriDonToiThieu}"></span>
@@ -203,41 +212,49 @@
                                     <div class="col-md-6">
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Ngày bắt đầu:</label>
-                                        <input type="date" class="form-control" th:field="*{ngayBatDau}">
+                                        <input type="datetime-local" class="form-control" th:field="*{ngayBatDau}"
+                                               onchange="validateDateStartUpdate()" id="ngayBatDau">
                                         <span class="check-loi" th:errors="*{ngayBatDau}"></span>
+                                        <br>
+                                        <span id="error-message-start-update"
+                                              style="color: red;font-size: 14px;font-weight: bold;"></span>
+
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Ngày kết
                                             thúc:</label>
-                                        <input type="date" class="form-control" th:field="*{ngayKetThuc}">
+                                        <input type="datetime-local" class="form-control" th:field="*{ngayKetThuc}" onchange="validateDateEndUpdate()" id="ngayKetThuc">
                                         <span class="check-loi" th:errors="*{ngayKetThuc}"></span>
                                         <span class="check-loi" th:if="${checkNgayKetThuc=='ngayKetThuc'}">Ngày kết thúc phải sau ngày tạo</span>
+                                        <br>
+                                        <span id="error-message-end-update"
+                                              style="color: red;font-size: 14px;font-weight: bold;"></span>
 
                                     </div>
-                                    <div class="search-trang-thai" style="margin-top: 4%;">
-                                        <label style="margin-left:17%;">Trạng thái:</label>
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                               value="2"
-                                               style="margin-left:10%;" checked th:field="*{trangThai}">
-                                        <label class="form-check-label">
-                                            Sắp diễn ra
-                                        </label>
+                                    <!--                                    <div class="search-transearch-trag-thai" style="margin-top: 4%;">-->
+                                    <!--                                        <label style="margin-left:17%;">Trạng thái:</label>-->
+                                    <!--                                        <input class="form-check-input" type="radio" name="gridRadios"-->
+                                    <!--                                               value="2"-->
+                                    <!--                                               style="margin-left:10%;" checked th:field="*{trangThai}">-->
+                                    <!--                                        <label class="form-check-label">-->
+                                    <!--                                            Sắp diễn ra-->
+                                    <!--                                        </label>-->
 
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                               value="0"
-                                               style="margin-left:5%;" th:field="*{trangThai}" checked>
-                                        <label class="form-check-label">
-                                            Đang diễn ra
-                                        </label>
+                                    <!--                                        <input class="form-check-input" type="radio" name="gridRadios"-->
+                                    <!--                                               value="0"-->
+                                    <!--                                               style="margin-left:5%;" th:field="*{trangThai}" checked>-->
+                                    <!--                                        <label class="form-check-label">-->
+                                    <!--                                            Đang diễn ra-->
+                                    <!--                                        </label>-->
 
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                               value="1"
-                                               style="margin-left:5%;" checked th:field="*{trangThai}">
-                                        <label class="form-check-label">
-                                            Đã kết thúc
-                                        </label>
-                                    </div>
+                                    <!--                                        <input class="form-check-input" type="radio" name="gridRadios"-->
+                                    <!--                                               value="1"-->
+                                    <!--                                               style="margin-left:5%;" checked th:field="*{trangThai}">-->
+                                    <!--                                        <label class="form-check-label">-->
+                                    <!--                                            Đã kết thúc-->
+                                    <!--                                        </label>-->
+                                    <!--                                    </div>-->
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-warning">Update</button>
                                     </div>
@@ -299,11 +316,45 @@
     </div>
 </div>
 <!--Thông báo thất bại end-->
+<script>
+    function validateDateStartUpdate() {
+        var inputField = document.getElementById('ngayBatDau');
+        var errorMessage = document.getElementById('error-message-start-update');
 
+        // Biểu thức chính quy để kiểm tra định dạng yyyy-MM-ddTHH:mm
+        var dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+
+        // Kiểm tra nếu giá trị nhập vào không khớp với biểu thức chính quy
+        if (!dateTimeRegex.test(inputField.value)) {
+            errorMessage.innerHTML = 'Định dạng ngày và giờ không hợp lệ. Vui lòng nhập theo định dạng dd/mm/yyyy --:-- hoặc nhập đúng ngày.';
+            inputField.setCustomValidity('Định dạng ngày và giờ không hợp lệ.');
+        } else {
+            errorMessage.innerHTML = '';
+            inputField.setCustomValidity('');
+        }
+    }
+
+    function validateDateEndUpdate() {
+        var inputField = document.getElementById('ngayKetThuc');
+        var errorMessage = document.getElementById('error-message-end-update');
+
+        // Biểu thức chính quy để kiểm tra định dạng yyyy-MM-ddTHH:mm
+        var dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+
+        // Kiểm tra nếu giá trị nhập vào không khớp với biểu thức chính quy
+        if (!dateTimeRegex.test(inputField.value)) {
+            errorMessage.innerHTML = 'Định dạng ngày và giờ không hợp lệ. Vui lòng nhập theo định dạng dd/mm/yyyy --:-- hoặc nhập đúng ngày.';
+            inputField.setCustomValidity('Định dạng ngày và giờ không hợp lệ.');
+        } else {
+            errorMessage.innerHTML = '';
+            inputField.setCustomValidity('');
+        }
+    }
+</script>
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
-        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>Glacat</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
         <!-- All the links in the footer should remain intact. -->

@@ -65,17 +65,15 @@ public class SecurityConfig {
                 UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                 TaiKhoan user = taiKhoanRepository.findByTenTaiKhoan(userDetails.getUsername()).orElse(null);
 
-                if (user != null && user.getTrangThai() != null && user.getTrangThai() == 0) {
-                    return "/login-error"; // Redirect to a login error page if the user's trangThai is 0
+                if (user != null && user.getTrangThai() != null && user.getTrangThai() == 1) {
+                    return "/login-error"; // Redirect to a login error page if the user's trangThai is 1
                 } else {
                     if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
                         System.out.println(userDetails.getPassword());
-                        return "/products/admin";
+                        return "/ban-hang-tai-quay/hoa-don";
                     } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
-                        return "/products/user";
-                    }
-
-                    else {
+                        return "/home";
+                    } else {
                         return "/someDefaultPath";
                     }
                 }
@@ -87,9 +85,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/products/welcome", "/products/new","/login","/user/shop","/test/**","/register","/saveTaiKhoan","/verify","/quen-mat-khau",
-                        "/saveTaiKhoan1","/verify","/reset-mat-khau","/check-ran-dom","/check-random").permitAll()
-                .requestMatchers("/style/","/static/css/**", "/static/fonts/**","/static/img/**","/static/js/**","/static/scss/**","/static/vendor/**").permitAll()
+                .requestMatchers("/products/welcome", "/products/new", "/login", "/user/shop", "/test/**", "/register", "/saveTaiKhoan", "/verify", "/quen-mat-khau",
+                        "/them-tai-khoan", "/verify", "/reset-mat-khau", "/xac-minh", "/xac-minh/check").permitAll()
+                .requestMatchers("/style/", "/static/css/**", "/static/fonts/**", "/static/img/**", "/static/js/**", "/static/scss/**", "/static/vendor/**").permitAll()
                 .requestMatchers("/**").permitAll()
                 .requestMatchers("/admin/**").permitAll()
                 .and()
@@ -105,7 +103,7 @@ public class SecurityConfig {
                 .loginProcessingUrl("/login")
                 .loginPage("/login")
                 .successHandler(authenticationSuccessHandler())
-                .failureUrl("/login?error=true")
+                .failureUrl("/login/erorr")
                 // Khi đăng nhập sai username và password thì nhập lại
 //                .usernameParameter("username")// tham số này nhận từ form login ở bước 3 có input  name='username'
 //                .passwordParameter("password")// tham số này nhận từ form login ở bước 3 có input  name='password
@@ -128,7 +126,6 @@ public class SecurityConfig {
 //                .authorizeHttpRequests().requestMatchers("/products/**")
 //                .authenticated().and().formLogin().and().build();
 //    }
-
 
 
     @Bean

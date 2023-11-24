@@ -28,7 +28,16 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
 
     @Override
     public List<ChiTietSanPham> getAllCtspOneSanPham() {
+
         return repository.fillAllCtspOneSanPham();
+
+    }
+
+    @Override
+    public List<ChiTietSanPham> getAllCtspOneSanPhamMinGia() {
+
+        return repository.fillAllCtspOneSanPhamMinGia();
+
     }
 
     @Override
