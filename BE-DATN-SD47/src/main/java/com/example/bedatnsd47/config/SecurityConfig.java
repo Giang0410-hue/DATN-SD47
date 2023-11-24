@@ -64,20 +64,12 @@ public class SecurityConfig {
             protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
                 UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                 TaiKhoan user = taiKhoanRepository.findByTenTaiKhoan(userDetails.getUsername()).orElse(null);
-                System.out.println(userDetails+"****");
-                if (user != null) {
-                    System.out.println("*****null");
-                }
-                if (user == null) {
-                    System.out.println("*****null");
-                }
+
                 if (user != null && user.getTrangThai() != null && user.getTrangThai() == 1) {
                     return "/login-error"; // Redirect to a login error page if the user's trangThai is 1
                 } else {
                     if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
                         System.out.println(userDetails.getPassword());
-                        System.out.println(user + "*****");
-
                         return "/ban-hang-tai-quay/hoa-don";
                     } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
                         return "/home";
@@ -111,7 +103,7 @@ public class SecurityConfig {
                 .loginProcessingUrl("/login")
                 .loginPage("/login")
                 .successHandler(authenticationSuccessHandler())
-                .failureUrl("/login?error=true")
+                .failureUrl("/login/erorr")
                 // Khi đăng nhập sai username và password thì nhập lại
 //                .usernameParameter("username")// tham số này nhận từ form login ở bước 3 có input  name='username'
 //                .passwordParameter("password")// tham số này nhận từ form login ở bước 3 có input  name='password

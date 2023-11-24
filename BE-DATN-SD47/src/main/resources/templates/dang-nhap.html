@@ -45,31 +45,55 @@
 
                                     <div class="col-12">
                                         <label for="yourUsername" class="form-label">Tên tài khoản</label>
-                                        <div class="input-group has-validation">
-                                            <input type="text" class="form-control" id="yourUsername"
+                                            <input type="text" class="form-control" id="yourUsername" placeholder="Nhập tài khoản"
                                                    name='username' th:value="${tenTaiKhoan}" required>
-<!--                                            <div class="invalid-feedback">Please enter your username.</div>-->
-                                        </div>
+                                            <div class="check-loi" id="yourUsernameCheck" style="display: none"></div>
                                     </div>
 
                                     <div class="col-12">
                                         <label for="yourPassword" class="form-label">Mật khẩu</label>
-                                        <input type="password" class="form-control" id="yourPassword"
+                                        <input type="password" class="form-control" id="yourPassword" placeholder="Nhập mật khẩu"
                                                name='password' required th:value="${matKhauMoi}">
-<!--                                        <div class="invalid-feedback">Please enter your password!</div>-->
+                                        <div class="check-loi" id="yourPasswordCheck" style="display: none"></div>
                                     </div>
-
+                                    <div class="check-loi" id="message" style="text-align: center" th:text="${message}"></div>
                                     <div class="col-12">
                                         <p class="small mb-0"><a href="/quen-mat-khau">Quên mật khẩu</a></p>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-primary w-100" type="submit">Đăng nhập</button>
+                                        <button class="btn btn-primary w-100" onclick="return checkDangNhap()" type="submit">Đăng nhập</button>
                                     </div>
                                     <div class="col-12">
                                         <p class="small mb-0">Bạn chưa có tài khoản? <a href="/register">Tạo một tài khoản</a></p>
                                     </div>
                                 </form>
+                                <script>
+                                    function checkDangNhap() {
+                                        var check = true;
 
+                                        var yourUsername = document.getElementById("yourUsername")
+                                        var yourUsernameCheck = document.getElementById("yourUsernameCheck")
+                                        yourUsernameCheck.style.display = 'none'
+                                        if(yourUsername.value.trim()==''){
+                                            yourUsernameCheck.style.display = 'block'
+                                            yourUsernameCheck.innerText = 'Bạn chưa nhập tài khoản'
+                                            check = false
+                                        }
+
+                                        var yourPassword = document.getElementById("yourPassword")
+                                        var yourPasswordCheck = document.getElementById("yourPasswordCheck")
+                                        yourPasswordCheck.style.display = 'none'
+                                        if(yourPassword.value.trim()==''){
+                                            yourPasswordCheck.style.display = 'block'
+                                            yourPasswordCheck.innerText = 'Bạn chưa nhập tài khoản'
+                                            check = false
+                                        }
+
+                                        var message = document.getElementById("message")
+                                        message.style.display = 'none'
+                                        return check;
+                                    }
+                                </script>
                             </div>
                         </div>
 
