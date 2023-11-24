@@ -14,6 +14,7 @@ import com.example.bedatnsd47.service.KhachHangService;
 import com.example.bedatnsd47.service.KichCoService;
 import com.example.bedatnsd47.service.LoaiDeService;
 import com.example.bedatnsd47.service.MauSacService;
+import com.example.bedatnsd47.service.TaiKhoanService;
 import com.example.bedatnsd47.service.VoucherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
@@ -38,7 +40,7 @@ import java.util.List;
 //@RequestMapping("/home")
 public class HomeController {
 
-    private Long idTaiKhoan = Long.valueOf(8);
+    private Long idTaiKhoan  = Long.valueOf(8);
 
     @Autowired
     private ChiTietSanPhamSerivce chiTietSanPhamSerivce;
@@ -62,6 +64,9 @@ public class HomeController {
     private DiaChiService diaChiService;
 
     @Autowired
+    private TaiKhoanService  taiKhoanService;
+
+    @Autowired
     private VoucherService voucherService;
 
     @Autowired
@@ -69,9 +74,12 @@ public class HomeController {
 
     private Date currentDate = new Date();
 
-    @GetMapping("/home")
-    public String home() {
-
+    @GetMapping("home")
+    public String home(
+//            Principal principal
+    ) {
+//        TaiKhoan taiKhoan = taiKhoanService.getTaiKhoanByName(principal.getName());
+//        idTaiKhoan = taiKhoan.getId();
         return "/customer-template/ban-hang-customer";
 
     }
@@ -88,7 +96,7 @@ public class HomeController {
         return "/customer-template/dang-ky";
     }
 
-    @GetMapping("/cart")
+    @GetMapping("cart")
     public String cart(
             Model model
     ) {

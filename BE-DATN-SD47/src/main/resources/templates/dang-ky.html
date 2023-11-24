@@ -51,7 +51,7 @@
                                       method='post'>
                                     <div class="col-12">
                                         <label for="yourEmail" class="form-label">Email của bạn</label>
-                                        <input type="email" name="email" class="form-control" id="yourEmail">
+                                        <input type="email" name="email" class="form-control" placeholder="Nhập email" id="yourEmail">
                                         <div class="check-loi" id="checkEmailAdd" style="display: none"></div>
                                         <div class="check-loi" th:text="${checkTrungEmail}" ></div>
 
@@ -59,7 +59,7 @@
 
                                     <div class="col-12">
                                         <label for="yourUsername" class="form-label">Tên tài khoản</label>
-                                        <input type="text" name="username" class="form-control" id="yourUsername"
+                                        <input type="text" name="username" class="form-control" placeholder="Nhập tên tài khoản" id="yourUsername"
                                                required>
                                         <div class="check-loi" id="checkTenTaiKhoanAdd" style="display: none"></div>
                                         <div class="check-loi" th:text="${checkTrungTenTaiKhoan}"></div>
@@ -68,7 +68,7 @@
 
                                     <div class="col-12">
                                         <label for="yourPassword" class="form-label">Mật khẩu</label>
-                                        <input type="password" name="password" class="form-control" id="yourPassword"
+                                        <input type="password" name="password" placeholder="Nhập mật khẩu" class="form-control" id="yourPassword"
                                                required>
                                         <div class="check-loi" id="checkMatKhauAdd" style="display: none"></div>
                                         <!--                                        <div class="invalid-feedback">Please enter your password!</div>-->

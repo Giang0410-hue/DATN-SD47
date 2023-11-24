@@ -24,9 +24,9 @@ import java.util.Random;
 
 @Controller
 public class FormLoginContrller {
+
     @Autowired
     TaiKhoanService service;
-
 
     @Autowired
     TaiKhoanRepository taiKhoanRepository;
@@ -47,6 +47,14 @@ public class FormLoginContrller {
     @GetMapping("/login")
     public String formLogin() {
 //        principal.getName();
+        return "dang-nhap";
+    }
+
+    @GetMapping("/login/erorr")
+    public String loginErorr(
+            Model model
+    ) {
+        model.addAttribute("message","Tài khoản chưa kích hoạt hoặc sai thông tin tài khoản");
         return "dang-nhap";
     }
 
@@ -195,7 +203,7 @@ public class FormLoginContrller {
             System.out.println("thanh cong");
             model.addAttribute("email", email);
             return "xac-minh-email-tc";
-        }else if(email.isEmpty()){
+        } else if (email.isEmpty()) {
             model.addAttribute("message", "Bạn chưa nhập email");
             System.out.println("Email null");
             return "quen-mat-khau";

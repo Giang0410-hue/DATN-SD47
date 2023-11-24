@@ -15,4 +15,6 @@ public interface TaiKhoanService {
     public boolean verifyAccount(String verificationPassWord, String resetPass);
 
     public TaiKhoan saveUser(TaiKhoan user, String url);
+
+    TaiKhoan getTaiKhoanByName(String name);
 }

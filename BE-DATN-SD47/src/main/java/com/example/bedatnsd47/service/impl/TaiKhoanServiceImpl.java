@@ -81,7 +81,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
                 "<br>\n" +
                 "Chân thành cảm ơn,\n" +
                 "<br>\n" +
-                "Đội ngũ Glacat\n"+
+                "Đội ngũ Glacat\n" +
                 "</p>";
         try {
 
@@ -115,14 +115,14 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         String to = taiKhoan.getEmail();
         String subject = "Chào mừng bạn đến với Glacat - Xác Minh Tài Khoản của Bạn";
         String content =
-                        "<p class=\"email-content\" style=\"font-family: 'Arial', sans-serif;font-size: 16px;color: #333;line-height: 1.5;\">\n" +
+                "<p class=\"email-content\" style=\"font-family: 'Arial', sans-serif;font-size: 16px;color: #333;line-height: 1.5;\">\n" +
                         "Chào [[name]], <br>\n" +
                         "Chúc mừng! Tài khoản Khách Hàng mới của bạn tại Glacat đã được tạo thành công. Để bảo vệ tính bảo mật của tài khoản, chúng tôi cần xác minh rằng địa chỉ email này thuộc về bạn.\n" +
                         "</p>\n" +
 
                         "<p class=\"email-content\">\n" +
                         "**Mã Xác Minh Tài Khoản:\n" +
-                        "<span class=\"verification-code\" style=\"color: #ff0000;font-weight: bold;\">"+random+"</span> **\n" +
+                        "<span class=\"verification-code\" style=\"color: #ff0000;font-weight: bold;\">" + random + "</span> **\n" +
                         "</p>\n" +
 
                         "<p class=\"email-content\">\n" +
@@ -185,5 +185,12 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         }
 
         return newuser;
+    }
+
+    @Override
+    public TaiKhoan getTaiKhoanByName(String name) {
+
+        return repository.findByTenTaiKhoan(name).orElse(null);
+
     }
 }
