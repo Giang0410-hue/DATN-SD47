@@ -20,6 +20,9 @@ public interface GioHangChiTietRepository extends JpaRepository<GioHangChiTiet,L
     @Query(value = "SELECT COUNT(id) FROM gio_hang_chi_tiet where gio_hang_id = :idGioHang and trang_thai = 0",nativeQuery = true)
     Integer soLuongSpTrongGioHangCT(@Param("idGioHang")Long idGioHang);
 
+    @Query(value = "SELECT * FROM gio_hang_chi_tiet where chi_tiet_san_pham_id = :idCTSP",nativeQuery = true)
+    GioHangChiTiet fillByIdCTSP(@Param("idCTSP")Long idCTSP);
+
     @Query(value = "select * from gio_hang_chi_tiet where gio_hang_id = :idGioHang and chi_tiet_san_pham_id = :idChiTetSP",nativeQuery = true)
     GioHangChiTiet getByGioHangChiTiet(@Param("idGioHang")Long idGioHang,@Param("idChiTetSP")Long idChiTetSP);
 

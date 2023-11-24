@@ -58,6 +58,26 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
             "WHERE CTE.rn = 1 ORDER BY cts.id DESC;", nativeQuery = true)
     List<ChiTietSanPham> fillAllCtspOneSanPham();
 
+    @Query(value = "WITH CTE AS (\n" +
+            "\tSELECT id, san_pham_id,\n" +
+            "\tROW_NUMBER() OVER (PARTITION BY san_pham_id ORDER BY gia_hien_hanh ASC, id DESC) AS rn\n" +
+            "    FROM chi_tiet_san_pham\n" +
+            "    WHERE trang_thai = 0\n" +
+            "            ) \n" +
+            "            SELECT  \n" +
+            "               cts.id, \n" +
+            "               cts.so_luong, \n" +
+            "               cts.gia_hien_hanh, \n" +
+            "               cts.trang_thai, \n" +
+            "                cts.san_pham_id, \n" +
+            "               cts.kich_co_id, \n" +
+            "                cts.mau_sac_id, \n" +
+            "                cts.loai_de_id \n" +
+            "            FROM chi_tiet_san_pham cts \n" +
+            "            JOIN CTE ON cts.id = CTE.id \n" +
+            "            WHERE CTE.rn = 1 ORDER BY cts.id DESC", nativeQuery = true)
+    List<ChiTietSanPham> fillAllCtspOneSanPhamMinGia();
+
     @Query(value = "SELECT cts.*\n" +
             "FROM (\n" +
             "    SELECT *,\n" +

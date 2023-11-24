@@ -22,7 +22,7 @@
     <div class="container">
         <th:block th:if="${session.msg}">
             <p class="text-center text-success fs-4">[[${session.msg}]]</p>
-<!--            <th:block th:text="${@userServiceImpl.removeSessionMessage()}"></th:block>-->
+            <!--            <th:block th:text="${@userServiceImpl.removeSessionMessage()}"></th:block>-->
 
         </th:block>
 
@@ -34,7 +34,7 @@
                         <div class="d-flex justify-content-center py-4">
                             <a href="/ban-hang-tai-quay/hoa-don" class="logo d-flex align-items-center w-auto">
                                 <img src="../../static/img/logo.png" alt="">
-                                <span class="d-none d-lg-block">NiceAdmin</span>
+                                <span class="d-none d-lg-block">Glacat</span>
                             </a>
                         </div><!-- End Logo -->
 
@@ -43,65 +43,57 @@
                             <div class="card-body">
 
                                 <div class="pt-4 pb-2">
-                                    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
-                                    <p class="text-center small">Enter your personal details to create account</p>
+                                    <h5 class="card-title text-center pb-0 fs-4">Tạo một tài khoản</h5>
+                                    <p class="text-center small">Nhập thông tin cá nhân của bạn để tạo tài khoản</p>
                                 </div>
 
-                                <form class="row g-3 needs-validation" novalidate th:action="@{/saveTaiKhoan1}" method='post'>
-
-
+                                <form class="row g-3 needs-validation" novalidate th:action="@{/them-tai-khoan}"
+                                      method='post'>
                                     <div class="col-12">
-                                        <label for="yourEmail" class="form-label">Your Email</label>
-                                        <input type="email" name="email" class="form-control" id="yourEmail" required>
-                                        <div class="invalid-feedback">Please enter a valid Email adddress!</div>
+                                        <label for="yourEmail" class="form-label">Email của bạn</label>
+                                        <input type="email" name="email" class="form-control" id="yourEmail">
+                                        <div class="check-loi" id="checkEmailAdd" style="display: none"></div>
+                                        <div class="check-loi" th:text="${checkTrungEmail}" ></div>
+
                                     </div>
 
                                     <div class="col-12">
-                                        <label for="yourUsername" class="form-label">Username</label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                            <input type="text" name="username" class="form-control" id="yourUsername"
-                                                   required>
-                                            <div class="invalid-feedback">Please choose a username.</div>
-                                        </div>
+                                        <label for="yourUsername" class="form-label">Tên tài khoản</label>
+                                        <input type="text" name="username" class="form-control" id="yourUsername"
+                                               required>
+                                        <div class="check-loi" id="checkTenTaiKhoanAdd" style="display: none"></div>
+                                        <div class="check-loi" th:text="${checkTrungTenTaiKhoan}"></div>
+
                                     </div>
 
                                     <div class="col-12">
-                                        <label for="yourPassword" class="form-label">Password</label>
+                                        <label for="yourPassword" class="form-label">Mật khẩu</label>
                                         <input type="password" name="password" class="form-control" id="yourPassword"
                                                required>
-                                        <div class="invalid-feedback">Please enter your password!</div>
+                                        <div class="check-loi" id="checkMatKhauAdd" style="display: none"></div>
+                                        <!--                                        <div class="invalid-feedback">Please enter your password!</div>-->
                                     </div>
 
+                                    <!--                                    <div class="col-12">-->
+                                    <!--                                        <div class="form-check">-->
+                                    <!--                                            <input class="form-check-input" name="terms" type="checkbox" value=""-->
+                                    <!--                                                   id="acceptTerms" required>-->
+                                    <!--                                            <label class="form-check-label" for="acceptTerms">I agree and accept the <a-->
+                                    <!--                                                    href="#">terms and conditions</a></label>-->
+                                    <!--                                            <div class="invalid-feedback">You must agree before submitting.</div>-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
                                     <div class="col-12">
-                                        <div class="form-check">
-                                            <input class="form-check-input" name="terms" type="checkbox" value=""
-                                                   id="acceptTerms" required>
-                                            <label class="form-check-label" for="acceptTerms">I agree and accept the <a
-                                                    href="#">terms and conditions</a></label>
-                                            <div class="invalid-feedback">You must agree before submitting.</div>
-                                        </div>
+                                        <button class="btn btn-primary w-100" onclick="return checkDangKy()" type="submit">Tạo tài khoản</button>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-primary w-100" type="submit">Create Account</button>
-                                    </div>
-                                    <div class="col-12">
-                                        <p class="small mb-0">Already have an account? <a href="/login">Log
-                                            in</a></p>
+                                        <p class="small mb-0">Bạn có sẵn sàng để tạo một tại khoản? <a
+                                                href="/login">Đăng nhập</a></p>
                                     </div>
                                 </form>
 
                             </div>
                         </div>
-
-                        <div class="credits">
-                            <!-- All the links in the footer should remain intact. -->
-                            <!-- You can delete the links only if you purchased the pro version. -->
-                            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -110,7 +102,59 @@
 
     </div>
 </main><!-- End #main -->
+<script>
 
+    function checkTextEmail(textEmail){
+        var email = /^[A-Za-z0-9+_.-]+@([^\s@]+)$/
+        return email.test(textEmail)
+    }
+
+    function checkTextUser(textUsername){
+        var username = /^[a-zA-Z0-9]+$/
+        return username.test(textUsername)
+    }
+
+    function checkDangKy() {
+        var isValid = true;
+
+        var checkEmail = document.getElementById("yourEmail");
+        var checkEmailAdd = document.getElementById("checkEmailAdd");
+        checkEmailAdd.style.display = 'none'
+        if (checkEmail.value.trim() == '') {
+            checkEmailAdd.style.display = 'block'
+            checkEmailAdd.innerText = 'Bạn chưa nhập email'
+            isValid = false;
+        }else if(!checkTextEmail(checkEmail.value.trim())){
+            checkEmailAdd.style.display = 'block'
+            checkEmailAdd.innerText = 'Email không hợp lệ'
+            isValid = false;
+        }
+
+        var checkUsername = document.getElementById("yourUsername");
+        var checkTenTaiKhoanAdd = document.getElementById("checkTenTaiKhoanAdd");
+        checkTenTaiKhoanAdd.style.display = 'none'
+        if (checkUsername.value.trim() == '') {
+            checkTenTaiKhoanAdd.style.display = 'block'
+            checkTenTaiKhoanAdd.innerText = 'Bạn chưa nhập tên tài khoản'
+            isValid = false;
+        }else if(!checkTextUser(checkUsername.value)){
+            checkTenTaiKhoanAdd.style.display = 'block'
+            checkTenTaiKhoanAdd.innerText = 'Tên tài khoản không hợp lệ'
+            isValid = false;
+        }
+
+        var checkPass = document.getElementById("yourPassword");
+        var checkMatKhauAdd = document.getElementById("checkMatKhauAdd");
+        checkMatKhauAdd.style.display = 'none'
+        if (checkPass.value.trim() == '') {
+            checkMatKhauAdd.style.display = 'block'
+            checkMatKhauAdd.innerText = 'Bạn chưa nhập mật khẩu'
+            isValid = false;
+        }
+        return isValid;
+    }
+
+</script>
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 

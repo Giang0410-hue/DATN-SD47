@@ -11,6 +11,8 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> getAllCtspOneSanPham();
 
+    List<ChiTietSanPham> getAllCtspOneSanPhamMinGia();
+
     List<ChiTietSanPham> getAllDangHoatDong();
 
     List<ChiTietSanPham> getAllNgungHoatDong();
@@ -34,7 +36,7 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> getAllById(Long id);
 
-    List<ChiTietSanPham> getAllbyIdSPAndIdMS(Long idSanPham,Long idMauSac);
+    List<ChiTietSanPham> getAllbyIdSPAndIdMS(Long idSanPham, Long idMauSac);
 
     List<ChiTietSanPham> getAllCtspByIdSanPham(Long idSanPham);
 

@@ -100,12 +100,13 @@ public class NhanVienController {
         } else if (!taiKhoanService.checkTenTkTrungSua(taiKhoan.getId(), taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
+            model.addAttribute("checkTenTrung", "Tên tài khoản đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/sua-nhan-vien";
         } else if (!taiKhoanService.checkEmailSua(taiKhoan.getId(), taiKhoan.getEmail())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/sua-nhan-vien";
         } else {
@@ -146,15 +147,15 @@ public class NhanVienController {
         else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
-            model.addAttribute("checkEmailTrung", "Email phẩm đã tồn tại");
+            model.addAttribute("checkTenTrung", "Tên tài khoản đã tồn tại");
+            model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/nhan-vien";
         }
         else if (!taiKhoanService.checkEmail(taiKhoan.getEmail())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkEmailTrung", "Email phẩm đã tồn tại");
+            model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/nhan-vien";
         }
@@ -171,7 +172,7 @@ public class NhanVienController {
             VaiTro vaiTro = new VaiTro();
             vaiTro.setId(Long.valueOf(1));
             userInfo.setVaiTro(vaiTro);
-            userInfo.setTrangThai(1);
+            userInfo.setTrangThai(0);
             userInfo.setVaiTro(vaiTro);
             taiKhoanService.update(userInfo);
             return "redirect:/admin/nhan-vien";

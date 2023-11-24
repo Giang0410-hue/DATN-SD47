@@ -53,6 +53,13 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     }
 
     @Override
+    public GioHangChiTiet fillByIdCTSP(Long idCTSP) {
+
+        return repository.fillByIdCTSP(idCTSP);
+
+    }
+
+    @Override
     public Integer soLuongSPGioHangCT(Long idGioHang) {
 
         return repository.soLuongSpTrongGioHangCT(idGioHang);
