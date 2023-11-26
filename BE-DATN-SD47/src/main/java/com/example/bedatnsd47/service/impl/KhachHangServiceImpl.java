@@ -53,7 +53,6 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     @Override
     public TaiKhoan update(TaiKhoan taiKhoan) {
-
         return repository.save(taiKhoan);
 
     }
