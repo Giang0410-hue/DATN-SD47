@@ -147,54 +147,11 @@
                             <div class="form-tao-moi">
                                 <div class="row g-3">
                                     <div th:if="${hoaDon.trangThai ==-1}" class="col-12">
+
                                         <div class="tao-hd">
                                             <!-- <button type="button" class="btn btn-success">Tạo hóa đơn</button> -->
 
-                                            <a onclick="handleButtonClick('postLink')" th:if="${lstHoaDon.size()<5}"
-                                                id="postLink" class="btn btn-success">Tạo Hóa đơn</a>
-                                            <!-- Button trigger modal -->
-
-                                            <button id="themHd2" onclick="handleButtonClick('themHd2')"
-                                                th:if="${lstHoaDon.size()>=5}" type="button" class="btn btn-success"
-                                                data-bs-toggle="modal" data-bs-target="#error5HoaDon">
-                                                Tạo Hóa đơn
-                                            </button>
-
-
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="error5HoaDon" tabindex="-1" role="dialog"
-                                                aria-labelledby="modalTitleId" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div style="width: 80%; margin: auto;" class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="modalTitleId">Thông báo</h5>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div style="text-align: center;" class="container-fluid">
-                                                                Bạn chỉ có thể tạo tối đa 5 hóa đơn!
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <script>
-                                                var modalId = document.getElementById('modalId');
-
-                                                modalId.addEventListener('show.bs.modal', function (event) {
-                                                    // Button that triggered the modal
-                                                    let button = event.relatedTarget;
-                                                    // Extract info from data-bs-* attributes
-                                                    let recipient = button.getAttribute('data-bs-whatever');
-
-                                                    // Use above variables to manipulate the DOM
-                                                });
-                                            </script>
-
+                                            <a id="postLink" class="btn btn-success">Tạo Hóa đơn</a>
                                             <script>
                                                 document.getElementById("postLink").addEventListener("click", function (event) {
                                                     event.preventDefault(); // Ngăn chặn thực hiện mặc định của thẻ <a>
@@ -242,136 +199,16 @@
                                         <div> <!-- div tổng của hóa đơn chi tiết -->
 
                                             <div class="them-moi-sp">
-                                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                    data-bs-target="#lshdModal">
-                                                    Lịch sử hóa đơn
-                                                </button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="lshdModal" tabindex="-1" role="dialog"
-                                                    aria-labelledby="modalTitleId" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-
-                                                            <div class="modal-body">
-                                                                <div class="container-fluid">
-                                                                    <div class="modal-header">
-                                                                        <h1 class="modal-title fs-5"
-                                                                            style="margin: auto;">
-                                                                            Lịch sử hóa đơn
-                                                                        </h1>
-                                                                    </div>
-                                                                    <table>
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>STT</th>
-                                                                                <th>Hành động</th>
-                                                                                <th>Thời gian</th>
-                                                                                <th>Nhân viên</th>
-                                                                                <th>Ghi chú</th>
-                                                                            </tr>
-                                                                            <thead>
-                                                                            <tbody>
-                                                                                <tr th:each=" lshd, state: ${lstLshd}">
-
-
-                                                                                    <td>
-                                                                                        [[${state.index+1}]]
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        [[${lshd.ghiChu}]]
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        [[${lshd.ngaySua}]]
-                                                                                    </td>
-                                                                                    <td>
-
-                                                                                    </td>
-
-
-                                                                                </tr>
-
-                                                                            </tbody>
-
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Close</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
 
                                                 <div
                                                     th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=3&&hoaDon.trangThai!=5}">
 
+                                                    <a class="btn btn-danger"
+                                                        th:href="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
+                                                        role="button">Hủy
+                                                        hóa đơn</a>
                                                     <!-- Button trigger modal -->
-
-
-
-                                                    <script>
-                                                        var modalId = document.getElementById('modalId');
-
-                                                        modalId.addEventListener('show.bs.modal', function (event) {
-                                                            // Button that triggered the modal
-                                                            let button = event.relatedTarget;
-                                                            // Extract info from data-bs-* attributes
-                                                            let recipient = button.getAttribute('data-bs-whatever');
-
-                                                            // Use above variables to manipulate the DOM
-                                                        });
-                                                    </script>
-
-
-                                                    <!-- Button trigger modal -->
-                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                        data-bs-target="#modalId">
-                                                        Hủy
-                                                        hóa đơn
-                                                    </button>
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="modalId" tabindex="-1" role="dialog"
-                                                        aria-labelledby="modalTitleId" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="modalTitleId">Xác nhận
-                                                                    </h5>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="container-fluid">
-
-                                                                        <div class="mb-3">
-                                                                            <label for="" class="form-label">Lý do
-                                                                                hủy</label>
-                                                                            <input type="text" class="form-control"
-                                                                                name="" id="" aria-describedby="helpId"
-                                                                                placeholder="">
-                                                                            <small id="helpId"
-                                                                                class="form-text text-muted">Viết rõ vào
-                                                                                đây</small>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Đóng</button>
-                                                                    <a class="btn btn-danger"
-                                                                        th:href="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
-                                                                        role="button">Hủy</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-
-
-                                                    <!-- Button trigger modal -->
-                                                    <button onclick="handleButtonClick()" type="button"
-                                                        class="btn btn-primary" data-bs-toggle="modal"
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                         th:data-bs-target="${'#addsp'+hoaDon.id}">
                                                         Thêm sản phẩm
                                                     </button>
@@ -448,12 +285,10 @@
                                                                                     </td>
                                                                                     <td>
 
-                                                                                        <button
-                                                                                            th:id="'themSp'+${ctsp.id}"
-                                                                                            type="submit"
+                                                                                        <button type="submit"
                                                                                             class="btn btn-success">Thêm
                                                                                         </button>
-                                                                                        <!-- th:onclick="'handleButtonClick(`themSp'+${ctsp.id}+'`)'"  -->
+
                                                                                     </td>
                                                                                 </form>
                                                                             </tr>
@@ -1067,8 +902,7 @@
                                                                     <input type="text" class="form-control"
                                                                         id="inputHoVaTen" name="inputHoVaTen"
                                                                         th:value="${hoaDon.nguoiNhan}">
-                                                                    <span class="errorInput"
-                                                                        id="errorInputHoVaTen"></span>
+                                                                    <span class="errorInput"  id="errorInputHoVaTen"></span>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label for="inputPassword3" class="form-label">
@@ -1078,8 +912,7 @@
                                                                     <input type="text" class="form-control"
                                                                         id="inputSoDienThoai" name="inputSoDienThoai"
                                                                         th:value="${hoaDon.sdtNguoiNhan}">
-                                                                    <span class="errorInput"
-                                                                        id="errorInputSoDienThoai"></span>
+                                                                    <span class="errorInput"  id="errorInputSoDienThoai"></span>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label class="form-label">
@@ -1089,33 +922,27 @@
 
                                                                     <select id="citySelect" class="form-control"
                                                                         name="thanhPho">
-                                                                        <option value="" disabled selected>Chọn Thành
-                                                                            Phố
+                                                                        <option value="" disabled selected>Chọn Thành Phố
                                                                         </option>
                                                                         <!-- Options will be filled dynamically here -->
                                                                     </select>
-                                                                    <span class="errorInput"
-                                                                        id="errorCitySelect"></span>
+                                                                    <span class="errorInput"  id="errorCitySelect"></span>
                                                                     <br>
                                                                     <select id="districtSelect" class="form-control"
                                                                         name="quanHuyen">
-                                                                        <option value="" disabled selected>Chọn
-                                                                            Quận/Huyện</option>
+                                                                        <option value="" disabled selected>Chọn Quận/Huyện</option>
                                                                         <!-- Options will be filled dynamically here -->
                                                                     </select>
-                                                                    <span class="errorInput"
-                                                                        id="errorDistrictSelect"></span>
+                                                                    <span class="errorInput"  id="errorDistrictSelect"></span>
 
                                                                     <br>
                                                                     <select id="wardSelect" class="form-control"
                                                                         name="phuongXa"
                                                                         onchange="calculateShippingFee()">
-                                                                        <option value="" disabled selected>Chọn Phường /
-                                                                            Xã</option>
+                                                                        <option value="" disabled selected>Chọn Phường / Xã</option>
                                                                         <!-- Options will be filled dynamically here -->
                                                                     </select>
-                                                                    <span class="errorInput"
-                                                                        id="errorWardSelect"></span>
+                                                                    <span class="errorInput" id="errorWardSelect"></span>
                                                                     <!-- phishipjs -->
                                                                     <script th:inline="javascript">
                                                                         document.addEventListener('DOMContentLoaded', function () {
@@ -1352,10 +1179,9 @@
                                                                     <textarea name="inputDcct" id="inputDiaChiCuThe"
                                                                         class="form-control"
                                                                         rows="6">[[${hoaDon.diaChiNguoiNhan}]]</textarea>
-                                                                    <span class="errorInput"
-                                                                        id="errorInputDiaChiCuThe"></span>
+                                                                        <span  class="errorInput"  id="errorInputDiaChiCuThe"></span>
                                                                 </div>
-
+                                                                
                                                                 <div class="col-12">
                                                                     <label class="form-label">
                                                                         <span class="dau-sao">*</span>
@@ -1433,21 +1259,6 @@
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col">
-                                                                        <h6>Chờ thanh toán</h6>
-                                                                    </div>
-                                                                    <div class="col" style="margin-top: 3%;">
-                                                                        <div class="form-check form-switch">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox" role="switch"
-                                                                                name="treo">
-
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col">
                                                                         <h6>Phương thức thanh toán:</h6>
                                                                     </div>
                                                                     <div class="col" style="margin-top: 1%">
@@ -1465,14 +1276,14 @@
                                                                         <h6>Voucher:</h6>
                                                                     </div>
                                                                     <div class="col" style="margin-top: 1%">
-                                                                        <div class="input-group flex-nowrap">
+                                                                        <div class="col-md-6">
                                                                             <input type="text" class="form-control"
                                                                                 id="c_code" disabled
                                                                                 aria-label="Coupon Code"
                                                                                 aria-describedby="button-addon2" />
-                                                                            <button
-                                                                                th:if="${hoaDon.trangThai==-1&&hoaDon.taiKhoan.hoVaTen!='Khách lẻ'}"
-                                                                                class="btn btn-primary btn-sm"
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <button th:if="${hoaDon.trangThai==-1&&hoaDon.taiKhoan.hoVaTen!='Khách lẻ'}" class="btn btn-primary btn-sm"
                                                                                 type="button"
                                                                                 onclick="checkAndDisplayVouchers()"
                                                                                 data-bs-toggle="modal"
@@ -1571,7 +1382,6 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -1583,7 +1393,7 @@
                                                                             [[${hoaDon.tongTienHoaDon()}]]
                                                                             VND</h6>
                                                                         <input th:value="${hoaDon.tongTienHoaDon()}"
-                                                                            type="hidden" name="tongTienHoaDon">
+                                                                            type="text" name="tongTienHoaDon">
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -1597,7 +1407,7 @@
 
 
                                                                         <input th:value="${hoaDon.phiShip}"
-                                                                            name="phiShip" type="hidden"
+                                                                            name="phiShip" type="text"
                                                                             id="shippingFeeResult">
                                                                     </div>
                                                                 </div>
@@ -1605,14 +1415,13 @@
                                                                     <div class="col">
                                                                         <h6>Giảm giá:</h6>
 
-                                                                        <input id="giamGiaInput" type="hidden"
+                                                                        <input id="giamGiaInput" type="text"
                                                                             th:value="${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}"
                                                                             name="giamGia">
                                                                     </div>
                                                                     <div class="col">
                                                                         <h6 id="moneyVoucher" class="thong-tin-gia">
                                                                             [[${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}]]
-                                                                            VND
                                                                         </h6>
                                                                     </div>
                                                                 </div>
@@ -1622,11 +1431,10 @@
                                                                     </div>
                                                                     <div class="col">
                                                                         <h6 class="thong-tin-gia" id="tongGiaH6"><span
-                                                                                id="tongGiaValue">[[${hoaDon.tongTienHoaDonKhiGiam()}]]</span>
+                                                                                id="tongGiaValue">[[${hoaDon.tongTienKhiGiam}]]</span>
                                                                             VND</h6>
-                                                                        <input
-                                                                            th:value="${hoaDon.tongTienHoaDonKhiGiam()}"
-                                                                            type="hidden" id="tongAll">
+                                                                        <input th:value="${hoaDon.tongTienKhiGiam}"
+                                                                            type="text" id="tongAll">
                                                                     </div>
 
 
@@ -1638,15 +1446,15 @@
                                                     <div th:switch="${hoaDon.trangThai}">
 
                                                         <div th:case="-1" class="" style="float: right;">
-
+                                                            <label for="">Treo</label> <input type="checkbox"
+                                                                name="treo">
 
                                                             <button th:if="${#lists.size(hoaDon.lstHoaDonChiTiet) ==0}"
                                                                 type="button" class="btn btn-success"
                                                                 data-bs-toggle="modal" data-bs-target="#gioHangTrong">
                                                                 Thanh toán
                                                             </button>
-                                                            <button id="thanhToan"
-                                                                th:if="${#lists.size(hoaDon.lstHoaDonChiTiet) !=0}"
+                                                            <button th:if="${#lists.size(hoaDon.lstHoaDonChiTiet) !=0}"
                                                                 type="submit" class="btn btn-success">Thanh toán
                                                             </button>
                                                             <!-- Button trigger modal -->
@@ -1690,28 +1498,26 @@
                                                         </div>
 
 
-                                                        <button id="thanhToan" th:case="0" type="submit"
-                                                            style="float: right;" class="btn btn-success">Xác nhận
+                                                        <button th:case="0" type="submit" style="float: right;"
+                                                            class="btn btn-success">Xác nhận
                                                         </button>
-                                                        <button id="thanhToan" th:case="1" type="submit"
-                                                            style="float: right;" class="btn btn-success">Đang giao
+                                                        <button th:case="1" type="submit" style="float: right;"
+                                                            class="btn btn-success">Đang giao
                                                         </button>
-                                                        <button id="thanhToan" th:case="2" type="submit"
-                                                            style="float: right;" class="btn btn-success">Hoàn thành
+                                                        <button th:case="2" type="submit" style="float: right;"
+                                                            class="btn btn-success">Hoàn thành
                                                         </button>
                                                         <img style="float: right;" th:case="3"
                                                             src="data:image/png;base64,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"
                                                             alt="">
-                                                        <button id="thanhToan" th:case="4" type="submit"
-                                                            style="float: right;" class="btn btn-success">Thanh toán
+                                                        <button th:case="4" type="submit" style="float: right;"
+                                                            class="btn btn-success">Thanh toán
                                                         </button>
 
                                                     </div>
-                                                    <input value="" name="voucherID" type="hidden" id="voucherID">
+                                                    <input value="" name="voucherID" type="text"
+                                                        id="voucherID">
                                                 </form>
-                                                <script>
-                                                    calculateShippingFee();
-                                                </script>
                                                 <!-- Modal voucher -->
                                                 <div class="modal fade" id="voucher" tabindex="-1"
                                                     aria-labelledby="voucherLabel" aria-hidden="true">
@@ -1975,10 +1781,8 @@
             content: '';
             /* Xóa nội dung */
         }
-
-        .errorInput {
+        .errorInput{
             color: red;
-            font-weight: bold;
         }
     </style>
     <!--    thư viện của bảng tích hợp tìm kiếm end-->
@@ -2082,35 +1886,6 @@
     </script>
     <!--  css + js chọn voucher-->
     <script src="../../static/js/banHangValid.js"></script>
-    <script>
-
-        function disabledInput() {
-            const checkGiaoHang = document.getElementById('toggleVisibility')
-            const inputHoVaTen = document.getElementById('inputHoVaTen')
-            const inputSoDienThoai = document.getElementById('inputSoDienThoai')
-            const citySelect = document.getElementById('citySelect')
-            const districtSelect = document.getElementById('districtSelect')
-            const wardSelect = document.getElementById('wardSelect')
-            const inputDiaChiCuThe = document.getElementById('inputDiaChiCuThe')
-            const inputGhiChu = document.getElementById('inputGhiChu')
-
-            checkGiaoHang.disabled = true;
-            inputHoVaTen.readOnly = true;
-            inputSoDienThoai.readOnly = true;
-            citySelect.disabled = true;
-            districtSelect.disabled = true;
-            wardSelect.disabled = true;
-            inputDiaChiCuThe.readOnly = true;
-            inputGhiChu.readOnly = true;
-        }
-
-        if ('[[${hoaDon.trangThai}]]' != 0 && '[[${hoaDon.trangThai}]]' != 1 && '[[${hoaDon.trangThai}]]' != -1 && '[[${hoaDon.trangThai}]]' != 4) {
-            disabledInput();
-        }
-
-
-
-    </script>
 </body>
 
 </html>

@@ -154,8 +154,29 @@
                                 <div class="tao-hd">
                                     <!-- <button type="button" class="btn btn-success">Tạo hóa đơn</button> -->
 
-                                    <a id="postLink" class="btn btn-success">Tạo Hóa đơn</a>
-
+                                    <a  th:if="${lstHoaDon.size()<5}"  id="postLink" class="btn btn-success">Tạo Hóa đơn</a>
+                                    <button  th:if="${lstHoaDon.size()>=5}"  type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#error5HoaDon">
+                                        Tạo Hóa đơn
+                                    </button>
+                                    
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="error5HoaDon" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                    <div class="modal-header">
+                                                            <h5 class="modal-title" id="modalTitleId">Thông báo</h5>
+                                                        </div>
+                                                <div class="modal-body">
+                                                    <div style="text-align: center;" class="container-fluid">
+                                                    Bạn chỉ có thể tạo tối đa 5 hóa đơn!
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <script>
                                         document.getElementById("postLink").addEventListener("click", function (event) {
                                             event.preventDefault(); // Ngăn chặn thực hiện mặc định của thẻ <a>
