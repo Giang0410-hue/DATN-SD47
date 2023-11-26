@@ -124,9 +124,14 @@ public class HoaDon {
         // LocalDateTime currentTime = LocalDateTime.now();
 
         // Định dạng thời gian theo yêu cầu: giờ, phút, ngày, tháng, năm
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
-        String formattedTime = currentTime.format(formatter);
-        return formattedTime;
+        String time;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+            time = currentTime.format(formatter);
+        } catch (Exception e) {
+            return "";
+        }
+        return time;
     }
 
     public Long tongTienHoaDonKhiGiam() {
@@ -147,7 +152,7 @@ public class HoaDon {
                 return "Hoàn thành";
             case 4:
                 return "Chờ thanh toán";
-                case 5:
+            case 5:
                 return "Đã hủy";
             default:
                 break;
