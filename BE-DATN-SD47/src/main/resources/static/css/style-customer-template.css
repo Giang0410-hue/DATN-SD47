@@ -1067,6 +1067,7 @@ a:hover {
 .product {
     color: black;
 }
+
 .product-info-container {
     width: 100%;
     max-width: 300px;
@@ -1194,15 +1195,6 @@ a:hover {
 }
 
 
-
-
-
-
-
-
-
-
-
 .sidebar-nav {
     padding: 0;
     margin: 0;
@@ -1326,3 +1318,101 @@ a:hover {
 /*    font-size: 12px; !* Điều chỉnh kích thước chữ *!*/
 /*    font-weight: bold; !* Để làm nổi bật chữ *!*/
 /*}*/
+
+#trangThaiMacDinh {
+    border: 2px solid red;
+    border-radius: 50px;
+    color: red;
+    padding: 3px 10px;
+    margin: 10px 10px;
+    display: inline-block;
+}
+
+/************************đơn mua*************************/
+.section-top .row {
+    margin-bottom: 2%;
+}
+
+.section-top .row .divider-line {
+    float: right;
+}
+
+.section-top .row .divider-line a {
+    color: #00ac8b;
+}
+
+.section-top .row .divider-line h6 {
+    display: inline;
+    color: red;
+    border-left: 1px solid black;
+    padding-left: 5px;
+}
+
+.section-top .row .border-duoi {
+    width: 97%;
+    margin: auto;
+    margin-bottom: -10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+/*----------------*/
+
+.section-mid .img-mid {
+    width: 100px;
+    height: 100px
+}
+
+.section-mid .divider-line {
+    margin-top: 10px;
+    margin-left: 2%;
+}
+
+.section-mid .divider-line h6 {
+    color: black;
+    font-weight: bold;
+}
+
+.section-mid .divider-line span {
+    color: black;
+}
+
+.section-mid .divider-line p {
+    color: black;
+}
+
+.section-mid .col-md-2 {
+    color: red;
+}
+
+.section-mid .border-duoi {
+    width: 97%;
+    margin: auto;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+/*-------------------*/
+
+.section-bottom .divider-line {
+    float: right;
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+
+.section-bottom .divider-line h6 {
+    display: inline;
+}
+
+.section-bottom .divider-line h5 {
+    display: inline;
+    color: red;
+}
+
+.section-bottom .divider-line1 {
+    float: right;
+    margin-bottom: 2%;
+}
+
+/************************đơn mua end*************************/
