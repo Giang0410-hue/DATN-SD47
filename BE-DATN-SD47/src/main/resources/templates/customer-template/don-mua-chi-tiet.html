@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head>
+    <title>Glacat</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link href="../../static/img/favicon.png" rel="icon">
+
+    <!--    thư viện của bảng tích hợp tìm kiếm-->
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"/>
+    <link rel="stylesheet" href="../../static/fonts/icomoon/style.css"/>
+
+    <link href="../../../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../static/css/magnific-popup.css"/>
+    <link rel="stylesheet" href="../../static/css/jquery-ui.css"/>
+    <link rel="stylesheet" href="../../static/css/owl.carousel.min.css"/>
+    <link rel="stylesheet" href="../../static/css/owl.theme.default.min.css"/>
+
+    <link rel="stylesheet" href="../../static/css/aos.css"/>
+
+    <link rel="stylesheet" href="../../static/css/style-customer-template.css"/>
+</head>
+
+<body>
+<div class="site-wrap">
+    <header class="site-navbar" role="banner">
+        <div class="site-navbar-top">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+                        <form action="" class="site-block-top-search">
+                            <span class="icon icon-search2"></span>
+                            <input type="text" class="form-control border-0" placeholder="Search"/>
+                        </form>
+                    </div>
+
+                    <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+                        <div class="site-logo">
+                            <a href="/home" class="js-logo-clone">Glacat</a>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+                        <div class="site-top-icons">
+                            <ul class="nav nav-pills" style="margin-left: 54%">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                       role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="/don-mua">Đơn Mua</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/logout}">Đăng Xuất</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item" style="margin-left: -15%">
+                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>
+                                </li>
+                                <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
+                                    <a class="site-cart" href="/cart">
+                                        <span class="icon icon-shopping_cart"></span>
+                                        <span class="count" th:text="${soLuongSPGioHangCT}"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="site-navigation text-right text-md-center" role="navigation">
+            <div class="container">
+                <ul class="site-menu js-clone-nav d-none d-md-block">
+                    <li>
+                        <a href="/home">Trang chủ</a>
+                        <!-- <ul class="dropdown">
+                  <li><a href="#">Menu One</a></li>
+                  <li><a href="#">Menu Two</a></li>
+                  <li><a href="#">Menu Three</a></li>
+                  <li class="has-children">
+                    <a href="#">Sub Menu</a>
+                    <ul class="dropdown">
+                      <li><a href="#">Menu One</a></li>
+                      <li><a href="#">Menu Two</a></li>
+                      <li><a href="#">Menu Three</a></li>
+                    </ul>
+                  </li>
+                </ul> -->
+                    </li>
+                    <!-- <li>
+                  <a href="about.html">Về chúng tôi</a>
+                  <ul class="dropdown">
+                <li><a href="#">Menu One</a></li>
+                <li><a href="#">Menu Two</a></li>
+                <li><a href="#">Menu Three</a></li>
+              </ul>
+                </li> -->
+                    <li><a href="/shop">Sản phẩm</a></li>
+                    <li><a href="contact.html">Liên hệ</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="bg-light py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-0">
+                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>
+                    <strong class="text-black">Contact</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="max-width: 90%">
+        <div class="row">
+            <div class="col-md-2">
+                <aside id="sidebar" class="sidebar">
+
+                    <ul class="sidebar-nav" id="sidebar-nav">
+
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"
+                               href="#">
+                                <i class="bi bi-person-fill"></i><span>Tài khoản của tôi</span><i
+                                    class="bi bi-chevron-down ms-auto"></i>
+                            </a>
+                            <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                                <li>
+                                    <a href="/thong-tin-khach-hang">
+                                        <i class="bi bi-circle"></i><span>Hồ Sơ</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/dia-chi">
+                                        <i class="bi bi-circle"></i><span>Địa Chỉ</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/mat-khau">
+                                        <i class="bi bi-circle"></i><span>Đổi Mật Khẩu</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li><!-- End Components Nav -->
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/don-mua">
+                                <i class="bi bi-receipt-cutoff"></i>
+                                <span>Đơn Mua</span>
+                            </a>
+                        </li><!-- End Forms Nav -->
+
+
+                    </ul>
+                </aside><!-- End Sidebar-->
+            </div>
+
+            <div class="col-md-10" style="background-color: #fafafa;margin-bottom: 5%">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <section class="section-top-dmct">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <a href="/don-mua">
+                                            <i class=" bi bi-arrow-left-circle-fill"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="divider-line">
+                                        <h6 th:if="${byHoaDon.trangThai==0}" class="trang-thai-don">CHỜ XÁC NHẬN</h6>
+                                        <h6 th:if="${byHoaDon.trangThai==1}" class="trang-thai-don">CHỜ GIAO HÀNG</h6>
+                                        <h6 th:if="${byHoaDon.trangThai==2}" class="trang-thai-don">ĐANG GIAO</h6>
+                                        <h6 th:if="${byHoaDon.trangThai==3}" class="trang-thai-don">HOÀN THÀNH</h6>
+                                        <h6 th:if="${byHoaDon.trangThai==5}" class="trang-thai-don">ĐÃ HỦY</h6>
+                                        <h6 th:if="${byHoaDon.trangThai==6}" class="trang-thai-don">TRẢ HÀNG</h6>
+                                        <h6 class="ma-don" th:text="${'MÃ ĐƠN HÀNG: ' + byHoaDon.maHoaDon}"></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div style="width: 80%;margin: auto;margin-top: 5%;margin-bottom: 5%;">
+                            <div class="row shop-tracking-status">
+                                <div class="col-md-12">
+                                    <div class="well">
+                                        <div class="order-status">
+                                            <div class="order-status-timeline">
+                                                <!-- class names: c0 c1 c2 c3 and c4 -->
+                                                <div class="order-status-timeline-completion c0"></div>
+                                            </div>
+
+                                            <div class="image-order-status image-order-status-new active img-circle">
+                                                <div class="icon"></div>
+                                                <span class="status">Đơn Hàng Đã Đặt</span>
+                                                <span class="status-end">01:35 21/11/2023</span>
+                                            </div>
+                                            <div class="image-order-status image-order-status-active active img-circle">
+                                                <div class="icon"></div>
+                                                <span class="status">Chờ Xác Nhận</span>
+                                                <span class="status-end">01:35 21/11/2023</span>
+                                            </div>
+                                            <div class="image-order-status image-order-status-intransit active img-circle">
+                                                <div class="icon"></div>
+                                                <span class="status">Đã Giao Cho ĐVVC</span>
+                                                <span class="status-end">01:35 21/11/2023</span>
+                                            </div>
+                                            <div class="image-order-status image-order-status-delivered active img-circle">
+                                                <div class="icon"></div>
+                                                <span class="status">Đã Nhận Được Hàng</span>
+                                                <span class="status-end">01:35 21/11/2023</span>
+                                            </div>
+                                            <div class="image-order-status image-order-status-completed active img-circle">
+                                                <div class="icon"></div>
+                                                <span class="status">Đơn Hàng Đã Hoàn Thành</span>
+                                                <span class="status-end">01:35 21/11/2023</span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="section-dmct">
+                        <div class="border-duoi"></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Địa Chỉ Nhận Hàng</h5>
+                                <span style="display: block" th:text="${byHoaDon.nguoiNhan}">Nguyễn Tuấn Anh</span>
+                                <span style="display: block" th:text="${byHoaDon.sdtNguoiNhan}">0377463664</span>
+                                <span th:text="${byHoaDon.diaChiNguoiNhan}"></span>
+                                <span th:text="${byHoaDon.phuongXa}"></span>
+                                <span th:text="${byHoaDon.quanHuyen}"></span>
+                                <span th:text="${byHoaDon.thanhPho}"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <a th:href="@{/gio-hang-chi-tiet/add-fast/{idChiTietSP}(idChiTietSP=${byHoaDon.lstHoaDonChiTiet[0]})/{soLuong}(soLuong=1)}" style="float: right;color: white" type="button" class="btn btn-primary">Mua Lại</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="section-mid">
+                        <div class="border-duoi-dmct"></div>
+                        <a href="#" th:each="listHoaDonCT : ${byHoaDon.lstHoaDonChiTiet}">
+                            <div class="row">
+                                <div class="col-md-10 d-flex align-items-center">
+                                    <img class="img-mid"
+                                         src="../../static/img/ImgShoe/newbalance1_Balance%20574%20%20(2).jpg"
+                                         alt="">
+                                    <div class="divider-line">
+                                        <h6 th:text="${listHoaDonCT.chiTietSanPham.sanPham.ten}">Giày Nike Air Max</h6>
+                                        <span th:text="${'Phân loại hàng: ' + listHoaDonCT.chiTietSanPham.mauSac.ten + ' - ' + listHoaDonCT.chiTietSanPham.kichCo.ten}"></span>
+                                        <p th:text="${'x'+listHoaDonCT.soLuong}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                    <span th:text="${listHoaDonCT.donGia + ' VND'}"></span>
+                                </div>
+                                <div class="border-duoi"></div>
+                            </div>
+                        </a>
+                    </section>
+
+                    <section class="section-bottom-table">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td colspan="2">Tổng tiền hàng</td>
+                                <td class="tien-table">30000VND</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Phí vận chuyển</td>
+                                <td class="tien-table">30000VND</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Thành tiền</td>
+                                <td class="tong-tien-table">30000VND</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Phương thức Thanh toán</td>
+                                <td class="tien-table">Thanh toán khi nhận hàng</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <footer class="site-footer border-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="footer-heading mb-4">Navigations</h3>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Sell online</a></li>
+                                <li><a href="#">Features</a></li>
+                                <li><a href="#">Shopping cart</a></li>
+                                <li><a href="#">Store builder</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Mobile commerce</a></li>
+                                <li><a href="#">Dropshipping</a></li>
+                                <li><a href="#">Website development</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Point of sale</a></li>
+                                <li><a href="#">Hardware</a></li>
+                                <li><a href="#">Software</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
+                    <h3 class="footer-heading mb-4">Promo</h3>
+                    <a href="#" class="block-6">
+                        <img src="../../static/img/hero_1.jpg" alt="Image placeholder"
+                             class="img-fluid rounded mb-4"/>
+                        <h3 class="font-weight-light mb-0">
+                            Finding Your Perfect Shoes
+                        </h3>
+                        <p>Promo from nuary 15 &mdash; 25, 2019</p>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="block-5 mb-5">
+                        <h3 class="footer-heading mb-4">Contact Info</h3>
+                        <ul class="list-unstyled">
+                            <li class="address">
+                                203 Fake St. Mountain View, San Francisco, California, USA
+                            </li>
+                            <li class="phone">
+                                <a href="tel://23923929210">+2 392 3929 210</a>
+                            </li>
+                            <li class="email">emailaddress@domain.com</li>
+                        </ul>
+                    </div>
+
+                    <div class="block-7">
+                        <form action="#" method="post">
+                            <label for="email_subscribe" class="footer-heading">Subscribe</label>
+                            <div class="form-group">
+                                <input type="text" class="form-control py-4" id="email_subscribe"
+                                       placeholder="Email"/>
+                                <input type="submit" class="btn btn-sm btn-primary" value="Send"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-5 mt-5 text-center">
+                <div class="col-md-12">
+                    <p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+
+
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        All rights reserved | This template is made with
+                        <i class="icon-heart" aria-hidden="true"></i> by
+                        <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+<!--    thư viện của bảng tích hợp tìm kiếm-->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
+<script>
+
+    for (let index = 1; index <= 7; index++) {
+        $(document).ready(function () {
+            var table = $('#exampleTable' + index).DataTable({
+                "language": {
+                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                    "emptyTable": "Không có kết quả nào được tìm thấy",
+                    "zeroRecords": "Không có kết quả phù hợp",
+                    "infoEmpty": "Không có dữ liệu để hiển thị"
+                },
+                "initComplete": function (settings, json) {
+                    // CSS changes
+                    $('#exampleTable' + index + '_filter input[type="search"]').addClass('form-control');
+                    $('#exampleTable' + index + '_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                    $('#exampleTable' + index + '_filter label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).replaceWith(' ');
+
+                    $('#exampleTable' + index + '_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).first().replaceWith('Hiển thị');
+                    $('#exampleTable' + index + '_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).last().replaceWith('mục');
+
+                    $('#exampleTable' + index + '_length select').addClass('form-select');
+                }
+            });
+
+            table.on('draw.dt', function () {
+                var pageInfo = table.page.info();
+
+                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+                $('#exampleTable' + index + '_info').html(newInfo);
+
+            });
+        });
+    }
+
+</script>
+<style>
+    /*input tìm kiếm*/
+    #example_filter input[type="search"] {
+        width: 180%;
+        margin-left: -80%;
+        margin-bottom: 10%;
+    }
+
+    /*select hiển thị mục*/
+    .dataTables_length label {
+        white-space: nowrap; /* Ngăn các phần tử xuống dòng */
+        display: flex; /* Hiển thị label và select trên cùng một dòng */
+        align-items: center; /* Canh chỉnh label và select theo chiều dọc */
+    }
+
+    .dataTables_length select {
+        margin-left: 5px; /* Tạo khoảng cách giữa label và select */
+    }
+
+    .dataTables_length label:after {
+        /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
+        content: ''; /* Xóa nội dung */
+    }
+</style>
+<!--    thư viện của bảng tích hợp tìm kiếm end-->
+
+<script src="../../../static/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="../../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../../static/vendor/chart.js/chart.umd.js"></script>
+<script src="../../../static/vendor/echarts/echarts.min.js"></script>
+<script src="../../../static/vendor/quill/quill.min.js"></script>
+<script src="../../../static/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="../../../static/vendor/tinymce/tinymce.min.js"></script>
+<script src="../../../static/vendor/php-email-form/validate.js"></script>
+
+<script src="../../static/js/main.js"></script>
+</body>
+
+</html>
+
+</html>

@@ -457,19 +457,30 @@ public class HomeController {
     }
 
     @GetMapping("/don-mua")
-    public String đonMua(
+    public String donMua(
             Model model
     ) {
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
         model.addAttribute("listAllHoaDon",hoaDonService.getAllHoaDonByTaiKhoanOrderByNgaySua(idTaiKhoan));
-        model.addAttribute("listHDChoThanhToan",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,0));
-        model.addAttribute("listHDVanChuyen",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,1));
-        model.addAttribute("listHDChoGiao",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,2));
+        model.addAttribute("listHDChoXacNhan",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,0));
+        model.addAttribute("listHDChoGiao",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,1));
+        model.addAttribute("listHDDangGiao",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,2));
         model.addAttribute("listHDHoanThanh",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,3));
         model.addAttribute("listHDDaHuy",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,5));
         model.addAttribute("listHDTraHang",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,6));
         return "/customer-template/don-mua";
+    }
+
+    @GetMapping("/don-mua/{idHoaDon}")
+    public String donMuaChiTiet(
+            @PathVariable("idHoaDon")Long idHoaDon,
+            Model model
+    ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+        model.addAttribute("byHoaDon",hoaDonService.findById(idHoaDon));
+        return "/customer-template/don-mua-chi-tiet";
     }
 
     @GetMapping("/thankyou")

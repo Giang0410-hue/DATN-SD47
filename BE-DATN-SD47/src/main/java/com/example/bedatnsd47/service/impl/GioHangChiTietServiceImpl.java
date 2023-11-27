@@ -88,10 +88,8 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
                                    String hoVaTen, String soDienThoai, String tienShip, String email,
                                    String voucher, String diaChiCuThe, String ghiChu, TaiKhoan taiKhoan,
                                    String phuongXaID, String quanHuyenID, String thanhPhoID,Long idGioHang) {
-        Date currentAdd = new Date();
-
         HoaDon hoaDon = new HoaDon();
-        hoaDon.setMaHoaDon("HĐ" + hoaDon.getId());
+        hoaDon.setMaHoaDon("HD" + hoaDon.getId());
         hoaDon.setLoaiHoaDon(1);
         hoaDon.setPhiShip(Long.valueOf(tienShip));
         hoaDon.setTongTien(tongTien);
@@ -101,8 +99,8 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         hoaDon.setSdtNguoiNhan(soDienThoai);
         hoaDon.setDiaChiNguoiNhan(diaChiCuThe);
         hoaDon.setEmailNguoiNhan(email);
-        hoaDon.setNgayTao(currentAdd);
-        hoaDon.setNgaySua(currentAdd);
+        hoaDon.setNgayTao(new Date());
+        hoaDon.setNgaySua(new Date());
         hoaDon.setTrangThai(0);
         hoaDon.setPhuongXa(phuongXaID);
         hoaDon.setQuanHuyen(quanHuyenID);
@@ -112,23 +110,24 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         hoaDon.setTaiKhoan(taiKhoan);
         repositoryHoaDon.save(hoaDon);
 
-        hoaDon.setMaHoaDon("HĐ" + hoaDon.getId());
+        hoaDon.setMaHoaDon("HD" + hoaDon.getId());
 
         repositoryHoaDon.save(hoaDon);
 
 
         List<GioHangChiTiet> listGioHangChiTiet = this.findAllById(listStringIdGioHangCT,idGioHang);
-        HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
 
         for (GioHangChiTiet gioHangChiTiet : listGioHangChiTiet) {
+            HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
             hoaDonChiTiet.setSoLuong(gioHangChiTiet.getSoLuong());
-            hoaDonChiTiet.setDonGia(gioHangChiTiet.getChiTietSanPham().getGiaHienHanh());//1111
+            hoaDonChiTiet.setDonGia(gioHangChiTiet.getChiTietSanPham().getGiaHienHanh());
             hoaDonChiTiet.setHoaDon(HoaDon.builder().id(hoaDon.getId()).build());
             hoaDonChiTiet.setChiTietSanPham(gioHangChiTiet.getChiTietSanPham());
+            hoaDonChiTiet.setNgaySua(new Date());
+            hoaDonChiTiet.setNgayTao(new Date());
             repositoryHoaDonChiTiet.save(hoaDonChiTiet);
             repository.delete(gioHangChiTiet);
         }
-
 
         return null;
 

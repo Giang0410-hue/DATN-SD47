@@ -162,32 +162,7 @@
                             </a>
                         </li><!-- End Forms Nav -->
 
-                        <li class="nav-item">
-                            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse"
-                               href="/thong-bao">
-                                <i class="bi bi-bell-fill"></i><span>Thông Báo</span><i
-                                    class="bi bi-chevron-down ms-auto"></i>
-                            </a>
-                            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                                <li>
-                                    <a href="/cap-nhap-don-hang">
-                                        <i class="bi bi-circle"></i><span>Cập Nhật Đơn Hàng</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/khuyen-mai">
-                                        <i class="bi bi-circle"></i><span>Khuyễn Mãi</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li><!-- End Tables Nav -->
 
-                        <li class="nav-item">
-                            <a class="nav-link collapsed" href="/kho-voucher">
-                                <i class="bi bi-ticket-perforated-fill"></i>
-                                <span>Kho Voucher</span>
-                            </a>
-                        </li><!-- End Icons Nav -->
                     </ul>
                 </aside><!-- End Sidebar-->
             </div>
@@ -207,16 +182,7 @@
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="ex3-tab-1" data-bs-toggle="tab" href="#ex3-tabs-1"
                            role="tab" aria-controls="ex3-tabs-1" aria-selected="false">
-                            Chờ thanh toán
-                            <!--                            <span class="cart">-->
-                            <!--                                <span class="cart__count">1</span>-->
-                            <!--                            </span>-->
-                        </a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="ex3-tab-2" data-bs-toggle="tab" href="#ex3-tabs-2"
-                           role="tab" aria-controls="ex3-tabs-2" aria-selected="false">
-                            Vận chuyển
+                            Chờ xác nhận
                             <!--                            <span class="cart">-->
                             <!--                                <span class="cart__count">1</span>-->
                             <!--                            </span>-->
@@ -225,12 +191,23 @@
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="ex3-tab-3" data-bs-toggle="tab" href="#ex3-tabs-3"
                            role="tab" aria-controls="ex3-tabs-3" aria-selected="false">
+
                             Chờ giao hàng
                             <!--                            <span class="cart">-->
                             <!--                                <span class="cart__count">1</span>-->
                             <!--                            </span>-->
                         </a>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="ex3-tab-2" data-bs-toggle="tab" href="#ex3-tabs-2"
+                           role="tab" aria-controls="ex3-tabs-2" aria-selected="false">
+                            Đang giao
+                            <!--                            <span class="cart">-->
+                            <!--                                <span class="cart__count">1</span>-->
+                            <!--                            </span>-->
+                        </a>
+                    </li>
+
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="ex3-tab-4" data-bs-toggle="tab" href="#ex3-tabs-4"
                            role="tab" aria-controls="ex3-tabs-4" aria-selected="false">
@@ -277,12 +254,15 @@
                                         <section class="section-top">
                                             <div class="row">
                                                 <div class="col-md-12">
+                                                    <div class="divider-line-left">
+                                                        <h6 th:text="${ allHoaDon.maHoaDon}"></h6>
+                                                    </div>
                                                     <div class="divider-line">
-                                                        <a href="#" th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
+                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}" th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
                                                             giao thành công</a>
-                                                        <h6 th:if="${allHoaDon.trangThai==0}">CHỜ THANH TOÁN</h6>
-                                                        <h6 th:if="${allHoaDon.trangThai==1}">VẬN CHUYỂN</h6>
-                                                        <h6 th:if="${allHoaDon.trangThai==2}">CHỜ GIAO HÀNG</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==0}">CHỜ XÁC NHẬN</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==1}">CHỜ GIAO HÀNG</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==2}">ĐANG GIAO</h6>
                                                         <h6 th:if="${allHoaDon.trangThai==3}">HOÀN THÀNH</h6>
                                                         <h6 th:if="${allHoaDon.trangThai==5}">ĐÃ HỦY</h6>
                                                         <h6 th:if="${allHoaDon.trangThai==6}">TRẢ HÀNG</h6>
@@ -293,7 +273,7 @@
                                         </section>
                                         <section class="section-mid"
                                                  th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
-                                            <a href="#">
+                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
                                                 <div class="row">
                                                     <div class="col-md-10 d-flex align-items-center">
                                                         <img class="img-mid"
@@ -324,7 +304,9 @@
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
                                                         <button type="button" class="btn btn-success">Mua Lại</button>
-                                                        <button type="button" th:if="${allHoaDon.trangThai==5}" class="btn btn-secondary">Xem Chi Tiết Đơn Hủy</button>
+                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
+                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
+                                                        </button>
                                                         <button type="button" class="btn btn-secondary">Liên Hệ Người
                                                             Bán
                                                         </button>
@@ -345,7 +327,7 @@
                     </div>
                     <!--trạng thái tất cả end-->
 
-                    <!--trạng thái chờ thanh toán-->
+                    <!--trạng thái CHỜ XÁC NHẬN-->
                     <div class="tab-pane fade show " id="ex3-tabs-1" role="tabpanel"
                          aria-labelledby="ex3-tab-1">
                         <div style="margin-top: 3%">
@@ -356,34 +338,45 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="allHoaDon : ${listHDChoXacNhan}">
                                     <td>
                                         <section class="section-top">
                                             <div class="row">
                                                 <div class="col-md-12">
+                                                    <div class="divider-line-left">
+                                                        <h6 th:text="${ allHoaDon.maHoaDon}"></h6>
+                                                    </div>
                                                     <div class="divider-line">
-                                                        <a href="#">Đơn hàng đã được giao thành công</a>
-                                                        <h6>HOÀN THÀNH</h6>
+                                                        <a href="#" th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
+                                                            giao thành công</a>
+                                                        <h6 th:if="${allHoaDon.trangThai==0}">CHỜ XÁC NHẬN</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==1}">CHỜ GIAO HÀNG</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==2}">ĐANG GIAO</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==3}">HOÀN THÀNH</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==5}">ĐÃ HỦY</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==6}">TRẢ HÀNG</h6>
                                                     </div>
                                                 </div>
                                                 <div class="border-duoi"></div>
                                             </div>
                                         </section>
-                                        <section class="section-mid">
-                                            <a href="#">
+                                        <section class="section-mid"
+                                                 th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
+                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
                                                 <div class="row">
                                                     <div class="col-md-10 d-flex align-items-center">
                                                         <img class="img-mid"
-                                                             src="../../static/img/ImgShoe/newbalance1_Balance%20574%20%20(2).jpg"
+                                                             th:each="listAnh : ${listHoaDonCT.chiTietSanPham.sanPham.listHinhAnhSanPham[0]}"
+                                                             th:src="${'../../static/img/ImgShoe/'+listAnh.url}"
                                                              alt="">
                                                         <div class="divider-line">
-                                                            <h6>Giày Nike Air Max</h6>
-                                                            <span>Phân loại hàng: Xanh - 38</span>
-                                                            <p>x1</p>
+                                                            <h6 th:text="${listHoaDonCT.chiTietSanPham.sanPham.ten}"></h6>
+                                                            <span th:text="${'Phân loại hàng: ' + listHoaDonCT.chiTietSanPham.mauSac.ten + ' - ' + listHoaDonCT.chiTietSanPham.kichCo.ten}"></span>
+                                                            <p th:text="${'x'+listHoaDonCT.soLuong}"></p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 d-flex align-items-center justify-content-center">
-                                                        <span>60.000 VND</span>
+                                                        <span th:text="${listHoaDonCT.donGia + ' VND'}"></span>
                                                     </div>
                                                     <div class="border-duoi"></div>
                                                 </div>
@@ -393,13 +386,16 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="divider-line">
-                                                        <h6>Thành tiền: </h6>
-                                                        <h5>60.000 VND</h5>
+                                                        <h6>Thành tiền:</h6>
+                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
                                                         <button type="button" class="btn btn-success">Mua Lại</button>
+                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
+                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
+                                                        </button>
                                                         <button type="button" class="btn btn-secondary">Liên Hệ Người
                                                             Bán
                                                         </button>
@@ -418,49 +414,453 @@
                             </table>
                         </div>
                     </div>
-                    <!--trạng thái chờ thanh toán end-->
-
-                    <!--trạng thái vận chuyển-->
-                    <div class="tab-pane fade show " id="ex3-tabs-2" role="tabpanel"
-                         aria-labelledby="ex3-tab-2">
-                        <div style="margin-top: 3%">
-                            vận chuyển
-                        </div>
-                    </div>
-                    <!--trạng thái vận chuyển end-->
+                    <!--trạng thái CHỜ XÁC NHẬN end-->
 
                     <!--trạng thái chờ giao hàng-->
                     <div class="tab-pane fade show " id="ex3-tabs-3" role="tabpanel"
                          aria-labelledby="ex3-tab-3">
                         <div style="margin-top: 3%">
-                            Chờ giao hàng
+                            <table id="exampleTable3" class="display" style="width:100%">
+                                <thead style="display: none">
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="allHoaDon : ${listHDChoGiao}">
+                                    <td>
+                                        <section class="section-top">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="divider-line-left">
+                                                        <h6 th:text="${ allHoaDon.maHoaDon}"></h6>
+                                                    </div>
+                                                    <div class="divider-line">
+                                                        <a href="#" th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
+                                                            giao thành công</a>
+                                                        <h6 th:if="${allHoaDon.trangThai==0}">CHỜ XÁC NHẬN</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==1}">CHỜ GIAO HÀNG</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==2}">ĐANG GIAO</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==3}">HOÀN THÀNH</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==5}">ĐÃ HỦY</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==6}">TRẢ HÀNG</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="border-duoi"></div>
+                                            </div>
+                                        </section>
+                                        <section class="section-mid"
+                                                 th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
+                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
+                                                <div class="row">
+                                                    <div class="col-md-10 d-flex align-items-center">
+                                                        <img class="img-mid"
+                                                             th:each="listAnh : ${listHoaDonCT.chiTietSanPham.sanPham.listHinhAnhSanPham[0]}"
+                                                             th:src="${'../../static/img/ImgShoe/'+listAnh.url}"
+                                                             alt="">
+                                                        <div class="divider-line">
+                                                            <h6 th:text="${listHoaDonCT.chiTietSanPham.sanPham.ten}"></h6>
+                                                            <span th:text="${'Phân loại hàng: ' + listHoaDonCT.chiTietSanPham.mauSac.ten + ' - ' + listHoaDonCT.chiTietSanPham.kichCo.ten}"></span>
+                                                            <p th:text="${'x'+listHoaDonCT.soLuong}"></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                                        <span th:text="${listHoaDonCT.donGia + ' VND'}"></span>
+                                                    </div>
+                                                    <div class="border-duoi"></div>
+                                                </div>
+                                            </a>
+                                        </section>
+                                        <section class="section-bottom">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="divider-line">
+                                                        <h6>Thành tiền:</h6>
+                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="divider-line1">
+                                                        <button type="button" class="btn btn-success">Mua Lại</button>
+                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
+                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
+                                                        </button>
+                                                        <button type="button" class="btn btn-secondary">Liên Hệ Người
+                                                            Bán
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot style="display: none">
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+
                         </div>
                     </div>
                     <!--trạng thái chờ giao hàng end-->
+
+                    <!--trạng thái đang giao-->
+                    <div class="tab-pane fade show " id="ex3-tabs-2" role="tabpanel"
+                         aria-labelledby="ex3-tab-2">
+                        <div style="margin-top: 3%">
+                            <table id="exampleTable4" class="display" style="width:100%">
+                                <thead style="display: none">
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="allHoaDon : ${listHDDangGiao}">
+                                    <td>
+                                        <section class="section-top">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="divider-line-left">
+                                                        <h6 th:text="${ allHoaDon.maHoaDon}"></h6>
+                                                    </div>
+                                                    <div class="divider-line">
+                                                        <a href="#" th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
+                                                            giao thành công</a>
+                                                        <h6 th:if="${allHoaDon.trangThai==0}">CHỜ XÁC NHẬN</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==1}">CHỜ GIAO HÀNG</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==2}">ĐANG GIAO</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==3}">HOÀN THÀNH</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==5}">ĐÃ HỦY</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==6}">TRẢ HÀNG</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="border-duoi"></div>
+                                            </div>
+                                        </section>
+                                        <section class="section-mid"
+                                                 th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
+                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
+                                                <div class="row">
+                                                    <div class="col-md-10 d-flex align-items-center">
+                                                        <img class="img-mid"
+                                                             th:each="listAnh : ${listHoaDonCT.chiTietSanPham.sanPham.listHinhAnhSanPham[0]}"
+                                                             th:src="${'../../static/img/ImgShoe/'+listAnh.url}"
+                                                             alt="">
+                                                        <div class="divider-line">
+                                                            <h6 th:text="${listHoaDonCT.chiTietSanPham.sanPham.ten}"></h6>
+                                                            <span th:text="${'Phân loại hàng: ' + listHoaDonCT.chiTietSanPham.mauSac.ten + ' - ' + listHoaDonCT.chiTietSanPham.kichCo.ten}"></span>
+                                                            <p th:text="${'x'+listHoaDonCT.soLuong}"></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                                        <span th:text="${listHoaDonCT.donGia + ' VND'}"></span>
+                                                    </div>
+                                                    <div class="border-duoi"></div>
+                                                </div>
+                                            </a>
+                                        </section>
+                                        <section class="section-bottom">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="divider-line">
+                                                        <h6>Thành tiền:</h6>
+                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="divider-line1">
+                                                        <button type="button" class="btn btn-success">Mua Lại</button>
+                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
+                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
+                                                        </button>
+                                                        <button type="button" class="btn btn-secondary">Liên Hệ Người
+                                                            Bán
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot style="display: none">
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+                    <!--trạng thái đang giao end-->
+
+
 
                     <!--trạng thái hoàn thành-->
                     <div class="tab-pane fade show " id="ex3-tabs-4" role="tabpanel"
                          aria-labelledby="ex3-tab-4">
                         <div style="margin-top: 3%">
-                            hoàn thành
+                            <table id="exampleTable5" class="display" style="width:100%">
+                                <thead style="display: none">
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="allHoaDon : ${listHDHoanThanh}">
+                                    <td>
+                                        <section class="section-top">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="divider-line-left">
+                                                        <h6 th:text="${ allHoaDon.maHoaDon}"></h6>
+                                                    </div>
+                                                    <div class="divider-line">
+                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}" th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
+                                                            giao thành công</a>
+                                                        <h6 th:if="${allHoaDon.trangThai==0}">CHỜ XÁC NHẬN</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==1}">CHỜ GIAO HÀNG</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==2}">ĐANG GIAO</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==3}">HOÀN THÀNH</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==5}">ĐÃ HỦY</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==6}">TRẢ HÀNG</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="border-duoi"></div>
+                                            </div>
+                                        </section>
+                                        <section class="section-mid"
+                                                 th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
+                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
+                                                <div class="row">
+                                                    <div class="col-md-10 d-flex align-items-center">
+                                                        <img class="img-mid"
+                                                             th:each="listAnh : ${listHoaDonCT.chiTietSanPham.sanPham.listHinhAnhSanPham[0]}"
+                                                             th:src="${'../../static/img/ImgShoe/'+listAnh.url}"
+                                                             alt="">
+                                                        <div class="divider-line">
+                                                            <h6 th:text="${listHoaDonCT.chiTietSanPham.sanPham.ten}"></h6>
+                                                            <span th:text="${'Phân loại hàng: ' + listHoaDonCT.chiTietSanPham.mauSac.ten + ' - ' + listHoaDonCT.chiTietSanPham.kichCo.ten}"></span>
+                                                            <p th:text="${'x'+listHoaDonCT.soLuong}"></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                                        <span th:text="${listHoaDonCT.donGia + ' VND'}"></span>
+                                                    </div>
+                                                    <div class="border-duoi"></div>
+                                                </div>
+                                            </a>
+                                        </section>
+                                        <section class="section-bottom">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="divider-line">
+                                                        <h6>Thành tiền:</h6>
+                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="divider-line1">
+                                                        <button type="button" class="btn btn-success">Mua Lại</button>
+                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
+                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
+                                                        </button>
+                                                        <button type="button" class="btn btn-secondary">Liên Hệ Người
+                                                            Bán
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot style="display: none">
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                     <!--trạng thái hoàn thành end-->
 
-                    <!--trạng thái tất cả-->
+                    <!--trạng thái hủy-->
                     <div class="tab-pane fade show " id="ex3-tabs-5" role="tabpanel"
                          aria-labelledby="ex3-tab-5">
                         <div style="margin-top: 3%">
-                            đã hủy
+                            <table id="exampleTable6" class="display" style="width:100%">
+                                <thead style="display: none">
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="allHoaDon : ${listHDDaHuy}">
+                                    <td>
+                                        <section class="section-top">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="divider-line-left">
+                                                        <h6 th:text="${ allHoaDon.maHoaDon}"></h6>
+                                                    </div>
+                                                    <div class="divider-line">
+                                                        <a href="#" th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
+                                                            giao thành công</a>
+                                                        <h6 th:if="${allHoaDon.trangThai==0}">CHỜ XÁC NHẬN</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==1}">CHỜ GIAO HÀNG</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==2}">ĐANG GIAO</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==3}">HOÀN THÀNH</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==5}">ĐÃ HỦY</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==6}">TRẢ HÀNG</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="border-duoi"></div>
+                                            </div>
+                                        </section>
+                                        <section class="section-mid"
+                                                 th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
+                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
+                                                <div class="row">
+                                                    <div class="col-md-10 d-flex align-items-center">
+                                                        <img class="img-mid"
+                                                             th:each="listAnh : ${listHoaDonCT.chiTietSanPham.sanPham.listHinhAnhSanPham[0]}"
+                                                             th:src="${'../../static/img/ImgShoe/'+listAnh.url}"
+                                                             alt="">
+                                                        <div class="divider-line">
+                                                            <h6 th:text="${listHoaDonCT.chiTietSanPham.sanPham.ten}"></h6>
+                                                            <span th:text="${'Phân loại hàng: ' + listHoaDonCT.chiTietSanPham.mauSac.ten + ' - ' + listHoaDonCT.chiTietSanPham.kichCo.ten}"></span>
+                                                            <p th:text="${'x'+listHoaDonCT.soLuong}"></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                                        <span th:text="${listHoaDonCT.donGia + ' VND'}"></span>
+                                                    </div>
+                                                    <div class="border-duoi"></div>
+                                                </div>
+                                            </a>
+                                        </section>
+                                        <section class="section-bottom">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="divider-line">
+                                                        <h6>Thành tiền:</h6>
+                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="divider-line1">
+                                                        <button type="button" class="btn btn-success">Mua Lại</button>
+                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
+                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
+                                                        </button>
+                                                        <button type="button" class="btn btn-secondary">Liên Hệ Người
+                                                            Bán
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot style="display: none">
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
-                    <!--trạng thái tất cả end-->
+                    <!--trạng thái hủy end-->
 
                     <!--trạng thái trả hàng-->
                     <div class="tab-pane fade show " id="ex3-tabs-6" role="tabpanel"
                          aria-labelledby="ex3-tab-6">
                         <div style="margin-top: 3%">
-                            trả hàng
+                            <table id="exampleTable7" class="display" style="width:100%">
+                                <thead style="display: none">
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="allHoaDon : ${listHDTraHang}">
+                                    <td>
+                                        <section class="section-top">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="divider-line-left">
+                                                        <h6 th:text="${ allHoaDon.maHoaDon}"></h6>
+                                                    </div>
+                                                    <div class="divider-line">
+                                                        <a href="#" th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
+                                                            giao thành công</a>
+                                                        <h6 th:if="${allHoaDon.trangThai==0}">CHỜ XÁC NHẬN</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==1}">CHỜ GIAO HÀNG</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==2}">ĐANG GIAO</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==3}">HOÀN THÀNH</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==5}">ĐÃ HỦY</h6>
+                                                        <h6 th:if="${allHoaDon.trangThai==6}">TRẢ HÀNG</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="border-duoi"></div>
+                                            </div>
+                                        </section>
+                                        <section class="section-mid"
+                                                 th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
+                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
+                                                <div class="row">
+                                                    <div class="col-md-10 d-flex align-items-center">
+                                                        <img class="img-mid"
+                                                             th:each="listAnh : ${listHoaDonCT.chiTietSanPham.sanPham.listHinhAnhSanPham[0]}"
+                                                             th:src="${'../../static/img/ImgShoe/'+listAnh.url}"
+                                                             alt="">
+                                                        <div class="divider-line">
+                                                            <h6 th:text="${listHoaDonCT.chiTietSanPham.sanPham.ten}"></h6>
+                                                            <span th:text="${'Phân loại hàng: ' + listHoaDonCT.chiTietSanPham.mauSac.ten + ' - ' + listHoaDonCT.chiTietSanPham.kichCo.ten}"></span>
+                                                            <p th:text="${'x'+listHoaDonCT.soLuong}"></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                                        <span th:text="${listHoaDonCT.donGia + ' VND'}"></span>
+                                                    </div>
+                                                    <div class="border-duoi"></div>
+                                                </div>
+                                            </a>
+                                        </section>
+                                        <section class="section-bottom">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="divider-line">
+                                                        <h6>Thành tiền:</h6>
+                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="divider-line1">
+                                                        <button type="button" class="btn btn-success">Mua Lại</button>
+                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
+                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
+                                                        </button>
+                                                        <button type="button" class="btn btn-secondary">Liên Hệ Người
+                                                            Bán
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot style="display: none">
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                     <!--trạng thái trả hàng end-->
