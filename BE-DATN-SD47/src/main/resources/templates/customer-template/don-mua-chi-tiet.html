@@ -284,15 +284,19 @@
                             <tbody>
                             <tr>
                                 <td colspan="2">Tổng tiền hàng</td>
-                                <td class="tien-table">30000VND</td>
+                                <td class="tien-table" th:text="${byHoaDon.tongTien - byHoaDon.phiShip+ ' VND'}">30000VND</td>
                             </tr>
                             <tr>
                                 <td colspan="2">Phí vận chuyển</td>
-                                <td class="tien-table">30000VND</td>
+                                <td class="tien-table" th:text="${byHoaDon.phiShip+ ' VND'}">30000VND</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Voucher</td>
+                                <td class="tien-table" th:text="${byHoaDon.tongTienKhiGiam - (byHoaDon.tongTien + byHoaDon.phiShip )+ ' VND'}">30000VND</td>
                             </tr>
                             <tr>
                                 <td colspan="2">Thành tiền</td>
-                                <td class="tong-tien-table">30000VND</td>
+                                <td class="tong-tien-table" th:text="${byHoaDon.tongTienKhiGiam+ ' VND'}">30000VND</td>
                             </tr>
                             <tr>
                                 <td colspan="2">Phương thức Thanh toán</td>

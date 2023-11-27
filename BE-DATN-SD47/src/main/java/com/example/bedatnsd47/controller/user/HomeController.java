@@ -10,6 +10,7 @@ import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import com.example.bedatnsd47.service.DiaChiService;
 import com.example.bedatnsd47.service.GioHangChiTietService;
 import com.example.bedatnsd47.service.GioHangService;
+import com.example.bedatnsd47.service.HoaDonService;
 import com.example.bedatnsd47.service.KhachHangService;
 import com.example.bedatnsd47.service.KichCoService;
 import com.example.bedatnsd47.service.LoaiDeService;
@@ -72,7 +73,8 @@ public class HomeController {
     @Autowired
     private GioHangChiTietService gioHangChiTietService;
 
-    private Date currentDate = new Date();
+    @Autowired
+    private HoaDonService hoaDonService;
 
     @GetMapping("home")
     public String home(
@@ -425,7 +427,6 @@ public class HomeController {
     ) {
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
-<<<<<<< HEAD
         model.addAttribute("listAllHoaDon",hoaDonService.getAllHoaDonByTaiKhoanOrderByNgaySua(idTaiKhoan));
         model.addAttribute("listHDChoXacNhan",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,0));
         model.addAttribute("listHDChoGiao",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,1));
@@ -433,8 +434,6 @@ public class HomeController {
         model.addAttribute("listHDHoanThanh",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,3));
         model.addAttribute("listHDDaHuy",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,5));
         model.addAttribute("listHDTraHang",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,6));
-=======
->>>>>>> parent of 9c49684 (update bán onl)
         return "/customer-template/don-mua";
     }
 
