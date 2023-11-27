@@ -24,8 +24,4 @@ public interface HoaDonService {
 
     HoaDon findByMa(String ma);
     List<HoaDon> findAllOrderByNgaySua();
-
-    List<HoaDon> getAllHoaDonByTaiKhoanOrderByNgaySua(Long idTaiKhoan);
-
-    List<HoaDon> getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(Long idTaiKhoan,Integer trangThai);
 }

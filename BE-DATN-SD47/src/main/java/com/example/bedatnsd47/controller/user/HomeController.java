@@ -10,7 +10,6 @@ import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import com.example.bedatnsd47.service.DiaChiService;
 import com.example.bedatnsd47.service.GioHangChiTietService;
 import com.example.bedatnsd47.service.GioHangService;
-import com.example.bedatnsd47.service.HoaDonService;
 import com.example.bedatnsd47.service.KhachHangService;
 import com.example.bedatnsd47.service.KichCoService;
 import com.example.bedatnsd47.service.LoaiDeService;
@@ -19,7 +18,6 @@ import com.example.bedatnsd47.service.TaiKhoanService;
 import com.example.bedatnsd47.service.VoucherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,7 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -75,11 +72,7 @@ public class HomeController {
     @Autowired
     private GioHangChiTietService gioHangChiTietService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private HoaDonService hoaDonService;
+    private Date currentDate = new Date();
 
     @GetMapping("home")
     public String home(
@@ -303,6 +296,22 @@ public class HomeController {
         return "/customer-template/shop";
     }
 
+
+//    @PostMapping("/gio-hang/add")
+//    public String addGioHang(
+//    ) {
+//        GioHang gioHang = new GioHang();
+//        gioHang.setMaGioHang("GH" + gioHangService.genMaTuDong());
+//        gioHang.setGhiChu("");
+//        gioHang.setNgayTao(currentDate);
+//        gioHang.setNgayTao(currentDate);
+//        gioHang.setTaiKhoan(TaiKhoan.builder().id(idTaiKhoan).build());
+//        gioHang.setTrangThai(0);
+//        gioHangService.save(gioHang);
+//        return "redirect:/shop";
+//    }
+
+
     @GetMapping("/chi-tiet-san-pham/{idSanPham}/{idMauSac}")
     @ResponseBody
     public List<ChiTietSanPham> getAllbyIdSPAndIdMS(
@@ -367,8 +376,7 @@ public class HomeController {
     public String updateInfo(
             @Valid @ModelAttribute("khachHang") TaiKhoan khachHang,
             BindingResult result,
-            Model model,
-            RedirectAttributes redirectAttributes
+            Model model
     ) {
         if (result.hasErrors()) {
             TaiKhoan kh = khachHangService.getById(idTaiKhoan);
@@ -387,7 +395,6 @@ public class HomeController {
         } else {
             khachHang.setNgaySua(new Date());
             khachHang.setVaiTro(VaiTro.builder().id(Long.valueOf(2)).build());
-            redirectAttributes.addFlashAttribute("checkModal", "modal");
             khachHangService.update(khachHang);
         }
         return "redirect:/thong-tin-khach-hang";
@@ -399,29 +406,11 @@ public class HomeController {
     ) {
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
-        List<DiaChi> diaChi = diaChiService.getAllByTaiKhoan(idTaiKhoan);
-        model.addAttribute("listDiaChi", diaChi);
-        if (diaChi.size() == 5) {
-            model.addAttribute("checkButtonAdd", "true");
-            model.addAttribute("soDiaChi", diaChi.size());
-        } else {
-            model.addAttribute("checkButtonAdd", "false");
-            model.addAttribute("soDiaChi", diaChi.size());
-        }
+
         return "/customer-template/dia-chi";
     }
 
-    @GetMapping("/dia-chi/delete/{id}")
-    public String deleteDiaChiKhachHang(
-            @PathVariable("id")Long idDiaChi,
-            RedirectAttributes redirectAttributes
-    ) {
-        diaChiService.deleteById(idDiaChi);
-        redirectAttributes.addFlashAttribute("checkModal", "modal");
-        return "redirect:/dia-chi";
-    }
-
-    @GetMapping("/mat-khau")
+    @GetMapping("/doi-mat-khau")
     public String doiMatKhau(
             Model model
     ) {
@@ -430,38 +419,13 @@ public class HomeController {
         return "/customer-template/doi-mat-khau-khach-hang";
     }
 
-    @GetMapping("/mat-khau/update")
-    public String updateMatKhau(
-            @RequestParam("matKhauCu")String matKhauCu,
-            @RequestParam("xacNhanmatKhauMoi")String xacNhanmatKhauMoi,
-            Model model,
-            RedirectAttributes redirectAttributes
-    ) {
-        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
-        if(!passwordEncoder.matches(matKhauCu,khachHang.getMatKhau())) {
-            model.addAttribute("messages", "Mật khẩu cũ không chính xác, vui lòng thử lại");
-        } else {
-            khachHang.setNgaySua(new Date());
-            khachHang.setMatKhau(passwordEncoder.encode(xacNhanmatKhauMoi));
-            khachHangService.update(khachHang);
-            redirectAttributes.addFlashAttribute("checkModal", "modal");
-            return "redirect:/mat-khau";
-        }
-        return "/customer-template/doi-mat-khau-khach-hang";
-    }
-
-    @GetMapping("/test")
-    public String test(
-    ) {
-      return "/customer-template/test";
-    }
-
     @GetMapping("/don-mua")
     public String donMua(
             Model model
     ) {
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+<<<<<<< HEAD
         model.addAttribute("listAllHoaDon",hoaDonService.getAllHoaDonByTaiKhoanOrderByNgaySua(idTaiKhoan));
         model.addAttribute("listHDChoXacNhan",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,0));
         model.addAttribute("listHDChoGiao",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,1));
@@ -469,6 +433,8 @@ public class HomeController {
         model.addAttribute("listHDHoanThanh",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,3));
         model.addAttribute("listHDDaHuy",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,5));
         model.addAttribute("listHDTraHang",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,6));
+=======
+>>>>>>> parent of 9c49684 (update bán onl)
         return "/customer-template/don-mua";
     }
 

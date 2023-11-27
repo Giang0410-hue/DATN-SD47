@@ -58,18 +58,4 @@ public class HoaDonServiceImpl implements HoaDonService {
     public List<HoaDon> findAllOrderByNgaySua() {
         return hoaDonRepository.findAllOrderByNgaySua();
     }
-
-    @Override
-    public List<HoaDon> getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(Long idTaiKhoan,Integer trangThai) {
-
-        return hoaDonRepository.findAllHoaDonByTaiKhoanAndTrangThaiOrderByNgaySua(idTaiKhoan,trangThai);
-
-    }
-
-    @Override
-    public List<HoaDon> getAllHoaDonByTaiKhoanOrderByNgaySua(Long idTaiKhoan) {
-
-        return hoaDonRepository.findAllHoaDonByTaiKhoanOrderByNgaySua(idTaiKhoan);
-
-    }
 }
