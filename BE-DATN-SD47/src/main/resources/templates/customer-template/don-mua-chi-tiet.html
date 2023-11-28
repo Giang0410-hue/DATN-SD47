@@ -203,7 +203,12 @@
                                         <div class="order-status">
                                             <div class="order-status-timeline">
                                                 <!-- class names: c0 c1 c2 c3 and c4 -->
-                                                <div class="order-status-timeline-completion c0"></div>
+                                                <div th:if="${byHoaDon.trangThai==0}" class="order-status-timeline-completion c1"></div>
+                                                <div th:if="${byHoaDon.trangThai==1}" class="order-status-timeline-completion c2"></div>
+                                                <div th:if="${byHoaDon.trangThai==2}" class="order-status-timeline-completion c3"></div>
+                                                <div th:if="${byHoaDon.trangThai==3}" class="order-status-timeline-completion c4"></div>
+                                                <div th:if="${byHoaDon.trangThai==5}" class="order-status-timeline-completion c5"></div>
+                                                <div th:if="${byHoaDon.trangThai==6}" class="order-status-timeline-completion c6"></div>
                                             </div>
 
                                             <div class="image-order-status image-order-status-new active img-circle">

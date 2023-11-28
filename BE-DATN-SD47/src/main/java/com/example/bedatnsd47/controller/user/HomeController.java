@@ -3,6 +3,7 @@ package com.example.bedatnsd47.controller.user;
 import com.example.bedatnsd47.entity.ChiTietSanPham;
 import com.example.bedatnsd47.entity.DiaChi;
 import com.example.bedatnsd47.entity.GioHangChiTiet;
+import com.example.bedatnsd47.entity.HoaDon;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.entity.VaiTro;
 import com.example.bedatnsd47.entity.Voucher;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -133,8 +135,10 @@ public class HomeController {
             @PathVariable String idChiTietSpAdd,
             @PathVariable String soLuongAdd
     ) {
+        String[] optionArray = idChiTietSpAdd.split(",");
+        List<String> listIdString = Arrays.asList(optionArray);
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
-        gioHangChiTietService.save(khachHang.getGioHang().getId(), Long.valueOf(idChiTietSpAdd), Integer.valueOf(soLuongAdd));
+        gioHangChiTietService.save(khachHang.getGioHang().getId(), listIdString, Integer.valueOf(soLuongAdd));
         return "redirect:/shop";
     }
 
@@ -143,8 +147,10 @@ public class HomeController {
             @PathVariable String idChiTietSpAdd,
             @PathVariable String soLuongAdd
     ) {
+        String[] optionArray = idChiTietSpAdd.split(",");
+        List<String> listIdString = Arrays.asList(optionArray);
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
-        gioHangChiTietService.save(khachHang.getGioHang().getId(), Long.valueOf(idChiTietSpAdd), Integer.valueOf(soLuongAdd));
+        gioHangChiTietService.save(khachHang.getGioHang().getId(), listIdString, Integer.valueOf(soLuongAdd));
         return "redirect:/cart";
     }
 
@@ -435,6 +441,48 @@ public class HomeController {
         model.addAttribute("listHDDaHuy",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,5));
         model.addAttribute("listHDTraHang",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,6));
         return "/customer-template/don-mua";
+    }
+
+    @PostMapping("/don-mua/mua-lai/{idChiTietSpAdd}")
+    public String muaLaiDonMua(
+            @PathVariable String idChiTietSpAdd
+    ) {
+        String[] optionArray = idChiTietSpAdd.split(",");
+        List<String> listIdString = Arrays.asList(optionArray);
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        gioHangChiTietService.save(khachHang.getGioHang().getId(), listIdString,1);
+        return "redirect:/cart";
+    }
+
+    @GetMapping("/don-mua/check-so-luong")
+    @ResponseBody
+    public List<Long> checkSoLuongSpMuaLai(
+            @RequestParam String idCTSP
+    ) {
+        String[] optionArray = idCTSP.split(",");
+        List<String> listIdString = Arrays.asList(optionArray);
+        System.out.println("idchitietsp***** : "+listIdString);
+//        List<ChiTietSanPham> list = chiTietSanPhamSerivce.getAllById(idCTSP);
+
+        List<Long> soLuongCheck = Arrays.asList(Long.valueOf(String.valueOf(listIdString)));
+        System.out.println("soLuongCheck***** : "+soLuongCheck);
+
+        return soLuongCheck;
+    }
+
+    @GetMapping("/huy-don/{idHoaDon}")
+    public String huyDon(
+            @PathVariable("idHoaDon")Long idHoaDon,
+            Model model,
+            RedirectAttributes redirectAttributes
+    ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+        HoaDon hoaDon = hoaDonService.findById(idHoaDon);
+        hoaDon.setNgaySua(new Date());
+        hoaDon.setTrangThai(5);
+        hoaDonService.saveOrUpdate(hoaDon);
+        return "redirect:/don-mua";
     }
 
     @GetMapping("/don-mua/{idHoaDon}")

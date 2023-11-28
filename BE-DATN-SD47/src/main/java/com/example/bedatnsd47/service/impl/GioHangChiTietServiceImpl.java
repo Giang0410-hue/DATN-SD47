@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -142,39 +143,47 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     }
 
     @Override
-    public GioHangChiTiet save(Long idGioHang, Long idChiTietSp, Integer soLuong) {
+    public List<GioHangChiTiet> save(Long idGioHang, List<String> idChiTietSp, Integer soLuong) {
+        List<GioHangChiTiet> gioHangChiTietList = repository.getByGioHangChiTiet(idGioHang, idChiTietSp);
 
-        GioHangChiTiet gioHangChiTiet = repository.getByGioHangChiTiet(idGioHang, idChiTietSp);
-        GioHangChiTiet gioHangChiTietNew = new GioHangChiTiet();
+        List<GioHangChiTiet> gioHangChiTietNewList = new ArrayList<>();
 
-        if (gioHangChiTiet == null) {
-            Date currentAdd = new Date();
+        // Nếu chưa có, thêm mới
+        if (gioHangChiTietList.isEmpty()) {
+            for (String idChiTiet : idChiTietSp) {
+                GioHangChiTiet gioHangChiTietNew = new GioHangChiTiet();
+                gioHangChiTietNew.setSoLuong(soLuong);
+                gioHangChiTietNew.setNgayTao(new Date());
+                gioHangChiTietNew.setNgaySua(new Date());
+                ChiTietSanPham chiTietSanPham = ChiTietSanPham.builder().id(Long.valueOf(idChiTiet)).build();
+                gioHangChiTietNew.setChiTietSanPham(chiTietSanPham);
+                gioHangChiTietNew.setGioHang(GioHang.builder().id(idGioHang).build());
+                gioHangChiTietNew.setTrangThai(0);
 
-            gioHangChiTietNew.setSoLuong(soLuong);
-            gioHangChiTietNew.setNgayTao(currentAdd);
-            gioHangChiTietNew.setNgaySua(currentAdd);
-            gioHangChiTietNew.setChiTietSanPham(ChiTietSanPham.builder().id(Long.valueOf(idChiTietSp)).build());
-            gioHangChiTietNew.setGioHang(GioHang.builder().id(idGioHang).build());
-            gioHangChiTietNew.setTrangThai(0);
-            System.out.println("a1");
-
+                gioHangChiTietNewList.add(gioHangChiTietNew);
+            }
         } else {
-            Date currentUpdate = new Date();
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                for (String idChiTiet : idChiTietSp) {
+                    GioHangChiTiet gioHangChiTietNew = new GioHangChiTiet();
+                    gioHangChiTietNew.setId(gioHangChiTiet.getId());
+                    gioHangChiTietNew.setSoLuong(gioHangChiTiet.getSoLuong() + soLuong);
+                    gioHangChiTietNew.setGhiChu(gioHangChiTiet.getGhiChu());
+                    gioHangChiTietNew.setNgayTao(gioHangChiTiet.getNgayTao());
+                    gioHangChiTietNew.setNgaySua(new Date());
+                    ChiTietSanPham chiTietSanPham = ChiTietSanPham.builder().id(Long.valueOf(idChiTiet)).build();
+                    gioHangChiTietNew.setChiTietSanPham(chiTietSanPham);
+                    gioHangChiTietNew.setGioHang(gioHangChiTiet.getGioHang());
+                    gioHangChiTietNew.setTrangThai(0);
 
-            gioHangChiTietNew.setId(gioHangChiTiet.getId());
-            gioHangChiTietNew.setSoLuong(gioHangChiTiet.getSoLuong() + soLuong);
-            gioHangChiTietNew.setGhiChu(gioHangChiTiet.getGhiChu());
-            gioHangChiTietNew.setNgayTao(gioHangChiTiet.getNgayTao());
-            gioHangChiTietNew.setNgaySua(currentUpdate);
-            gioHangChiTietNew.setChiTietSanPham(gioHangChiTiet.getChiTietSanPham());
-            gioHangChiTietNew.setGioHang(gioHangChiTiet.getGioHang());
-            gioHangChiTietNew.setTrangThai(0);
-            System.out.println("a2");
-
+                    gioHangChiTietNewList.add(gioHangChiTietNew);
+                }
+            }
         }
 
-        return repository.save(gioHangChiTietNew);
+        return repository.saveAll(gioHangChiTietNewList);
     }
+
 
     @Override
     public GioHangChiTiet update(GioHangChiTiet gioHangChiTiet) {

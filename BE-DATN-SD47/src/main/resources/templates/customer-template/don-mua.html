@@ -248,11 +248,12 @@
                                 <thead style="display: none">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Name</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="allHoaDon : ${listAllHoaDon}">
-                                    <td th:text="${allHoaDon.ngaySua}" style="display: none"></td>
+                                <tr th:each="allHoaDon,state : ${listAllHoaDon}">
+                                    <td th:text="${state.index}" style="display: none"></td>
                                     <td>
                                         <section class="section-top">
                                             <div class="row">
@@ -306,10 +307,12 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
-                                                        <button type="button" class="btn btn-success">Mua Lại</button>
-                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
-                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
-                                                        </button>
+                                                        <a th:if="${allHoaDon.trangThai==0}" th:href="@{/huy-don/{id}(id=${allHoaDon.id})}" class="btn btn-danger">Hủy Đơn</a>
+                                                        <a th:if="${allHoaDon.trangThai==1}" th:href="@{/huy-don/{id}(id=${allHoaDon.id})}" class="btn btn-danger">Hủy Đơn</a>
+                                                        <button th:if="${allHoaDon.trangThai==3}" type="button" class="btn btn-success">Mua Lại</button>
+                                                        <button th:if="${allHoaDon.trangThai==5}" type="button" class="btn btn-success">Mua Lại</button>
+                                                        <button th:if="${allHoaDon.trangThai==6}" type="button" class="btn btn-success">Mua Lại</button>
+                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}" th:if="${allHoaDon.trangThai==5}" class="btn btn-info">Xem Chi Tiết Đơn Hủy</a>
                                                         <button type="button" class="btn btn-secondary">Liên Hệ Người
                                                             Bán
                                                         </button>
@@ -322,6 +325,7 @@
                                 </tbody>
                                 <tfoot style="display: none">
                                 <tr>
+                                    <th>Name</th>
                                     <th>Name</th>
                                 </tr>
                                 </tfoot>
@@ -337,11 +341,12 @@
                                 <thead style="display: none">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Name</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="allHoaDon : ${listHDChoXacNhan}">
-                                    <td th:text="${allHoaDon.ngaySua}" style="display: none"></td>
+                                <tr th:each="allHoaDon,state : ${listHDChoXacNhan}">
+                                    <td th:text="${state.index}" style="display: none"></td>
                                     <td>
                                         <section class="section-top">
                                             <div class="row">
@@ -395,10 +400,7 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
-                                                        <button type="button" class="btn btn-success">Mua Lại</button>
-                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
-                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
-                                                        </button>
+                                                        <a th:href="@{/huy-don/{id}(id=${allHoaDon.id})}" class="btn btn-danger">Hủy Đơn</a>
                                                         <button type="button" class="btn btn-secondary">Liên Hệ Người
                                                             Bán
                                                         </button>
@@ -411,6 +413,7 @@
                                 </tbody>
                                 <tfoot style="display: none">
                                 <tr>
+                                    <th>Name</th>
                                     <th>Name</th>
                                 </tr>
                                 </tfoot>
@@ -427,11 +430,12 @@
                                 <thead style="display: none">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Name</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="allHoaDon : ${listHDChoGiao}">
-                                    <td th:text="${allHoaDon.ngaySua}" style="display: none"></td>
+                                <tr th:each="allHoaDon,state : ${listHDChoGiao}">
+                                    <td th:text="${state.index}" style="display: none"></td>
                                     <td>
                                         <section class="section-top">
                                             <div class="row">
@@ -485,10 +489,7 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
-                                                        <button type="button" class="btn btn-success">Mua Lại</button>
-                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
-                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
-                                                        </button>
+                                                        <a th:href="@{/huy-don/{id}(id=${allHoaDon.id})}" class="btn btn-danger">Hủy Đơn</a>
                                                         <button type="button" class="btn btn-secondary">Liên Hệ Người
                                                             Bán
                                                         </button>
@@ -502,10 +503,10 @@
                                 <tfoot style="display: none">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Name</th>
                                 </tr>
                                 </tfoot>
                             </table>
-
                         </div>
                     </div>
                     <!--trạng thái chờ giao hàng end-->
@@ -518,11 +519,12 @@
                                 <thead style="display: none">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Name</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="allHoaDon : ${listHDDangGiao}">
-                                    <td th:text="${allHoaDon.ngaySua}" style="display: none"></td>
+                                <tr th:each="allHoaDon,state : ${listHDDangGiao}">
+                                    <td th:text="${state.index}" style="display: none"></td>
                                     <td>
                                         <section class="section-top">
                                             <div class="row">
@@ -576,10 +578,6 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
-                                                        <button type="button" class="btn btn-success">Mua Lại</button>
-                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
-                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
-                                                        </button>
                                                         <button type="button" class="btn btn-secondary">Liên Hệ Người
                                                             Bán
                                                         </button>
@@ -592,6 +590,7 @@
                                 </tbody>
                                 <tfoot style="display: none">
                                 <tr>
+                                    <th>Name</th>
                                     <th>Name</th>
                                 </tr>
                                 </tfoot>
@@ -609,11 +608,12 @@
                                 <thead style="display: none">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Name</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="allHoaDon : ${listHDHoanThanh}">
-                                    <td th:text="${allHoaDon.ngaySua}" style="display: none"></td>
+                                <tr th:each="allHoaDon,state : ${listHDHoanThanh}">
+                                    <td th:text="${state.index}" style="display: none"></td>
                                     <td>
                                         <section class="section-top">
                                             <div class="row">
@@ -668,9 +668,6 @@
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
                                                         <button type="button" class="btn btn-success">Mua Lại</button>
-                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
-                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
-                                                        </button>
                                                         <button type="button" class="btn btn-secondary">Liên Hệ Người
                                                             Bán
                                                         </button>
@@ -683,6 +680,7 @@
                                 </tbody>
                                 <tfoot style="display: none">
                                 <tr>
+                                    <th>Name</th>
                                     <th>Name</th>
                                 </tr>
                                 </tfoot>
@@ -699,11 +697,12 @@
                                 <thead style="display: none">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Name</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="allHoaDon : ${listHDDaHuy}">
-                                    <td th:text="${allHoaDon.ngaySua}" style="display: none"></td>
+                                <tr th:each="allHoaDon,state : ${listHDDaHuy}">
+                                    <td th:text="${state.index}" style="display: none"></td>
                                     <td>
                                         <section class="section-top">
                                             <div class="row">
@@ -726,7 +725,8 @@
                                             </div>
                                         </section>
                                         <section class="section-mid"
-                                                 th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
+                                                 th:each="listHoaDonCT,stage : ${allHoaDon.lstHoaDonChiTiet}">
+                                            <input type="text" th:id="${'listIdChiTietSP'+allHoaDon.id}" th:name="${'listNameChiTietSP'+allHoaDon.id}" th:value="${listHoaDonCT.id}">
                                             <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
                                                 <div class="row">
                                                     <div class="col-md-10 d-flex align-items-center">
@@ -757,10 +757,8 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
-                                                        <button type="button" class="btn btn-success">Mua Lại</button>
-                                                        <button type="button" th:if="${allHoaDon.trangThai==5}"
-                                                                class="btn btn-secondary">Xem Chi Tiết Đơn Hủy
-                                                        </button>
+                                                        <button type="button" th:data-index="${allHoaDon.id}" onclick="muaLai(this)" class="btn btn-success">Mua Lại</button>
+                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}" class="btn btn-info">Xem Chi Tiết Đơn Hủy</a>
                                                         <button type="button" class="btn btn-secondary">Liên Hệ Người
                                                             Bán
                                                         </button>
@@ -774,9 +772,71 @@
                                 <tfoot style="display: none">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Name</th>
                                 </tr>
                                 </tfoot>
                             </table>
+
+                            <script>
+                                function muaLai(rowIndex) {
+                                    var index = rowIndex.getAttribute('data-index');
+                                    var listId = document.getElementById('listIdChiTietSP'+index)
+
+                                    var listName = document.getElementsByName('listNameChiTietSP' + index);
+                                    var listIdCTSP = [];
+
+                                    for (var i = 0; i < listName.length; i++) {
+                                        listIdCTSP.push(listName[i].value);
+                                    }
+
+                                    console.log("mảng id " + listIdCTSP);
+                                    console.log("id hóa đơn " + index)
+                                    console.log("listIDChitietsp" + listId.value)
+                                    var soLuongTruoc = 0;
+
+                                    fetch('/don-mua/check-so-luong?idCTSP='+listIdCTSP)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            // soLuongTruoc = data;
+                                            // var soLuongTonInt = parseInt(fillErro.innerText);
+                                            // if (soLuongTonInt == soLuongTruoc||soLuongTruoc>soLuongTonInt) {
+                                            //     console.log("Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.")
+                                            //     //thông báo lỗi
+                                            //     $('#checkSoLuongGHCT').modal('show')
+                                            //     return false;
+                                            // } else {
+                                            //     // Lấy URL cần gửi phương thức POST
+                                            //     var url = '/gio-hang-chi-tiet/add/' + rqIdChiTietSp + '/' + soLuongAdd; // Thay thế bằng URL thực tế
+                                            //     // Thực hiện phương thức POST
+                                            //     fetch(url, {
+                                            //         method: 'POST',
+                                            //         headers: {
+                                            //             'Content-Type': 'application/json'
+                                            //         }
+                                            //     })
+                                            //         .then(response => {
+                                            //             if (response.ok) {
+                                            //                 //thông báo
+                                            //                 var toast = new bootstrap.Toast(document.getElementById('thongBaoThemThanhCong'));
+                                            //                 toast.show();
+                                            //                 console.log('Đã thêm vào giỏ hàng');
+                                            //
+                                            //             } else {
+                                            //                 throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
+                                            //             }
+                                            //         })
+                                            //         .catch(error => {
+                                            //             console.error(error);
+                                            //         });
+                                            // }
+                                        })
+                                        .catch(error => {
+                                            console.error('Lỗi trong quá trình lấy số lượng từ cơ sở dữ liệu:', error)
+                                        });
+
+                                }
+                            </script>
+
                         </div>
                     </div>
                     <!--trạng thái hủy end-->
@@ -789,11 +849,12 @@
                                 <thead style="display: none">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Name</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="allHoaDon : ${listHDTraHang}">
-                                    <td th:text="${allHoaDon.ngaySua}" style="display: none"></td>
+                                <tr th:each="allHoaDon,state : ${listHDTraHang}">
+                                    <td th:text="${state.index}" style="display: none"></td>
                                     <td>
                                         <section class="section-top">
                                             <div class="row">
@@ -863,6 +924,7 @@
                                 </tbody>
                                 <tfoot style="display: none">
                                 <tr>
+                                    <th>Name</th>
                                     <th>Name</th>
                                 </tr>
                                 </tfoot>
@@ -982,6 +1044,7 @@
                     "zeroRecords": "Không có kết quả phù hợp",
                     "infoEmpty": "Không có dữ liệu để hiển thị"
                 },
+
                 "initComplete": function (settings, json) {
                     // CSS changes
                     $('#exampleTable' + index + '_filter input[type="search"]').addClass('form-control');
@@ -999,6 +1062,7 @@
 
                     $('#exampleTable' + index + '_length select').addClass('form-select');
                 }
+
             });
 
             table.on('draw.dt', function () {

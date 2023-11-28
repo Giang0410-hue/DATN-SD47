@@ -1432,6 +1432,9 @@ a:hover {
     float: right;
     margin-bottom: 2%;
 }
+.section-bottom .divider-line1 a {
+    color: white;
+}
 
 /************************đơn mua end*************************/
 
