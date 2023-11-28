@@ -123,6 +123,7 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
             hoaDonChiTiet.setDonGia(gioHangChiTiet.getChiTietSanPham().getGiaHienHanh());
             hoaDonChiTiet.setHoaDon(HoaDon.builder().id(hoaDon.getId()).build());
             hoaDonChiTiet.setChiTietSanPham(gioHangChiTiet.getChiTietSanPham());
+            hoaDonChiTiet.setTrangThai(0);
             hoaDonChiTiet.setNgaySua(new Date());
             hoaDonChiTiet.setNgayTao(new Date());
             repositoryHoaDonChiTiet.save(hoaDonChiTiet);
