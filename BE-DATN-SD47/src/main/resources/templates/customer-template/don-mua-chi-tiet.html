@@ -252,7 +252,8 @@
                                 <span th:text="${byHoaDon.thanhPho}"></span>
                             </div>
                             <div class="col-md-6">
-                                <a th:href="@{/gio-hang-chi-tiet/add-fast/{idChiTietSP}(idChiTietSP=${byHoaDon.lstHoaDonChiTiet[0]})/{soLuong}(soLuong=1)}" style="float: right;color: white" type="button" class="btn btn-primary">Mua Lại</a>
+                                <a th:href="@{/gio-hang-chi-tiet/add-fast/{idChiTietSP}(idChiTietSP=${byHoaDon.lstHoaDonChiTiet[0]})/{soLuong}(soLuong=1)}"
+                                   style="float: right;color: white" type="button" class="btn btn-primary">Mua Lại</a>
                             </div>
                         </div>
                     </section>
@@ -263,7 +264,8 @@
                             <div class="row">
                                 <div class="col-md-10 d-flex align-items-center">
                                     <img class="img-mid"
-                                         src="../../static/img/ImgShoe/newbalance1_Balance%20574%20%20(2).jpg"
+                                         th:each="anh : ${listHoaDonCT.chiTietSanPham.sanPham.listHinhAnhSanPham[0]}"
+                                         th:src="${'../../static/img/ImgShoe/'+anh.url}"
                                          alt="">
                                     <div class="divider-line">
                                         <h6 th:text="${listHoaDonCT.chiTietSanPham.sanPham.ten}">Giày Nike Air Max</h6>
@@ -284,7 +286,9 @@
                             <tbody>
                             <tr>
                                 <td colspan="2">Tổng tiền hàng</td>
-                                <td class="tien-table" th:text="${byHoaDon.tongTien - byHoaDon.phiShip+ ' VND'}">30000VND</td>
+                                <td class="tien-table" th:text="${byHoaDon.tongTien - byHoaDon.phiShip+ ' VND'}">
+                                    30000VND
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="2">Phí vận chuyển</td>
@@ -292,7 +296,10 @@
                             </tr>
                             <tr>
                                 <td colspan="2">Voucher</td>
-                                <td class="tien-table" th:text="${byHoaDon.tongTienKhiGiam - (byHoaDon.tongTien + byHoaDon.phiShip )+ ' VND'}">30000VND</td>
+                                <td class="tien-table"
+                                    th:text="${byHoaDon.tongTienKhiGiam - (byHoaDon.tongTien + byHoaDon.phiShip )+ ' VND'}">
+                                    30000VND
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="2">Thành tiền</td>

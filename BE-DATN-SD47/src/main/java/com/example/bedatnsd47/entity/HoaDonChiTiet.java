@@ -47,6 +47,9 @@ public class HoaDonChiTiet {
     @Column(name = "nguoi_sua", length = 100)
     private String nguoiSua;
 
+    @Column(name = "trang_thai")
+    private Integer trangThai;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hoa_don_id", referencedColumnName = "id")
     private HoaDon hoaDon;
