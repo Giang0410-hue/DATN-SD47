@@ -38,7 +38,33 @@ public class LichSuHoaDon {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(fetch = FetchType.LAZY )
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hoa_don_id", referencedColumnName = "id")
     private HoaDon hoaDon;
+
+    public String getStringTrangThai() {
+        if(this.trangThai== null){
+            return "Trạng thái null";
+        }
+        switch (this.trangThai) {
+            case 0:
+                return "Tạo hóa đơn";
+            case 1:
+                return "Đã xác nhận";
+            case 2:
+                return "Đã bàn giao cho đơn vị vận chuyển";
+            case 3:
+                return "Đã giao";
+            case 4:
+                return "Đặt hàng thành công";
+            case 5:
+                return "Đã hủy";
+            case 6:
+                return "Đã thanh toán";
+            default:
+                return "";
+
+        }
+
+    }
 }
