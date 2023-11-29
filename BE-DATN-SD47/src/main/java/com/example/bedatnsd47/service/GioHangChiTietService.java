@@ -28,7 +28,7 @@ public interface GioHangChiTietService {
 
     void deleteById(Long id);
 
-    GioHangChiTiet save(Long idGioHang, Long idChiTietSp, Integer soLuong);
+    List<GioHangChiTiet> save(Long idGioHang, List<String> idChiTietSp, Integer soLuong);
 
     GioHangChiTiet update(GioHangChiTiet gioHangChiTiet);
 

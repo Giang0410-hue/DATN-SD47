@@ -1432,6 +1432,9 @@ a:hover {
     float: right;
     margin-bottom: 2%;
 }
+.section-bottom .divider-line1 a {
+    color: white;
+}
 
 /************************đơn mua end*************************/
 
@@ -1643,6 +1646,16 @@ a:hover {
 .section-bottom-table table .tong-tien-table {
     border-left: 1px solid #b0b0b0;
     font-size: 25px;
+    color: red;
+}
+
+.section-top-dmct-don-huy{
+    margin-top: 3%;
+    border-bottom: 1px solid grey;
+    padding-bottom: 50px;
+    padding-top: 20px;
+}
+.section-top-dmct-don-huy h4{
     color: red;
 }
 
