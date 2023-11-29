@@ -54,7 +54,7 @@
                     <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                         <div class="site-top-icons">
                             <ul class="nav nav-pills" style="margin-left: 54%">
-                                <li class="nav-item dropdown" >
+                                <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                                        role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
                                     <ul class="dropdown-menu">
@@ -175,9 +175,9 @@
                         <a class="nav-link active" id="ex3-tab-0" data-bs-toggle="tab" href="#ex3-tabs-0"
                            role="tab" aria-controls="ex3-tabs-0" aria-selected="true">
                             Tất cả
-<!--                            <span class="cart">-->
-<!--                                <span class="cart__count">1</span>-->
-<!--                            </span>-->
+                            <!--                            <span class="cart">-->
+                            <!--                                <span class="cart__count">1</span>-->
+                            <!--                            </span>-->
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -187,9 +187,9 @@
                             <!--                            <span class="cart">-->
                             <!--                                <span class="cart__count">1</span>-->
                             <!--                            </span>-->
-<!--                            <span class="cart">-->
-<!--                                <span class="cart__count">1</span>-->
-<!--                            </span>-->
+                            <!--                            <span class="cart">-->
+                            <!--                                <span class="cart__count">1</span>-->
+                            <!--                            </span>-->
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -197,9 +197,9 @@
                            role="tab" aria-controls="ex3-tabs-3" aria-selected="false">
 
                             Chờ giao hàng
-<!--                            <span class="cart">-->
-<!--                                <span class="cart__count">1</span>-->
-<!--                            </span>-->
+                            <!--                            <span class="cart">-->
+                            <!--                                <span class="cart__count">1</span>-->
+                            <!--                            </span>-->
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -216,27 +216,27 @@
                         <a class="nav-link" id="ex3-tab-4" data-bs-toggle="tab" href="#ex3-tabs-4"
                            role="tab" aria-controls="ex3-tabs-4" aria-selected="false">
                             Hoàn thành
-<!--                            <span class="cart">-->
-<!--                                <span class="cart__count">1</span>-->
-<!--                            </span>-->
+                            <!--                            <span class="cart">-->
+                            <!--                                <span class="cart__count">1</span>-->
+                            <!--                            </span>-->
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="ex3-tab-5" data-bs-toggle="tab" href="#ex3-tabs-5"
                            role="tab" aria-controls="ex3-tabs-5" aria-selected="false">
                             Đã hủy
-<!--                            <span class="cart">-->
-<!--                                <span class="cart__count">1</span>-->
-<!--                            </span>-->
+                            <!--                            <span class="cart">-->
+                            <!--                                <span class="cart__count">1</span>-->
+                            <!--                            </span>-->
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="ex3-tab-6" data-bs-toggle="tab" href="#ex3-tabs-6"
                            role="tab" aria-controls="ex3-tabs-6" aria-selected="false">
                             Trả hàng/Hoàn tiền
-<!--                            <span class="cart">-->
-<!--                                <span class="cart__count">1</span>-->
-<!--                            </span>-->
+                            <!--                            <span class="cart">-->
+                            <!--                                <span class="cart__count">1</span>-->
+                            <!--                            </span>-->
                         </a>
                     </li>
                 </ul>
@@ -262,7 +262,8 @@
                                                         <h6 th:text="${ allHoaDon.maHoaDon}"></h6>
                                                     </div>
                                                     <div class="divider-line">
-                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}" th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
+                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}"
+                                                           th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
                                                             giao thành công</a>
                                                         <h6 th:if="${allHoaDon.trangThai==0}">CHỜ XÁC NHẬN</h6>
                                                         <h6 th:if="${allHoaDon.trangThai==1}">CHỜ GIAO HÀNG</h6>
@@ -277,6 +278,8 @@
                                         </section>
                                         <section class="section-mid"
                                                  th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
+                                            <input type="hidden"th:name="${'listNameChiTietSP1'+allHoaDon.id}"
+                                                   th:value="${listHoaDonCT.chiTietSanPham.id +' '+listHoaDonCT.chiTietSanPham.soLuong}">
                                             <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
                                                 <div class="row">
                                                     <div class="col-md-10 d-flex align-items-center">
@@ -307,12 +310,25 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
-                                                        <a th:if="${allHoaDon.trangThai==0}" th:href="@{/huy-don/{id}(id=${allHoaDon.id})}" class="btn btn-danger">Hủy Đơn</a>
-                                                        <a th:if="${allHoaDon.trangThai==1}" th:href="@{/huy-don/{id}(id=${allHoaDon.id})}" class="btn btn-danger">Hủy Đơn</a>
-                                                        <button th:if="${allHoaDon.trangThai==3}" type="button" class="btn btn-success">Mua Lại</button>
-                                                        <button th:if="${allHoaDon.trangThai==5}" type="button" class="btn btn-success">Mua Lại</button>
-                                                        <button th:if="${allHoaDon.trangThai==6}" type="button" class="btn btn-success">Mua Lại</button>
-                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}" th:if="${allHoaDon.trangThai==5}" class="btn btn-info">Xem Chi Tiết Đơn Hủy</a>
+                                                        <a th:if="${allHoaDon.trangThai==0}"
+                                                           th:href="@{/huy-don/{id}(id=${allHoaDon.id})}"
+                                                           class="btn btn-danger">Hủy Đơn</a>
+                                                        <a th:if="${allHoaDon.trangThai==1}"
+                                                           th:href="@{/huy-don/{id}(id=${allHoaDon.id})}"
+                                                           class="btn btn-danger">Hủy Đơn</a>
+                                                        <button th:if="${allHoaDon.trangThai==3}" type="button" th:data-index="${allHoaDon.id}"
+                                                                onclick="muaLai1(this)" class="btn btn-success">Mua Lại
+                                                        </button>
+                                                        <button th:if="${allHoaDon.trangThai==5}" type="button" th:data-index="${allHoaDon.id}"
+                                                                onclick="muaLai1(this)" class="btn btn-success">Mua Lại
+                                                        </button>
+                                                        <button th:if="${allHoaDon.trangThai==6}" type="button" th:data-index="${allHoaDon.id}"
+                                                                onclick="muaLai1(this)" class="btn btn-success">Mua Lại
+                                                        </button>
+
+                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}"
+                                                           th:if="${allHoaDon.trangThai==5}" class="btn btn-info">Xem
+                                                            Chi Tiết Đơn Hủy</a>
                                                         <button type="button" class="btn btn-secondary">Liên Hệ Người
                                                             Bán
                                                         </button>
@@ -330,6 +346,116 @@
                                 </tr>
                                 </tfoot>
                             </table>
+                            <!-- Modal thông báo check chọn sản phẩm-->
+                            <div class="modal fade" id="checkMuaLai1" style="margin-top: 8%" tabindex="-1"
+                                 aria-labelledby="checkMuaLai1Label" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body" style="text-align: center;margin-top: 3%">
+                                            <p>Có sản phẩm đã hết hàng hoặc ngừng bán.
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Đóng
+                                            </button>
+                                            <button type="button" class="btn btn-primary"
+                                                    onclick="confirmAction1()">Xác nhận
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal thông báo check chọn sản phẩm end-->
+                            <script>
+                                var filteredIds1 = [];
+                                var soLuongId1 = 0;
+
+                                function muaLai1(rowIndex) {
+                                    filteredIds1 = [];
+                                    soLuongId1 = 0;
+                                    var index = rowIndex.getAttribute('data-index');
+
+                                    var listName = document.getElementsByName('listNameChiTietSP1' + index);
+
+                                    var listIdCTSP = [];
+
+                                    for (var i = 0; i < listName.length; i++) {
+                                        listIdCTSP.push(listName[i].value);
+                                    }
+                                    console.log(listIdCTSP)
+
+
+                                    // Kiểm tra và in ra thông báo nếu có id chi tiết sản phẩm có số lượng bằng 0
+                                    for (var i = 0; i < listIdCTSP.length; i++) {
+                                        var parts = listIdCTSP[i].split(" ");
+                                        var id = parts[0];
+                                        var quantity = parseInt(parts[1]);
+
+                                        if (quantity > 0) {
+                                            soLuongId1++;
+                                            filteredIds1.push(id);
+                                        }
+
+                                        if (quantity === 0) {
+                                            // Hiển thị modal
+                                            $('#checkMuaLai1').modal('show');
+                                            return
+                                        }
+
+                                    }
+                                    console.log(filteredIds1)
+
+                                    var url = '/don-mua/mua-lai?options=' +  filteredIds1;
+                                    // Thực hiện phương thức POST
+                                    fetch(url, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    })
+                                        .then(response => {
+                                            if (response.ok) {
+                                                // Xử lý kết quả nếu cần
+                                                console.log('Đã thêm vào giỏ hàng');
+                                                window.location.href = '/cart?checkGHCT=true'+soLuongId1;
+                                            } else {
+                                                throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error(error);
+                                        });
+
+                                }
+
+                                // Xác nhận từ người dùng
+                                function confirmAction1() {
+                                    var url = '/don-mua/mua-lai?options=' +  filteredIds1;
+                                    // Thực hiện phương thức POST
+                                    fetch(url, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    })
+                                        .then(response => {
+                                            if (response.ok) {
+                                                // Xử lý kết quả nếu cần
+                                                console.log('Đã thêm vào giỏ hàng');
+                                                window.location.href = '/cart?checkGHCT=true'+soLuongId1;
+                                            } else {
+                                                throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error(error);
+                                        });
+                                    // Ẩn modal nếu cần
+                                    $('#checkMuaLai').modal('hide');
+                                }
+                            </script>
                         </div>
                     </div>
 
@@ -400,7 +526,8 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
-                                                        <a th:href="@{/huy-don/{id}(id=${allHoaDon.id})}" class="btn btn-danger">Hủy Đơn</a>
+                                                        <a th:href="@{/huy-don/{id}(id=${allHoaDon.id})}"
+                                                           class="btn btn-danger">Hủy Đơn</a>
                                                         <button type="button" class="btn btn-secondary">Liên Hệ Người
                                                             Bán
                                                         </button>
@@ -489,7 +616,8 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
-                                                        <a th:href="@{/huy-don/{id}(id=${allHoaDon.id})}" class="btn btn-danger">Hủy Đơn</a>
+                                                        <a th:href="@{/huy-don/{id}(id=${allHoaDon.id})}"
+                                                           class="btn btn-danger">Hủy Đơn</a>
                                                         <button type="button" class="btn btn-secondary">Liên Hệ Người
                                                             Bán
                                                         </button>
@@ -622,7 +750,8 @@
                                                         <h6 th:text="${ allHoaDon.maHoaDon}"></h6>
                                                     </div>
                                                     <div class="divider-line">
-                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}" th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
+                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}"
+                                                           th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
                                                             giao thành công</a>
                                                         <h6 th:if="${allHoaDon.trangThai==0}">CHỜ XÁC NHẬN</h6>
                                                         <h6 th:if="${allHoaDon.trangThai==1}">CHỜ GIAO HÀNG</h6>
@@ -726,7 +855,8 @@
                                         </section>
                                         <section class="section-mid"
                                                  th:each="listHoaDonCT,stage : ${allHoaDon.lstHoaDonChiTiet}">
-                                            <input type="text" th:id="${'listIdChiTietSP'+allHoaDon.id}" th:name="${'listNameChiTietSP'+allHoaDon.id}" th:value="${listHoaDonCT.id}">
+                                            <input type="hidden"th:name="${'listNameChiTietSP'+allHoaDon.id}"
+                                                   th:value="${listHoaDonCT.chiTietSanPham.id +' '+listHoaDonCT.chiTietSanPham.soLuong}">
                                             <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
                                                 <div class="row">
                                                     <div class="col-md-10 d-flex align-items-center">
@@ -757,8 +887,11 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
-                                                        <button type="button" th:data-index="${allHoaDon.id}" onclick="muaLai(this)" class="btn btn-success">Mua Lại</button>
-                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}" class="btn btn-info">Xem Chi Tiết Đơn Hủy</a>
+                                                        <button type="button" th:data-index="${allHoaDon.id}"
+                                                                onclick="muaLai(this)" class="btn btn-success">Mua Lại
+                                                        </button>
+                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}"
+                                                           class="btn btn-info">Xem Chi Tiết Đơn Hủy</a>
                                                         <button type="button" class="btn btn-secondary">Liên Hệ Người
                                                             Bán
                                                         </button>
@@ -776,69 +909,116 @@
                                 </tr>
                                 </tfoot>
                             </table>
+                            <!-- Modal thông báo check chọn sản phẩm-->
+                            <div class="modal fade" id="checkMuaLai" style="margin-top: 8%" tabindex="-1"
+                                 aria-labelledby="checkMuaLaiLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body" style="text-align: center;margin-top: 3%">
+                                            <p>Có sản phẩm đã hết hàng hoặc ngừng bán.
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Đóng
+                                            </button>
+                                            <button type="button" class="btn btn-primary"
+                                                    onclick="confirmAction()">Xác nhận
+                                            </button>
+                                        </div>
 
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal thông báo check chọn sản phẩm end-->
                             <script>
+                                var filteredIds = [];
+                                var soLuongId = 0;
+
                                 function muaLai(rowIndex) {
+                                    filteredIds = [];
+                                    soLuongId = 0;
                                     var index = rowIndex.getAttribute('data-index');
-                                    var listId = document.getElementById('listIdChiTietSP'+index)
 
                                     var listName = document.getElementsByName('listNameChiTietSP' + index);
+
                                     var listIdCTSP = [];
 
                                     for (var i = 0; i < listName.length; i++) {
                                         listIdCTSP.push(listName[i].value);
                                     }
+                                    console.log(listIdCTSP)
 
-                                    console.log("mảng id " + listIdCTSP);
-                                    console.log("id hóa đơn " + index)
-                                    console.log("listIDChitietsp" + listId.value)
-                                    var soLuongTruoc = 0;
 
-                                    fetch('/don-mua/check-so-luong?idCTSP='+listIdCTSP)
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            // soLuongTruoc = data;
-                                            // var soLuongTonInt = parseInt(fillErro.innerText);
-                                            // if (soLuongTonInt == soLuongTruoc||soLuongTruoc>soLuongTonInt) {
-                                            //     console.log("Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.")
-                                            //     //thông báo lỗi
-                                            //     $('#checkSoLuongGHCT').modal('show')
-                                            //     return false;
-                                            // } else {
-                                            //     // Lấy URL cần gửi phương thức POST
-                                            //     var url = '/gio-hang-chi-tiet/add/' + rqIdChiTietSp + '/' + soLuongAdd; // Thay thế bằng URL thực tế
-                                            //     // Thực hiện phương thức POST
-                                            //     fetch(url, {
-                                            //         method: 'POST',
-                                            //         headers: {
-                                            //             'Content-Type': 'application/json'
-                                            //         }
-                                            //     })
-                                            //         .then(response => {
-                                            //             if (response.ok) {
-                                            //                 //thông báo
-                                            //                 var toast = new bootstrap.Toast(document.getElementById('thongBaoThemThanhCong'));
-                                            //                 toast.show();
-                                            //                 console.log('Đã thêm vào giỏ hàng');
-                                            //
-                                            //             } else {
-                                            //                 throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
-                                            //             }
-                                            //         })
-                                            //         .catch(error => {
-                                            //             console.error(error);
-                                            //         });
-                                            // }
+                                    // Kiểm tra và in ra thông báo nếu có id chi tiết sản phẩm có số lượng bằng 0
+                                    for (var i = 0; i < listIdCTSP.length; i++) {
+                                        var parts = listIdCTSP[i].split(" ");
+                                        var id = parts[0];
+                                        var quantity = parseInt(parts[1]);
+
+                                        if (quantity > 0) {
+                                            soLuongId++;
+                                            filteredIds.push(id);
+                                        }
+
+                                        if (quantity === 0) {
+                                            // Hiển thị modal
+                                            $('#checkMuaLai').modal('show');
+                                            return
+                                        }
+
+                                    }
+                                    console.log(filteredIds)
+
+                                    var url = '/don-mua/mua-lai?options=' +  filteredIds;
+                                    // Thực hiện phương thức POST
+                                    fetch(url, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    })
+                                        .then(response => {
+                                            if (response.ok) {
+                                                // Xử lý kết quả nếu cần
+                                                console.log('Đã thêm vào giỏ hàng');
+                                                window.location.href = '/cart?checkGHCT=true'+soLuongId;
+                                            } else {
+                                                throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
+                                            }
                                         })
                                         .catch(error => {
-                                            console.error('Lỗi trong quá trình lấy số lượng từ cơ sở dữ liệu:', error)
+                                            console.error(error);
                                         });
 
                                 }
-                            </script>
 
-                        </div>
-                    </div>
+                                // Xác nhận từ người dùng
+                                function confirmAction() {
+                                    var url = '/don-mua/mua-lai?options=' +  filteredIds;
+                                    // Thực hiện phương thức POST
+                                    fetch(url, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    })
+                                        .then(response => {
+                                            if (response.ok) {
+                                                // Xử lý kết quả nếu cần
+                                                console.log('Đã thêm vào giỏ hàng');
+                                                window.location.href = '/cart?checkGHCT=true'+soLuongId;
+                                            } else {
+                                                throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error(error);
+                                        });
+                                    // Ẩn modal nếu cần
+                                    $('#checkMuaLai').modal('hide');
+                                }
+                            </script>
                     <!--trạng thái hủy end-->
 
                     <!--trạng thái trả hàng-->
@@ -940,6 +1120,9 @@
     </div>
 
 
+
+        </div>
+    </div>
     <footer class="site-footer border-top">
         <div class="container">
             <div class="row">

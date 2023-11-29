@@ -169,3 +169,34 @@ if (checkGHCTValue === 'true') {
     // Thực hiện hành động khi giá trị không phải 'true'
     console.log('checkGHCT is not true');
 }
+var checkGHCT = params.get('checkGHCT');
+
+if (checkGHCT.startsWith('true')) {
+    // Lấy số lượng từ chuỗi sau "true"
+    var quantity = parseInt(checkGHCT.substring(4));
+
+    // Thực hiện hành động khi giá trị bắt đầu bằng 'true'
+    console.log('checkGHCT is true');
+
+    $(document).ready(function () {
+        // Chọn checkbox dựa trên số lượng
+        var selectedCheckboxes = $('input[name="options[]"]').slice(0, quantity);
+        selectedCheckboxes.prop('checked', true);
+
+        // Lấy giá trị cột thứ 5 của hàng chứa checkbox đầu tiên được chọn
+        var giaTriCotThu5 = 0; // Khởi tạo giá trị tổng thanh toán
+
+        selectedCheckboxes.each(function () {
+            giaTriCotThu5 += parseInt($(this).closest('tr').find('td:eq(5)').text()) || 0;
+        });
+
+        // Cập nhật giá trị tổng thanh toán
+        var tongThanhToan = document.getElementById("tongTienCart");
+        tongThanhToan.innerHTML = '';
+        tongThanhToan.innerText = giaTriCotThu5 + ' VND';
+    });
+
+} else {
+    // Thực hiện hành động khi giá trị không phải 'true'
+    console.log('checkGHCT is not true');
+}

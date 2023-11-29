@@ -4,6 +4,7 @@ import com.example.bedatnsd47.entity.ChiTietSanPham;
 import com.example.bedatnsd47.entity.DiaChi;
 import com.example.bedatnsd47.entity.GioHangChiTiet;
 import com.example.bedatnsd47.entity.HoaDon;
+import com.example.bedatnsd47.entity.HoaDonChiTiet;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.entity.VaiTro;
 import com.example.bedatnsd47.entity.Voucher;
@@ -11,6 +12,7 @@ import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import com.example.bedatnsd47.service.DiaChiService;
 import com.example.bedatnsd47.service.GioHangChiTietService;
 import com.example.bedatnsd47.service.GioHangService;
+import com.example.bedatnsd47.service.HoaDonChiTietService;
 import com.example.bedatnsd47.service.HoaDonService;
 import com.example.bedatnsd47.service.KhachHangService;
 import com.example.bedatnsd47.service.KichCoService;
@@ -35,15 +37,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 //@RequestMapping("/home")
 public class HomeController {
 
-    private Long idTaiKhoan  = Long.valueOf(8);
+    private Long idTaiKhoan = Long.valueOf(8);
 
     @Autowired
     private ChiTietSanPhamSerivce chiTietSanPhamSerivce;
@@ -67,7 +71,7 @@ public class HomeController {
     private DiaChiService diaChiService;
 
     @Autowired
-    private TaiKhoanService  taiKhoanService;
+    private TaiKhoanService taiKhoanService;
 
     @Autowired
     private VoucherService voucherService;
@@ -433,46 +437,30 @@ public class HomeController {
     ) {
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
-        model.addAttribute("listAllHoaDon",hoaDonService.getAllHoaDonByTaiKhoanOrderByNgaySua(idTaiKhoan));
-        model.addAttribute("listHDChoXacNhan",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,0));
-        model.addAttribute("listHDChoGiao",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,1));
-        model.addAttribute("listHDDangGiao",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,2));
-        model.addAttribute("listHDHoanThanh",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,3));
-        model.addAttribute("listHDDaHuy",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,5));
-        model.addAttribute("listHDTraHang",hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan,6));
+        model.addAttribute("listAllHoaDon", hoaDonService.getAllHoaDonByTaiKhoanOrderByNgaySua(idTaiKhoan));
+        model.addAttribute("listHDChoXacNhan", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 0));
+        model.addAttribute("listHDChoGiao", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 1));
+        model.addAttribute("listHDDangGiao", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 2));
+        model.addAttribute("listHDHoanThanh", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 3));
+        model.addAttribute("listHDDaHuy", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 5));
+        model.addAttribute("listHDTraHang", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 6));
         return "/customer-template/don-mua";
     }
 
-    @PostMapping("/don-mua/mua-lai/{idChiTietSpAdd}")
+    @PostMapping("/don-mua/mua-lai")
     public String muaLaiDonMua(
-            @PathVariable String idChiTietSpAdd
+            @RequestParam String options
     ) {
-        String[] optionArray = idChiTietSpAdd.split(",");
+        String[] optionArray = options.split(",");
         List<String> listIdString = Arrays.asList(optionArray);
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
-        gioHangChiTietService.save(khachHang.getGioHang().getId(), listIdString,1);
+        gioHangChiTietService.save(khachHang.getGioHang().getId(), listIdString, 1);
         return "redirect:/cart";
-    }
-
-    @GetMapping("/don-mua/check-so-luong")
-    @ResponseBody
-    public List<Long> checkSoLuongSpMuaLai(
-            @RequestParam String idCTSP
-    ) {
-        String[] optionArray = idCTSP.split(",");
-        List<String> listIdString = Arrays.asList(optionArray);
-        System.out.println("idchitietsp***** : "+listIdString);
-//        List<ChiTietSanPham> list = chiTietSanPhamSerivce.getAllById(idCTSP);
-
-        List<Long> soLuongCheck = Arrays.asList(Long.valueOf(String.valueOf(listIdString)));
-        System.out.println("soLuongCheck***** : "+soLuongCheck);
-
-        return soLuongCheck;
     }
 
     @GetMapping("/huy-don/{idHoaDon}")
     public String huyDon(
-            @PathVariable("idHoaDon")Long idHoaDon,
+            @PathVariable("idHoaDon") Long idHoaDon,
             Model model,
             RedirectAttributes redirectAttributes
     ) {
@@ -487,12 +475,12 @@ public class HomeController {
 
     @GetMapping("/don-mua/{idHoaDon}")
     public String donMuaChiTiet(
-            @PathVariable("idHoaDon")Long idHoaDon,
+            @PathVariable("idHoaDon") Long idHoaDon,
             Model model
     ) {
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
-        model.addAttribute("byHoaDon",hoaDonService.findById(idHoaDon));
+        model.addAttribute("byHoaDon", hoaDonService.findById(idHoaDon));
         return "/customer-template/don-mua-chi-tiet";
     }
 
