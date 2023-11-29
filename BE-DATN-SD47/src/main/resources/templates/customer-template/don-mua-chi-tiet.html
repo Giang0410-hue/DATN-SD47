@@ -195,6 +195,20 @@
                         </section>
                     </div>
 
+                    <div class="col-md-12" th:if="${byHoaDon.trangThai==5}">
+                        <section class="section-top-dmct-don-huy">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4>Đã hủy đơn hàng</h4>
+                                    <span>vào 18:19 28-10-2023</span>
+                                </div>
+                                <div class="col-md-6">
+                                   <h6>Lý do: Muốn thay đổi địa chỉ giao hàng</h6>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
                     <div class="col-md-12">
                         <div style="width: 80%;margin: auto;margin-top: 5%;margin-bottom: 5%;">
                             <div class="row shop-tracking-status">
@@ -203,12 +217,18 @@
                                         <div class="order-status">
                                             <div class="order-status-timeline">
                                                 <!-- class names: c0 c1 c2 c3 and c4 -->
-                                                <div th:if="${byHoaDon.trangThai==0}" class="order-status-timeline-completion c1"></div>
-                                                <div th:if="${byHoaDon.trangThai==1}" class="order-status-timeline-completion c2"></div>
-                                                <div th:if="${byHoaDon.trangThai==2}" class="order-status-timeline-completion c3"></div>
-                                                <div th:if="${byHoaDon.trangThai==3}" class="order-status-timeline-completion c4"></div>
-                                                <div th:if="${byHoaDon.trangThai==5}" class="order-status-timeline-completion c5"></div>
-                                                <div th:if="${byHoaDon.trangThai==6}" class="order-status-timeline-completion c6"></div>
+                                                <div th:if="${byHoaDon.trangThai==0}"
+                                                     class="order-status-timeline-completion c1"></div>
+                                                <div th:if="${byHoaDon.trangThai==1}"
+                                                     class="order-status-timeline-completion c1"></div>
+                                                <div th:if="${byHoaDon.trangThai==2}"
+                                                     class="order-status-timeline-completion c2"></div>
+                                                <div th:if="${byHoaDon.trangThai==3}"
+                                                     class="order-status-timeline-completion c3"></div>
+                                                <div th:if="${byHoaDon.trangThai==5}"
+                                                     class="order-status-timeline-completion c4"></div>
+                                                <div th:if="${byHoaDon.trangThai==6}"
+                                                     class="order-status-timeline-completion c5"></div>
                                             </div>
 
                                             <div class="image-order-status image-order-status-new active img-circle">
@@ -257,8 +277,23 @@
                                 <span th:text="${byHoaDon.thanhPho}"></span>
                             </div>
                             <div class="col-md-6">
-                                <a th:href="@{/gio-hang-chi-tiet/add-fast/{idChiTietSP}(idChiTietSP=${byHoaDon.lstHoaDonChiTiet[0]})/{soLuong}(soLuong=1)}"
-                                   style="float: right;color: white" type="button" class="btn btn-primary">Mua Lại</a>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button th:if="${byHoaDon.trangThai==3}"
+                                                style="float: right;color: white" type="button" class="btn btn-primary">Mua Lại
+                                        </button>
+                                        <button th:if="${byHoaDon.trangThai==5}"
+                                                style="float: right;color: white" type="button" class="btn btn-primary">Mua Lại
+                                        </button>
+                                        <button th:if="${byHoaDon.trangThai==6}"
+                                                style="float: right;color: white" type="button" class="btn btn-primary">Mua Lại
+                                        </button>
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 2%">
+                                        <button style="float: right;color: white" type="button" class="btn btn-primary">Liên Hệ Người Bán
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>
