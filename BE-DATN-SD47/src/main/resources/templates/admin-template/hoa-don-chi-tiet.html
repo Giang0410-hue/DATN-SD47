@@ -278,13 +278,16 @@
                                                                                         [[${state.index+1}]]
                                                                                     </td>
                                                                                     <td>
-                                                                                        [[${lshd.ghiChu}]]
+                                                                                        [[${lshd.getStringTrangThai()}]]
                                                                                     </td>
                                                                                     <td>
                                                                                         [[${lshd.ngaySua}]]
                                                                                     </td>
                                                                                     <td>
-
+                                                                                        -----
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        [[${lshd.ghiChu}]]
                                                                                     </td>
 
 
@@ -324,47 +327,53 @@
                                                     </script>
 
 
-                                                    <!-- Button trigger modal -->
-                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                        data-bs-target="#modalId">
-                                                        Hủy
-                                                        hóa đơn
-                                                    </button>
+                                                    <form
+                                                        th:action="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
+                                                        method="post">
+                                                        <!-- Button trigger modal -->
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-bs-toggle="modal" data-bs-target="#ghiChu">
+                                                            Hủy
+                                                            hóa đơn
+                                                        </button>
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="modalId" tabindex="-1" role="dialog"
-                                                        aria-labelledby="modalTitleId" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="modalTitleId">Xác nhận
-                                                                    </h5>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="container-fluid">
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="ghiChu" tabindex="-1" role="dialog"
+                                                            aria-labelledby="modalTitleId" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="modalTitleId">Xác
+                                                                            nhận
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="container-fluid">
 
-                                                                        <div class="mb-3">
-                                                                            <label for="" class="form-label">Lý do
-                                                                                hủy</label>
-                                                                            <input type="text" class="form-control"
-                                                                                name="" id="" aria-describedby="helpId"
-                                                                                placeholder="">
-                                                                            <small id="helpId"
-                                                                                class="form-text text-muted">Viết rõ vào
-                                                                                đây</small>
+                                                                            <div class="mb-3">
+                                                                                <label for="" class="form-label">Lý
+                                                                                    do</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="ghiChu" id=""
+                                                                                    aria-describedby="helpId"
+                                                                                    placeholder="">
+                                                                                <small id="helpId"
+                                                                                    class="form-text text-muted">Viết rõ
+                                                                                    vào
+                                                                                    đây</small>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Đóng</button>
-                                                                    <a class="btn btn-danger"
-                                                                        th:href="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
-                                                                        role="button">Hủy</a>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Đóng</button>
+                                                                        <button class="btn btn-danger"
+                                                                            type="submit">Hủy</button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </form>
 
 
 
@@ -941,44 +950,19 @@
                                                                 </div>
                                                                 <div class="modal-body">
 
-                                                                    <!-- form tìm kiếm khách hàng -->
-                                                                    <form action="">
-                                                                        <label class="col-sm-2 col-form-label">Nhập
-                                                                            địa
-                                                                            chỉ:</label>
-                                                                        <div class="row mb-3">
-                                                                            <div class="col-sm-10">
-                                                                                <div class="input-group">
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        placeholder="Tìm kiếm theo địa chỉ">
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-primary"><i
-                                                                                            class="bi bi-arrow-clockwise"></i>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-2">
-                                                                                <button type="submit"
-                                                                                    class="btn btn-primary"
-                                                                                    style="float: right;">Tìm
-                                                                                    kiếm
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
+
 
 
                                                                     <!-- table DC -->
-                                                                    <table>
+                                                                    <table id="example2" class="display">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>STT</th>
-                                                                                <th>Phường/Xã</th>
-                                                                                <th>Quận/Huyện</th>
-                                                                                <th>Thành phố</th>
-                                                                                <th>Địa chỉ cụ thể</th>
-                                                                                <th>Hành Động</th>
+                                                                                <th scope="col">STT</th>
+                                                                                <th scope="col">Phường/Xã</th>
+                                                                                <th scope="col">Quận/Huyện</th>
+                                                                                <th scope="col">Thành phố</th>
+                                                                                <th scope="col">Địa chỉ cụ thể</th>
+                                                                                <th scope="col">Hành Động</th>
                                                                             </tr>
                                                                             <thead>
                                                                             <tbody>
@@ -1008,7 +992,7 @@
                                                                                                     class="bi bi-check2-circle"></i>
                                                                                             </button>
                                                                                         </td>
-                                                                                        <td><input type="text"
+                                                                                        <td><input type="hidden"
                                                                                                 name="idDiaChi"
                                                                                                 th:value="${dc.id}">
                                                                                         </td>
@@ -1016,6 +1000,17 @@
                                                                                 </tr>
 
                                                                             </tbody>
+                                                                        <tfoot hidden="hidden">
+                                                                            <tr>
+
+                                                                                <th scope="col">STT</th>
+                                                                                <th scope="col">Phường/Xã</th>
+                                                                                <th scope="col">Quận/Huyện</th>
+                                                                                <th scope="col">Thành phố</th>
+                                                                                <th scope="col">Địa chỉ cụ thể</th>
+                                                                                <th scope="col">Hành Động</th>
+                                                                            </tr>
+                                                                        </tfoot>
                                                                     </table>
                                                                     <nav aria-label="Page navigation example">
                                                                         <ul class="pagination">
@@ -1647,7 +1642,10 @@
                                                             </button>
                                                             <button id="thanhToan"
                                                                 th:if="${#lists.size(hoaDon.lstHoaDonChiTiet) !=0}"
-                                                                type="submit" class="btn btn-success">Thanh toán
+                                                                type="button" class="btn btn-success"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#ghiChuThanhToan">Thanh toán
+
                                                             </button>
                                                             <!-- Button trigger modal -->
 
@@ -1690,19 +1688,74 @@
                                                         </div>
 
 
-                                                        <button id="thanhToan" th:case="0" type="submit"
+
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="ghiChuThanhToan" tabindex="-1"
+                                                            role="dialog" aria-labelledby="modalTitleId"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="modalTitleId">Xác
+                                                                            nhận</h5>
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="container-fluid">
+                                                                            <div class="mb-3">
+                                                                                <label for="" class="form-label">Ghi
+                                                                                    chú</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="ghiChuThanhToan" id=""
+                                                                                    aria-describedby="helpId"
+                                                                                    placeholder="">
+                                                                                <small id="helpId"
+                                                                                    class="form-text text-muted">Viết rõ
+                                                                                    vào đây</small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Save</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <script>
+                                                            var modalId = document.getElementById('modalId');
+
+                                                            modalId.addEventListener('show.bs.modal', function (event) {
+                                                                // Button that triggered the modal
+                                                                let button = event.relatedTarget;
+                                                                // Extract info from data-bs-* attributes
+                                                                let recipient = button.getAttribute('data-bs-whatever');
+
+                                                                // Use above variables to manipulate the DOM
+                                                            });
+                                                        </script>
+
+
+                                                        <button id="thanhToan" th:case="0" type="button"
+                                                            data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
                                                             style="float: right;" class="btn btn-success">Xác nhận
                                                         </button>
-                                                        <button id="thanhToan" th:case="1" type="submit"
+                                                        <button id="thanhToan" th:case="1" type="button"
+                                                            data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
                                                             style="float: right;" class="btn btn-success">Đang giao
                                                         </button>
-                                                        <button id="thanhToan" th:case="2" type="submit"
+                                                        <button id="thanhToan" th:case="2" type="button"
+                                                            data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
                                                             style="float: right;" class="btn btn-success">Hoàn thành
                                                         </button>
                                                         <img style="float: right;" th:case="3"
                                                             src="data:image/png;base64,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"
                                                             alt="">
-                                                        <button id="thanhToan" th:case="4" type="submit"
+                                                        <button id="thanhToan" th:case="4" type="button"
+                                                            data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
                                                             style="float: right;" class="btn btn-success">Thanh toán
                                                         </button>
 
@@ -1943,6 +1996,42 @@
 
                 var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
                 $('#example1_info').html(newInfo);
+
+            });
+        });
+
+        $(document).ready(function () {
+            var table = $('#example2').DataTable({
+                "language": {
+                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                    "emptyTable": "Không có kết quả nào được tìm thấy",
+                    "zeroRecords": "Không có kết quả phù hợp",
+                    "infoEmpty": "Không có dữ liệu để hiển thị"
+                },
+                "initComplete": function (settings, json) {
+                    // CSS changes
+                    $('#example2_filter input[type="search"]').addClass('form-control');
+                    $('#example2_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                    $('#example2_filter label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).replaceWith(' ');
+
+                    $('#example2_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).first().replaceWith('Hiển thị');
+                    $('#example2_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).last().replaceWith('mục');
+
+                    $('#example2_length select').addClass('form-select');
+                }
+            });
+
+            table.on('draw.dt', function () {
+                var pageInfo = table.page.info();
+
+                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+                $('#example2_info').html(newInfo);
 
             });
         });
