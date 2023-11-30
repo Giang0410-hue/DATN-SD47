@@ -5,12 +5,14 @@ import com.example.bedatnsd47.entity.GioHang;
 import com.example.bedatnsd47.entity.GioHangChiTiet;
 import com.example.bedatnsd47.entity.HoaDon;
 import com.example.bedatnsd47.entity.HoaDonChiTiet;
+import com.example.bedatnsd47.entity.LichSuHoaDon;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.entity.Voucher;
 import com.example.bedatnsd47.repository.GioHangChiTietRepository;
 import com.example.bedatnsd47.repository.HoaDonChiTietRepository;
 import com.example.bedatnsd47.repository.HoaDonRepository;
 import com.example.bedatnsd47.service.GioHangChiTietService;
+import com.example.bedatnsd47.service.LichSuHoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,9 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
 
     @Autowired
     private HoaDonChiTietRepository repositoryHoaDonChiTiet;
+
+    @Autowired
+    private LichSuHoaDonService lichSuHoaDonService;
 
     @Override
     public List<GioHangChiTiet> findAll() {
@@ -110,6 +115,14 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
 
         hoaDon.setTaiKhoan(taiKhoan);
         repositoryHoaDon.save(hoaDon);
+
+        lichSuHoaDonService.saveOrUpdate(LichSuHoaDon.builder()
+                .ghiChu(ghiChu)
+                .ngayTao(new Date())
+                .ngaySua(new Date())
+                .trangThai(0)
+                .hoaDon(hoaDon)
+                .build());
 
         hoaDon.setMaHoaDon("HD" + hoaDon.getId());
 

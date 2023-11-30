@@ -153,27 +153,26 @@ var params = new URLSearchParams(queryString);
 // Lấy giá trị của tham số 'checkGHCT'
 var checkGHCTValue = params.get('checkGHCT');
 
-// Kiểm tra giá trị và thực hiện các hành động tương ứng
-if (checkGHCTValue === 'true') {
-    // Thực hiện hành động khi giá trị là 'true'
-    console.log('checkGHCT is true');
-    $(document).ready(function () {
-        // Chọn checkbox đầu tiên trong bảng dựa trên name
-        $('input[name="options[]"]:first').prop('checked', true);
-        var giaTriCotThu5 = $('input[name="options[]"]:checked').closest('tr').find('td:eq(5)').text();
-        var tongThanhToan = document.getElementById("tongTienCart");
-        tongThanhToan.innerHTML = '';
-        tongThanhToan.innerText = giaTriCotThu5;
-    });
-} else {
-    // Thực hiện hành động khi giá trị không phải 'true'
-    console.log('checkGHCT is not true');
-}
-var checkGHCT = params.get('checkGHCT');
+// // Kiểm tra giá trị và thực hiện các hành động tương ứng
+// if (checkGHCTValue === 'true') {
+//     // Thực hiện hành động khi giá trị là 'true'
+//     console.log('checkGHCT is true');
+//     $(document).ready(function () {
+//         // Chọn checkbox đầu tiên trong bảng dựa trên name
+//         $('input[name="options[]"]:first').prop('checked', true);
+//         var giaTriCotThu5 = $('input[name="options[]"]:checked').closest('tr').find('td:eq(5)').text();
+//         var tongThanhToan = document.getElementById("tongTienCart");
+//         tongThanhToan.innerHTML = '';
+//         tongThanhToan.innerText = giaTriCotThu5;
+//     });
+// } else {
+//     // Thực hiện hành động khi giá trị không phải 'true'
+//     console.log('checkGHCT is not true');
+// }
 
-if (checkGHCT.startsWith('true')) {
+if (checkGHCTValue.startsWith('true')) {
     // Lấy số lượng từ chuỗi sau "true"
-    var quantity = parseInt(checkGHCT.substring(4));
+    var quantity = parseInt(checkGHCTValue.substring(4));
 
     // Thực hiện hành động khi giá trị bắt đầu bằng 'true'
     console.log('checkGHCT is true');
