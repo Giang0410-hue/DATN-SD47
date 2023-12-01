@@ -54,11 +54,11 @@ public class ChiTietSanPhamController {
     private Date currentDate = new Date();
 
     private Model getString(Model model) {
-        model.addAttribute("listSanPham", sanPhamSerivce.getAll());
-        model.addAttribute("listThuongHieu", thuongHieuService.findAll());
-        model.addAttribute("listKichCo", kichCoService.findAll());
-        model.addAttribute("listMauSac", mauSacService.findAll());
-        model.addAttribute("listLoaiDe", loaiDeService.findAll());
+        model.addAttribute("listSanPham", sanPhamSerivce.getAllDangHoatDong());
+        model.addAttribute("listThuongHieu", thuongHieuService.getAllDangHoatDong());
+        model.addAttribute("listKichCo", kichCoService.getAllDangHoatDong());
+        model.addAttribute("listMauSac", mauSacService.getAllDangHoatDong());
+        model.addAttribute("listLoaiDe", loaiDeService.getAllDangHoatDong());
         return model;
     }
 
@@ -121,8 +121,8 @@ public class ChiTietSanPhamController {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             redirectAttributes.addFlashAttribute("checkTab", "true");
             sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
-            sanPham.setNgayTao(currentDate);
-            sanPham.setNgaySua(currentDate);
+            sanPham.setNgayTao(new Date());
+            sanPham.setNgaySua(new Date());
             sanPham.setTrangThai(0);
             sanPhamSerivce.add(sanPham);
 

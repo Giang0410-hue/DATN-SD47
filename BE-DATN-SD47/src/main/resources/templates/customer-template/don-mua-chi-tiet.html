@@ -64,9 +64,9 @@
                                     </ul>
                                 </li>
 
-                                <li class="nav-item" style="margin-left: -15%">
-                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>
-                                </li>
+                                <!--                                <li class="nav-item" style="margin-left: -15%">-->
+<!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
+<!--                                </li>-->
                                 <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
                                     <a class="site-cart" href="/cart">
                                         <span class="icon icon-shopping_cart"></span>
@@ -107,7 +107,7 @@
               </ul>
                 </li> -->
                     <li><a href="/shop">Sản phẩm</a></li>
-                    <li><a href="contact.html">Liên hệ</a></li>
+                    <li><a href="/lien-he">Liên hệ</a></li>
                 </ul>
             </div>
         </nav>
@@ -224,13 +224,29 @@
                                                      class="order-status-timeline-completion c1"></div>
                                                 <div th:if="${byHoaDon.trangThai==2}"
                                                      class="order-status-timeline-completion c2"></div>
-                                                <div th:if="${byHoaDon.trangThai==3}"
-                                                     class="order-status-timeline-completion c3"></div>
+
+                                                <div th:if="${byHoaDon.loaiHoaDon==1}">
+                                                    <div th:if="${byHoaDon.trangThai==3}"
+                                                         class="order-status-timeline-completion c3"></div>
+                                                </div>
+
+                                                <div th:if="${byHoaDon.loaiHoaDon==2}">
+                                                    <div th:if="${listLichSuHoaDon.size()>2}">
+                                                        <div th:if="${byHoaDon.trangThai==3}"
+                                                             class="order-status-timeline-completion c3"></div>
+                                                    </div>
+                                                    <div th:if="${listLichSuHoaDon.size()==2}">
+                                                        <div th:if="${byHoaDon.trangThai==3}"
+                                                             class="order-status-timeline-completion c1"></div>
+                                                    </div>
+                                                </div>
+
 
                                                 <div th:if="${listLichSuHoaDon.size()==2}">
                                                     <div th:if="${byHoaDon.trangThai==5}"
                                                          class="order-status-timeline-completion c1"></div>
                                                 </div>
+
                                                 <div th:if="${listLichSuHoaDon.size()==3}">
                                                     <div th:if="${byHoaDon.trangThai==5}"
                                                          class="order-status-timeline-completion c2"></div>
@@ -240,58 +256,110 @@
                                                      class="order-status-timeline-completion c6"></div>
                                             </div>
 
-                                            <div th:if="${byHoaDon.trangThai!=5}">
-                                                <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
-                                                     th:class="'image-order-status image-order-status-' +
+                                            <!-- tất cả trạng thái hóa đơn - loại hóa đơn 1-->
+                                            <div th:if="${byHoaDon.loaiHoaDon==1}">
+                                                <div th:if="${byHoaDon.trangThai!=5}">
+                                                    <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
+                                                         th:class="'image-order-status image-order-status-' +
                                                         (${iterStat.index} == 0 ? 'new' :
                                                         (${iterStat.index} == 1 ? 'active' :
                                                         (${iterStat.index} == 2 ? 'intransit' :
                                                         (${iterStat.index} == 3 ? 'delivered' :
                                                         (${iterStat.index} == 4 ? 'completed' :
                                                          '')))))+ ' img-circle'">
-                                                    <div class="icon"></div>
-                                                    <span class="status" th:switch="${lshd.trangThai}">
+                                                        <div class="icon"></div>
+                                                        <span class="status" th:switch="${lshd.trangThai}">
                                                             <span th:case="0">Đã Đặt Hàng</span>
                                                             <span th:case="1">Đã Xác Nhận</span>
                                                             <span th:case="2">Đã Giao Cho ĐVVC</span>
                                                             <span th:case="3">Đã Nhận Được Hàng</span>
-                                                        <!--                                                            <span th:case="4" th:text="Hoàn Trả Thành Công"></span>-->
+                                                            <!--                                                            <span th:case="4" th:text="Hoàn Trả Thành Công"></span>-->
                                                         </span>
-                                                    <span class="status-end" th:text="${lshd.ngaySua}"></span>
+                                                        <span class="status-end" th:text="${lshd.ngaySua}"></span>
+                                                    </div>
+
+                                                    <!--                                                <div class="image-order-status image-order-status-new active img-circle">-->
+                                                    <!--                                                    <div class="icon"></div>-->
+                                                    <!--                                                    <span class="status">Đơn Hàng Đã Đặt</span>-->
+                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
+                                                    <!--                                                </div>-->
+                                                    <!--                                                <div class="image-order-status image-order-status-new active img-circle">-->
+                                                    <!--                                                    <div class="icon"></div>-->
+                                                    <!--                                                    <span class="status">Đã Đặt Hàng</span>-->
+                                                    <!--                                                    <span class="status-end"></span>-->
+                                                    <!--                                                </div>-->
+                                                    <!--                                                <div class="image-order-status image-order-status-active active img-circle">-->
+                                                    <!--                                                    <div class="icon"></div>-->
+                                                    <!--                                                    <span class="status">Chờ Xác Nhận</span>-->
+                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
+                                                    <!--                                                </div>-->
+                                                    <!--                                                <div class="image-order-status image-order-status-intransit active img-circle">-->
+                                                    <!--                                                    <div class="icon"></div>-->
+                                                    <!--                                                    <span class="status">Chờ Giao</span>-->
+                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
+                                                    <!--                                                </div>-->
+                                                    <!--                                                <div class="image-order-status image-order-status-delivered active img-circle">-->
+                                                    <!--                                                    <div class="icon"></div>-->
+                                                    <!--                                                    <span class="status">Đang Giao</span>-->
+                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
+                                                    <!--                                                </div>-->
+                                                    <!--                                                <div class="image-order-status image-order-status-completed active img-circle">-->
+                                                    <!--                                                    <div class="icon"></div>-->
+                                                    <!--                                                    <span class="status">Đơn Hàng Đã Hoàn Thành</span>-->
+                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
+                                                    <!--                                                </div>-->
                                                 </div>
 
-                                                <!--                                                <div class="image-order-status image-order-status-new active img-circle">-->
-                                                <!--                                                    <div class="icon"></div>-->
-                                                <!--                                                    <span class="status">Đơn Hàng Đã Đặt</span>-->
-                                                <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                <!--                                                </div>-->
-                                                <!--                                                <div class="image-order-status image-order-status-new active img-circle">-->
-                                                <!--                                                    <div class="icon"></div>-->
-                                                <!--                                                    <span class="status">Đã Đặt Hàng</span>-->
-                                                <!--                                                    <span class="status-end"></span>-->
-                                                <!--                                                </div>-->
-                                                <!--                                                <div class="image-order-status image-order-status-active active img-circle">-->
-                                                <!--                                                    <div class="icon"></div>-->
-                                                <!--                                                    <span class="status">Chờ Xác Nhận</span>-->
-                                                <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                <!--                                                </div>-->
-                                                <!--                                                <div class="image-order-status image-order-status-intransit active img-circle">-->
-                                                <!--                                                    <div class="icon"></div>-->
-                                                <!--                                                    <span class="status">Chờ Giao</span>-->
-                                                <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                <!--                                                </div>-->
-                                                <!--                                                <div class="image-order-status image-order-status-delivered active img-circle">-->
-                                                <!--                                                    <div class="icon"></div>-->
-                                                <!--                                                    <span class="status">Đang Giao</span>-->
-                                                <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                <!--                                                </div>-->
-                                                <!--                                                <div class="image-order-status image-order-status-completed active img-circle">-->
-                                                <!--                                                    <div class="icon"></div>-->
-                                                <!--                                                    <span class="status">Đơn Hàng Đã Hoàn Thành</span>-->
-                                                <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                <!--                                                </div>-->
                                             </div>
+                                            <!-- tất cả trạng thái hóa đơn - loại hóa đơn 1-->
 
+
+<!--                                            cần check lại trạng thái lịch sử-->
+                                            <!-- tất cả trạng thái hóa đơn - loại hóa đơn 2-->
+                                            <div th:if="${byHoaDon.loaiHoaDon==2}">
+                                                <div th:if="${listLichSuHoaDon.size()>2}">
+                                                    <div th:if="${byHoaDon.trangThai!=5}">
+                                                        <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
+                                                             th:class="'image-order-status image-order-status-' +
+                                                        (${iterStat.index} == 0 ? 'new' :
+                                                        (${iterStat.index} == 1 ? 'active' :
+                                                        (${iterStat.index} == 2 ? 'intransit' :
+                                                        (${iterStat.index} == 3 ? 'delivered' :
+                                                        (${iterStat.index} == 4 ? 'completed' :
+                                                         '')))))+ ' img-circle'">
+                                                            <div class="icon"></div>
+                                                            <span class="status" th:switch="${lshd.trangThai}">
+                                                            <span th:case="0">Đã Đặt Hàng</span>
+                                                            <span th:case="1">Đã Xác Nhận</span>
+                                                            <span th:case="2">Đã Giao Cho ĐVVC</span>
+                                                            <span th:case="3">Đã Nhận Được Hàng</span>
+                                                                <!--<span th:case="4" th:text="Hoàn Trả Thành Công"></span>-->
+                                                        </span>
+                                                            <span class="status-end" th:text="${lshd.ngaySua}"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div th:if="${listLichSuHoaDon.size()==2}">
+                                                    <div th:if="${byHoaDon.trangThai!=5}">
+                                                        <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
+                                                             th:class="'image-order-status image-order-status-' +
+                                                        (${iterStat.index} == 0 ? 'new' :
+                                                        (${iterStat.index} == 1 ? 'activeHoanThanh' :
+                                                        ''))+ ' img-circle'">
+                                                            <div class="icon"></div>
+                                                            <span class="status" th:switch="${lshd.trangThai}">
+                                                            <span th:case="0">Đã Đặt Hàng</span>
+                                                            <span th:case="3">Đã Nhận Được Hàng</span>
+                                                                <!--<span th:case="4" th:text="Hoàn Trả Thành Công"></span>-->
+                                                        </span>
+                                                            <span class="status-end" th:text="${lshd.ngaySua}"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- tất cả trạng thái hóa đơn - loại hóa đơn 2-->
+
+                                            <!--trạng thái hủy-->
                                             <div th:if="${byHoaDon.trangThai==5}">
                                                 <div th:if="${listLichSuHoaDon.size()==2}">
                                                     <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
@@ -322,6 +390,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!--trạng thái hủy-->
 
                                         </div>
                                     </div>
@@ -365,12 +434,12 @@
                                                 onclick="muaLai2(this)" class="btn btn-success">Mua Lại
                                         </button>
                                     </div>
-<!--                                    <div class="col-md-12" style="margin-top: 2%">-->
-<!--                                        <button th:if="${byHoaDon.trangThai==6}"-->
-<!--                                                style="float: right;color: white" type="button" class="btn btn-primary">-->
-<!--                                            Hủy Yêu Cầu-->
-<!--                                        </button>-->
-<!--                                    </div>-->
+                                    <!--                                    <div class="col-md-12" style="margin-top: 2%">-->
+                                    <!--                                        <button th:if="${byHoaDon.trangThai==6}"-->
+                                    <!--                                                style="float: right;color: white" type="button" class="btn btn-primary">-->
+                                    <!--                                            Hủy Yêu Cầu-->
+                                    <!--                                        </button>-->
+                                    <!--                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -689,7 +758,7 @@
                 var quanHuyen = data.data.find(district => district.DistrictID == idQuanHuyenArray);
                 // Đặt tên thành phố vào thẻ có class là quanHuyenColumn trong dòng hiện tại
                 var quanHuyenColumn = document.getElementById("quanHuyenColumn")
-                quanHuyenColumn.innerText = quanHuyen.DistrictName+ ',';
+                quanHuyenColumn.innerText = quanHuyen.DistrictName + ',';
             })
             .catch(error => {
                 console.error('Lỗi khi tải dữ liệu quận:', error);
@@ -699,28 +768,28 @@
         // Lấy danh sách id quận/huyện từ một danh sách district
         var idQuanHuyenArray = /*[[ ${byHoaDon.quanHuyen}]]*/ [];
         // Lặp qua từng id quận/huyện và gọi API cho mỗi id
-            fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${idQuanHuyenArray}`, {
-                method: 'GET',
-                headers: {
-                    'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
-                    'Content-Type': 'application/json',
-                },
+        fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${idQuanHuyenArray}`, {
+            method: 'GET',
+            headers: {
+                'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Lấy giá trị id thành phố từ thymeleaf
+                var idPhuongXaArray = /*[[ ${byHoaDon.phuongXa}]]*/ [];
+
+                var phuongXa = data.data.find(ward => ward.WardCode == idPhuongXaArray);
+                console.log(phuongXa)
+
+                // Đặt tên thành phố vào thẻ có class là phuongXaColumn trong dòng hiện tại
+                var phuongXaColumn = document.getElementById('phuongXaColumn');
+                phuongXaColumn.innerText = phuongXa.WardName + ',';
             })
-                .then(response => response.json())
-                .then(data => {
-                    // Lấy giá trị id thành phố từ thymeleaf
-                    var idPhuongXaArray = /*[[ ${byHoaDon.phuongXa}]]*/ [];
-
-                    var phuongXa = data.data.find(ward => ward.WardCode == idPhuongXaArray);
-                    console.log(phuongXa)
-
-                    // Đặt tên thành phố vào thẻ có class là phuongXaColumn trong dòng hiện tại
-                    var phuongXaColumn = document.getElementById('phuongXaColumn');
-                    phuongXaColumn.innerText = phuongXa.WardName + ',';
-                })
-                .catch(error => {
-                    console.error('Lỗi khi tải dữ liệu xã:', error);
-                });
+            .catch(error => {
+                console.error('Lỗi khi tải dữ liệu xã:', error);
+            });
     });
 
 </script>

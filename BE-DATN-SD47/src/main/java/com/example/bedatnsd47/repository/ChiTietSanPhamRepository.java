@@ -30,7 +30,9 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
             "    cts.san_pham_id,\n" +
             "    cts.kich_co_id,\n" +
             "    cts.mau_sac_id,\n" +
-            "    cts.loai_de_id\n" +
+            "    cts.loai_de_id,\n" +
+            "    cts.ngay_tao,\n" +
+            "    cts.ngay_sua\n" +
             "FROM chi_tiet_san_pham cts\n" +
             "JOIN CTE ON cts.id = CTE.id\n" +
             "WHERE CTE.rn = 1  ORDER BY cts.id DESC;", nativeQuery = true)
@@ -52,7 +54,9 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
             "    cts.san_pham_id,\n" +
             "    cts.kich_co_id,\n" +
             "    cts.mau_sac_id,\n" +
-            "    cts.loai_de_id\n" +
+            "    cts.loai_de_id,\n" +
+            "    cts.ngay_tao,\n" +
+            "    cts.ngay_sua\n" +
             "FROM chi_tiet_san_pham cts\n" +
             "JOIN CTE ON cts.id = CTE.id\n" +
             "WHERE CTE.rn = 1 ORDER BY cts.id DESC;", nativeQuery = true)
@@ -72,7 +76,9 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
             "                cts.san_pham_id, \n" +
             "               cts.kich_co_id, \n" +
             "                cts.mau_sac_id, \n" +
-            "                cts.loai_de_id \n" +
+            "                cts.loai_de_id, \n" +
+            "    cts.ngay_tao,\n" +
+            "    cts.ngay_sua\n" +
             "            FROM chi_tiet_san_pham cts \n" +
             "            JOIN CTE ON cts.id = CTE.id \n" +
             "            WHERE CTE.rn = 1 ORDER BY cts.id DESC", nativeQuery = true)

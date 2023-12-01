@@ -73,7 +73,7 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     }
 
     @Override
-    public List<GioHangChiTiet> findAllById(List<String> listIdString,Long idGioHang) {
+    public List<GioHangChiTiet> findAllById(List<String> listIdString, Long idGioHang) {
         List<Long> listIdLong = new ArrayList<>();
         for (String str : listIdString) {
             try {
@@ -85,7 +85,7 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
             }
         }
 
-        return repository.findAllByIdGHCT(listIdLong,idGioHang);
+        return repository.findAllByIdGHCT(listIdLong, idGioHang);
 
     }
 
@@ -93,7 +93,7 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     public HoaDonChiTiet addHoaDon(List<String> listStringIdGioHangCT, Long tongTien, Long tongTienSale,
                                    String hoVaTen, String soDienThoai, String tienShip, String email,
                                    String voucher, String diaChiCuThe, String ghiChu, TaiKhoan taiKhoan,
-                                   String phuongXaID, String quanHuyenID, String thanhPhoID,Long idGioHang) {
+                                   String phuongXaID, String quanHuyenID, String thanhPhoID, Long idGioHang) {
         HoaDon hoaDon = new HoaDon();
         hoaDon.setMaHoaDon("HD" + hoaDon.getId());
         hoaDon.setLoaiHoaDon(1);
@@ -111,7 +111,9 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         hoaDon.setPhuongXa(phuongXaID);
         hoaDon.setQuanHuyen(quanHuyenID);
         hoaDon.setThanhPho(thanhPhoID);
-        hoaDon.setVoucher(Voucher.builder().id(Long.valueOf(voucher)).build());
+        if (voucher != "") {
+            hoaDon.setVoucher(Voucher.builder().id(Long.valueOf(voucher)).build());
+        }
 
         hoaDon.setTaiKhoan(taiKhoan);
         repositoryHoaDon.save(hoaDon);
@@ -129,7 +131,7 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         repositoryHoaDon.save(hoaDon);
 
 
-        List<GioHangChiTiet> listGioHangChiTiet = this.findAllById(listStringIdGioHangCT,idGioHang);
+        List<GioHangChiTiet> listGioHangChiTiet = this.findAllById(listStringIdGioHangCT, idGioHang);
 
         for (GioHangChiTiet gioHangChiTiet : listGioHangChiTiet) {
             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
