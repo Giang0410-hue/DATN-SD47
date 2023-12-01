@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -76,6 +77,7 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
                     listCheck.setSoLuong(listCheck.getSoLuong() + soLuongMoi);
                     listCheck.setGiaHienHanh(Long.valueOf(listDonGia.get(i)));
                     listCheck.setTrangThai(0);
+                    chiTietSanPham.setNgaySua(new Date());
 
                     ChiTietSanPham updatedChiTietSanPham = repository.save(listCheck);
                     chiTietSanPhamList.add(updatedChiTietSanPham);
@@ -94,6 +96,8 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
                 chiTietSanPham.setSoLuong(Integer.parseInt(listSoLuong.get(i)));
                 chiTietSanPham.setGiaHienHanh(Long.valueOf(listDonGia.get(i)));
                 chiTietSanPham.setTrangThai(0);
+                chiTietSanPham.setNgayTao(new Date());
+                chiTietSanPham.setNgaySua(new Date());
 
                 if (chiTietSanPham.getSoLuong() > 0) {
                     ChiTietSanPham savedChiTietSanPham = repository.save(chiTietSanPham);
@@ -112,7 +116,7 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
             List<String> listKichCo, List<String> listMauSac,
             List<String> listLoaiDe, List<String> listTrangThai,
             List<String> listSoLuong, List<String> listDonGia) {
-
+        ChiTietSanPham chiTietSanPhamNew = this.getById(Long.valueOf(listIdChiTietSp.get(0)));
         List<ChiTietSanPham> chiTietSanPhamList = new ArrayList<>();
 
         for (int i = 0; i < listSanPham.size(); i++) {
@@ -125,6 +129,8 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
             chiTietSanPham.setTrangThai(Integer.parseInt(listTrangThai.get(i)));
             chiTietSanPham.setSoLuong(Integer.parseInt(listSoLuong.get(i)));
             chiTietSanPham.setGiaHienHanh(Long.valueOf(listDonGia.get(i)));
+            chiTietSanPham.setNgayTao(chiTietSanPhamNew.getNgayTao());
+            chiTietSanPham.setNgaySua(new Date());
             ChiTietSanPham savedChiTietSanPham = repository.save(chiTietSanPham);
             chiTietSanPhamList.add(savedChiTietSanPham);
         }
