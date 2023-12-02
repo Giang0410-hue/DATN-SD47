@@ -31,7 +31,6 @@ public class NhanVienController {
     @Autowired
     NhanVienService taiKhoanService;
 
-
     @Autowired
     DiaChiService diaChiService;
 
@@ -41,8 +40,6 @@ public class NhanVienController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    private Date currentDate = new Date();
 
     @GetMapping()
     public String hienThi(Model model) {
@@ -111,7 +108,7 @@ public class NhanVienController {
             return "/admin-template/nhan_vien/sua-nhan-vien";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            taiKhoan.setNgaySua(currentDate);
+            taiKhoan.setNgaySua(new Date());
             VaiTro vaiTro = new VaiTro();
             vaiTro.setId(Long.valueOf(1));
             taiKhoan.setVaiTro(vaiTro);
@@ -166,8 +163,8 @@ public class NhanVienController {
             url = url.replace(request.getServletPath(), "");
             taiKhoanService.sendEmail(userInfo, url, random2);
             System.out.println(userInfo);
-            userInfo.setNgayTao(currentDate);
-            userInfo.setNgaySua(currentDate);
+            userInfo.setNgayTao(new Date());
+            userInfo.setNgaySua(new Date());
             userInfo.setMatKhau(passwordEncoder.encode(random2));
             VaiTro vaiTro = new VaiTro();
             vaiTro.setId(Long.valueOf(1));

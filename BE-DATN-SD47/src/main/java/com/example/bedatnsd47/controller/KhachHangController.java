@@ -41,12 +41,6 @@ public class KhachHangController {
     @Autowired
     GioHangService gioHangService;
 
-
-    public Date date( ) {
-        Date currentDate = new Date();
-        return currentDate;
-    }
-
     String random3 = ranDom1();
 
     TaiKhoan userInfo = new TaiKhoan();
@@ -162,8 +156,8 @@ public class KhachHangController {
                 TaiKhoan taiKhoan = taiKhoanService.getById(idTaiKhoan);
                 diaChi.setTaiKhoan(taiKhoan);
                 diaChi.setTrangThai(0);
-                diaChi.setNgayTao(date());
-                diaChi.setNgaySua(date());
+                diaChi.setNgayTao(new Date());
+                diaChi.setNgaySua(new Date());
                 diaChiService.save(diaChi);
                 return "redirect:/admin/khach-hang/view-update-khach-hang/" + idTaiKhoan;
             }
@@ -201,8 +195,8 @@ public class KhachHangController {
                 TaiKhoan taiKhoan = taiKhoanService.getById(idTaiKhoan);
                 diaChi.setTaiKhoan(taiKhoan);
                 diaChi.setTrangThai(0);
-                diaChi.setNgayTao(date());
-                diaChi.setNgaySua(date());
+                diaChi.setNgayTao(new Date());
+                diaChi.setNgaySua(new Date());
                 diaChiService.update(diaChi);
                 return "redirect:/admin/khach-hang/view-update-khach-hang/" + idTaiKhoan;
             }
@@ -275,7 +269,7 @@ public class KhachHangController {
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             taiKhoan.setNgayTao(taiKhoan.getNgayTao());
-            taiKhoan.setNgaySua(date());
+            taiKhoan.setNgaySua(new Date());
             VaiTro vaiTro = new VaiTro();
             vaiTro.setId(Long.valueOf(2));
             taiKhoan.setVaiTro(vaiTro);
@@ -327,8 +321,8 @@ public class KhachHangController {
             url = url.replace(request.getServletPath(), "");
             taiKhoanService.sendEmail(userInfo, url, random3);
             System.out.println(userInfo);
-            userInfo.setNgayTao(date());
-            userInfo.setNgaySua(date());
+            userInfo.setNgayTao(new Date());
+            userInfo.setNgaySua(new Date());
             userInfo.setMatKhau(passwordEncoder.encode(random3));
             VaiTro vaiTro = new VaiTro();
             vaiTro.setId(Long.valueOf(2));
@@ -340,8 +334,8 @@ public class KhachHangController {
             GioHang gioHang = new GioHang();
             gioHang.setMaGioHang("GH" + gioHangService.genMaTuDong());
             gioHang.setGhiChu("");
-            gioHang.setNgaySua(date());
-            gioHang.setNgayTao(date());
+            gioHang.setNgaySua(new Date());
+            gioHang.setNgayTao(new Date());
             gioHang.setTaiKhoan(TaiKhoan.builder().id(userInfo.getId()).build());
             gioHang.setTrangThai(0);
             gioHangService.save(gioHang);

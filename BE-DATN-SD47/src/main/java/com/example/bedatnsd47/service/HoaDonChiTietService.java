@@ -12,4 +12,7 @@ public interface HoaDonChiTietService {
     void deleteById(Long id);
     void saveOrUpdate(HoaDonChiTiet hoaDonChiTiet);
     List<HoaDonChiTiet> findByIdHoaDon(Long idHoaDon);
+
+    List<HoaDonChiTiet> finTop5HDCT();
+
 }

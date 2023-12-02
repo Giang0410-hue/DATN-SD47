@@ -65,6 +65,12 @@
 <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/thong-ke">
+                <i class="bi bi-graph-up-arrow"></i>
+                <span>Thống Kê</span>
+            </a>
+        </li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don">
@@ -343,7 +349,48 @@
                                         </select>
                                         <div class="check-loi" id="checkNullSelectMauSac"></div>
                                     </div>
+                                    <div style="display: none" class="col-md-12" id="nhapFullDuLieu">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        Nhập tất cả số lượng:
+                                                        <input class="form-control" type="number" oninput="updateInputsSoLuong(this)">
+                                                        <script>
+                                                            function updateInputsSoLuong(sourceInput) {
+                                                                // Lấy giá trị của input nguồn
+                                                                var sourceValue = sourceInput.value;
+                                                                console.log(sourceValue)
+                                                                const donGiaInputs = document.getElementsByName("listSoLuong");
+                                                                for (let i = 0; i < donGiaInputs.length; i++) {
+                                                                    donGiaInputs[i].value = sourceValue
 
+                                                                }
+                                                            }
+                                                        </script>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        Nhập tất cả giá:
+                                                        <input  class="form-control" type="number" oninput="updateInputsGia(this)">
+                                                        <script>
+                                                            function updateInputsGia(sourceInput) {
+                                                                // Lấy giá trị của input nguồn
+                                                                var sourceValue = sourceInput.value;
+                                                                console.log(sourceValue)
+                                                                const donGiaInputs = document.getElementsByName("listDonGia");
+                                                                for (let i = 0; i < donGiaInputs.length; i++) {
+                                                                    donGiaInputs[i].value = sourceValue
+
+                                                                }
+                                                            }
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <table class="table" style="table-layout: fixed;">
                                             <thead id="tableThead">
@@ -372,6 +419,7 @@
                                                 const errorDivKichCo = document.getElementById("checkNullSelectKichCo");
                                                 const errorDivMauSac = document.getElementById("checkNullSelectMauSac");
 
+
                                                 var selectedKichCo = kichCoSelect.selectedOptions.length > 0;
                                                 var selectedMauSac = mauSacSelect.selectedOptions.length > 0;
 
@@ -397,6 +445,7 @@
                                                     errorDivKichCo.style.display = "none";
                                                     errorDivMauSac.style.display = "none";
 
+
                                                     const soLuongInputs = document.getElementsByName("listSoLuong");
                                                     const donGiaInputs = document.getElementsByName("listDonGia");
 
@@ -406,10 +455,10 @@
                                                         const checkDonGia = donGiaInputs[i].value;
                                                         const errorDiv = document.getElementById("checkDonGia" + (i * 2 + 2));
 
-                                                        if (checkDonGia <= 10000 || checkDonGia >= 1000000000) {
+                                                        if (checkDonGia < 10000 || checkDonGia >= 1000000000) {
                                                             hasError = true; // Có lỗi
                                                             errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
-                                                            errorDiv.textContent = (checkDonGia <= 10000) ? "Giá phải >= 10000" : "Giá phải <= 1000000000"; // Hiển thị thông báo lỗi
+                                                            errorDiv.textContent = (checkDonGia < 10000) ? "Giá phải >= 10000" : "Giá phải <= 1000000000"; // Hiển thị thông báo lỗi
                                                         } else {
                                                             errorDiv.style.display = "none"; // Ẩn div thông báo lỗi nếu giá trị hợp lệ
                                                         }
@@ -448,7 +497,7 @@
                                                 const loaiDeSelect = document.getElementById("loaiDeSelect");
                                                 const mauSacSelect = document.getElementById("mauSacSelect");
                                                 const tableBody = document.getElementById("tableBody");
-
+                                                const nhapFullDuLieu = document.getElementById("nhapFullDuLieu");
                                                 tableBody.style.display = "none";
 
                                                 kichCoSelect.addEventListener("change", updateTable);
@@ -459,7 +508,6 @@
                                                 function updateTable() {
                                                     const kichCoValues = getSelectedValues("kichCoSelect");
                                                     const mauSacValues = getSelectedValues("mauSacSelect");
-
                                                     const kichCoLabels = getSelectedValuesAndLabels("kichCoSelect");
                                                     const mauSacLabels = getSelectedValuesAndLabels("mauSacSelect");
                                                     const loaiDeLabels = getSelectedValuesAndLabels("loaiDeSelect");
@@ -492,6 +540,7 @@
                                                     const fieldTypes = ["select", "select", "select", "select", "text", "text"]; // Loại của từng ô
                                                     let rowCount = 1;
                                                     if (kichCoValues.length > 0 && mauSacValues.length > 0) {
+                                                        nhapFullDuLieu.style.display = "block";
                                                         tableBody.innerHTML = ""; // Xóa dữ liệu cũ trước khi điền mới
                                                         mauSacLabels.forEach(mauSacLabel => {
                                                             kichCoLabels.forEach(kichCoLabel => {
@@ -553,6 +602,7 @@
                                                         tableBody.style.display = "table-row-group"; // Hiển thị tbody
                                                     } else {
                                                         tableBody.style.display = "none"; // Ẩn tbody nếu không có dữ liệu
+                                                        nhapFullDuLieu.style.display = "none";
                                                     }
                                                 }
 

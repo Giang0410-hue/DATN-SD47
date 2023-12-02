@@ -13,4 +13,8 @@ import org.springframework.stereotype.Repository;
 public interface LichSuHoaDonRepository extends JpaRepository<LichSuHoaDon, Long> {
     @Query("select lshd from LichSuHoaDon lshd where lshd.hoaDon.id =:idhd order by lshd.ngaySua desc")
     List<LichSuHoaDon> findByIdHd(@Param("idhd") Long idhd);
+
+    @Query("select lshd from LichSuHoaDon lshd where lshd.hoaDon.id =:idhd order by lshd.ngaySua asc")
+    List<LichSuHoaDon> findByIdhdNgaySuaAsc(@Param("idhd") Long idhd);
+
 }

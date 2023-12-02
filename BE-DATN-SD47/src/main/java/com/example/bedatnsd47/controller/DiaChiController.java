@@ -29,9 +29,6 @@ public class DiaChiController {
 
     private Integer trangThai = 1;
 
-    private Date currentDate = new Date();
-
-
     @GetMapping("/view-update/{id}/{idDiaChi}")
     public String viewUpdateAndDiaChi(Model model, @PathVariable("id") Long id, @PathVariable("idDiaChi") Long idDiaCHi) {
         DiaChi diaChi = diaChiService.getById(id);

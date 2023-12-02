@@ -65,9 +65,9 @@
                                     </ul>
                                 </li>
 
-                                <li class="nav-item" style="margin-left: -15%">
-                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>
-                                </li>
+                                <!--                                <li class="nav-item" style="margin-left: -15%">-->
+<!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
+<!--                                </li>-->
                                 <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
                                     <a class="site-cart" href="/cart">
                                         <span class="icon icon-shopping_cart"></span>
@@ -108,7 +108,7 @@
               </ul>
                 </li> -->
                     <li><a href="/shop">Sản phẩm</a></li>
-                    <li><a href="contact.html">Liên hệ</a></li>
+                    <li><a href="/lien-he">Liên hệ</a></li>
                 </ul>
             </div>
         </nav>
@@ -148,7 +148,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/doi-mat-khau" class="active">
+                                    <a href="/mat-khau" class="active">
                                         <i class="bi bi-circle" ></i><span>Đổi Mật Khẩu</span>
                                     </a>
                                 </li>
@@ -172,36 +172,109 @@
             <div class="col-md-10" style="background-color: white">
                 <h4 style="margin-top: 2%">Đổi mật khẩu</h4>
                 <p>Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác</p>
-                <form class="row g-3" style="width: 90%;margin-left: 20%;margin-top: 5%">
+                <form class="row g-3" style="width: 90%;margin-left: 20%;margin-top: 5%"
+                      th:action="@{/mat-khau/update}">
                     <div class="row mb-3">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">Mật khẩu cũ</label>
+                        <label for="matKhauCu" class="col-sm-3 col-form-label">Mật khẩu cũ</label>
                         <div class="col-sm-5">
-                            <input type="password" class="form-control" id="inputEmail3">
+                            <input type="password" class="form-control" name="matKhauCu" id="matKhauCu">
+                            <div class="check-loi" id="matKhauCuCheck" style="display: none"></div>
+                            <div class="check-loi" id="messages" th:text="${messages}"></div>
+
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">Mật khẩu mới</label>
+                        <label for="matKhauMoi" class="col-sm-3 col-form-label">Mật khẩu mới</label>
                         <div class="col-sm-5">
-                            <input type="password" class="form-control" id="inputPassword3">
+                            <input type="password" class="form-control" name="matKhauMoi" id="matKhauMoi">
+                            <div class="check-loi" id="matKhauMoiCheck" style="display: none"></div>
+
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="inputPassword4" class="col-sm-2 col-form-label">Mật khẩu mới</label>
+                        <label for="xacNhanmatKhauMoi" class="col-sm-3 col-form-label">Xác nhận mật khẩu</label>
                         <div class="col-sm-5">
-                            <input type="password" class="form-control" id="inputPassword4">
+                            <input type="password" class="form-control" name="xacNhanmatKhauMoi" id="xacNhanmatKhauMoi">
+                            <div class="check-loi" id="xacNhanmatKhauMoiCheck" style="display: none"></div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col" style="margin-left: 22%;margin-top: 5%;margin-bottom: 10%">
-                            <button type="submit" class="btn btn-primary">Xác nhận</button>
+                        <div class="col" style="margin-left: 25%;margin-top: 5%;margin-bottom: 10%">
+                            <button type="submit" onclick="return checkDoiMatKhau()" class="btn btn-primary">Xác nhận</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        function checkDoiMatKhau() {
+            var check = true;
 
+            var matKhauCu = document.getElementById("matKhauCu")
+            var matKhauCuCheck = document.getElementById("matKhauCuCheck")
+            var messages = document.getElementById("messages")
+            messages.style.display = 'none'
+            matKhauCuCheck.style.display = 'none'
+            if(matKhauCu.value.trim()==''){
+                matKhauCuCheck.style.display = 'block'
+                matKhauCuCheck.innerText = 'Bạn chưa nhập mật khẩu cũ'
+                check = false
+            }
 
+            var matKhauMoi = document.getElementById("matKhauMoi")
+            var matKhauMoiCheck = document.getElementById("matKhauMoiCheck")
+            matKhauMoiCheck.style.display = 'none'
+            if(matKhauMoi.value.trim()==''){
+                matKhauMoiCheck.style.display = 'block'
+                matKhauMoiCheck.innerText = 'Bạn chưa nhập mật khẩu mới'
+                check = false
+            }
+
+            var xacNhanmatKhauMoi = document.getElementById("xacNhanmatKhauMoi")
+            var xacNhanmatKhauMoiCheck = document.getElementById("xacNhanmatKhauMoiCheck")
+            xacNhanmatKhauMoiCheck.style.display = 'none'
+            if(xacNhanmatKhauMoi.value.trim()==''){
+                xacNhanmatKhauMoiCheck.style.display = 'block'
+                xacNhanmatKhauMoiCheck.innerText = 'Bạn chưa nhập xác nhận mật khẩu mới'
+                check = false
+            }else if(matKhauMoi.value != xacNhanmatKhauMoi.value){
+                xacNhanmatKhauMoiCheck.style.display = 'block'
+                xacNhanmatKhauMoiCheck.innerText = 'Mật khẩu và Mật khẩu xác nhận không giống nhau'
+                check = false
+            }
+            return check
+        }
+    </script>
+    <!--js bật modal khi check-->
+    <script th:if="${checkModal=='modal'}">
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var toast = new bootstrap.Toast(document.getElementById('thongBaoThemThanhCong'));
+            toast.show();
+        });
+    </script>
+    <!--js bật modal khi check-->
+    <!-- Modal thông báo check chọn sản phẩm-->
+    <div class="toast-container position-fixed top-50 start-50 translate-middle">
+        <div id="thongBaoThemThanhCong" class="toast" role="alert" aria-live="assertive" data-bs-delay="1000"
+             aria-atomic="true"
+             style="background-color: #7e7e7e;">
+            <div class="toast-body center-image" style=";display: flex;justify-content: center;align-items: center;">
+                <img src="../../static/img/successful_notification.png" alt="Notification Image"
+                     style="margin-top:7%;width: 12%;height: 12%;">
+            </div>
+            <div class="toast-body" style="color: white;display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin-bottom: 7%;
+            text-align: center;">
+                Cập nhật mật khẩu
+            </div>
+        </div>
+    </div>
+    <!-- Modal thông báo check chọn sản phẩm end-->
     <footer class="site-footer border-top">
         <div class="container">
             <div class="row">
@@ -295,7 +368,7 @@
 <script src="../../static/js/jquery-3.3.1.min.js"></script>
 <script src="../../static/js/jquery-ui.js"></script>
 <script src="../../static/js/popper.min.js"></script>
-<script src="../../static/js/bootstrap.min.js"></script>
+
 <script src="../../static/js/owl.carousel.min.js"></script>
 <script src="../../static/js/jquery.magnific-popup.min.js"></script>
 <script src="../../static/js/aos.js"></script>
