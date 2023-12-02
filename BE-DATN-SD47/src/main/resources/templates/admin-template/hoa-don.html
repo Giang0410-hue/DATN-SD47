@@ -217,6 +217,15 @@
                                         </span> -->
                                     </a>
                                 </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="ex3-tab-7" data-bs-toggle="tab" href="#ex3-tabs-7"
+                                        role="tab" aria-controls="ex3-tabs-7" aria-selected="false">
+                                        Đổi trả
+                                        <!-- <span class="cart">
+                                            <span class="cart__count">[[${lstHdHuy.size()}]]</span>
+                                        </span> -->
+                                    </a>
+                                </li>
                             </ul>
 
                             <div class="tab-content" id="ex2-content">
@@ -289,11 +298,11 @@
                                 <div class="tab-pane fade show" id="ex3-tabs-1" role="tabpanel"
                                     aria-labelledby="ex3-tab-1">
                                     <div style="margin-top: 3%;" class="tblHoaDonChoXacNhan">
-                                        
-                                        <table  id="exampleTable2" class="display" >
+
+                                        <table id="exampleTable2" class="display">
                                             <thead>
                                                 <tr>
-                                                  
+
                                                     <th scope="col">STT</th>
                                                     <th scope="col">Mã Hóa Đơn</th>
                                                     <th scope="col">Loại Hóa Đơn</th>
@@ -306,7 +315,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr th:each="hd, state : ${lstHdChoXacNhan}">
-                                                    
+
                                                     <td th:text="${state.index+1}"></td>
                                                     <td th:text="${hd.maHoaDon}">HD1</td>
                                                     <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
@@ -343,16 +352,16 @@
                                         </table>
 
 
-                                        
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel" aria-labelledby="ex3-tab-2">
                                     <div style="margin-top: 3%;" class="tblHoaDonChoGiao">
-                                        
-                                        <table  id="exampleTable3" class="display" >
+
+                                        <table id="exampleTable3" class="display">
                                             <thead>
                                                 <tr>
-                                                  
+
                                                     <th scope="col">STT</th>
                                                     <th scope="col">Mã Hóa Đơn</th>
                                                     <th scope="col">Loại Hóa Đơn</th>
@@ -366,7 +375,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr th:each="hd, state : ${lstHdChoGiao}">
-                                                   
+
                                                     <td th:text="${state.index+1}"></td>
                                                     <td th:text="${hd.maHoaDon}">HD1</td>
                                                     <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
@@ -406,16 +415,16 @@
 
 
 
-                                        
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="ex3-tabs-3" role="tabpanel" aria-labelledby="ex3-tab-3">
                                     <div style="margin-top: 3%;" class="tblHoaDonDangGiao">
-                                        
-                                        <table  id="exampleTable4" class="display">
+
+                                        <table id="exampleTable4" class="display">
                                             <thead>
                                                 <tr>
-                                                   
+
                                                     <th scope="col">STT</th>
                                                     <th scope="col">Mã Hóa Đơn</th>
                                                     <th scope="col">Loại Hóa Đơn</th>
@@ -429,7 +438,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr th:each="hd, state : ${lstHdDangGiao}">
-                                                    
+
                                                     <td th:text="${state.index+1}"></td>
                                                     <td th:text="${hd.maHoaDon}">HD1</td>
                                                     <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
@@ -469,18 +478,18 @@
 
 
 
-                                        
-                                        
+
+
                                     </div>
                                 </div>
 
                                 <div class="tab-pane fade" id="ex3-tabs-4" role="tabpanel" aria-labelledby="ex3-tab-4">
                                     <div style="margin-top: 3%" class="tblHoaDonHoanThanh">
-                                        
-                                        <table  id="exampleTable5" class="display" >
+
+                                        <table id="exampleTable5" class="display">
                                             <thead>
                                                 <tr>
-                                                    
+
                                                     <th scope="col">STT</th>
                                                     <th scope="col">Mã Hóa Đơn</th>
                                                     <th scope="col">Loại Hóa Đơn</th>
@@ -494,7 +503,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr th:each="hd, state : ${lstHdHoanThanh}">
-                                                    
+
                                                     <td th:text="${state.index+1}"></td>
                                                     <td th:text="${hd.maHoaDon}">HD1</td>
                                                     <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
@@ -534,17 +543,17 @@
 
 
 
-                                        
-                                        
+
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="ex3-tabs-5" role="tabpanel" aria-labelledby="ex3-tab-5">
                                     <div style="margin-top: 3%" class="tblHoaDonChoThanhToan">
-                                        
+
                                         <table id="exampleTable6" class="display">
                                             <thead>
                                                 <tr>
-                                                   
+
                                                     <th scope="col">STT</th>
                                                     <th scope="col">Mã Hóa Đơn</th>
                                                     <th scope="col">Loại Hóa Đơn</th>
@@ -558,7 +567,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr th:each="hd, state : ${lstHdChoThanhToan}">
-                                                    
+
                                                     <td th:text="${state.index+1}"></td>
                                                     <td th:text="${hd.maHoaDon}">HD1</td>
                                                     <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
@@ -598,17 +607,17 @@
 
 
 
-                                        
-                                        
+
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="ex3-tabs-6" role="tabpanel" aria-labelledby="ex3-tab-6">
                                     <div class="tblHoaDonHuy">
-                                        
+
                                         <table id="exampleTable7" class="display">
                                             <thead>
                                                 <tr>
-                                                   
+
                                                     <th scope="col">STT</th>
                                                     <th scope="col">Mã Hóa Đơn</th>
                                                     <th scope="col">Loại Hóa Đơn</th>
@@ -622,7 +631,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr th:each="hd, state : ${lstHdHuy}">
-                                                   
+
                                                     <td th:text="${state.index+1}"></td>
                                                     <td th:text="${hd.maHoaDon}">HD1</td>
                                                     <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
@@ -648,7 +657,56 @@
 
 
 
-                                        
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="ex3-tabs-7" role="tabpanel" aria-labelledby="ex3-tab-7">
+                                    <div class="tblHoaDonHuy">
+
+                                        <table id="exampleTable8" class="display">
+                                            <thead>
+                                                <tr>
+
+                                                    <th scope="col">STT</th>
+                                                    <th scope="col">Mã Hóa Đơn</th>
+                                                    <th scope="col">Loại Hóa Đơn</th>
+                                                    <th scope="col">Khách Hàng</th>
+                                                    <th scope="col">Sô Điện Thoại</th>
+                                                    <th scope="col">Nhân Viên</th>
+                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                    <th scope="col">Ngày Tạo</th>
+                                                    <th scope="col">Thao Tác</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="hd, state : ${lstHdTra}">
+
+                                                    <td th:text="${state.index+1}"></td>
+                                                    <td th:text="${hd.maHoaDon}">HD1</td>
+                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
+                                                    <td th:text="${hd.nguoiNhan}"></td>
+                                                    <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
+                                                    <td th:text="${hd.nguoiTao}"></td>
+                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
+                                                    <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                    <td>
+                                                        <!-- Button trigger modal
+                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                            data-bs-target="#cho-xac-nhan">
+                                                            <i class="bi bi-eye-fill"></i>
+                                                        </button> -->
+                                                        <a class="btn btn-info"
+                                                            th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                class="bi bi-eye-fill"></i></a>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+
+
+
                                     </div>
                                 </div>
                             </div>
@@ -681,45 +739,45 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
     <script>
-        
-        for (let index = 1; index <= 7; index++) {
+
+        for (let index = 1; index <= 8; index++) {
             $(document).ready(function () {
-            var table = $('#exampleTable' + index).DataTable({
-                "language": {
-                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
-                    "emptyTable": "Không có kết quả nào được tìm thấy",
-                    "zeroRecords": "Không có kết quả phù hợp",
-                    "infoEmpty": "Không có dữ liệu để hiển thị"
-                },
-                "initComplete": function (settings, json) {
-                    // CSS changes
-                    $('#exampleTable'+index+'_filter input[type="search"]').addClass('form-control');
-                    $('#exampleTable'+index+'_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
-                    $('#exampleTable'+index+'_filter label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).replaceWith(' ');
+                var table = $('#exampleTable' + index).DataTable({
+                    "language": {
+                        "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                        "emptyTable": "Không có kết quả nào được tìm thấy",
+                        "zeroRecords": "Không có kết quả phù hợp",
+                        "infoEmpty": "Không có dữ liệu để hiển thị"
+                    },
+                    "initComplete": function (settings, json) {
+                        // CSS changes
+                        $('#exampleTable' + index + '_filter input[type="search"]').addClass('form-control');
+                        $('#exampleTable' + index + '_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                        $('#exampleTable' + index + '_filter label').contents().filter(function () {
+                            return this.nodeType === 3;
+                        }).replaceWith(' ');
 
-                    $('#exampleTable'+index+'_length label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).first().replaceWith('Hiển thị');
-                    $('#exampleTable'+index+'_length label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).last().replaceWith('mục');
+                        $('#exampleTable' + index + '_length label').contents().filter(function () {
+                            return this.nodeType === 3;
+                        }).first().replaceWith('Hiển thị');
+                        $('#exampleTable' + index + '_length label').contents().filter(function () {
+                            return this.nodeType === 3;
+                        }).last().replaceWith('mục');
 
-                    $('#exampleTable'+index+'_length select').addClass('form-select');
-                }
+                        $('#exampleTable' + index + '_length select').addClass('form-select');
+                    }
+                });
+
+                table.on('draw.dt', function () {
+                    var pageInfo = table.page.info();
+
+                    var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+                    $('#exampleTable' + index + '_info').html(newInfo);
+
+                });
             });
-
-            table.on('draw.dt', function () {
-                var pageInfo = table.page.info();
-
-                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
-                $('#exampleTable'+index+'_info').html(newInfo);
-
-            });
-        });
         }
-      
+
     </script>
     <style>
         /*input tìm kiếm*/
@@ -728,36 +786,43 @@
             margin-left: -80%;
             margin-bottom: 10%;
         }
+
         #exampleTable1_filter input[type="search"] {
             width: 180%;
             margin-left: -80%;
             margin-bottom: 10%;
         }
+
         #exampleTable2_filter input[type="search"] {
             width: 180%;
             margin-left: -80%;
             margin-bottom: 10%;
         }
+
         #exampleTable3_filter input[type="search"] {
             width: 180%;
             margin-left: -80%;
             margin-bottom: 10%;
         }
+
         #exampleTable4_filter input[type="search"] {
             width: 180%;
             margin-left: -80%;
             margin-bottom: 10%;
         }
+
         #exampleTable5_filter input[type="search"] {
             width: 180%;
             margin-left: -80%;
             margin-bottom: 10%;
         }
+
         #exampleTable6_filter input[type="search"] {
             width: 180%;
             margin-left: -80%;
             margin-bottom: 10%;
         }
+
         #exampleTable7_filter input[type="search"] {
             width: 180%;
             margin-left: -80%;

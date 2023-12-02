@@ -85,6 +85,7 @@ public class BanHangController {
             hd.setNgayTao(new Date());
             hd.setTaiKhoan(khachHangService.findKhachLe());
             hd.setPhiShip((long) 0);
+            hd.setLoaiHoaDon(1);
             hd.setTongTien((long) 0);
             hd.setTongTienKhiGiam((long) 0);
             hoaDonService.saveOrUpdate(hd);
@@ -264,7 +265,7 @@ public class BanHangController {
                 hd.setNgayThanhToan(new Date());
                 break;
             case 4:
-             addLichSuHoaDon(hd.getId(), ghiChuThanhToan, 6);
+                addLichSuHoaDon(hd.getId(), ghiChuThanhToan, 6);
                 hd.setTrangThai(3);
                 hd.setNgaySua(new Date());
                 hd.setNgayThanhToan(new Date());
@@ -304,6 +305,8 @@ public class BanHangController {
         request.setAttribute("lstHdHoanThanh", hoaDonService.find5ByTrangThai(3));
         request.setAttribute("lstHdChoThanhToan", hoaDonService.find5ByTrangThai(4));
         request.setAttribute("lstHdHuy", hoaDonService.find5ByTrangThai(5));
+        request.setAttribute("lstHdTra", hoaDonService.find5ByTrangThai(6));
+
         return "/admin-template/hoa-don";
     }
 

@@ -152,6 +152,8 @@ public class HoaDon {
                 return "Chờ thanh toán";
             case 5:
                 return "Đã hủy";
+            case 6:
+                return "Đổi trả"; 
             default:
                 break;
         }
