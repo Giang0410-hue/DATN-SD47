@@ -45,24 +45,26 @@ public class LichSuHoaDon {
     private HoaDon hoaDon;
 
     public String getStringTrangThai() {
-        if(this.trangThai== null){
+        if (this.trangThai == null) {
             return "Trạng thái null";
         }
         switch (this.trangThai) {
             case 0:
                 return "Tạo hóa đơn";
             case 1:
-                return "Đã xác nhận";
+                return "Đặt hàng thành công";
             case 2:
                 return "Đã bàn giao cho đơn vị vận chuyển";
             case 3:
-                return "Đã giao";
+                return "Đã thanh toán";
             case 4:
-                return "Đặt hàng thành công";
+                return "Đã xác nhận";
             case 5:
                 return "Đã hủy";
             case 6:
-                return "Đã thanh toán";
+                return "Đã giao";
+            case 7:
+                return "Trả hàng";
             default:
                 return "";
 

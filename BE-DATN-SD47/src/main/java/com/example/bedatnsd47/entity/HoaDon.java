@@ -86,12 +86,6 @@ public class HoaDon {
     @Column(name = "ngay_sua")
     private Date ngaySua;
 
-    @Column(name = "nguoi_tao", length = 100)
-    private String nguoiTao;
-
-    @Column(name = "nguoi_sua", length = 100)
-    private String nguoiSua;
-
     @Column(name = "trang_thai")
     private Integer trangThai;
 
@@ -152,6 +146,10 @@ public class HoaDon {
                 return "Chờ thanh toán";
             case 5:
                 return "Đã hủy";
+            case 6:
+                return "Chờ xác nhận đổi trả"; 
+            case 7:
+                return "Hoàn thành đổi trả";
             default:
                 break;
         }
