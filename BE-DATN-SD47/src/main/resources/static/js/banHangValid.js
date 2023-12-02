@@ -25,6 +25,24 @@ function validateAndSubmit(slg, sl, idCtsp) {
     }
 }
 
+function validateAndSubmitTraHang(slg, sl, idCtsp) {
+
+    var soLuong = document.getElementById('soLuongEditTra' + idCtsp).value;
+    var soLuongGoc = slg;
+    if (isNaN(soLuong) || soLuong < 0) {
+        alert("Vui lòng nhập một số nguyên không âm.");
+    } else if (parseInt(soLuong) > parseInt(soLuongGoc)) {
+        alert("Số lượng không được lớn hơn số lượng hiện tại (" + soLuongGoc + ").");
+    } else if (soLuong === "") {
+        alert("Vui lòng nhập số lượng trả");
+    } else {
+        alert("Số lượng hợp lệ: " + soLuong);
+
+        // Nếu số lượng hợp lệ, thực hiện submit form
+        document.getElementById("myForm" + idCtsp).submit();
+    }
+}
+
 function validateThanhToan() {
     handleButtonClick('thanhToan');
 
@@ -113,4 +131,37 @@ function handleButtonClick(idBtn) {
     setTimeout(function() {
       button.removeAttribute('disabled'); // Kích hoạt lại button sau một khoảng thời gian
     }, 1500); // Ví dụ: kích hoạt lại sau 3 giây (3000 milliseconds)
+  }
+
+  const inputElement = document.getElementById('tienKhachTra'); // Thay 'inputId' bằng ID thực của ô input
+  const tongTien = document.getElementById('tongAll');
+  const traLai = document.getElementById('traLai');
+  inputElement.addEventListener('input', function(event) {
+      const newValue = event.target.value;
+      traLai.innerHTML=(newValue- tongTien.value)
+  
+      // Thực hiện các hành động khác ngay khi giá trị thay đổi
+  });
+
+  function resetTienKhachTra(){
+    const inputElement = document.getElementById('tienKhachTra'); // Thay 'inputId' bằng ID thực của ô input
+            const tongTien = document.getElementById('tongAll');
+            const traLai = document.getElementById('traLai');
+            inputElement.value=null
+            traLai.innerHTML='0'
+  }
+  function resetTienKhachTra2(){
+    const inputElement2 = document.getElementById('tongAll'); // Thay 'inputId' bằng ID thực của ô input
+
+inputElement2.addEventListener('input', function(event) {
+    const newValue = event.target.value;
+    console.log('Giá trị mới tt:', newValue);
+
+    // Thực hiện các hành động khác sau khi giá trị thay đổi
+});
+    const inputElement = document.getElementById('tienKhachTra'); // Thay 'inputId' bằng ID thực của ô input
+            const tongTien = document.getElementById('tongAll');
+            const traLai = document.getElementById('traLai');
+            inputElement.value=null
+            traLai.innerHTML='0'
   }

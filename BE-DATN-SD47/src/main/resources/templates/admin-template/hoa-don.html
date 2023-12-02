@@ -58,12 +58,12 @@
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="/admin/thong-ke">
-                <i class="bi bi-graph-up-arrow"></i>
-                <span>Thống Kê</span>
-            </a>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/admin/thong-ke">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span>Thống Kê</span>
+                </a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don">
@@ -233,489 +233,558 @@
                                     </a>
                                 </li>
                             </ul>
+                            <form method="post" action="/ban-hang-tai-quay/hoa-don/chuyen-nhanh">
+                                <div class="tab-content" id="ex2-content">
+                                    <div class="tab-pane fade show active" id="ex3-tabs-0" role="tabpanel"
+                                        aria-labelledby="ex3-tab-1">
+                                        <div style="margin-top: 3%" class="tblHoaDonAll">
 
-                            <div class="tab-content" id="ex2-content">
-                                <div class="tab-pane fade show active" id="ex3-tabs-0" role="tabpanel"
-                                    aria-labelledby="ex3-tab-1">
-                                    <div style="margin-top: 3%" class="tblHoaDonAll">
 
-
-                                        <table id="exampleTable1" class="display">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">STT</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Trạng thái</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr th:each="hd, state : ${lstHdctAll}">
-                                                    <td th:text="${state.index+1}"></td>
-                                                    <td th:text="${hd.maHoaDon}">HD1</td>
-                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
-                                                    <td th:text="${hd.getStringTrangThai}">Trạng thái</td>
-                                                    <td th:text="${hd.nguoiNhan}"></td>
-                                                    <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
-                                                    <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
-                                                    <td>
-                                                        <!-- Button trigger modal
+                                            <table id="exampleTable1" class="display">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">STT</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Trạng thái</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="hd, state : ${lstHdctAll}">
+                                                        <td th:text="${state.index+1}"></td>
+                                                        <td th:text="${hd.maHoaDon}">HD1</td>
+                                                        <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
+                                                        <td th:text="${hd.getStringTrangThai}">Trạng thái</td>
+                                                        <td th:text="${hd.nguoiNhan}"></td>
+                                                        <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
+                                                        <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
+                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td>
+                                                            <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                                             data-bs-target="#cho-xac-nhan">
                                                             <i class="bi bi-eye-fill"></i>
                                                         </button> -->
-                                                        <a class="btn btn-info"
-                                                            th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
-                                                                class="bi bi-eye-fill"></i></a>
-                                                    </td>
-                                                </tr>
+                                                            <a class="btn btn-info"
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                    class="bi bi-eye-fill"></i></a>
+                                                        </td>
+                                                    </tr>
 
-                                            </tbody>
-                                            <tfoot hidden="hidden">
-                                                <tr>
+                                                </tbody>
+                                                <tfoot hidden="hidden">
+                                                    <tr>
 
-                                                    <th scope="col">STTs</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Trạng thái</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-
+                                                        <th scope="col">STTs</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Trạng thái</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
 
 
 
+
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane fade show" id="ex3-tabs-1" role="tabpanel"
-                                    aria-labelledby="ex3-tab-1">
-                                    <div style="margin-top: 3%;" class="tblHoaDonChoXacNhan">
+                                    <div class="tab-pane fade show" id="ex3-tabs-1" role="tabpanel"
+                                        aria-labelledby="ex3-tab-1">
+                                        <div style="margin-top: 3%;" class="tblHoaDonChoXacNhan">
 
-                                        <table id="exampleTable2" class="display">
-                                            <thead>
-                                                <tr>
+                                            <table id="exampleTable2" class="display">
+                                                <thead>
+                                                    <tr>
 
-                                                    <th scope="col">STT</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr th:each="hd, state : ${lstHdChoXacNhan}">
+                                                        <th scope="col">STT</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="hd, state : ${lstHdChoXacNhan}">
 
-                                                    <td th:text="${state.index+1}"></td>
-                                                    <td th:text="${hd.maHoaDon}">HD1</td>
-                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
-                                                    <td th:text="${hd.nguoiNhan}"></td>
-                                                    <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
-                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
-                                                    <td>
-                                                        <!-- Button trigger modal
+                                                        <td th:text="${state.index+1}"></td>
+                                                        <td th:text="${hd.maHoaDon}">HD1</td>
+                                                        <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
+                                                        <td th:text="${hd.nguoiNhan}"></td>
+                                                        <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
+                                                        <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
+                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td>
+                                                            <button th:onclick="'setInputIdHoaDon('+${hd.id}+')'"
+                                                                type="button" class="btn btn-primary"
+                                                                data-bs-toggle="modal" data-bs-target="#modalId">
+                                                                Chuyển
+                                                            </button>
+                                                            <a class="btn btn-info"
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                    class="bi bi-eye-fill"></i></a>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                                <tfoot hidden="hidden">
+                                                    <tr>
+
+                                                        <th scope="col">STTs</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel"
+                                        aria-labelledby="ex3-tab-2">
+                                        <div style="margin-top: 3%;" class="tblHoaDonChoGiao">
+
+                                            <table id="exampleTable3" class="display">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th scope="col">STT</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="hd, state : ${lstHdChoGiao}">
+
+
+
+                                                        <td th:text="${state.index+1}"></td>
+                                                        <td th:text="${hd.maHoaDon}">HD1</td>
+                                                        <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
+                                                        <td th:text="${hd.nguoiNhan}"></td>
+                                                        <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
+                                                        <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
+                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td>
+
+                                                            <!-- Button trigger modal -->
+                                                            <button th:onclick="'setInputIdHoaDon('+${hd.id}+')'"
+                                                                type="button" class="btn btn-primary"
+                                                                data-bs-toggle="modal" data-bs-target="#modalId">
+                                                                Chuyển
+                                                            </button>
+
+
+
+
+                                                            <a class="btn btn-info"
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                    class="bi bi-eye-fill"></i></a>
+                                                        </td>
+
+                                                    </tr>
+
+                                                </tbody>
+                                                <tfoot hidden="hidden">
+                                                    <tr>
+
+                                                        <th scope="col">STTs</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="ex3-tabs-3" role="tabpanel"
+                                        aria-labelledby="ex3-tab-3">
+                                        <div style="margin-top: 3%;" class="tblHoaDonDangGiao">
+
+                                            <table id="exampleTable4" class="display">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th scope="col">STT</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="hd, state : ${lstHdDangGiao}">
+
+                                                        <td th:text="${state.index+1}"></td>
+                                                        <td th:text="${hd.maHoaDon}">HD1</td>
+                                                        <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
+                                                        <td th:text="${hd.nguoiNhan}"></td>
+                                                        <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
+                                                        <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
+                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td>
+                                                            <button th:onclick="'setInputIdHoaDon('+${hd.id}+')'"
+                                                                type="button" class="btn btn-primary"
+                                                                data-bs-toggle="modal" data-bs-target="#modalId">
+                                                                Chuyển
+                                                            </button>
+                                                            <a class="btn btn-info"
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                    class="bi bi-eye-fill"></i></a>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                                <tfoot hidden="hidden">
+                                                    <tr>
+
+                                                        <th scope="col">STTs</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+
+
+
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="ex3-tabs-4" role="tabpanel"
+                                        aria-labelledby="ex3-tab-4">
+                                        <div style="margin-top: 3%" class="tblHoaDonHoanThanh">
+
+                                            <table id="exampleTable5" class="display">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th scope="col">STT</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Thanh Toán</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="hd, state : ${lstHdHoanThanh}">
+
+                                                        <td th:text="${state.index+1}"></td>
+                                                        <td th:text="${hd.maHoaDon}">HD1</td>
+                                                        <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
+                                                        <td th:text="${hd.nguoiNhan}"></td>
+                                                        <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
+                                                        <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
+                                                        <td th:text="${hd.timeFm(hd.ngayThanhToan)}"></td>
+                                                        <td>
+
+                                                            <a class="btn btn-info"
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                    class="bi bi-eye-fill"></i></a>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                                <tfoot hidden="hidden">
+                                                    <tr>
+
+                                                        <th scope="col">STTs</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="ex3-tabs-5" role="tabpanel"
+                                        aria-labelledby="ex3-tab-5">
+                                        <div style="margin-top: 3%" class="tblHoaDonChoThanhToan">
+
+                                            <table id="exampleTable6" class="display">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th scope="col">STT</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="hd, state : ${lstHdChoThanhToan}">
+
+                                                        <td th:text="${state.index+1}"></td>
+                                                        <td th:text="${hd.maHoaDon}">HD1</td>
+                                                        <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
+                                                        <td th:text="${hd.nguoiNhan}"></td>
+                                                        <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
+                                                        <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
+                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td>
+                                                            <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                                             data-bs-target="#cho-xac-nhan">
                                                             <i class="bi bi-eye-fill"></i>
                                                         </button> -->
-                                                        <a class="btn btn-info"
-                                                            th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
-                                                                class="bi bi-eye-fill"></i></a>
-                                                    </td>
-                                                </tr>
+                                                            <a class="btn btn-info"
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                    class="bi bi-eye-fill"></i></a>
+                                                        </td>
+                                                    </tr>
 
-                                            </tbody>
-                                            <tfoot hidden="hidden">
-                                                <tr>
+                                                </tbody>
+                                                <tfoot hidden="hidden">
+                                                    <tr>
 
-                                                    <th scope="col">STTs</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
+                                                        <th scope="col">STTs</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
 
 
 
+
+
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel" aria-labelledby="ex3-tab-2">
-                                    <div style="margin-top: 3%;" class="tblHoaDonChoGiao">
+                                    <div class="tab-pane fade" id="ex3-tabs-6" role="tabpanel"
+                                        aria-labelledby="ex3-tab-6">
+                                        <div class="tblHoaDonHuy">
 
-                                        <table id="exampleTable3" class="display">
-                                            <thead>
-                                                <tr>
+                                            <table id="exampleTable7" class="display">
+                                                <thead>
+                                                    <tr>
 
-                                                    <th scope="col">STT</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr th:each="hd, state : ${lstHdChoGiao}">
+                                                        <th scope="col">STT</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="hd, state : ${lstHdHuy}">
 
-                                                    <td th:text="${state.index+1}"></td>
-                                                    <td th:text="${hd.maHoaDon}">HD1</td>
-                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
-                                                    <td th:text="${hd.nguoiNhan}"></td>
-                                                    <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
-                                                    <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
-                                                    <td>
-                                                        <!-- Button trigger modal
+                                                        <td th:text="${state.index+1}"></td>
+                                                        <td th:text="${hd.maHoaDon}">HD1</td>
+                                                        <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
+                                                        <td th:text="${hd.nguoiNhan}"></td>
+                                                        <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
+                                                        <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
+                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td>
+                                                            <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                                             data-bs-target="#cho-xac-nhan">
                                                             <i class="bi bi-eye-fill"></i>
                                                         </button> -->
-                                                        <a class="btn btn-info"
-                                                            th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
-                                                                class="bi bi-eye-fill"></i></a>
-                                                    </td>
-                                                </tr>
+                                                            <a class="btn btn-info"
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                    class="bi bi-eye-fill"></i></a>
+                                                        </td>
+                                                    </tr>
 
-                                            </tbody>
-                                            <tfoot hidden="hidden">
-                                                <tr>
+                                                </tbody>
+                                                <tfoot hidden="hidden">
+                                                    <tr>
 
-                                                    <th scope="col">STTs</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-
+                                                        <th scope="col">STT</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
 
 
 
+
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane fade" id="ex3-tabs-3" role="tabpanel" aria-labelledby="ex3-tab-3">
-                                    <div style="margin-top: 3%;" class="tblHoaDonDangGiao">
+                                    <div class="tab-pane fade" id="ex3-tabs-7" role="tabpanel"
+                                        aria-labelledby="ex3-tab-7">
+                                        <div class="tblHoaDonTra">
 
-                                        <table id="exampleTable4" class="display">
-                                            <thead>
-                                                <tr>
+                                            <table id="exampleTable8" class="display">
+                                                <thead>
+                                                    <tr>
 
-                                                    <th scope="col">STT</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr th:each="hd, state : ${lstHdDangGiao}">
+                                                        <th scope="col">STT</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Trang thái</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="hd, state : ${lstHdTra}">
 
-                                                    <td th:text="${state.index+1}"></td>
-                                                    <td th:text="${hd.maHoaDon}">HD1</td>
-                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
-                                                    <td th:text="${hd.nguoiNhan}"></td>
-                                                    <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
-                                                    <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
-                                                    <td>
-                                                        <!-- Button trigger modal
+                                                        <td th:text="${state.index+1}"></td>
+                                                        <td th:text="${hd.maHoaDon}">HD1</td>
+                                                        <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
+                                                        <td th:text="${hd.nguoiNhan}"></td>
+                                                        <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
+                                                        <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
+                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td th:text="${hd.getStringTrangThai()}"></td>
+
+                                                        <td>
+                                                            <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                                             data-bs-target="#cho-xac-nhan">
                                                             <i class="bi bi-eye-fill"></i>
                                                         </button> -->
-                                                        <a class="btn btn-info"
-                                                            th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
-                                                                class="bi bi-eye-fill"></i></a>
-                                                    </td>
-                                                </tr>
+                                                            <a class="btn btn-info"
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                    class="bi bi-eye-fill"></i></a>
+                                                        </td>
+                                                    </tr>
 
-                                            </tbody>
-                                            <tfoot hidden="hidden">
-                                                <tr>
+                                                </tbody>
+                                                <tfoot hidden="hidden">
+                                                    <tr>
 
-                                                    <th scope="col">STTs</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-
-
+                                                        <th scope="col">STT</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Loại Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Sô Điện Thoại</th>
+                                                        <th scope="col">Tổng Tiền(VNĐ)</th>
+                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Trang thái</th>
+                                                        <th scope="col">Thao Tác</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
 
 
 
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="text" id="idHoaDon" name="idHoaDon">
+                                <script>
+                                    function setInputIdHoaDon(id) {
+                                        document.getElementById('idHoaDon').value = id;
+                                    }
+                                </script>
+                                <!-- Modal -->
+                                <div class="modal fade" id="modalId" tabindex="-1" role="dialog"
+                                    aria-labelledby="modalTitleId" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalTitleId">Ghi chú</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="container-fluid">
+                                                    <div class="mb-3">
+                                                        <label for="" class="form-label"></label>
+                                                        <textarea class="form-control" name="ghiChu" id=""
+                                                            rows="3"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="ex3-tabs-4" role="tabpanel" aria-labelledby="ex3-tab-4">
-                                    <div style="margin-top: 3%" class="tblHoaDonHoanThanh">
+                                <script>
+                                    var modalId = document.getElementById('modalId');
 
-                                        <table id="exampleTable5" class="display">
-                                            <thead>
-                                                <tr>
+                                    modalId.addEventListener('show.bs.modal', function (event) {
+                                        // Button that triggered the modal
+                                        let button = event.relatedTarget;
+                                        // Extract info from data-bs-* attributes
+                                        let recipient = button.getAttribute('data-bs-whatever');
 
-                                                    <th scope="col">STT</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Thanh Toán</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr th:each="hd, state : ${lstHdHoanThanh}">
-
-                                                    <td th:text="${state.index+1}"></td>
-                                                    <td th:text="${hd.maHoaDon}">HD1</td>
-                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
-                                                    <td th:text="${hd.nguoiNhan}"></td>
-                                                    <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
-                                                    <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.timeFm(hd.ngayThanhToan)}"></td>
-                                                    <td>
-                                                        <!-- Button trigger modal
-                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                            data-bs-target="#cho-xac-nhan">
-                                                            <i class="bi bi-eye-fill"></i>
-                                                        </button> -->
-                                                        <a class="btn btn-info"
-                                                            th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
-                                                                class="bi bi-eye-fill"></i></a>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                            <tfoot hidden="hidden">
-                                                <tr>
-
-                                                    <th scope="col">STTs</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-
-
-
-
-
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="ex3-tabs-5" role="tabpanel" aria-labelledby="ex3-tab-5">
-                                    <div style="margin-top: 3%" class="tblHoaDonChoThanhToan">
-
-                                        <table id="exampleTable6" class="display">
-                                            <thead>
-                                                <tr>
-
-                                                    <th scope="col">STT</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr th:each="hd, state : ${lstHdChoThanhToan}">
-
-                                                    <td th:text="${state.index+1}"></td>
-                                                    <td th:text="${hd.maHoaDon}">HD1</td>
-                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
-                                                    <td th:text="${hd.nguoiNhan}"></td>
-                                                    <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
-                                                    <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
-                                                    <td>
-                                                        <!-- Button trigger modal
-                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                            data-bs-target="#cho-xac-nhan">
-                                                            <i class="bi bi-eye-fill"></i>
-                                                        </button> -->
-                                                        <a class="btn btn-info"
-                                                            th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
-                                                                class="bi bi-eye-fill"></i></a>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                            <tfoot hidden="hidden">
-                                                <tr>
-
-                                                    <th scope="col">STTs</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-
-
-
-
-
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="ex3-tabs-6" role="tabpanel" aria-labelledby="ex3-tab-6">
-                                    <div class="tblHoaDonHuy">
-
-                                        <table id="exampleTable7" class="display">
-                                            <thead>
-                                                <tr>
-
-                                                    <th scope="col">STT</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr th:each="hd, state : ${lstHdHuy}">
-
-                                                    <td th:text="${state.index+1}"></td>
-                                                    <td th:text="${hd.maHoaDon}">HD1</td>
-                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
-                                                    <td th:text="${hd.nguoiNhan}"></td>
-                                                    <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
-                                                    <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
-                                                    <td>
-                                                        <!-- Button trigger modal
-                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                            data-bs-target="#cho-xac-nhan">
-                                                            <i class="bi bi-eye-fill"></i>
-                                                        </button> -->
-                                                        <a class="btn btn-info"
-                                                            th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
-                                                                class="bi bi-eye-fill"></i></a>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-
-
-
-
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="ex3-tabs-7" role="tabpanel" aria-labelledby="ex3-tab-7">
-                                    <div class="tblHoaDonHuy">
-
-                                        <table id="exampleTable8" class="display">
-                                            <thead>
-                                                <tr>
-
-                                                    <th scope="col">STT</th>
-                                                    <th scope="col">Mã Hóa Đơn</th>
-                                                    <th scope="col">Loại Hóa Đơn</th>
-                                                    <th scope="col">Khách Hàng</th>
-                                                    <th scope="col">Sô Điện Thoại</th>
-                                                    <th scope="col">Nhân Viên</th>
-                                                    <th scope="col">Tổng Tiền(VNĐ)</th>
-                                                    <th scope="col">Ngày Tạo</th>
-                                                    <th scope="col">Thao Tác</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr th:each="hd, state : ${lstHdTra}">
-
-                                                    <td th:text="${state.index+1}"></td>
-                                                    <td th:text="${hd.maHoaDon}">HD1</td>
-                                                    <td th:text="${hd.loaiHoaDon}==1?'Online':'Offline'">Online</td>
-                                                    <td th:text="${hd.nguoiNhan}"></td>
-                                                    <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
-                                                    <td th:text="${hd.nguoiTao}"></td>
-                                                    <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                    <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
-                                                    <td>
-                                                        <!-- Button trigger modal
-                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                            data-bs-target="#cho-xac-nhan">
-                                                            <i class="bi bi-eye-fill"></i>
-                                                        </button> -->
-                                                        <a class="btn btn-info"
-                                                            th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
-                                                                class="bi bi-eye-fill"></i></a>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-
-
-
-
-                                    </div>
-                                </div>
-                            </div>
+                                        // Use above variables to manipulate the DOM
+                                    });
+                                </script>
+                            </form>
                         </div>
                     </div>
                 </div>

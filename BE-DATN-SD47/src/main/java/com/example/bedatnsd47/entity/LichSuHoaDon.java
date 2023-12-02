@@ -63,7 +63,8 @@ public class LichSuHoaDon {
                 return "Đã hủy";
             case 6:
                 return "Đã giao";
-
+            case 7:
+                return "Trả hàng";
             default:
                 return "";
 

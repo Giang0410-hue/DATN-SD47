@@ -179,4 +179,9 @@ public class KhachHangServiceImpl implements KhachHangService {
         }
 
     }
+
+    @Override
+    public void addKhachLe() {
+        repository.addKhachLe();
+    }
 }

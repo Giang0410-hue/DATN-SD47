@@ -50,12 +50,12 @@
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="/admin/thong-ke">
-                <i class="bi bi-graph-up-arrow"></i>
-                <span>Thống Kê</span>
-            </a>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/admin/thong-ke">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span>Thống Kê</span>
+                </a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link " href="/ban-hang-tai-quay/hoa-don">
@@ -511,10 +511,12 @@
                                                             <th scope="col">STT</th>
                                                             <th scope="col">Sản phẩm</th>
                                                             <th scope="col">Số lượng</th>
-                                                            <th scope="col">Tổng tiền</th>
+                                                            <th scope="col">Thành tiền</th>
+                                                            <th scope="col">Trạng thái</th>
                                                             <th scope="col"
-                                                                th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=3&&hoaDon.trangThai!=5}">
+                                                                th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=5}">
                                                                 Thao tác</th>
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -522,7 +524,7 @@
 
                                                         <tr th:each="obj, state:${hoaDon.lstHoaDonChiTiet}">
 
-                                                            <form th:id="${'myForm'+obj.ChiTietSanPham.id}"
+                                                            <form th:id="${'myForm'+obj.id}"
                                                                 action="/ban-hang-tai-quay/hoa-don-chi-tiet/update"
                                                                 method="post">
 
@@ -551,9 +553,73 @@
                                                                 <td>
                                                                     [[${obj.soLuong}]]
                                                                 </td>
+
                                                                 <td>
                                                                     <div class="price-table">
                                                                         [[${obj.tongTien()}]] VND
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <p th:if="${obj.trangThai==2}">
+                                                                        Hàng trả
+                                                                    </p>
+                                                                    <p th:if="${obj.trangThai==1}">
+                                                                        Hàng đổi
+                                                                    </p>
+                                                                    <p th:if="${obj.trangThai==0}">
+                                                                        Hàng bình thường
+                                                                    </p>
+                                                                </td>
+                                                                <td th:if="${hoaDon.trangThai==3}">
+                                                                    <div class="button-table">
+                                                                        <button type="button" class="btn btn-primary"
+                                                                            th:data-bs-toggle="modal"
+                                                                            th:data-bs-target="${'#modalEditSoLuongTra'+obj.id}">
+                                                                            Trả hàng
+                                                                            <input type="hidden" name="idHdct"
+                                                                                th:value="${obj.id}">
+                                                                        </button>
+
+                                                                        <!-- Modal update sl tra -->
+                                                                        <div class="modal fade"
+                                                                            th:id="${'modalEditSoLuongTra'+obj.id}"
+                                                                            tabindex="-1"
+                                                                            aria-labelledby="exampleModalLabel"
+                                                                            aria-hidden="true">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h1 class="modal-title fs-5"
+                                                                                            id="exampleModalLabel">Nhập
+                                                                                            số lượng</h1>
+
+
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <p>(Sẵn
+                                                                                            [[${obj.soLuong}]]
+                                                                                            sản phẩm )</p>
+                                                                                        <input type="number"
+                                                                                            name="soLuongEditTra"
+                                                                                            
+                                                                                            th:id="${'soLuongEditTra'+obj.id}">
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-secondary"
+                                                                                            data-bs-dismiss="modal">Close
+                                                                                        </button>
+                                                                                        <button
+                                                                                            th:onclick="'validateAndSubmitTraHang('+${obj.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
+                                                                                            type="button"
+                                                                                            class="btn btn-primary">Save
+                                                                                            changes
+                                                                                        </button>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </td>
                                                                 <td
@@ -571,7 +637,7 @@
                                                                                 th:value="${obj.id}">
                                                                         </button>
 
-                                                                        <!-- Modal -->
+                                                                        <!-- Modal update sl-->
                                                                         <div class="modal fade"
                                                                             th:id="${'modalEditSoLuong'+obj.id}"
                                                                             tabindex="-1"
@@ -592,7 +658,7 @@
                                                                                             sản phẩm )</p>
                                                                                         <input type="number"
                                                                                             name="soLuongEdit"
-                                                                                            th:id="${'soLuongEdit'+obj.ChiTietSanPham.id}">
+                                                                                            th:id="${'soLuongEdit'+obj.id}">
                                                                                     </div>
                                                                                     <div class="modal-footer">
                                                                                         <button type="button"
@@ -600,7 +666,7 @@
                                                                                             data-bs-dismiss="modal">Close
                                                                                         </button>
                                                                                         <button
-                                                                                            th:onclick="'validateAndSubmit('+${obj.ChiTietSanPham.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.ChiTietSanPham.id}+')'"
+                                                                                            th:onclick="'validateAndSubmit('+${obj.ChiTietSanPham.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
                                                                                             type="button"
                                                                                             class="btn btn-primary">Save
                                                                                             changes
@@ -1262,6 +1328,7 @@
                                                                             }
                                                                         });
                                                                         function calculateShippingFee() {
+                                                                            resetTienKhachTra();
                                                                             var citySelect = document.getElementById('citySelect').value;
                                                                             var districtSelect = document.getElementById('districtSelect').value;
                                                                             var wardSelect = document.getElementById('wardSelect').value;
@@ -1617,6 +1684,34 @@
                                                                         </h6>
                                                                     </div>
                                                                 </div>
+
+                                                                <div th:if="${hoaDon.trangThai==-1||hoaDon.trangThai==4}"
+                                                                    class="row">
+                                                                    <div class="col">
+                                                                        <h6>Tiền khách trả:</h6>
+                                                                    </div>
+                                                                    <div class="col">
+
+                                                                        <input id="tienKhachTra" class="thong-tin-gia"
+                                                                            type="number">
+                                                                    </div>
+
+
+                                                                </div>
+                                                                <div th:if="${hoaDon.trangThai==-1||hoaDon.trangThai==4}"
+                                                                    class="row">
+                                                                    <div class="col">
+                                                                        <h6>Trả lại:</h6>
+                                                                    </div>
+                                                                    <div class="col">
+
+                                                                        <h6 class="thong-tin-gia"><span
+                                                                                id="traLai">0</span>
+                                                                            VND</h6>
+                                                                    </div>
+
+
+                                                                </div>
                                                                 <div class="row">
                                                                     <div class="col">
                                                                         <h3>Tổng tiền:</h3>
@@ -1632,6 +1727,7 @@
 
 
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1757,9 +1853,10 @@
                                                             data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
                                                             style="float: right;" class="btn btn-success">Hoàn thành
                                                         </button>
-                                                        <img style="float: right;" th:case="3"
-                                                            src="data:image/png;base64,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"
-                                                            alt="">
+                                                        <button id="thanhToan" th:case="3" type="button"
+                                                            data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
+                                                            style="float: right;" class="btn btn-success">Xác nhận trả hàng
+                                                        </button>
                                                         <button id="thanhToan" th:case="4" type="button"
                                                             data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
                                                             style="float: right;" class="btn btn-success">Thanh toán
@@ -2094,6 +2191,7 @@
     </style>
     <script>
         function handleRadioVoucher(rowIndex) {
+            resetTienKhachTra();
             var index = rowIndex.getAttribute('data-index');
             console.log(index)
             // Tách chuỗi thành mảng các phần tử (số)
@@ -2134,7 +2232,7 @@
 
             // tongTien.value = shippingFeeResultInt + tongTienHangInt;
             tongTienAndSale.value = shippingFeeResultInt + tongTienHangInt - ((tongTienHangInt * phamTramGiam) / 100).toFixed(0);
-            totalElementSale.innerHTML = shippingFeeResultInt + tongTienHangInt - ((tongTienHangInt * phamTramGiam) / 100).toFixed(0) + ' VND';
+            totalElementSale.innerHTML = shippingFeeResultInt + tongTienHangInt - ((tongTienHangInt * phamTramGiam) / 100).toFixed(0);
             document.getElementById('giamGiaInput').value = ((tongTienHangInt * phamTramGiam) / 100).toFixed(0);
         }
 
