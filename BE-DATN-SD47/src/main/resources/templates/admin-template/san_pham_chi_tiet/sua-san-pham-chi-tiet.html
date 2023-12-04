@@ -181,37 +181,21 @@
                                 <div class="row g-3" style="margin-top: 2%;width: 95%; margin: auto">
                                     <div class="col-md-12">
                                         <label class="col-form-label">
-                                            <span class="dausao">*</span>Tên sản phẩm
+                                            <span class="dausao">*</span>Tên sản phẩm:
                                         </label>
                                         <input type="text" class="form-control"
                                                th:value="${sanPhamDetail != null ? sanPhamDetail.ten : ''}" disabled>
 
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label class="col-form-label">
-                                            <span class="dausao">*</span>Tên sản phẩm
+                                            <span class="dausao">*</span>Thương Hiệu:
                                         </label>
                                         <!-- Kiểm tra nếu sanPhamDetail không null thì hiển thị giá trị, ngược lại hiển thị một giá trị mặc định hoặc không hiển thị gì cả -->
                                         <input type="text" class="form-control"
                                                th:value="${sanPhamDetail != null ? sanPhamDetail.thuongHieu.ten : ''}"
                                                disabled>
 
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">
-                                            <span class="dau-sao">*</span>Trạng thái:</label>
-                                        <div style="margin-top: 1%;">
-                                            <input class="form-check-input" id="trangThai1" type="radio"
-                                                   name="trangThai1" style="margin-left:5%;"
-                                                   onchange="selectOnChange(0)">
-                                            <label class="form-check-label" for="trangThai1">Đang hoạt động</label>
-
-                                            <input class="form-check-input" id="trangThai2" type="radio"
-                                                   name="trangThai1" style="margin-left:5%;"
-                                                   onchange="selectOnChange(1)">
-                                            <label class="form-check-label" for="trangThai2">Ngừng hoạt động</label>
-
-                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="col-form-label">
@@ -242,50 +226,70 @@
                                         </textarea>
                                     </div>
 
-                                </div>
-                                <div class="col-md-12" id="nhapFullDuLieu">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    Nhập tất cả số lượng:
-                                                    <input class="form-control" type="number" oninput="updateInputsSoLuong(this)">
-                                                    <script>
-                                                        function updateInputsSoLuong(sourceInput) {
-                                                            // Lấy giá trị của input nguồn
-                                                            var sourceValue = sourceInput.value;
-                                                            console.log(sourceValue)
-                                                            const donGiaInputs = document.getElementsByName("listSoLuong");
-                                                            for (let i = 0; i < donGiaInputs.length; i++) {
-                                                                donGiaInputs[i].value = sourceValue
 
-                                                            }
-                                                        }
-                                                    </script>
+                                    <div class="col-md-12" id="nhapFullDuLieu">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-label">
+                                                    <span class="dau-sao">*</span>Chọn Tất Cả Trạng thái:</label>
+                                                <div style="margin-top: 1%;">
+                                                    <input class="form-check-input" id="trangThai1" type="radio"
+                                                           name="trangThai1" style="margin-left:5%;"
+                                                           onchange="selectOnChange(0)">
+                                                    <label class="form-check-label" for="trangThai1">Đang hoạt
+                                                        động</label>
+
+                                                    <input class="form-check-input" id="trangThai2" type="radio"
+                                                           name="trangThai1" style="margin-left:5%;"
+                                                           onchange="selectOnChange(1)">
+                                                    <label class="form-check-label" for="trangThai2">Ngừng hoạt
+                                                        động</label>
+
                                                 </div>
-                                                <div class="col-md-6">
-                                                    Nhập tất cả giá:
-                                                    <input  class="form-control" type="number" oninput="updateInputsGia(this)">
-                                                    <script>
-                                                        function updateInputsGia(sourceInput) {
-                                                            // Lấy giá trị của input nguồn
-                                                            var sourceValue = sourceInput.value;
-                                                            console.log(sourceValue)
-                                                            const donGiaInputs = document.getElementsByName("listDonGia");
-                                                            for (let i = 0; i < donGiaInputs.length; i++) {
-                                                                donGiaInputs[i].value = sourceValue
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-6">
 
+                                                        <label class="form-label">
+                                                            <span class="dau-sao">*</span>Nhập tất cả số lượng:</label>
+                                                        <input class="form-control" type="number"
+                                                               oninput="updateInputsSoLuong(this)">
+                                                        <script>
+                                                            function updateInputsSoLuong(sourceInput) {
+                                                                // Lấy giá trị của input nguồn
+                                                                var sourceValue = sourceInput.value;
+                                                                console.log(sourceValue)
+                                                                const donGiaInputs = document.getElementsByName("listSoLuong");
+                                                                for (let i = 0; i < donGiaInputs.length; i++) {
+                                                                    donGiaInputs[i].value = sourceValue
+
+                                                                }
                                                             }
-                                                        }
-                                                    </script>
+                                                        </script>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        Nhập tất cả giá:
+                                                        <input class="form-control" type="number"
+                                                               oninput="updateInputsGia(this)">
+                                                        <script>
+                                                            function updateInputsGia(sourceInput) {
+                                                                // Lấy giá trị của input nguồn
+                                                                var sourceValue = sourceInput.value;
+                                                                console.log(sourceValue)
+                                                                const donGiaInputs = document.getElementsByName("listDonGia");
+                                                                for (let i = 0; i < donGiaInputs.length; i++) {
+                                                                    donGiaInputs[i].value = sourceValue
+
+                                                                }
+                                                            }
+                                                        </script>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                                 <form th:action="@{/admin/san-pham-chi-tiet/update}" method="post"
                                       enctype="multipart/form-data"
                                       class="row g-3" style="margin-top: 2%;width: 95%; margin: auto">
@@ -341,11 +345,13 @@
                                                         #selectTrangThai1 {
                                                             background-color: #4bff52;
                                                         }
+
                                                         #selectTrangThai2 {
                                                             background-color: #ff5959;
                                                         }
                                                     </style>
-                                                    <select class="form-control listTrangThai" th:id="${chiTietSanPham.trangThai == 0} ? 'selectTrangThai1' : 'selectTrangThai2'"
+                                                    <select class="form-control listTrangThai"
+                                                            th:id="${chiTietSanPham.trangThai == 0} ? 'selectTrangThai1' : 'selectTrangThai2'"
                                                             name="listTrangThai"
                                                             aria-label="Default select example">
                                                         <option th:value="0" th:label="|Đang hoạt động|"
