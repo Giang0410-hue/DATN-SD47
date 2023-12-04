@@ -65,6 +65,12 @@
 <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/thong-ke">
+                <i class="bi bi-graph-up-arrow"></i>
+                <span>Thống Kê</span>
+            </a>
+        </li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don">
@@ -207,16 +213,79 @@
 
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <label class="col-form-label">
+                                            <span class="dausao">*</span>Ngày Tạo:
+                                        </label>
+                                        <!-- Kiểm tra nếu sanPhamDetail không null thì hiển thị giá trị, ngược lại hiển thị một giá trị mặc định hoặc không hiển thị gì cả -->
+                                        <input type="text" class="form-control"
+                                               th:value="${listChiTietSP[0].ngayTao}"
+                                               disabled>
 
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="col-form-label">
+                                            <span class="dausao">*</span>Ngày Sửa:
+                                        </label>
+                                        <!-- Kiểm tra nếu sanPhamDetail không null thì hiển thị giá trị, ngược lại hiển thị một giá trị mặc định hoặc không hiển thị gì cả -->
+                                        <input type="text" class="form-control"
+                                               th:value="${listChiTietSP[0].ngaySua}"
+                                               disabled>
+
+                                    </div>
                                     <div class="col-md-12">
                                         <label class="col-form-label"><span
                                                 class="dausao">*</span>Mô tả</label>
-                                        <textarea class="form-control" th:text="${sanPhamDetail != null ? sanPhamDetail.moTa : ''}"
+                                        <textarea class="form-control"
+                                                  th:text="${sanPhamDetail != null ? sanPhamDetail.moTa : ''}"
                                                   id="exampleFormControlTextarea1" rows="3" disabled>
                                         </textarea>
                                     </div>
 
                                 </div>
+                                <div class="col-md-12" id="nhapFullDuLieu">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    Nhập tất cả số lượng:
+                                                    <input class="form-control" type="number" oninput="updateInputsSoLuong(this)">
+                                                    <script>
+                                                        function updateInputsSoLuong(sourceInput) {
+                                                            // Lấy giá trị của input nguồn
+                                                            var sourceValue = sourceInput.value;
+                                                            console.log(sourceValue)
+                                                            const donGiaInputs = document.getElementsByName("listSoLuong");
+                                                            for (let i = 0; i < donGiaInputs.length; i++) {
+                                                                donGiaInputs[i].value = sourceValue
+
+                                                            }
+                                                        }
+                                                    </script>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    Nhập tất cả giá:
+                                                    <input  class="form-control" type="number" oninput="updateInputsGia(this)">
+                                                    <script>
+                                                        function updateInputsGia(sourceInput) {
+                                                            // Lấy giá trị của input nguồn
+                                                            var sourceValue = sourceInput.value;
+                                                            console.log(sourceValue)
+                                                            const donGiaInputs = document.getElementsByName("listDonGia");
+                                                            for (let i = 0; i < donGiaInputs.length; i++) {
+                                                                donGiaInputs[i].value = sourceValue
+
+                                                            }
+                                                        }
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <form th:action="@{/admin/san-pham-chi-tiet/update}" method="post"
                                       enctype="multipart/form-data"
                                       class="row g-3" style="margin-top: 2%;width: 95%; margin: auto">
@@ -268,7 +337,16 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class="form-control listTrangThai" name="listTrangThai"
+                                                    <style>
+                                                        #selectTrangThai1 {
+                                                            background-color: #4bff52;
+                                                        }
+                                                        #selectTrangThai2 {
+                                                            background-color: #ff5959;
+                                                        }
+                                                    </style>
+                                                    <select class="form-control listTrangThai" th:id="${chiTietSanPham.trangThai == 0} ? 'selectTrangThai1' : 'selectTrangThai2'"
+                                                            name="listTrangThai"
                                                             aria-label="Default select example">
                                                         <option th:value="0" th:label="|Đang hoạt động|"
                                                                 th:selected="${chiTietSanPham.trangThai == 0}"></option>
@@ -292,7 +370,8 @@
                                                     <input type="number" class="form-control" min="0" name="listSoLuong"
 
                                                            th:value="${chiTietSanPham.soLuong}">
-                                                    <div class="error-message" th:id="'checkSoLuong' + ${iterStat.index}"
+                                                    <div class="error-message"
+                                                         th:id="'checkSoLuong' + ${iterStat.index}"
                                                          style="display: none;color: #ff0000;font-size: 14px;font-weight: bold;"></div>
                                                 </td>
                                                 <td>
@@ -307,7 +386,9 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" onclick="return checkSuaCtsp()" class="btn btn-warning">Cập nhật</button>
+                                        <button type="submit" onclick="return checkSuaCtsp()" class="btn btn-warning">
+                                            Cập nhật
+                                        </button>
                                         <script>
                                             function checkSuaCtsp() {
                                                 const soLuongInputs = document.getElementsByName("listSoLuong");
@@ -319,10 +400,10 @@
                                                     const checkDonGia = donGiaInputs[i].value;
                                                     const errorDiv = document.getElementById("checkDonGia" + i);
 
-                                                    if (checkDonGia <= 10000 || checkDonGia >= 1000000000) {
+                                                    if (checkDonGia < 10000 || checkDonGia >= 1000000000) {
                                                         hasError = true; // Có lỗi
                                                         errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
-                                                        errorDiv.textContent = (checkDonGia <= 10000) ? "Giá phải >= 10000" : "Giá phải <= 1000000000"; // Hiển thị thông báo lỗi
+                                                        errorDiv.textContent = (checkDonGia < 10000) ? "Giá phải >= 10000" : "Giá phải <= 1000000000"; // Hiển thị thông báo lỗi
                                                     } else {
                                                         errorDiv.style.display = "none"; // Ẩn div thông báo lỗi nếu giá trị hợp lệ
                                                     }
@@ -332,10 +413,10 @@
                                                     const checkSoLuong = soLuongInputs[i].value;
                                                     const errorDiv = document.getElementById("checkSoLuong" + i);
 
-                                                    if (checkSoLuong=="") {
+                                                    if (checkSoLuong == "") {
                                                         hasError = true; // Có lỗi
                                                         errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
-                                                        errorDiv.textContent =  "Không được để null"; // Hiển thị thông báo lỗi
+                                                        errorDiv.textContent = "Không được để null"; // Hiển thị thông báo lỗi
                                                     } else if (checkSoLuong < 0 || checkSoLuong >= 100000) {
                                                         hasError = true; // Có lỗi
                                                         errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi

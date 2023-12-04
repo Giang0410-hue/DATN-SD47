@@ -23,7 +23,7 @@ public interface GioHangChiTietRepository extends JpaRepository<GioHangChiTiet,L
     @Query(value = "SELECT * FROM gio_hang_chi_tiet where chi_tiet_san_pham_id = :idCTSP",nativeQuery = true)
     GioHangChiTiet fillByIdCTSP(@Param("idCTSP")Long idCTSP);
 
-    @Query(value = "select * from gio_hang_chi_tiet where gio_hang_id = :idGioHang and chi_tiet_san_pham_id = :idChiTetSP",nativeQuery = true)
-    GioHangChiTiet getByGioHangChiTiet(@Param("idGioHang")Long idGioHang,@Param("idChiTetSP")Long idChiTetSP);
+    @Query(value = "select * from gio_hang_chi_tiet where gio_hang_id = :idGioHang  and chi_tiet_san_pham_id IN (:idChiTetSP)",nativeQuery = true)
+    List<GioHangChiTiet> getByGioHangChiTiet(@Param("idGioHang")Long idGioHang,@Param("idChiTetSP")List<String> idChiTetSP);
 
 }

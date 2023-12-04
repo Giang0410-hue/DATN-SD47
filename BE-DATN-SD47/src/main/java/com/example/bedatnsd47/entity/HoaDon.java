@@ -1,6 +1,5 @@
 package com.example.bedatnsd47.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -88,12 +86,6 @@ public class HoaDon {
     @Column(name = "ngay_sua")
     private Date ngaySua;
 
-    @Column(name = "nguoi_tao", length = 100)
-    private String nguoiTao;
-
-    @Column(name = "nguoi_sua", length = 100)
-    private String nguoiSua;
-
     @Column(name = "trang_thai")
     private Integer trangThai;
 
@@ -124,9 +116,14 @@ public class HoaDon {
         // LocalDateTime currentTime = LocalDateTime.now();
 
         // Định dạng thời gian theo yêu cầu: giờ, phút, ngày, tháng, năm
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
-        String formattedTime = currentTime.format(formatter);
-        return formattedTime;
+        String time;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+            time = currentTime.format(formatter);
+        } catch (Exception e) {
+            return "";
+        }
+        return time;
     }
 
     public Long tongTienHoaDonKhiGiam() {
@@ -147,8 +144,12 @@ public class HoaDon {
                 return "Hoàn thành";
             case 4:
                 return "Chờ thanh toán";
-                case 5:
+            case 5:
                 return "Đã hủy";
+            case 6:
+                return "Xác nhận đổi trả"; 
+            case 7:
+                return "Hoàn thành đổi trả";
             default:
                 break;
         }

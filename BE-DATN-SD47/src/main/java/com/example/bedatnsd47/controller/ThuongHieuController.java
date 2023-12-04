@@ -24,8 +24,6 @@ public class ThuongHieuController {
     @Autowired
     private ThuongHieuService thuongHieuService;
 
-    private Date currentDate = new Date();
-
     @GetMapping("")
     public String hienThi(
             Model model
@@ -82,7 +80,7 @@ public class ThuongHieuController {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             ThuongHieu th = thuongHieuService.getById(thuongHieu.getId());
             thuongHieu.setNgayTao(th.getNgayTao());
-            thuongHieu.setNgaySua(currentDate);
+            thuongHieu.setNgaySua(new Date());
             thuongHieuService.update(thuongHieu);
             return "redirect:/admin/thuong-hieu";
         }
@@ -109,8 +107,8 @@ public class ThuongHieuController {
         }
         else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            thuongHieu.setNgayTao(currentDate);
-            thuongHieu.setNgaySua(currentDate);
+            thuongHieu.setNgayTao(new Date());
+            thuongHieu.setNgaySua(new Date());
             thuongHieu.setTrangThai(0);
             thuongHieuService.save(thuongHieu);
             return "redirect:/admin/thuong-hieu";

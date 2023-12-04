@@ -10,11 +10,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "lich_su_hoa_don")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class LichSuHoaDon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +40,35 @@ public class LichSuHoaDon {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(fetch = FetchType.LAZY )
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hoa_don_id", referencedColumnName = "id")
     private HoaDon hoaDon;
+
+    public String getStringTrangThai() {
+        if (this.trangThai == null) {
+            return "Trạng thái null";
+        }
+        switch (this.trangThai) {
+            case 0:
+                return "Tạo hóa đơn";
+            case 1:
+                return "Đã xác nhận";
+            case 2:
+                return "Đã bàn giao cho đơn vị vận chuyển";
+            case 3:
+                return "Đã giao";
+            case 4:
+                return "Đặt hàng thành công";
+            case 5:
+                return "Đã hủy";
+            case 6:
+                return "Đã thanh toán";
+            case 7:
+                return "Trả hàng";
+            default:
+                return "";
+
+        }
+
+    }
 }

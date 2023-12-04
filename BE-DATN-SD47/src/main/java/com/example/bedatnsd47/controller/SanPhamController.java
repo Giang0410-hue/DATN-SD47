@@ -39,8 +39,6 @@ public class SanPhamController {
     @Autowired
     private HinhAnhSanPhamSerivce hinhAnhSanPhamSerivce;
 
-    private Date currentDate = new Date();
-
 
     @GetMapping()
     public String hienThi(
@@ -105,7 +103,7 @@ public class SanPhamController {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             SanPham sp = sanPhamSerivce.getById(sanPham.getId());
             sanPham.setNgayTao(sp.getNgayTao());
-            sanPham.setNgaySua(currentDate);
+            sanPham.setNgaySua(new Date());
             for (MultipartFile file : multipartFiles) {
                 if (file != null && !file.isEmpty()) {
                     hinhAnhSanPhamSerivce.deleteByID(sanPham.getId());
@@ -141,8 +139,8 @@ public class SanPhamController {
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             sanPham.setMa("SP" + sanPhamSerivce.genMaTuDong());
-            sanPham.setNgayTao(currentDate);
-            sanPham.setNgaySua(currentDate);
+            sanPham.setNgayTao(new Date());
+            sanPham.setNgaySua(new Date());
             sanPham.setTrangThai(0);
             sanPhamSerivce.add(sanPham);
 
