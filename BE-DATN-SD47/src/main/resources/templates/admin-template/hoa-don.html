@@ -233,7 +233,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            <form method="post" action="/ban-hang-tai-quay/hoa-don/chuyen-nhanh">
+                            <form onsubmit="return checkValidGhiChu()" method="post" action="/ban-hang-tai-quay/hoa-don/chuyen-nhanh">
                                 <div class="tab-content" id="ex2-content">
                                     <div class="tab-pane fade show active" id="ex3-tabs-0" role="tabpanel"
                                         aria-labelledby="ex3-tab-1">
@@ -758,8 +758,9 @@
                                                 <div class="container-fluid">
                                                     <div class="mb-3">
                                                         <label for="" class="form-label"></label>
-                                                        <textarea class="form-control" name="ghiChu" id=""
+                                                        <textarea class="form-control" name="ghiChu" id="ghiChu"
                                                             rows="3"></textarea>
+                                                            <small style="color: red;" id="errorGhiChu"></small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -792,7 +793,7 @@
         </section>
 
     </main><!-- End #main -->
-
+<script src="../../static/js/banHangValid.js"></script>
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">

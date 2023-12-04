@@ -601,7 +601,6 @@
                                                                                             sản phẩm )</p>
                                                                                         <input type="number"
                                                                                             name="soLuongEditTra"
-                                                                                            
                                                                                             th:id="${'soLuongEditTra'+obj.id}">
                                                                                     </div>
                                                                                     <div class="modal-footer">
@@ -1328,7 +1327,7 @@
                                                                             }
                                                                         });
                                                                         function calculateShippingFee() {
-                                                                            resetTienKhachTra();
+
                                                                             var citySelect = document.getElementById('citySelect').value;
                                                                             var districtSelect = document.getElementById('districtSelect').value;
                                                                             var wardSelect = document.getElementById('wardSelect').value;
@@ -1807,13 +1806,11 @@
                                                                             <div class="mb-3">
                                                                                 <label for="" class="form-label">Ghi
                                                                                     chú</label>
-                                                                                <input type="text" class="form-control"
-                                                                                    name="ghiChuThanhToan" id=""
-                                                                                    aria-describedby="helpId"
-                                                                                    placeholder="">
-                                                                                <small id="helpId"
-                                                                                    class="form-text text-muted">Viết rõ
-                                                                                    vào đây</small>
+                                                                                    <textarea class="form-control"
+                                                                                    name="ghiChuThanhToan" id="nhapGhiChu" cols="30" rows="10"></textarea>
+                                                                                
+                                                                                <small style="color: red;" id="errorGhiChuThanhToan"
+                                                                                    class="form-text "></small>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1855,8 +1852,21 @@
                                                         </button>
                                                         <button id="thanhToan" th:case="3" type="button"
                                                             data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
-                                                            style="float: right;" class="btn btn-success">Xác nhận trả hàng
+                                                            style="float: right;" class="btn btn-success">Xác nhận trả
+                                                            hàng
                                                         </button>
+                                                        <div th:case="6" class="">
+                                                            <!-- <button id="thanhToan"  type="button"
+                                                                data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
+                                                                style="float: right;" class="btn btn-success">Từ chối
+                                                            </button> -->
+                                                            <button id="thanhToan"  type="button"
+                                                                data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
+                                                                style="float: right;" class="btn btn-success">Xác nhận
+                                                                trả hàng
+                                                            </button>
+                                                        </div>
+
                                                         <button id="thanhToan" th:case="4" type="button"
                                                             data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
                                                             style="float: right;" class="btn btn-success">Thanh toán
@@ -2191,7 +2201,6 @@
     </style>
     <script>
         function handleRadioVoucher(rowIndex) {
-            resetTienKhachTra();
             var index = rowIndex.getAttribute('data-index');
             console.log(index)
             // Tách chuỗi thành mảng các phần tử (số)

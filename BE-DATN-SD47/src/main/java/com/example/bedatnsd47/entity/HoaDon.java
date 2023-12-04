@@ -147,7 +147,7 @@ public class HoaDon {
             case 5:
                 return "Đã hủy";
             case 6:
-                return "Chờ xác nhận đổi trả"; 
+                return "Xác nhận đổi trả"; 
             case 7:
                 return "Hoàn thành đổi trả";
             default:

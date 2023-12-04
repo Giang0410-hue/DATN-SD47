@@ -42,8 +42,31 @@ function validateAndSubmitTraHang(slg, sl, idCtsp) {
         document.getElementById("myForm" + idCtsp).submit();
     }
 }
+function validGhiChuThanhToan() {
+    var textarea = document.getElementById("nhapGhiChu");
+    var text = textarea.value.trim(); // Lấy giá trị và loại bỏ khoảng trắng
+    var errorGhiChu = document.getElementById("errorGhiChuThanhToan")
+    if (text === '') {
+        errorGhiChu.innerHTML = "Vui lòng nhập ghi chú";
 
+        alert('s')
+        return false;
+    } else {
+        alert('vd')
+    }
+}
 function validateThanhToan() {
+
+    var inputGhiChuThanhToan = document.getElementById('nhapGhiChu')
+    var errorGhiChu = document.getElementById("errorGhiChuThanhToan")
+
+    if (inputGhiChuThanhToan.value.trim() === '') {
+        errorGhiChu.innerHTML = "Vui lòng nhập ghi chú";
+
+    
+        return false;
+    } 
+    // return false;
     handleButtonClick('thanhToan');
 
     const checkGiaoHang = document.getElementById('toggleVisibility').checked
@@ -118,50 +141,64 @@ function handleButtonClick(idBtn) {
     var button = document.getElementById(idBtn); // Lấy button
     console.log('handleButtonClick')
     if (button.getAttribute('disabled') === 'disabled') {
-      // Nếu button đã được vô hiệu hóa, không làm gì cả (để ngăn chặn spam)
-      return;
+        // Nếu button đã được vô hiệu hóa, không làm gì cả (để ngăn chặn spam)
+        return;
     }
-  
+
     // Vô hiệu hóa button sau khi được nhấn
     button.setAttribute('disabled', 'disabled');
-  
+
     // Gửi yêu cầu hoặc thực hiện công việc cần thiết ở đây
-  
+
     // Sau một khoảng thời gian, có thể muốn kích hoạt lại button (nếu thích)
-    setTimeout(function() {
-      button.removeAttribute('disabled'); // Kích hoạt lại button sau một khoảng thời gian
+    setTimeout(function () {
+        button.removeAttribute('disabled'); // Kích hoạt lại button sau một khoảng thời gian
     }, 1500); // Ví dụ: kích hoạt lại sau 3 giây (3000 milliseconds)
-  }
+}
 
-  const inputElement = document.getElementById('tienKhachTra'); // Thay 'inputId' bằng ID thực của ô input
-  const tongTien = document.getElementById('tongAll');
-  const traLai = document.getElementById('traLai');
-  inputElement.addEventListener('input', function(event) {
-      const newValue = event.target.value;
-      traLai.innerHTML=(newValue- tongTien.value)
-  
-      // Thực hiện các hành động khác ngay khi giá trị thay đổi
-  });
+const inputElement = document.getElementById('tienKhachTra'); // Thay 'inputId' bằng ID thực của ô input
+const tongTien = document.getElementById('tongAll');
+const traLai = document.getElementById('traLai');
+inputElement.addEventListener('input', function (event) {
+    const newValue = event.target.value;
+    traLai.innerHTML = (newValue - tongTien.value)
 
-  function resetTienKhachTra(){
+    // Thực hiện các hành động khác ngay khi giá trị thay đổi
+});
+
+function resetTienKhachTra() {
     const inputElement = document.getElementById('tienKhachTra'); // Thay 'inputId' bằng ID thực của ô input
-            const tongTien = document.getElementById('tongAll');
-            const traLai = document.getElementById('traLai');
-            inputElement.value=null
-            traLai.innerHTML='0'
-  }
-  function resetTienKhachTra2(){
+    const tongTien = document.getElementById('tongAll');
+    const traLai = document.getElementById('traLai');
+    inputElement.value = null
+    traLai.innerHTML = '0'
+}
+function resetTienKhachTra2() {
     const inputElement2 = document.getElementById('tongAll'); // Thay 'inputId' bằng ID thực của ô input
 
-inputElement2.addEventListener('input', function(event) {
-    const newValue = event.target.value;
-    console.log('Giá trị mới tt:', newValue);
+    inputElement2.addEventListener('input', function (event) {
+        const newValue = event.target.value;
+        console.log('Giá trị mới tt:', newValue);
 
-    // Thực hiện các hành động khác sau khi giá trị thay đổi
-});
+        // Thực hiện các hành động khác sau khi giá trị thay đổi
+    });
     const inputElement = document.getElementById('tienKhachTra'); // Thay 'inputId' bằng ID thực của ô input
-            const tongTien = document.getElementById('tongAll');
-            const traLai = document.getElementById('traLai');
-            inputElement.value=null
-            traLai.innerHTML='0'
-  }
+    const tongTien = document.getElementById('tongAll');
+    const traLai = document.getElementById('traLai');
+    inputElement.value = null
+    traLai.innerHTML = '0'
+}
+
+function checkValidGhiChu() {
+    var textarea = document.getElementById("ghiChu");
+    var text = textarea.value.trim(); // Lấy giá trị và loại bỏ khoảng trắng
+    var errorGhiChu = document.getElementById("errorGhiChu")
+    if (text === '') {
+        errorGhiChu.innerHTML = "Vui lòng nhập ghi chú";
+
+
+        return false;
+    } else {
+        return true;
+    }
+}

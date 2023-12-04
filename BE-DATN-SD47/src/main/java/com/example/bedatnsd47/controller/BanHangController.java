@@ -92,7 +92,7 @@ public class BanHangController {
             hd.setNgayTao(new Date());
             hd.setTaiKhoan(khachHangService.findKhachLe());
             hd.setPhiShip((long) 0);
-            hd.setLoaiHoaDon(1);
+            hd.setLoaiHoaDon(2);
             hd.setTongTien((long) 0);
             hd.setTongTienKhiGiam((long) 0);
             hoaDonService.saveOrUpdate(hd);
@@ -229,14 +229,15 @@ public class BanHangController {
         hoaDonService.saveOrUpdate(hd);
         return "redirect:/ban-hang-tai-quay/hoa-don/" + idhdc;
     }
+
     @PostMapping("/hoa-don/chuyen-nhanh")
-    public String chuyenNhanh(@RequestParam Long idHoaDon,@RequestParam String ghiChu){
+    public String chuyenNhanh(@RequestParam Long idHoaDon, @RequestParam String ghiChu) {
         HoaDon hd = hoaDonService.findById(idHoaDon);
-        hd.setTrangThai(hd.getTrangThai()+1);
+        hd.setTrangThai(hd.getTrangThai() + 1);
         hd.setNgaySua(new Date());
         addLichSuHoaDon(idHoaDon, ghiChu, hd.getTrangThai());
         hoaDonService.saveOrUpdate(hd);
-        System.out.println(ghiChu+"ghiChu");
+        System.out.println(ghiChu + "ghiChu");
         return "redirect:/ban-hang-tai-quay/hoa-don/quan-ly";
 
     }
@@ -275,7 +276,7 @@ public class BanHangController {
 
                 } else {
                     // Hoàn thành
-                    addLichSuHoaDon(hd.getId(), ghiChuThanhToan, 6);
+                    addLichSuHoaDon(hd.getId(), ghiChuThanhToan, 3);
                     hd.setTrangThai(3);
                     hd.setNgayThanhToan(new Date());
                     hd.setNgaySua(new Date());
@@ -307,7 +308,31 @@ public class BanHangController {
                 break;
             case 3:
                 addLichSuHoaDon(hd.getId(), ghiChuThanhToan, 7);
-                hd.setTrangThai(6);
+                HoaDon hdDoiTra = new HoaDon();
+                hdDoiTra.setNguoiNhan(hd.getNguoiNhan());
+                hdDoiTra.setEmailNguoiNhan(hd.getEmailNguoiNhan());
+                hdDoiTra.setNgayTao(new Date());
+                hdDoiTra.setNgaySua(new Date());
+                hdDoiTra.setTaiKhoan(hd.getTaiKhoan());
+                hdDoiTra.setQuanHuyen(hd.getQuanHuyen());
+                hdDoiTra.setThanhPho(hd.getThanhPho());
+                hdDoiTra.setPhuongXa(hd.getPhuongXa());
+                hdDoiTra.setLoaiHoaDon(2);
+                hdDoiTra.setTrangThai(7);
+                hdDoiTra.setTongTien((long) 0);
+                hdDoiTra.setTongTienKhiGiam((long) 0);
+                hdDoiTra.setPhiShip((long) 0);
+                hoaDonService.saveOrUpdate(hdDoiTra);
+                hdDoiTra.setMaHoaDon("HD-DOITRA" + hdDoiTra.getId());
+                hoaDonService.saveOrUpdate(hdDoiTra);
+                for (HoaDonChiTiet hdctf : hd.getLstHoaDonChiTiet()) {
+                    if (hdctf.getTrangThai() == 2) {
+                        HoaDonChiTiet hdctn = hdctf;
+                        hdctn.setHoaDon(hdDoiTra);
+                        hoaDonChiTietService.saveOrUpdate(hdctn);
+                    }
+                }
+
                 hd.setNgaySua(new Date());
                 break;
             case 4:
@@ -317,6 +342,8 @@ public class BanHangController {
                 hd.setNgayThanhToan(new Date());
                 updateSl(hd);
                 break;
+            case 6:
+                hd.setTrangThai(7);
             default:
                 break;
 
