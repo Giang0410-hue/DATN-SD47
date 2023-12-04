@@ -52,17 +52,17 @@ public class LichSuHoaDon {
             case 0:
                 return "Tạo hóa đơn";
             case 1:
-                return "Đặt hàng thành công";
+                return "Đã xác nhận";
             case 2:
                 return "Đã bàn giao cho đơn vị vận chuyển";
             case 3:
-                return "Đã thanh toán";
+                return "Đã giao";
             case 4:
-                return "Đã xác nhận";
+                return "Đặt hàng thành công";
             case 5:
                 return "Đã hủy";
             case 6:
-                return "Đã giao";
+                return "Đã thanh toán";
             case 7:
                 return "Trả hàng";
             default:
