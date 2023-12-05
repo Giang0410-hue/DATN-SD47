@@ -2,32 +2,49 @@ package com.example.bedatnsd47.controller;
 
 import com.example.bedatnsd47.entity.ChiTietSanPham;
 import com.example.bedatnsd47.entity.DiaChi;
+import com.example.bedatnsd47.entity.GioHang;
 import com.example.bedatnsd47.entity.HoaDon;
 import com.example.bedatnsd47.entity.HoaDonChiTiet;
 import com.example.bedatnsd47.entity.LichSuHoaDon;
 import com.example.bedatnsd47.entity.TaiKhoan;
+import com.example.bedatnsd47.entity.VaiTro;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import com.example.bedatnsd47.service.DiaChiService;
+import com.example.bedatnsd47.service.GioHangService;
 import com.example.bedatnsd47.service.HoaDonChiTietService;
 import com.example.bedatnsd47.service.HoaDonService;
 import com.example.bedatnsd47.service.KhachHangService;
 import com.example.bedatnsd47.service.LichSuHoaDonService;
+import com.example.bedatnsd47.service.TaiKhoanService;
 import com.example.bedatnsd47.service.VoucherService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/ban-hang-tai-quay")
 // @HÁ
 public class BanHangController {
+    @Autowired
+    GioHangService gioHangService;
 
     @Autowired
     LichSuHoaDonService lichSuHoaDonService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     HoaDonService hoaDonService;
@@ -40,6 +57,9 @@ public class BanHangController {
 
     @Autowired
     KhachHangService khachHangService;
+
+    @Autowired
+    TaiKhoanService taiKhoanService;
 
     @Autowired
     DiaChiService diaChiService;
@@ -66,7 +86,8 @@ public class BanHangController {
     Long idhdc;
 
     @GetMapping("/hoa-don/{id}")
-    public String hoaDon(@PathVariable Long id) {
+    public String hoaDon(@PathVariable Long id, Model model) {
+        model.addAttribute("khachHang", new TaiKhoan());
         request.setAttribute("lstHoaDon", hoaDonService.find5ByTrangThai(-1));
         request.setAttribute("lstHdct", hoaDonChiTietService.findAll());
         request.setAttribute("lstCtsp", chiTietSanPhamSerivce.fillAllDangHoatDongLonHon0());
@@ -263,7 +284,7 @@ public class BanHangController {
 
                 } else if (giaoHang.equals("on")) {
                     // Giao hàng
-                    addLichSuHoaDon(hd.getId(), ghiChuThanhToan, 4);
+                    addLichSuHoaDon(hd.getId(), ghiChuThanhToan, 1);
                     hd.setTrangThai(1);
                     hd.setPhiShip(phiShip);
                     hd.setSdtNguoiNhan(inputSoDienThoai);
@@ -392,6 +413,84 @@ public class BanHangController {
         lshd.setNgayTao(new Date());
         lshd.setNgaySua(new Date());
         lichSuHoaDonService.saveOrUpdate(lshd);
+    }
+
+    @PostMapping("/khach-hang/them-nhanh")
+    public String add(@ModelAttribute("khachHang") TaiKhoan taiKhoan,
+            Model model,
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request,
+            @RequestParam("email") String email) {
+        String random3 = ranDom1();
+        TaiKhoan userInfo = taiKhoan;
+        TaiKhoan taiKhoanEntity = new TaiKhoan();
+        taiKhoanEntity.setNgaySinh(taiKhoan.getNgaySinh());
+        if (!taiKhoanEntity.isValidNgaySinh()) {
+            redirectAttributes.addFlashAttribute("checkModal", "modal");
+            redirectAttributes.addFlashAttribute("checkThongBao", "thaiBai");
+            redirectAttributes.addFlashAttribute("checkNgaySinh", "ngaySinh");
+            return "redirect:/ban-hang-tai-quay/hoa-don/" + idhdc;
+        } else if (!khachHangService.checkTenTaiKhoanTrung(taiKhoan.getTenTaiKhoan())) {
+            redirectAttributes.addFlashAttribute("checkModal", "modal");
+            redirectAttributes.addFlashAttribute("checkThongBao", "thaiBai");
+            redirectAttributes.addFlashAttribute("checkTenTrung", "Tên tài khoản đã tồn tại");
+            redirectAttributes.addFlashAttribute("checkEmailTrung", "Email đã tồn tại");
+            return "redirect:/ban-hang-tai-quay/hoa-don/" + idhdc;
+        } else if (!khachHangService.checkEmail(taiKhoan.getEmail())) {
+            redirectAttributes.addFlashAttribute("checkModal", "modal");
+            redirectAttributes.addFlashAttribute("checkThongBao", "thaiBai");
+            redirectAttributes.addFlashAttribute("checkEmailTrung", "Email đã tồn tại");
+            return "redirect:/ban-hang-tai-quay/hoa-don/" + idhdc;
+        } else {
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+            String url = request.getRequestURL().toString();
+            System.out.println(url);
+            url = url.replace(request.getServletPath(), "");
+            khachHangService.sendEmail(userInfo, url, random3);
+            System.out.println(userInfo);
+            userInfo.setNgayTao(new Date());
+            userInfo.setNgaySua(new Date());
+            userInfo.setMatKhau(passwordEncoder.encode(random3));
+            VaiTro vaiTro = new VaiTro();
+            vaiTro.setId(Long.valueOf(2));
+            userInfo.setVaiTro(vaiTro);
+            userInfo.setTrangThai(0);
+            userInfo.setVaiTro(vaiTro);
+            khachHangService.update(userInfo);
+
+            GioHang gioHang = new GioHang();
+            gioHang.setMaGioHang("GH" + gioHangService.genMaTuDong());
+            gioHang.setGhiChu("");
+            gioHang.setNgaySua(new Date());
+            gioHang.setNgayTao(new Date());
+            gioHang.setTaiKhoan(TaiKhoan.builder().id(userInfo.getId()).build());
+            gioHang.setTrangThai(0);
+            gioHangService.save(gioHang);
+
+            return "redirect:/ban-hang-tai-quay/hoa-don/" + idhdc;
+        }
+    }
+
+    public String ranDom1() {
+        // Khai báo một mảng chứa 6 số nguyên ngẫu nhiên
+        String ran = "";
+        int[] randomNumbers = new int[6];
+
+        // Tạo một đối tượng Random
+        Random random = new Random();
+
+        // Đổ số nguyên ngẫu nhiên vào mảng
+        for (int i = 0; i < 6; i++) {
+            randomNumbers[i] = random.nextInt(100); // Giới hạn số ngẫu nhiên từ 0 đến 99
+        }
+
+        // In ra các số nguyên ngẫu nhiên trong mảng
+        System.out.println("Dãy 6 số nguyên ngẫu nhiên:");
+        for (int number : randomNumbers) {
+            ran = ran + number;
+            System.out.println(number);
+        }
+        return ran;
     }
 
 }
