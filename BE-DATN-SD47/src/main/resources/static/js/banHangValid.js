@@ -202,3 +202,86 @@ function checkValidGhiChu() {
         return true;
     }
 }
+
+function getNameXaPhuong(idQuanHuyen,idXaPhuong) {
+    fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${idQuanHuyen}`, {
+        method: 'GET',
+        headers: {
+            'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Xử lý dữ liệu khi API trả về thành công
+            // populateSelect(wardSelect, data.data, 'WardCode', 'WardName');
+            data.data.forEach(x=>{
+                if(x.WardCode===idXaPhuong){
+                    console.log(x.WardName)
+                    document.getElementById('phuongXaChonDc').innerHTML = x.WardName
+                }
+            })
+            // console.log(data.data)
+
+        })
+        .catch(error => {
+            console.error('Lỗi khi tải dữ liệu quận:', error);
+        });
+}
+
+function getNameQuanHuyenById(idThanhPho, idQuanHuyen) {
+    fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${idThanhPho}`, {
+        method: 'GET',
+        headers: {
+            'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Xử lý dữ liệu khi API trả về thành công
+            data.data.forEach(q => {
+                if (q.DistrictID === idQuanHuyen) {
+                    console.log(q.DistrictName)
+                }
+            });
+            // console.log(data.data)
+
+
+        })
+        .catch(error => {
+            console.error('Lỗi khi tải dữ liệu quận:', error);
+        });
+}
+
+function getNameThanhPhoById(idThanhPho) {
+    var tenThanhPho = ''
+
+    fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/province`, {
+        method: 'GET',
+        headers: {
+            'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Xử lý dữ liệu khi API trả về thành công
+            var lst = data.data
+            lst.forEach(dc => {
+                // console.log(dc.ProvinceID)
+                if (idThanhPho === dc.ProvinceID) {
+                    tenThanhPho = dc.ProvinceName
+                    console.log(tenThanhPho)
+                }
+
+
+            });
+
+
+        })
+        .catch(error => {
+            console.error('Lỗi khi tải dữ liệu quận:', error);
+        });
+
+}
