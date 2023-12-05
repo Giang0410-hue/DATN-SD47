@@ -8,8 +8,10 @@ import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.repository.ChiTietSanPhamRepository;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -183,6 +185,13 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     @Override
     public List<ChiTietSanPham> fillAllDangHoatDongLonHon0() {
         return repository.fillAllDangHoatDongLonHon0();
+    }
+
+    @Override
+    public List<ChiTietSanPham> searchAll(Integer pageNo,String tenSanPham,String tenMauSac) {
+
+        return repository.searchAll(tenSanPham,tenMauSac);
+
     }
 
 }
