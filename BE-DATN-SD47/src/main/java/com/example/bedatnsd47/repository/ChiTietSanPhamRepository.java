@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Repository
@@ -106,4 +107,8 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
 
     @Query(value = "select * from chi_tiet_san_pham where trang_thai = 0 and so_luong>0", nativeQuery = true)
     List<ChiTietSanPham> fillAllDangHoatDongLonHon0();
+
+    @Query(value = "SELECT p FROM ChiTietSanPham p WHERE p.trangThai = 0 AND p.sanPham.ten LIKE CONCAT('%',:tenSanPham,'%') \n" +
+            "OR p.trangThai = 0 AND p.mauSac.ten LIKE CONCAT('%',:tenMauSac,'%')")
+    List<ChiTietSanPham> searchAll(@Param("tenSanPham")String tenSanPham,@Param("tenMauSac")String tenMauSac);
 }

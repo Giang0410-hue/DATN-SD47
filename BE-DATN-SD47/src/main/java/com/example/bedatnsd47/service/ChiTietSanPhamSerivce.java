@@ -42,4 +42,6 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> fillAllDangHoatDongLonHon0();
 
+    List<ChiTietSanPham> searchAll(Integer pageNo,String tenSanPham,String tenMauSac);
+
 }

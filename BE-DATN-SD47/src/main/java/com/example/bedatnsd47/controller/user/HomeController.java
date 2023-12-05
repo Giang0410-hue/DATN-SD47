@@ -8,6 +8,7 @@ import com.example.bedatnsd47.entity.LichSuHoaDon;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.entity.VaiTro;
 import com.example.bedatnsd47.entity.Voucher;
+import com.example.bedatnsd47.repository.ChiTietSanPhamRepository;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import com.example.bedatnsd47.service.DiaChiService;
 import com.example.bedatnsd47.service.GioHangChiTietService;
@@ -22,6 +23,7 @@ import com.example.bedatnsd47.service.TaiKhoanService;
 import com.example.bedatnsd47.service.VoucherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -544,6 +546,20 @@ public class HomeController {
 //        System.out.println(lichSuHoaDonService.findById(Long.valueOf(10172)));
 //        return "/admin-template/detail-hoa-don";
 //    }
+    @Autowired
+    private ChiTietSanPhamRepository chiTietSanPhamRepository;
+    @GetMapping("/search")
+    @ResponseBody
+    public ResponseEntity<?> search(
+            @RequestParam(value = "tenSanPham",defaultValue = "")String tenSanPham,
+            @RequestParam(value = "tenMauSac",defaultValue = "")String tenMauSac
+    ) {
+        System.out.println("tenSanPham*****" + tenSanPham);
+        System.out.println("tenMauSac*****" + tenMauSac);
+        List<ChiTietSanPham> chiTietSanPham = chiTietSanPhamRepository.searchAll(tenSanPham,tenMauSac);
+        return ResponseEntity.ok(chiTietSanPham);
+    }
+
     @GetMapping("/thankyou")
     public String thankYou(
             Model model
