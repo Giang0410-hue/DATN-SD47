@@ -533,7 +533,17 @@ public class HomeController {
         System.out.println(lichSuHoaDonService.findById(idHoaDon));
         return "/customer-template/don-mua-chi-tiet";
     }
-
+//    @GetMapping("/detail-hoa-don")
+//    public String detail(
+//            Model model
+//    ) {
+//        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+//        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+//        model.addAttribute("byHoaDon", hoaDonService.findById(Long.valueOf(10172)));
+//        model.addAttribute("listLichSuHoaDon", lichSuHoaDonService.findByIdhdNgaySuaAsc(Long.valueOf(10172)));
+//        System.out.println(lichSuHoaDonService.findById(Long.valueOf(10172)));
+//        return "/admin-template/detail-hoa-don";
+//    }
     @GetMapping("/thankyou")
     public String thankYou(
             Model model
