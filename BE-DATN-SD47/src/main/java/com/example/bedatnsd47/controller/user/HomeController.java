@@ -20,9 +20,12 @@ import com.example.bedatnsd47.service.LichSuHoaDonService;
 import com.example.bedatnsd47.service.LoaiDeService;
 import com.example.bedatnsd47.service.MauSacService;
 import com.example.bedatnsd47.service.TaiKhoanService;
+import com.example.bedatnsd47.service.ThuongHieuService;
 import com.example.bedatnsd47.service.VoucherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -36,6 +39,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.awt.print.Pageable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -57,6 +61,9 @@ public class HomeController {
 
     @Autowired
     private LoaiDeService loaiDeService;
+
+    @Autowired
+    private ThuongHieuService thuongHieuService;
 
     @Autowired
     private KhachHangService khachHangService;
@@ -295,34 +302,72 @@ public class HomeController {
         return "redirect:/thankyou";
     }
 
+//    @GetMapping("/shop")
+//    public String shop(
+//            Model model
+//    ) {
+//        model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllDangHoatDong());
+//        model.addAttribute("listMauSac", mauSacService.findAll());
+//        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+//        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+//        model.addAttribute("listKichCo", kichCoService.findAll());
+//        model.addAttribute("listLoaiDe", loaiDeService.findAll());
+//        return "/customer-template/shop";
+//    }
+
     @GetMapping("/shop")
-    public String shop(
+//    @ResponseBody
+    public String search(
+            @RequestParam(value = "keyword", defaultValue = "") String keyword,
+            @RequestParam(value = "MauSac", required = false) List<Long> MauSac,
+            @RequestParam(value = "KichCo", required = false) List<Long> KichCo,
+            @RequestParam(value = "LoaiDe", required = false) List<Long> LoaiDe,
+            @RequestParam(value = "ThuongHieu", required = false) List<Long> ThuongHieu,
+            @RequestParam(value = "minPrice", defaultValue = "") Long minPrice,
+            @RequestParam(value = "maxPrice", defaultValue = "") Long maxPrice,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "28") Integer size,
             Model model
     ) {
-        model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllDangHoatDong());
-        model.addAttribute("listMauSac", mauSacService.findAll());
+        if (MauSac == null) {
+            MauSac = chiTietSanPhamSerivce.getAllIdMauSacCTSP();
+        }
+        if (KichCo == null) {
+            KichCo = chiTietSanPhamSerivce.getAllIdKichCoCTSP();
+        }
+        if (LoaiDe == null) {
+            LoaiDe = chiTietSanPhamSerivce.getAllIdLoaiDeCTSP();
+        }
+        if (ThuongHieu == null) {
+            ThuongHieu = chiTietSanPhamSerivce.getAllIdThuongHieuCTSP();
+        }
+        if (minPrice == null) {
+            minPrice = chiTietSanPhamSerivce.getAllMinGiaCTSP();
+        }
+        if (maxPrice == null) {
+            maxPrice = chiTietSanPhamSerivce.getAllMaxGiaCTSP();
+        }
+
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+//        Page<List<ChiTietSanPham>> chiTietSanPham = chiTietSanPhamSerivce.searchAll(pageNo,keyword,MauSac,KichCo,LoaiDe,ThuongHieu,minPrice,maxPrice);
+        model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.searchAll(page, size, keyword, MauSac, KichCo, LoaiDe, ThuongHieu, minPrice, maxPrice).stream().toList());
+        Integer pageCout = (int) Math.ceil((double) chiTietSanPhamSerivce.getAllDangHoatDong().size() / size);
+        System.out.println(chiTietSanPhamSerivce.getAllDangHoatDong().size() + "*****");
+        model.addAttribute("pageCount", pageCout);
+        model.addAttribute("listMauSac", mauSacService.findAll());
         model.addAttribute("listKichCo", kichCoService.findAll());
         model.addAttribute("listLoaiDe", loaiDeService.findAll());
+        model.addAttribute("listThuongHieu", thuongHieuService.getAllDangHoatDong());
         return "/customer-template/shop";
     }
 
+    @GetMapping("/test")
+    public String shopSingle(
+    ) {
 
-//    @PostMapping("/gio-hang/add")
-//    public String addGioHang(
-//    ) {
-//        GioHang gioHang = new GioHang();
-//        gioHang.setMaGioHang("GH" + gioHangService.genMaTuDong());
-//        gioHang.setGhiChu("");
-//        gioHang.setNgayTao(currentDate);
-//        gioHang.setNgayTao(currentDate);
-//        gioHang.setTaiKhoan(TaiKhoan.builder().id(idTaiKhoan).build());
-//        gioHang.setTrangThai(0);
-//        gioHangService.save(gioHang);
-//        return "redirect:/shop";
-//    }
-
+        return "/customer-template/testin";
+    }
 
     @GetMapping("/chi-tiet-san-pham/{idSanPham}/{idMauSac}")
     @ResponseBody
@@ -546,19 +591,7 @@ public class HomeController {
 //        System.out.println(lichSuHoaDonService.findById(Long.valueOf(10172)));
 //        return "/admin-template/detail-hoa-don";
 //    }
-    @Autowired
-    private ChiTietSanPhamRepository chiTietSanPhamRepository;
-    @GetMapping("/search")
-    @ResponseBody
-    public ResponseEntity<?> search(
-            @RequestParam(value = "tenSanPham",defaultValue = "")String tenSanPham,
-            @RequestParam(value = "tenMauSac",defaultValue = "")String tenMauSac
-    ) {
-        System.out.println("tenSanPham*****" + tenSanPham);
-        System.out.println("tenMauSac*****" + tenMauSac);
-        List<ChiTietSanPham> chiTietSanPham = chiTietSanPhamRepository.searchAll(tenSanPham,tenMauSac);
-        return ResponseEntity.ok(chiTietSanPham);
-    }
+
 
     @GetMapping("/thankyou")
     public String thankYou(

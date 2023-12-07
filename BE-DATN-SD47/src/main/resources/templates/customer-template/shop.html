@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"/>
     <link rel="stylesheet" href="../../static/fonts/icomoon/style.css"/>
 
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css"/>
+    <link href="../../../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="../../static/css/magnific-popup.css"/>
     <link rel="stylesheet" href="../../static/css/jquery-ui.css"/>
     <link rel="stylesheet" href="../../static/css/owl.carousel.min.css"/>
@@ -43,7 +46,7 @@
                     <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                         <div class="site-top-icons">
                             <ul class="nav nav-pills" style="margin-left: 54%">
-                                <li class="nav-item dropdown" >
+                                <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                                        role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
                                     <ul class="dropdown-menu">
@@ -55,9 +58,9 @@
                                 </li>
 
                                 <!--                                <li class="nav-item" style="margin-left: -15%">-->
-<!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
-<!--                                </li>-->
-                                <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
+                                <!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
+                                <!--                                </li>-->
+                                <li class="nav-item" style=";margin-left: -10%">
                                     <a class="site-cart" href="/cart">
                                         <span class="icon icon-shopping_cart"></span>
                                         <span class="count" th:text="${soLuongSPGioHangCT}"></span>
@@ -119,75 +122,412 @@
             <form class="pf-controls" id="pf-Filters">
                 <fieldset class="filter-group pf-search">
                     <h4>Tìm kiếm</h4>
-                    <input type="text" class="live-search-box" id="pf-search-id" placeholder="Tìm kiếm ..."/>
+                    <input type="text" class="live-search-box" id="pf-search-id"
+                           placeholder="Tìm kiếm theo tên sản phẩm"/>
                 </fieldset>
+                <div style="border-top: 1px solid #bfbfbf;width: 95%;margin-top: 5%;margin-bottom: 5%"></div>
                 <fieldset class="filter-group pf-checkboxes">
                     <h4>Màu Sắc</h4>
                     <div class="pf-checkbox" th:each="mauSac : ${listMauSac}">
-                        <input type="checkbox" th:value="${mauSac.ten}" class="segment"/>
+                        <input type="checkbox" th:value="${mauSac.id}"
+                               class="mauSacCheckbox" onclick="handleCheckboxClick(this)"/>
                         <label th:text="${mauSac.ten}"></label>
                     </div>
                 </fieldset>
+                <div style="border-top: 1px solid #bfbfbf;width: 95%;margin-top: 5%;margin-bottom: 5%"></div>
                 <fieldset class="filter-group pf-checkboxes">
                     <h4>Kích Cỡ</h4>
                     <div class="pf-checkbox" th:each="kichCo : ${listKichCo}">
-                        <input type="checkbox" th:value="${kichCo.ten}" class="seating"/>
+                        <input type="checkbox" th:value="${kichCo.id}"
+                               class="kichCoCheckbox" onclick="handleCheckboxClick(this)"/>
                         <label th:text="${kichCo.ten}"></label>
                     </div>
                 </fieldset>
+                <div style="border-top: 1px solid #bfbfbf;width: 95%;margin-top: 5%;margin-bottom: 5%"></div>
                 <fieldset class="filter-group pf-checkboxes">
                     <h4>Loại Đế</h4>
                     <div class="pf-checkbox" th:each="loaiDe : ${listLoaiDe}">
-                        <input type="checkbox" th:value="${loaiDe.ten}" class="power"/>
+                        <input type="checkbox" th:value="${loaiDe.id}"
+                               class="loaiDeCheckbox" onclick="handleCheckboxClick(this)"/>
                         <label th:text="${loaiDe.ten}"></label>
                     </div>
                 </fieldset>
-                <button id="pf-Reset">Xóa bộ lọc</button>
+                <div style="border-top: 1px solid #bfbfbf;width: 95%;margin-top: 5%;margin-bottom: 5%"></div>
+                <fieldset class="filter-group pf-checkboxes">
+                    <h4>Thương Hiệu</h4>
+                    <div class="pf-checkbox" th:each="thuongHieu : ${listThuongHieu}">
+                        <input type="checkbox" th:value="${thuongHieu.id}"
+                               class="thuongHieuCheckbox" onclick="handleCheckboxClick(this)"/>
+                        <label th:text="${thuongHieu.ten}"></label>
+                    </div>
+                </fieldset>
+                <div style="border-top: 1px solid #bfbfbf;width: 95%;margin-top: 5%;margin-bottom: 5%"></div>
+                <fieldset class="filter-group pf-checkboxes">
+                    <h4>Khoảng giá</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="text" style="width: 47%" id="minPrice" placeholder="Từ"
+                                   min="1" maxlength="13" step="1" oninput="limitInput(this)">
+                            -
+                            <input type="text" style="width: 47%" id="maxPrice" placeholder="Đến"
+                                   min="1" maxlength="13" step="1" oninput="limitInput(this)">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="check-loi" id="checkLoiKhoangGia"
+                                 style="text-align: center;margin-top: 5%;display: none"></div>
+                            <button type="button"
+                                    onclick="checkApDung()"
+                                    style="width: 100%;background-color: #ff7f1f;color: white;margin-top: 5%"
+                                    class="btn btn-primary">Áp dụng
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+                <div style="border-top: 1px solid #bfbfbf;width: 95%;margin-top: 5%;margin-bottom: 5%"></div>
+
+                <button id="pf-Reset" style="width: 95%;background-color: #ff7f1f;color: white">Xóa bộ lọc</button>
+                <script>
+
+                    function limitInput(inputElement) {
+                        var minValue = parseInt(inputElement.min, 10);
+                        var maxValue = parseInt(inputElement.max, 10);
+                        var stepValue = parseInt(inputElement.step, 10);
+
+                        // Chuyển giá trị nhập vào thành số nguyên
+                        var enteredValue = parseInt(inputElement.value, 10);
+
+                        // Kiểm tra giá trị nhập vào
+                        if (isNaN(enteredValue)) {
+                            // Nếu giá trị không phải là số, đặt giá trị mặc định là giá trị nhỏ nhất
+                            inputElement.value = minValue;
+                        } else if (enteredValue < minValue) {
+                            // Nếu giá trị nhỏ hơn giá trị nhỏ nhất, đặt giá trị nhỏ nhất
+                            inputElement.value = minValue;
+                        } else if (enteredValue > maxValue) {
+                            // Nếu giá trị lớn hơn giá trị lớn nhất, đặt giá trị lớn nhất
+                            inputElement.value = maxValue;
+                        } else if (enteredValue % stepValue !== 0) {
+                            // Nếu giá trị không chia hết cho bước, làm tròn đến giá trị gần nhất chia hết cho bước
+                            inputElement.value = Math.round(enteredValue / stepValue) * stepValue;
+                        }
+                    }
+
+                    // Biến để lưu trữ vị trí trang
+                    var scrollPosition = 0;
+
+                    // Lấy vị trí trang khi trang được load
+                    window.onload = function () {
+                        scrollPosition = window.pageYOffset;
+                    };
+
+                    function checkApDung() {
+
+                        var check = true;
+
+                        var minPrice = document.getElementById("minPrice")
+                        var maxPrice = document.getElementById("maxPrice")
+                        var checkLoiKhoangGia = document.getElementById("checkLoiKhoangGia")
+                        checkLoiKhoangGia.style.display = 'none'
+                        if (minPrice.value.trim() == '' && maxPrice.value.trim() == '') {
+                            checkLoiKhoangGia.style.display = 'block'
+                            checkLoiKhoangGia.innerText = "Vui lòng điền khoảng giá phù hợp"
+                            check = false
+                        }
+                        var minValue = parseFloat(minPrice.value);
+                        var maxValue = parseFloat(maxPrice.value);
+                        if (minValue > maxValue) {
+                            checkLoiKhoangGia.style.display = 'block'
+                            console.log("min: " + minPrice.value)
+                            console.log("max: " + maxPrice.value)
+                            checkLoiKhoangGia.innerText = "Vui lòng điền khoảng giá phù hợp"
+                            check = false
+                        }
+
+                        if (check) {
+                            var fullUrl = window.location.href;
+
+                            if (minPrice.value !== '') {
+                                fullUrl = updateQueryStringParameter('minPrice', minPrice.value, fullUrl);
+                            } else {
+                                fullUrl = removeQueryStringParameter('minPrice', fullUrl);
+                            }
+
+                            if (maxPrice.value !== '') {
+                                fullUrl = updateQueryStringParameter('maxPrice', maxPrice.value, fullUrl);
+                            } else {
+                                fullUrl = removeQueryStringParameter('maxPrice', fullUrl);
+                            }
+
+                            window.location.href = fullUrl
+
+                        }
+
+                    }
+
+                    var selectedMauSacValues = [];
+                    var selectedKichCoValues = [];
+                    var selectedLoaiDeValues = [];
+                    var selectedThuongHieuValues = [];
+
+
+                    window.onload = function () {
+                        // Khi trang được tải, kiểm tra xem có tham số MauSac và KichCo trong URL không
+                        var urlParams = new URLSearchParams(window.location.search);
+                        var MauSacParam = urlParams.get('MauSac');
+                        var KichCoParam = urlParams.get('KichCo');
+                        var LoaiDeParam = urlParams.get('LoaiDe');
+                        var ThuongHieuParam = urlParams.get('ThuongHieu');
+                        var keywordParam = urlParams.get('keyword');
+                        var minPrice = urlParams.get('minPrice');
+                        var maxPrice = urlParams.get('maxPrice');
+                        var page = urlParams.get('page');
+
+                        if (MauSacParam) {
+                            // Nếu có, thêm các giá trị vào mảng selectedMauSacValues
+                            selectedMauSacValues = MauSacParam.split(',');
+
+                            // Cập nhật trạng thái checkbox dựa trên selectedMauSacValues
+                            selectedMauSacValues.forEach(function (value) {
+                                var checkbox = document.querySelector('.mauSacCheckbox[value="' + value + '"]');
+                                if (checkbox) {
+                                    checkbox.checked = true;
+                                }
+                            });
+                        }
+
+                        if (KichCoParam) {
+                            // Nếu có, thêm các giá trị vào mảng selectedKichCoValues
+                            selectedKichCoValues = KichCoParam.split(',');
+
+                            // Cập nhật trạng thái checkbox dựa trên selectedKichCoValues
+                            selectedKichCoValues.forEach(function (value) {
+                                var checkbox = document.querySelector('.kichCoCheckbox[value="' + value + '"]');
+                                if (checkbox) {
+                                    checkbox.checked = true;
+                                }
+                            });
+                        }
+
+                        if (LoaiDeParam) {
+                            // Nếu có, thêm các giá trị vào mảng selectedKichCoValues
+                            selectedLoaiDeValues = LoaiDeParam.split(',');
+
+                            // Cập nhật trạng thái checkbox dựa trên selectedKichCoValues
+                            selectedLoaiDeValues.forEach(function (value) {
+                                var checkbox = document.querySelector('.loaiDeCheckbox[value="' + value + '"]');
+                                if (checkbox) {
+                                    checkbox.checked = true;
+                                }
+                            });
+                        }
+                        if (ThuongHieuParam) {
+                            // Nếu có, thêm các giá trị vào mảng selectedKichCoValues
+                            selectedThuongHieuValues = ThuongHieuParam.split(',');
+
+                            // Cập nhật trạng thái checkbox dựa trên selectedKichCoValues
+                            selectedThuongHieuValues.forEach(function (value) {
+                                var checkbox = document.querySelector('.thuongHieuCheckbox[value="' + value + '"]');
+                                if (checkbox) {
+                                    checkbox.checked = true;
+                                }
+                            });
+                        }
+                        if (keywordParam) {
+
+                            var inputElement = document.getElementById('pf-search-id');
+                            inputElement.value = keywordParam
+
+                        }
+                        if (minPrice) {
+
+                            var inputElement = document.getElementById('minPrice');
+                            inputElement.value = minPrice
+
+                        }
+                        if (maxPrice) {
+
+                            var inputElement = document.getElementById('maxPrice');
+                            inputElement.value = maxPrice
+
+                        }
+                        if (page) {
+
+                            var inputElement = document.getElementById('pageNo');
+                            var intPage = parseInt(page) +1
+                            inputElement.value = intPage
+
+                        }
+                    };
+
+                    var inputElement = document.getElementById('pf-search-id');
+
+                    inputElement.addEventListener('blur', function () {
+                        var inputValue = inputElement.value;
+                        console.log('Giá trị của input:', inputValue);
+
+                        var fullUrl = window.location.href;
+
+                        if (inputValue !== '') {
+                            fullUrl = updateQueryStringParameter('keyword', inputValue, fullUrl);
+                        } else {
+                            fullUrl = removeQueryStringParameter('keyword', fullUrl);
+                        }
+
+                        window.location.href = fullUrl
+
+
+                    });
+
+                    function handleCheckboxClick(checkbox) {
+                        const checkedValue = checkbox.value;
+                        const checkboxClass = checkbox.classList.contains('mauSacCheckbox') ? 'mauSac' :
+                            checkbox.classList.contains('kichCoCheckbox') ? 'kichCo' :
+                                checkbox.classList.contains('loaiDeCheckbox') ? 'loaiDe' : 'thuongHieu';
+
+
+                        if (checkbox.checked) {
+                            if (checkboxClass === 'mauSac') {
+                                selectedMauSacValues.push(checkedValue);
+                            } else if (checkboxClass === 'kichCo') {
+                                selectedKichCoValues.push(checkedValue);
+                            } else if (checkboxClass === 'loaiDe') {
+                                selectedLoaiDeValues.push(checkedValue);
+                            } else {
+                                selectedThuongHieuValues.push(checkedValue);
+                            }
+                        } else {
+                            if (checkboxClass === 'mauSac') {
+                                const index = selectedMauSacValues.indexOf(checkedValue);
+                                if (index !== -1) {
+                                    selectedMauSacValues.splice(index, 1);
+                                }
+                            } else if (checkboxClass === 'kichCo') {
+                                const index = selectedKichCoValues.indexOf(checkedValue);
+                                if (index !== -1) {
+                                    selectedKichCoValues.splice(index, 1);
+                                }
+                            } else if (checkboxClass === 'loaiDe') {
+                                const index = selectedLoaiDeValues.indexOf(checkedValue);
+                                if (index !== -1) {
+                                    selectedLoaiDeValues.splice(index, 1);
+                                }
+                            } else {
+                                const index = selectedThuongHieuValues.indexOf(checkedValue);
+                                if (index !== -1) {
+                                    selectedThuongHieuValues.splice(index, 1);
+                                }
+                            }
+                        }
+
+                        console.log('Selected MauSac Values:', selectedMauSacValues);
+                        console.log('Selected KichCo Values:', selectedKichCoValues);
+                        console.log('Selected LoaiDe Values:', selectedLoaiDeValues);
+                        console.log('Selected ThuongHieu Values:', selectedThuongHieuValues);
+
+                        // Chuyển mảng thành chuỗi query string
+                        var mauSacQueryString = selectedMauSacValues.join(',');
+                        var kichCoQueryString = selectedKichCoValues.join(',');
+                        var loaiDeQueryString = selectedLoaiDeValues.join(',');
+                        var thuonghieuQueryString = selectedThuongHieuValues.join(',');
+
+                        // Lấy toàn bộ URL hiện tại
+                        var fullUrl = window.location.href;
+
+                        // Thêm/chỉnh sửa tham số MauSac
+                        if (mauSacQueryString !== '') {
+                            fullUrl = updateQueryStringParameter('MauSac', mauSacQueryString, fullUrl);
+                        } else {
+                            fullUrl = removeQueryStringParameter('MauSac', fullUrl);
+                        }
+
+                        // Thêm/chỉnh sửa tham số KichCo
+                        if (kichCoQueryString !== '') {
+                            fullUrl = updateQueryStringParameter('KichCo', kichCoQueryString, fullUrl);
+                        } else {
+                            fullUrl = removeQueryStringParameter('KichCo', fullUrl);
+                        }
+
+                        // Thêm/chỉnh sửa tham số LoaiDe
+                        if (loaiDeQueryString !== '') {
+                            fullUrl = updateQueryStringParameter('LoaiDe', loaiDeQueryString, fullUrl);
+                        } else {
+                            fullUrl = removeQueryStringParameter('LoaiDe', fullUrl);
+                        }
+
+                        // Thêm/chỉnh sửa tham số ThuongHieu
+                        if (thuonghieuQueryString !== '') {
+                            fullUrl = updateQueryStringParameter('ThuongHieu', thuonghieuQueryString, fullUrl);
+                        } else {
+                            fullUrl = removeQueryStringParameter('ThuongHieu', fullUrl);
+                        }
+
+
+                        console.log('New URL:', fullUrl);
+
+                        window.history.replaceState(null, null, fullUrl);
+                        window.location.href = fullUrl
+
+                        scrollPosition = window.pageYOffset;
+                        location.reload();
+                    }
+
+
+                    // Hàm cập nhật giá trị của query parameter trong URL
+                    function updateQueryStringParameter(key, value, url) {
+                        var regex = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                        var separator = url.indexOf('?') !== -1 ? "&" : "?";
+                        if (url.match(regex)) {
+                            return url.replace(regex, '$1' + key + "=" + value + '$2');
+                        } else {
+                            return url + separator + key + "=" + value;
+                        }
+                    }
+
+                    // Hàm xóa query parameter khỏi URL
+                    function removeQueryStringParameter(key, url) {
+                        var urlParts = url.split('?');
+                        if (urlParts.length >= 2) {
+                            var prefix = encodeURIComponent(key) + '=';
+                            var queryString = urlParts[1].split('&');
+
+                            for (var i = queryString.length - 1; i >= 0; i--) {
+                                if (queryString[i].lastIndexOf(prefix, 0) !== -1) {
+                                    queryString.splice(i, 1);
+                                }
+                            }
+
+                            url = urlParts[0] + (queryString.length > 0 ? '?' + queryString.join('&') : '');
+                        }
+
+                        return url;
+                    }
+                </script>
             </form>
         </div>
+        <div style="float: right;margin-top: 2%;margin-bottom: 4%;margin-right: 10%" class="dieu-huong">
+            <div class="dieu-huong1" style="display: inline;font-size: 2.5rem">
+                <span style="color: red" id="minPage">1</span><span th:text="${'/'+pageCount}" id="maxPage"></span>
+            </div>
+            <div class="dieu-huong2" style="display: inline">
+                <button style="background-color: white;border: 1px solid black" id="preTop">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button style="background-color: white;border: 1px solid black" id="nextTop">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
         <div class="pf-wrapper">
-            <!--                        <div id="pf-Container" class="pf-container live-search-list">-->
-            <!--&lt;!&ndash;                            <div class="fail-message" style="display:none;"></div>&ndash;&gt;-->
-            <!--                            <div th:each="chiTiepSp : ${listChiTietSP}" class="pf-card">-->
-            <!--                                <a style=" color: inherit;" >-->
-
-            <!--                                    &lt;!&ndash;                        <div class="pf-card-header" style="object-fit: cover">&ndash;&gt;-->
-            <!--                                    &lt;!&ndash;                            <div id="carouselExampleSlidesOnly" class="carousel slide"&ndash;&gt;-->
-            <!--                                    &lt;!&ndash;                                 data-bs-ride="carousel" style=" width: 200px;height: 200px;margin: auto">&ndash;&gt;-->
-            <!--                                    &lt;!&ndash;                                <div class="carousel-inner">&ndash;&gt;-->
-            <!--                                    &lt;!&ndash;                                    <div class="carousel-item active" data-bs-interval="1">&ndash;&gt;-->
-            <!--                                    &lt;!&ndash;                                    </div>&ndash;&gt;-->
-            <!--                                    <div th:each="anh : ${chiTiepSp.sanPham.listHinhAnhSanPham[0]}" style="height: 70%">-->
-            <!--                                        <img th:src="@{'../../../static/img/ImgShoe/' + ${anh.url}}"-->
-            <!--                                             th:data-segment="${chiTiepSp.mauSac.ten}"-->
-            <!--                                             th:data-seating="${chiTiepSp.kichCo.ten}"-->
-            <!--                                             th:data-power="${chiTiepSp.loaiDe.ten}"-->
-            <!--                                             class="d-block w-100" alt="...">-->
-            <!--                                    </div>-->
-            <!--                                    &lt;!&ndash;                                </div>&ndash;&gt;-->
-            <!--                                    &lt;!&ndash;                            </div>&ndash;&gt;-->
-            <!--                                    &lt;!&ndash;                        </div>&ndash;&gt;-->
-            <!--&lt;!&ndash;                                    <div class="pf-card-body">&ndash;&gt;-->
-            <!--&lt;!&ndash;                                        <p class="pf-item-title" th:text="${chiTiepSp.sanPham.ten}"></p>&ndash;&gt;-->
-            <!--&lt;!&ndash;                                        <p>&ndash;&gt;-->
-            <!--&lt;!&ndash;                                            Giá:&ndash;&gt;-->
-            <!--&lt;!&ndash;                                            <span th:text="${chiTiepSp.giaHienHanh + ' VNĐ'}"></span>&ndash;&gt;-->
-            <!--&lt;!&ndash;                                        </p>&ndash;&gt;-->
-            <!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
-            <!--                                </a>-->
-
-            <!--                            </div>-->
-
-            <!--                        </div> &lt;!&ndash; pf-Container end &ndash;&gt;-->
-
 
             <!-- Start Product Section -->
             <div class="product-section">
                 <div class="container">
+
                     <div class="row" style="margin-top: -13%">
                         <div id="pf-Container" class="pf-container live-search-list">
                             <div class="fail-message" style="text-align: center;margin-top: 20%;display: none"></div>
-                            <div class="pf-card" th:each="chiTiepSp : ${listChiTietSP}"
+                            <div class="pf-card" th:each="chiTiepSp,stage : ${listChiTietSP}"
                                  style="margin-top: 5%">
                                 <a class="product-item" th:href="@{/shop-single/{id}(id=${chiTiepSp.sanPham.id})}">
                                     <input type="hidden" th:value="${chiTiepSp.sanPham.ten}">
@@ -195,9 +535,6 @@
                                     <div class="product-thumbnail-container">
                                         <img th:each="anh : ${chiTiepSp.sanPham.listHinhAnhSanPham[0]}"
                                              th:src="@{'../../../static/img/ImgShoe/' + ${anh.url}}"
-                                             th:data-segment="${chiTiepSp.mauSac.ten}"
-                                             th:data-seating="${chiTiepSp.kichCo.ten}"
-                                             th:data-power="${chiTiepSp.loaiDe.ten}"
                                              class="img-fluid product-thumbnail">
                                     </div>
                                     <div class="product-info-container">
@@ -213,6 +550,151 @@
                             </div>
                         </div>
                     </div>
+                    <nav aria-label="Page navigation example" style="margin-left: 35%">
+                        <ul class="pagination" style="font-size: 2.2rem">
+                            <li class="page-item">
+                                <a class="page-link" aria-label="Previous">
+                                    <i class="bi bi-chevron-double-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" id="pre" aria-label="Previous">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+
+                            <li class="page-item" style="width: 7%">
+                                <input type="text" min="1" th:max="${pageCount}" value="1"
+                                       oninput="limitInput1(this)"
+                                       step="1"
+                                       id="pageNo"
+                                       style="width: 98%;height: 45px;padding-left: 40%">
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" id="next" aria-label="Next">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" aria-label="Next">
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <script>
+
+                            var preTop = document.getElementById("preTop");
+
+                            preTop.addEventListener("click", function (event) {
+                                handleClickPreTop();
+                            });
+
+                            function handleClickPreTop() {
+                                // Đặt logic xử lý chung ở đây
+                                capNhatSoLuong(this, -1);
+                            }
+
+                            var nextTop = document.getElementById("nextTop");
+
+                            // Đính kèm một bộ lắng nghe sự kiện click
+                            nextTop.addEventListener("click", function (event) {
+                                capNhatSoLuong(this, 1);
+                            });
+
+                            // ------------------------------------
+                            var preLink = document.getElementById("pre");
+
+                            preLink.addEventListener("click", function (event) {
+                                capNhatSoLuong(this, -1);
+                            });
+
+                            var nextLink = document.getElementById("next");
+
+                            var inputElement = document.getElementById('pageNo');
+
+                            // Đính kèm một bộ lắng nghe sự kiện click
+                            nextLink.addEventListener("click", function (event) {
+                                capNhatSoLuong(this, 1);
+                            });
+
+                            inputElement.addEventListener('blur', function () {
+                                var inputValue = inputElement.value - 1;
+                                console.log('Giá trị của input:', inputValue);
+
+                                var fullUrl = window.location.href;
+
+                                if (inputValue !== '') {
+                                    fullUrl = updateQueryStringParameter('page', inputValue, fullUrl);
+                                } else {
+                                    fullUrl = removeQueryStringParameter('page', fullUrl);
+                                }
+
+                                window.location.href = fullUrl
+
+
+                            });
+
+                            function capNhatSoLuong(button, soLuongThem) {
+                                var input = $(button).closest('ul.pagination').find('input[id^="pageNo"]');
+                                var min = parseInt(input.attr('min'));
+                                var max = parseInt(input.attr('max'));
+                                var step = parseInt(input.attr('step'));
+                                var soLuongHienTai = parseInt(input.val());
+                                var soLuongMoi = soLuongHienTai + soLuongThem;
+
+                                // Kiểm tra giá trị mới nằm trong khoảng từ min đến max và là bội số của step
+                                if (min && soLuongMoi < min) {
+                                    soLuongMoi = min;
+                                }
+                                if (max && soLuongMoi > max) {
+                                    soLuongMoi = max;
+                                }
+                                if (step && soLuongMoi % step !== 0) {
+                                    soLuongMoi = Math.ceil(soLuongMoi / step) * step; // Làm cho nó là bội số của step
+                                }
+
+                                // Cập nhật giá trị mới cho input
+                                input.val(soLuongMoi);
+                                console.log(soLuongMoi);
+
+                                var fullUrl = window.location.href;
+
+                                if (soLuongMoi - 1 !== '') {
+                                    fullUrl = updateQueryStringParameter('page', soLuongMoi - 1, fullUrl);
+                                } else {
+                                    fullUrl = removeQueryStringParameter('page', fullUrl);
+                                }
+
+                                window.location.href = fullUrl
+
+                            }
+
+                            function limitInput1(inputElement) {
+                                var minValue = parseInt(inputElement.min, 10);
+                                var maxValue = parseInt(inputElement.max, 10);
+                                var stepValue = parseInt(inputElement.step, 10);
+
+                                // Chuyển giá trị nhập vào thành số nguyên
+                                var enteredValue = parseInt(inputElement.value, 10);
+
+                                // Kiểm tra giá trị nhập vào
+                                if (isNaN(enteredValue)) {
+                                    // Nếu giá trị không phải là số, đặt giá trị mặc định là giá trị nhỏ nhất
+                                    inputElement.value = minValue;
+                                } else if (enteredValue < minValue) {
+                                    // Nếu giá trị nhỏ hơn giá trị nhỏ nhất, đặt giá trị nhỏ nhất
+                                    inputElement.value = minValue;
+                                } else if (enteredValue > maxValue) {
+                                    // Nếu giá trị lớn hơn giá trị lớn nhất, đặt giá trị lớn nhất
+                                    inputElement.value = maxValue;
+                                } else if (enteredValue % stepValue !== 0) {
+                                    // Nếu giá trị không chia hết cho bước, làm tròn đến giá trị gần nhất chia hết cho bước
+                                    inputElement.value = Math.round(enteredValue / stepValue) * stepValue;
+                                }
+                            }
+                        </script>
+                    </nav>
+
                 </div>
             </div>
         </div>
@@ -466,113 +948,7 @@
     }
 </style>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
-<script>
-    jQuery(document).ready(function () {
-        /* filter products */
-        jQuery('.productfinder input[type="checkbox"]').on('click', function () {
-            jQuery('div.pf-card').hide();
-            jQuery('div.fail-message').hide();
-            var selectedSegment = [];
-            var selectedSeating = [];
-            var selectedPower = [];
 
-            jQuery('input[type="checkbox"].segment:checked').each(function () {
-                selectedSegment.push(jQuery(this).val());
-            });
-            jQuery('input[type="checkbox"].seating:checked').each(function () {
-                selectedSeating.push(jQuery(this).val());
-            });
-            jQuery('input[type="checkbox"].power:checked').each(function () {
-                selectedPower.push(jQuery(this).val());
-            });
-
-            if (selectedSegment.length != 0 && selectedSeating.length == 0 && selectedPower == 0) {
-                jQuery.each(selectedSegment, function (index, segment) {
-                    jQuery('img[data-segment="' + segment + '"]').closest('.pf-card').show();
-                });
-            } else if (selectedSegment.length == 0 && selectedSeating.length != 0 && selectedPower == 0) {
-                jQuery.each(selectedSeating, function (index, seating) {
-                    jQuery('img[data-seating="' + seating + '"]').closest('.pf-card').show();
-                });
-            } else if (selectedSegment.length == 0 && selectedSeating.length == 0 && selectedPower != 0) {
-                jQuery.each(selectedPower, function (index, power) {
-                    jQuery('img[data-power="' + power + '"]').closest('.pf-card').show();
-                });
-            } else if (selectedSegment.length != 0 && selectedSeating.length != 0 && selectedPower == 0) {
-                jQuery.each(selectedSegment, function (index, segment) {
-                    jQuery.each(selectedSeating, function (index, seating) {
-                        jQuery('img[data-segment="' + segment + '"][data-seating="' + seating + '"]').closest('.pf-card').show();
-                    });
-                });
-            } else if (selectedSegment.length != 0 && selectedSeating.length == 0 && selectedPower != 0) {
-                jQuery.each(selectedSegment, function (index, segment) {
-                    jQuery.each(selectedPower, function (index, power) {
-                        jQuery('img[data-segment="' + segment + '"][data-power="' + power + '"]').closest('.pf-card').show();
-                    });
-                });
-            } else if (selectedSegment.length == 0 && selectedSeating.length != 0 && selectedPower != 0) {
-                jQuery.each(selectedSeating, function (index, seating) {
-                    jQuery.each(selectedPower, function (index, power) {
-                        jQuery('img[data-seating="' + seating + '"][data-power="' + power + '"]').closest('.pf-card').show();
-                    });
-                });
-            } else if (selectedSegment.length != 0 && selectedSeating.length != 0 && selectedPower != 0) {
-                jQuery.each(selectedSegment, function (index, segment) {
-                    jQuery.each(selectedSeating, function (index, seating) {
-                        jQuery.each(selectedPower, function (index, power) {
-                            jQuery('img[data-segment="' + segment + '"][data-seating="' + seating + '"][data-power="' + power + '"]').closest('.pf-card').show();
-                        });
-                    });
-                });
-            } else if (selectedSegment.length == 0 && selectedSeating.length == 0 && selectedPower == 0) {
-                jQuery('img').closest('.pf-card').show();
-            }
-
-            if (jQuery('div.pf-card:visible').length == 0) {
-                    jQuery($(".fail-message")).show().text("Không tìm thấy mục nào phù hợp với bộ lọc đã chọn");
-            }
-        });
-
-        /* search products */
-        // var highlight = function (string) {
-        //     console.log("highlight open")
-        //
-        //     jQuery($("#pf-Container .pf-card")).each(function () {
-        //         console.log("highlight open123")
-        //         var matchStart = jQuery(this).text().toLowerCase().indexOf("" + string.toLowerCase() + "");
-        //         var matchEnd = matchStart + string.length - 1;
-        //         var beforeMatch = jQuery(this).text().slice(0, matchStart);
-        //         var matchText = jQuery(this).text().slice(matchStart, matchEnd + 1);
-        //         var afterMatch = jQuery(this).text().slice(matchEnd + 1);
-        //     });
-        // };
-        jQuery("#pf-search-id").on("keyup click input", function () {
-            var formId = document.getElementById('pf-Filters');
-            jQuery(formId).find("input:radio, input:checkbox").prop('checked', false);
-            jQuery($("#pf-Container")).find(".pf-card").show();
-
-            if (this.value.length > 0) {
-                jQuery($("#pf-Container .pf-card")).hide().filter(function () {
-                    return jQuery(this).find('.product-title').text().toLowerCase().replace(/([,.@€$&*®™])+/g, '').indexOf(jQuery("#pf-search-id").val().toLowerCase()) != -1;
-                }).show();
-                // highlight(this.value);
-                jQuery($("#pf-Container")).show();
-            } else {
-                jQuery($("#pf-Container")).show();
-            }
-        });
-
-
-        /* reset filter & search products */
-        jQuery('#pf-reset-form').on('click', function () {
-            var formId = document.getElementById('#pf-Filters');
-            jQuery(formId).trigger("reset");
-            jQuery(formId).find("input:text").val('');
-            jQuery(formId).find("input:radio, input:checkbox").prop('checked', false);
-            jQuery(".pf-Container").find(".pf-card").show();
-        });
-    });
-</script>
 
 <script src="../../static/js/jquery-3.3.1.min.js"></script>
 <script src="../../static/js/jquery-ui.js"></script>
