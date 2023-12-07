@@ -138,10 +138,60 @@
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+            <li class="nav-item dropdown pe-3">
+
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <span class="d-none d-md-block dropdown-toggle ps-2">Nguyễn Tuấn Anh</span>
+                </a><!-- End Profile Iamge Icon -->
+
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                    <li class="dropdown-header">
+                        <h6>Nguyễn Tuấn Anh</h6>
+                        <span>Nhân Viên</span>
+                    </li>
+
+                    <!--                    <li>-->
+                    <!--                        <hr class="dropdown-divider">-->
+                    <!--                    </li>-->
+
+                    <!--                    <li>-->
+                    <!--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">-->
+                    <!--                            <i class="bi bi-person"></i>-->
+                    <!--                            <span>Thông tin của tôi</span>-->
+                    <!--                        </a>-->
+                    <!--                    </li>-->
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" th:href="@{/logout}">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Đăng Xuất</span>
+                        </a>
+                    </li>
+
+                </ul><!-- End Profile Dropdown Items -->
+            </li><!-- End Profile Nav -->
+
+        </ul>
+    </nav><!-- End Icons Navigation -->
+
 </header><!-- End Header -->
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link " href="/admin/thong-ke">
+                <i class="bi bi-graph-up-arrow"></i>
+                <span>Thống Kê</span>
+            </a>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don">
                 <i class="bi bi-grid"></i>
@@ -149,11 +199,11 @@
             </a>
         </li><!-- End Dashboard Nav -->
         <li class="nav-item">
-            <a class="nav-link " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i><span>Quản Lý Sản Phẩm</span><i
                     class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+            <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="/admin/san-pham-chi-tiet">
                         <i class="bi bi-circle"></i><span>Sản Phẩm Chi Tiết</span>
@@ -180,7 +230,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="thong-ke.html" class="active">
+                    <a href="thong-ke.html">
                         <i class="bi bi-circle"></i><span>Kích Cỡ</span>
                     </a>
                 </li>
