@@ -238,5 +238,9 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
         }
         return page;
     }
+    
+    public List<Object[]> danhSachHangSapHet(Integer soLuong) {
+        return repository.danhSachHangSapHet(soLuong);
+    }
 
 }

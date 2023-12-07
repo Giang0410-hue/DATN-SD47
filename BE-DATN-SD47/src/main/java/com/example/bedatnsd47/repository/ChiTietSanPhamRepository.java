@@ -144,4 +144,8 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
             "JOIN san_pham s ON c.san_pham_id = s.id\n" +
             "JOIN thuong_hieu th ON s.thuong_hieu_id = th.id", nativeQuery = true)
     List<Long> getAllIdThuongHieuCTSP();
+
+    @Query("select ctsp.sanPham.ten,ctsp.kichCo.ten,ctsp.mauSac.ten,ctsp.loaiDe.ten,ctsp.soLuong from ChiTietSanPham ctsp where ctsp.soLuong <= :soLuong and ctsp.trangThai = 0")
+    List<Object[]> danhSachHangSapHet(@Param("soLuong")Integer soLuong);
+
 }
