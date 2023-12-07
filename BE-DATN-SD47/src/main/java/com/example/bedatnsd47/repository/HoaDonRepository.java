@@ -2,6 +2,8 @@ package com.example.bedatnsd47.repository;
 
 import com.example.bedatnsd47.entity.HoaDon;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,4 +27,43 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
 
     @Query("Select hd from HoaDon hd where hd.trangThai=:tt order by hd.ngaySua desc")
     List<HoaDon> find5ByTrangThai(@Param("tt") Integer trangThai);
+
+    @Query("select COUNT(hd) from HoaDon hd where CAST(hd.ngayTao AS DATE) = :ngayTao")
+    Integer countHoaDonNgay(@Param("ngayTao") Date ngayTao);
+
+    @Query("select SUM(hd.tongTien) from HoaDon hd where CAST(hd.ngayTao AS DATE) = :ngayTao")
+    Long sumGiaTriHoaDonNgay(@Param("ngayTao") Date ngayTao);
+
+    @Query("SELECT COUNT(hd) FROM HoaDon hd WHERE MONTH(hd.ngayTao) = MONTH(:ngayTao)")
+    Integer countHoaDonThang(@Param("ngayTao") Date ngayTao);
+
+    @Query("SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE MONTH(hd.ngayTao) = MONTH(:ngayTao)")
+    Long sumGiaTriHoaDonThang(@Param("ngayTao") Date ngayTao);
+
+    @Query("select COUNT(hd) from HoaDon hd where hd.trangThai = :trangThai")
+    Integer countHoaDon(@Param("trangThai") Integer trangThai);
+
+    @Query("SELECT COUNT(hd) FROM HoaDon hd WHERE CAST(hd.ngayTao AS DATE) BETWEEN :startDate AND :endDate")
+    Integer countHoaDonTrongKhoangThoiGian(
+            @Param("startDate") Date startDate,
+            @Param("endDate") Date endDate
+    );
+
+    @Query("SELECT CAST(hd.ngayTao AS DATE) AS ngay, COUNT(hd) AS soLuongHoaDon " +
+            "FROM HoaDon hd " +
+            "WHERE CAST(hd.ngayTao AS DATE) BETWEEN :startDate AND :endDate " +
+            "GROUP BY CAST(hd.ngayTao AS DATE)")
+    List<Object[]> thongKeHoaDonTheoNgay(
+            @Param("startDate") Date startDate,
+            @Param("endDate") Date endDate
+    );
+
+    @Query("SELECT COUNT(hd) FROM HoaDon hd WHERE CAST(hd.ngayTao AS DATE) BETWEEN :startDate AND :endDate ")
+    Integer countHoaDonBetween(@Param("startDate") Date startDate,
+                               @Param("endDate") Date endDate);
+
+    @Query("SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE CAST(hd.ngayTao AS DATE) BETWEEN :startDate AND :endDate ")
+    Long sumGiaTriHoaDonBetween(@Param("startDate") Date startDate,
+                                @Param("endDate") Date endDate);
+
 }

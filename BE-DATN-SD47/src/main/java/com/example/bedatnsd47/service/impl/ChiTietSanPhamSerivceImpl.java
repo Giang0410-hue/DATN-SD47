@@ -170,4 +170,9 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
         return repository.fillAllDangHoatDongLonHon0();
     }
 
+    @Override
+    public List<Object[]> danhSachHangSapHet(Integer soLuong) {
+        return repository.danhSachHangSapHet(soLuong);
+    }
+
 }

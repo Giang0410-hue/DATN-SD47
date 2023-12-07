@@ -2,6 +2,7 @@ package com.example.bedatnsd47.service;
 
 import com.example.bedatnsd47.entity.ChiTietSanPham;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -39,5 +40,7 @@ public interface ChiTietSanPhamSerivce {
     List<ChiTietSanPham> getAllCtspByIdSanPham(Long idSanPham);
 
     List<ChiTietSanPham> fillAllDangHoatDongLonHon0();
+
+    List<Object[]> danhSachHangSapHet(Integer soLuong);
 
 }

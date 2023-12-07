@@ -80,4 +80,9 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
 
     @Query(value = "select * from chi_tiet_san_pham where trang_thai = 0 and so_luong>0", nativeQuery = true)
     List<ChiTietSanPham> fillAllDangHoatDongLonHon0();
+
+
+    @Query("select ctsp.sanPham.ten,ctsp.kichCo.ten,ctsp.mauSac.ten,ctsp.loaiDe.ten,ctsp.soLuong from ChiTietSanPham ctsp where ctsp.soLuong <= :soLuong and ctsp.trangThai = 0")
+    List<Object[]> danhSachHangSapHet(@Param("soLuong")Integer soLuong);
+
 }
