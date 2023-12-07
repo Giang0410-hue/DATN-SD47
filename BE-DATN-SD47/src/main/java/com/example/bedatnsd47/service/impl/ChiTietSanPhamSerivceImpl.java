@@ -8,10 +8,11 @@ import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.repository.ChiTietSanPhamRepository;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,12 +37,12 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
 
     }
 
-    @Override
-    public List<ChiTietSanPham> getAllCtspOneSanPhamMinGia() {
-
-        return repository.fillAllCtspOneSanPhamMinGia();
-
-    }
+//    @Override
+//    public List<ChiTietSanPham> getAllCtspOneSanPhamMinGia() {
+//
+//        return repository.fillAllCtspOneSanPhamMinGia();
+//
+//    }
 
     @Override
     public List<ChiTietSanPham> getAllDangHoatDong() {
@@ -188,10 +189,54 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     }
 
     @Override
-    public List<ChiTietSanPham> searchAll(Integer pageNo,String tenSanPham,String tenMauSac) {
+    public Page<List<ChiTietSanPham>> searchAll(Integer pageNo,Integer size, String tenSanPham, List<Long> idMauSac, List<Long> idKichCo,
+                                                List<Long> idLoaiDe, List<Long> idThuongHieu, Long minGia,
+                                                Long maxGia) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        return repository.searchAll(pageable, tenSanPham, idMauSac, idKichCo, idLoaiDe, idThuongHieu, minGia, maxGia);
 
-        return repository.searchAll(tenSanPham,tenMauSac);
+    }
 
+    @Override
+    public List<Long> getAllIdMauSacCTSP() {
+        return repository.getAllIdMauSacCTSP();
+    }
+
+    @Override
+    public List<Long> getAllIdKichCoCTSP() {
+        return repository.getAllIdKichCoCTSP();
+    }
+
+    @Override
+    public List<Long> getAllIdLoaiDeCTSP() {
+        return repository.getAllIdLoaiDeCTSP();
+    }
+
+    @Override
+    public List<Long> getAllIdThuongHieuCTSP() {
+        return repository.getAllIdThuongHieuCTSP();
+    }
+
+    @Override
+    public Long getAllMinGiaCTSP() {
+        return repository.getAllMinGiaCTSP();
+    }
+
+    @Override
+    public Long getAllMaxGiaCTSP() {
+        return repository.getAllMaxGiaCTSP();
+    }
+
+    @Override
+    public Integer checkPage(Integer page) {
+        Integer sizeList = repository.findAll().size();
+        Integer pageCount = (int) Math.ceil((double) sizeList / 5);
+        if (page >= pageCount) {
+            page = 0;
+        }else if (page < 0) {
+            page = pageCount-1;
+        }
+        return page;
     }
 
 }
