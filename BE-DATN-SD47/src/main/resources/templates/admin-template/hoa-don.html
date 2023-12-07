@@ -305,15 +305,20 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td th:text="${hd.ngayTao}"></td>
                                                         <td>
                                                             <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                                             data-bs-target="#cho-xac-nhan">
                                                             <i class="bi bi-eye-fill"></i>
                                                         </button> -->
+                                                        <button th:if="${hd.trangThai==0||hd.trangThai==1||hd.trangThai==2}" th:onclick="'setInputIdHoaDon('+${hd.id}+')'"
+                                                                type="button" class="btn btn-primary"
+                                                                data-bs-toggle="modal" data-bs-target="#modalId">
+                                                                <i class="bi bi-arrow-90deg-right"></i>
+                                                            </button>
                                                             <a class="btn btn-info"
-                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/detail/'+${hd.id}}"><i
                                                                     class="bi bi-eye-fill"></i></a>
                                                         </td>
                                                     </tr>
@@ -367,15 +372,16 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td th:text="${hd.ngayTao}"></td>
                                                         <td>
                                                             <button th:onclick="'setInputIdHoaDon('+${hd.id}+')'"
                                                                 type="button" class="btn btn-primary"
                                                                 data-bs-toggle="modal" data-bs-target="#modalId">
-                                                                Chuyển
+                                                                <i class="bi bi-arrow-90deg-right"></i>
+
                                                             </button>
                                                             <a class="btn btn-info"
-                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/detail/'+${hd.id}}"><i
                                                                     class="bi bi-eye-fill"></i></a>
                                                         </td>
                                                     </tr>
@@ -429,21 +435,23 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td th:text="${hd.ngayTao}"></td>
+
                                                         <td>
 
                                                             <!-- Button trigger modal -->
                                                             <button th:onclick="'setInputIdHoaDon('+${hd.id}+')'"
                                                                 type="button" class="btn btn-primary"
                                                                 data-bs-toggle="modal" data-bs-target="#modalId">
-                                                                Chuyển
+                                                                <i class="bi bi-arrow-90deg-right"></i>
+
                                                             </button>
 
 
 
 
                                                             <a class="btn btn-info"
-                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/detail/'+${hd.id}}"><i
                                                                     class="bi bi-eye-fill"></i></a>
                                                         </td>
 
@@ -497,15 +505,17 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td th:text="${hd.ngayTao}"></td>
+
                                                         <td>
                                                             <button th:onclick="'setInputIdHoaDon('+${hd.id}+')'"
                                                                 type="button" class="btn btn-primary"
                                                                 data-bs-toggle="modal" data-bs-target="#modalId">
-                                                                Chuyển
+                                                                <i class="bi bi-arrow-90deg-right"></i>
+
                                                             </button>
                                                             <a class="btn btn-info"
-                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/detail/'+${hd.id}}"><i
                                                                     class="bi bi-eye-fill"></i></a>
                                                         </td>
                                                     </tr>
@@ -560,11 +570,11 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.timeFm(hd.ngayThanhToan)}"></td>
+                                                        <td th:text="${hd.ngayTao}"></td>
                                                         <td>
 
                                                             <a class="btn btn-info"
-                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/detail/'+${hd.id}}"><i
                                                                     class="bi bi-eye-fill"></i></a>
                                                         </td>
                                                     </tr>
@@ -618,7 +628,7 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td th:text="${hd.ngayTao}"></td>
                                                         <td>
                                                             <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
@@ -626,7 +636,7 @@
                                                             <i class="bi bi-eye-fill"></i>
                                                         </button> -->
                                                             <a class="btn btn-info"
-                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/detail/'+${hd.id}}"><i
                                                                     class="bi bi-eye-fill"></i></a>
                                                         </td>
                                                     </tr>
@@ -680,7 +690,7 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td th:text="${hd.ngayTao}"></td>
                                                         <td>
                                                             <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
@@ -688,7 +698,7 @@
                                                             <i class="bi bi-eye-fill"></i>
                                                         </button> -->
                                                             <a class="btn btn-info"
-                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/detail/'+${hd.id}}"><i
                                                                     class="bi bi-eye-fill"></i></a>
                                                         </td>
                                                     </tr>
@@ -742,7 +752,7 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.timeFm(hd.ngayTao)}"></td>
+                                                        <td th:text="${hd.ngayTao}"></td>
                                                         <td th:text="${hd.getStringTrangThai()}"></td>
 
                                                         <td>
@@ -752,7 +762,7 @@
                                                             <i class="bi bi-eye-fill"></i>
                                                         </button> -->
                                                             <a class="btn btn-info"
-                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/'+${hd.id}}"><i
+                                                                th:href="@{'/ban-hang-tai-quay/hoa-don/detail/'+${hd.id}}"><i
                                                                     class="bi bi-eye-fill"></i></a>
                                                         </td>
                                                     </tr>
@@ -833,7 +843,97 @@
                 </div>
             </div>
         </section>
+    <!--Thông báo thành công-->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <script th:if="${checkThongBao=='thanhCong'}">
+            // <script>
+            //     function showToast() {
+            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+            //         liveToast.show();
+            //
+            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+            //         liveToast.show();
+            //
+            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+            //         liveToast.show();
+            //     }
+            //     // Show the toast when the page loads
+            //     document.addEventListener('DOMContentLoaded', showToast);
+            //
+            window.addEventListener('DOMContentLoaded', (event) => {
+                // Hiển thị modal
+                var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+                liveToast.show();
+            });
+        </script>
+        <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+            style="  background-color: rgba(62, 189, 97,0.2);border:2px solid #3ebd61;  border-radius:1rem;">
+            <div class="toast-body">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <img src="../../../static/img/successful_notification.png" alt="" style="margin: auto">
+                    </div>
+                    <div class="col-md-8" style=" margin-top:6.3%">
+                        <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #3ebd61;">
+                            Thành công</span>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                    </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Thông báo thành công end-->
+
+    <!--Thông báo thất bại-->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <script th:if="${checkThongBao=='thaiBai'}">
+            // <script>
+            //     function showToast() {
+            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+            //         liveToast.show();
+            //     }
+            //     // Show the toast when the page loads
+            //     document.addEventListener('DOMContentLoaded', showToast);
+            //
+            window.addEventListener('DOMContentLoaded', (event) => {
+                // Hiển thị modal
+                var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+                liveToast.show();
+            });
+        </script>
+        <div id="liveToastDanger" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+            style="background-color: rgb(252,134,134);border:2px solid #ff2020;border-radius:1rem;">
+            <div class="toast-body">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <img src="../../../static/img/successful_danger.png" alt="" style="margin: auto">
+                    </div>
+                    <div class="col-md-8" style=" margin-top:6.3%">
+                        <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: white;">
+                            Lỗi</span>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Thông báo thất bại end-->
     </main><!-- End #main -->
 <script src="../../static/js/banHangValid.js"></script>
     <!-- ======= Footer ======= -->
@@ -983,6 +1083,7 @@
 
     <!-- Template Main JS File -->
 <script src="../../../static/js/main-off.js"></script>
+
 </body>
 
 </html>

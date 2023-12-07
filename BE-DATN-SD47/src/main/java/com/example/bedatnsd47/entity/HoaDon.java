@@ -16,10 +16,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
@@ -81,9 +84,11 @@ public class HoaDon {
     private Date ngayMongMuon;
 
     @Column(name = "ngay_tao")
+    @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
     private Date ngayTao;
 
     @Column(name = "ngay_sua")
+    @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
     private Date ngaySua;
 
     @Column(name = "trang_thai")
@@ -112,23 +117,29 @@ public class HoaDon {
         return total;
     }
 
-    public static String timeFm(LocalDateTime currentTime) {
-        // LocalDateTime currentTime = LocalDateTime.now();
-
-        // Định dạng thời gian theo yêu cầu: giờ, phút, ngày, tháng, năm
-        String time;
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
-            time = currentTime.format(formatter);
-        } catch (Exception e) {
-            return "";
-        }
-        return time;
-    }
+    
 
     public Long tongTienHoaDonKhiGiam() {
 
         return this.tongTienHoaDon() + this.getPhiShip();
+    }
+
+    public Long getGiamGia() {
+        if (this.voucher != null) {
+            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
+            Long giam = (this.tongTienHoaDon() * ptGiam) / 100;
+            return giam;
+        }
+        return (long) 0;
+    }
+
+    public Long getPhanTramGiam() {
+        if (this.voucher != null) {
+            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
+
+            return ptGiam;
+        }
+        return (long) 0;
     }
 
     public String getStringTrangThai() {
@@ -147,7 +158,7 @@ public class HoaDon {
             case 5:
                 return "Đã hủy";
             case 6:
-                return "Xác nhận đổi trả"; 
+                return "Xác nhận đổi trả";
             case 7:
                 return "Hoàn thành đổi trả";
             default:
