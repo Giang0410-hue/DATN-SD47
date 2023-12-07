@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "lich_su_hoa_don")
 @Data
@@ -26,11 +28,13 @@ public class LichSuHoaDon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @Column(name = "ngay_tao")
+    @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
     private Date ngayTao;
 
     @Column(name = "ngay_sua")
+    @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
     private Date ngaySua;
 
     @Column(name = "ghi_chu", length = 255)
@@ -42,6 +46,8 @@ public class LichSuHoaDon {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hoa_don_id", referencedColumnName = "id")
     private HoaDon hoaDon;
+
+    private String nguoiSua;
 
     public String getStringTrangThai() {
         if (this.trangThai == null) {
@@ -63,6 +69,24 @@ public class LichSuHoaDon {
             case 6:
                 return "Đã thanh toán";
             case 7:
+                return "Trả hàng";
+            case 8:
+                return "Rollback";
+            case 20:
+                return "Tạo hóa đơn";
+            case 21:
+                return "Đã xác nhận";
+            case 22:
+                return "Đã bàn giao cho đơn vị vận chuyển";
+            case 23:
+                return "Đã giao";
+            case 24:
+                return "Đặt hàng thành công";
+            case 25:
+                return "Đã hủy";
+            case 26:
+                return "Đã thanh toán";
+            case 27:
                 return "Trả hàng";
             default:
                 return "";
