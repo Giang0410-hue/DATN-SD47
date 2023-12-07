@@ -3,6 +3,7 @@ package com.example.bedatnsd47.service.impl;
 
 import com.example.bedatnsd47.entity.HoaDonChiTiet;
 import com.example.bedatnsd47.repository.HoaDonChiTietRepository;
+import com.example.bedatnsd47.repository.HoaDonRepository;
 import com.example.bedatnsd47.service.HoaDonChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
 
     @Autowired
     HoaDonChiTietRepository hoaDonChiTietRepository;
+
+    @Autowired
+    HoaDonRepository hoaDonRepository;
 
     @Override
     public List<HoaDonChiTiet> findAll() {
@@ -42,6 +46,12 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     }
 
     @Override
+    public List<HoaDonChiTiet> finTop5HDCT() {
+
+        return hoaDonChiTietRepository.fillAllIdHoaDonTrangThaiHoanThanh(hoaDonRepository.fillAllIdHoaDonTrangThaiHoanThanh());
+
+    }
+
     public List<Object[]> findByTongSoLuongBetween(Date startDate, Date endDate) {
         return hoaDonChiTietRepository.findByTongSoLuongBetween(startDate,endDate);
     }
@@ -75,4 +85,5 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     public List<Object[]> thongKeSanPhamTheoNgay(Date startDateChart, Date endDateChart) {
         return hoaDonChiTietRepository.thongKeSanPhamTheoNgay(startDateChart, endDateChart);
     }
+
 }

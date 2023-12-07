@@ -4917,3 +4917,11 @@
 .icon-zoom_out_map:before {
   content: "\e56b";
 }
+.check-loi {
+  color: #ff0000;
+  /* Màu chữ màu đỏ */
+  font-size: 14px;
+  /* Kích thước font 14px */
+  font-weight: bold;
+  /* Đậm */
+}

@@ -8,9 +8,13 @@ import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.repository.ChiTietSanPhamRepository;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,8 +32,17 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
 
     @Override
     public List<ChiTietSanPham> getAllCtspOneSanPham() {
+
         return repository.fillAllCtspOneSanPham();
+
     }
+
+//    @Override
+//    public List<ChiTietSanPham> getAllCtspOneSanPhamMinGia() {
+//
+//        return repository.fillAllCtspOneSanPhamMinGia();
+//
+//    }
 
     @Override
     public List<ChiTietSanPham> getAllDangHoatDong() {
@@ -67,6 +80,7 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
                     listCheck.setSoLuong(listCheck.getSoLuong() + soLuongMoi);
                     listCheck.setGiaHienHanh(Long.valueOf(listDonGia.get(i)));
                     listCheck.setTrangThai(0);
+                    chiTietSanPham.setNgaySua(new Date());
 
                     ChiTietSanPham updatedChiTietSanPham = repository.save(listCheck);
                     chiTietSanPhamList.add(updatedChiTietSanPham);
@@ -85,6 +99,8 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
                 chiTietSanPham.setSoLuong(Integer.parseInt(listSoLuong.get(i)));
                 chiTietSanPham.setGiaHienHanh(Long.valueOf(listDonGia.get(i)));
                 chiTietSanPham.setTrangThai(0);
+                chiTietSanPham.setNgayTao(new Date());
+                chiTietSanPham.setNgaySua(new Date());
 
                 if (chiTietSanPham.getSoLuong() > 0) {
                     ChiTietSanPham savedChiTietSanPham = repository.save(chiTietSanPham);
@@ -103,7 +119,7 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
             List<String> listKichCo, List<String> listMauSac,
             List<String> listLoaiDe, List<String> listTrangThai,
             List<String> listSoLuong, List<String> listDonGia) {
-
+        ChiTietSanPham chiTietSanPhamNew = this.getById(Long.valueOf(listIdChiTietSp.get(0)));
         List<ChiTietSanPham> chiTietSanPhamList = new ArrayList<>();
 
         for (int i = 0; i < listSanPham.size(); i++) {
@@ -116,6 +132,8 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
             chiTietSanPham.setTrangThai(Integer.parseInt(listTrangThai.get(i)));
             chiTietSanPham.setSoLuong(Integer.parseInt(listSoLuong.get(i)));
             chiTietSanPham.setGiaHienHanh(Long.valueOf(listDonGia.get(i)));
+            chiTietSanPham.setNgayTao(chiTietSanPhamNew.getNgayTao());
+            chiTietSanPham.setNgaySua(new Date());
             ChiTietSanPham savedChiTietSanPham = repository.save(chiTietSanPham);
             chiTietSanPhamList.add(savedChiTietSanPham);
         }
@@ -171,6 +189,56 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     }
 
     @Override
+    public Page<List<ChiTietSanPham>> searchAll(Integer pageNo,Integer size, String tenSanPham, List<Long> idMauSac, List<Long> idKichCo,
+                                                List<Long> idLoaiDe, List<Long> idThuongHieu, Long minGia,
+                                                Long maxGia) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        return repository.searchAll(pageable, tenSanPham, idMauSac, idKichCo, idLoaiDe, idThuongHieu, minGia, maxGia);
+
+    }
+
+    @Override
+    public List<Long> getAllIdMauSacCTSP() {
+        return repository.getAllIdMauSacCTSP();
+    }
+
+    @Override
+    public List<Long> getAllIdKichCoCTSP() {
+        return repository.getAllIdKichCoCTSP();
+    }
+
+    @Override
+    public List<Long> getAllIdLoaiDeCTSP() {
+        return repository.getAllIdLoaiDeCTSP();
+    }
+
+    @Override
+    public List<Long> getAllIdThuongHieuCTSP() {
+        return repository.getAllIdThuongHieuCTSP();
+    }
+
+    @Override
+    public Long getAllMinGiaCTSP() {
+        return repository.getAllMinGiaCTSP();
+    }
+
+    @Override
+    public Long getAllMaxGiaCTSP() {
+        return repository.getAllMaxGiaCTSP();
+    }
+
+    @Override
+    public Integer checkPage(Integer page) {
+        Integer sizeList = repository.findAll().size();
+        Integer pageCount = (int) Math.ceil((double) sizeList / 5);
+        if (page >= pageCount) {
+            page = 0;
+        }else if (page < 0) {
+            page = pageCount-1;
+        }
+        return page;
+    }
+    
     public List<Object[]> danhSachHangSapHet(Integer soLuong) {
         return repository.danhSachHangSapHet(soLuong);
     }

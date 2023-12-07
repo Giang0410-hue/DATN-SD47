@@ -18,6 +18,8 @@ public interface HoaDonChiTietService {
 
     List<HoaDonChiTiet> findByIdHoaDon(Long idHoaDon);
 
+    List<HoaDonChiTiet> finTop5HDCT();
+
     List<Object[]> findByTongSoLuongBetween(
             Date startDate,
             Date endDate);

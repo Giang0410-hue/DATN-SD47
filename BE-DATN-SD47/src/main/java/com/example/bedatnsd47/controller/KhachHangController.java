@@ -41,8 +41,6 @@ public class KhachHangController {
     @Autowired
     GioHangService gioHangService;
 
-    private Date currentDate = new Date();
-
     String random3 = ranDom1();
 
     TaiKhoan userInfo = new TaiKhoan();
@@ -158,8 +156,8 @@ public class KhachHangController {
                 TaiKhoan taiKhoan = taiKhoanService.getById(idTaiKhoan);
                 diaChi.setTaiKhoan(taiKhoan);
                 diaChi.setTrangThai(0);
-                diaChi.setNgayTao(currentDate);
-                diaChi.setNgaySua(currentDate);
+                diaChi.setNgayTao(new Date());
+                diaChi.setNgaySua(new Date());
                 diaChiService.save(diaChi);
                 return "redirect:/admin/khach-hang/view-update-khach-hang/" + idTaiKhoan;
             }
@@ -197,8 +195,8 @@ public class KhachHangController {
                 TaiKhoan taiKhoan = taiKhoanService.getById(idTaiKhoan);
                 diaChi.setTaiKhoan(taiKhoan);
                 diaChi.setTrangThai(0);
-                diaChi.setNgayTao(currentDate);
-                diaChi.setNgaySua(currentDate);
+                diaChi.setNgayTao(new Date());
+                diaChi.setNgaySua(new Date());
                 diaChiService.update(diaChi);
                 return "redirect:/admin/khach-hang/view-update-khach-hang/" + idTaiKhoan;
             }
@@ -254,26 +252,26 @@ public class KhachHangController {
         } else if (!taiKhoanService.checkTenTkTrungSua(taiKhoan.getId(), taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
+            model.addAttribute("checkTenTrung", "Tên tài khoản đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             List<DiaChi> listDiaChi = diaChiService.getAllByTaiKhoan(taiKhoan.getId());
             model.addAttribute("listDiaChi", listDiaChi);
             model.addAttribute("diaChi", new DiaChi());
             return "/admin-template/khach_hang/sua-khach-hang";
         } else if (!taiKhoanService.checkEmailSua(taiKhoan.getId(), taiKhoan.getEmail())) {
-            model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
+            model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             List<DiaChi> listDiaChi = diaChiService.getAllByTaiKhoan(taiKhoan.getId());
             model.addAttribute("listDiaChi", listDiaChi);
             model.addAttribute("diaChi", new DiaChi());
-            return "/admin-template/khach_hang/khach-hang";
+            return "/admin-template/khach_hang/sua-khach-hang";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             taiKhoan.setNgayTao(taiKhoan.getNgayTao());
-            taiKhoan.setNgaySua(currentDate);
+            taiKhoan.setNgaySua(new Date());
             VaiTro vaiTro = new VaiTro();
-            vaiTro.setId(Long.valueOf(3));
+            vaiTro.setId(Long.valueOf(2));
             taiKhoan.setVaiTro(vaiTro);
             taiKhoan.setTrangThai(taiKhoan.getTrangThai());
             taiKhoanService.update(taiKhoan);
@@ -305,14 +303,14 @@ public class KhachHangController {
         } else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
-            model.addAttribute("checkEmailTrung", "Email phẩm đã tồn tại");
+            model.addAttribute("checkTenTrung", "Tên tài khoản đã tồn tại");
+            model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/khach_hang/khach-hang";
         } else if (!taiKhoanService.checkEmail(taiKhoan.getEmail())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkEmailTrung", "Email phẩm đã tồn tại");
+            model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/khach_hang/khach-hang";
         }
@@ -323,20 +321,21 @@ public class KhachHangController {
             url = url.replace(request.getServletPath(), "");
             taiKhoanService.sendEmail(userInfo, url, random3);
             System.out.println(userInfo);
-            userInfo.setNgayTao(currentDate);
-            userInfo.setNgaySua(currentDate);
+            userInfo.setNgayTao(new Date());
+            userInfo.setNgaySua(new Date());
             userInfo.setMatKhau(passwordEncoder.encode(random3));
             VaiTro vaiTro = new VaiTro();
             vaiTro.setId(Long.valueOf(2));
             userInfo.setVaiTro(vaiTro);
-            userInfo.setTrangThai(1);
+            userInfo.setTrangThai(0);
             userInfo.setVaiTro(vaiTro);
             taiKhoanService.update(userInfo);
+
             GioHang gioHang = new GioHang();
             gioHang.setMaGioHang("GH" + gioHangService.genMaTuDong());
             gioHang.setGhiChu("");
-            gioHang.setNgayTao(currentDate);
-            gioHang.setNgayTao(currentDate);
+            gioHang.setNgaySua(new Date());
+            gioHang.setNgayTao(new Date());
             gioHang.setTaiKhoan(TaiKhoan.builder().id(userInfo.getId()).build());
             gioHang.setTrangThai(0);
             gioHangService.save(gioHang);

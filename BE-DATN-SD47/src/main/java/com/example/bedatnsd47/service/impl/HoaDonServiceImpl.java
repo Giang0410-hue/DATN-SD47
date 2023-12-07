@@ -61,6 +61,19 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
+    public List<HoaDon> getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(Long idTaiKhoan,Integer trangThai) {
+
+        return hoaDonRepository.findAllHoaDonByTaiKhoanAndTrangThaiOrderByNgaySua(idTaiKhoan,trangThai);
+
+    }
+
+    @Override
+    public List<HoaDon> getAllHoaDonByTaiKhoanOrderByNgaySua(Long idTaiKhoan) {
+
+        return hoaDonRepository.findAllHoaDonByTaiKhoanOrderByNgaySua(idTaiKhoan);
+
+    }
+
     public Integer countHoaDonDay(Date ngayTao) {
         return hoaDonRepository.countHoaDonNgay(ngayTao);
     }
@@ -94,6 +107,5 @@ public class HoaDonServiceImpl implements HoaDonService {
     public Long sumGiaTriHoaDonBetween(Date startDate, Date endDate) {
         return hoaDonRepository.sumGiaTriHoaDonBetween(startDate,endDate);
     }
-
 
 }

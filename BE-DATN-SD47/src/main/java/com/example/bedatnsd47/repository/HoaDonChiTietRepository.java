@@ -1,5 +1,6 @@
 package com.example.bedatnsd47.repository;
 
+import com.example.bedatnsd47.entity.HoaDon;
 import com.example.bedatnsd47.entity.HoaDonChiTiet;
 
 import java.util.Date;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Repository;
 public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, Long> {
     @Query("Select hdct from HoaDonChiTiet hdct where hdct.id=:idHoaDon")
     List<HoaDonChiTiet> findByIdHoaDon(@Param("idHoaDon") Long idHoaDon);
+
+    @Query(value = "select top 5 * from hoa_don_chi_tiet where hoa_don_id in (:listIdHoaDon) order by so_luong desc",nativeQuery = true)
+    List<HoaDonChiTiet> fillAllIdHoaDonTrangThaiHoanThanh(@Param("listIdHoaDon")List<Long> listIdHoaDon);
 
     @Query("SELECT SUM(hd.soLuong) FROM HoaDonChiTiet hd WHERE MONTH(hd.ngayTao) = MONTH(:ngayTao)")
     Integer sumSanPhamHoaDonThang(@Param("ngayTao") Date ngayTao);

@@ -38,7 +38,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     @Override
     public String addUser(TaiKhoan userInfo) {
-        userInfo.setTrangThai(1);
+        userInfo.setTrangThai(0);
         userInfo.setMatKhau(passwordEncoder.encode(userInfo.getMatKhau()));
         repository.save(userInfo);
         GioHang gioHang = new GioHang();
@@ -46,10 +46,18 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         gioHang.setMaGioHang("GH" + gioHangService.genMaTuDong());
         gioHang.setGhiChu("");
         gioHang.setNgayTao(currentDate);
-        gioHang.setNgayTao(currentDate);
+        gioHang.setNgaySua(currentDate);
         gioHang.setTaiKhoan(TaiKhoan.builder().id(userInfo.getId()).build());
         gioHang.setTrangThai(0);
         gioHangService.save(gioHang);
+        return "user added to system";
+    }
+
+    @Override
+    public String updateUser(TaiKhoan userInfo) {
+        userInfo.setTrangThai(0);
+        userInfo.setMatKhau(passwordEncoder.encode(userInfo.getMatKhau()));
+        repository.save(userInfo);
         return "user added to system";
     }
 
@@ -58,9 +66,23 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     public void sendEmail(TaiKhoan taiKhoan, String url) {
         String from = "daspabitra55@gmail.com";
         String to = taiKhoan.getEmail();
-        String subject = "Account Verfication";
-        String content = "Dear [[name]],<br>" + "Please click the link below to verify your registration:<br>"
-                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>" + "Thank you,<br>" + "Becoder";
+        String subject = "Khôi Phục Mật Khẩu Tài Khoản Glacat của Bạn";
+        String content = "<p class=\"email-content\" style=\"font-family: 'Arial', sans-serif;font-size: 16px;color: #333;line-height: 1.5;\">\n" +
+                "Chào [[name]], <br>\n" +
+                "Chúc mừng! Bạn đã yêu cầu hướng dẫn khôi phục mật khẩu cho tài khoản của mình trên Glacat. Để tiếp tục quá trình này, vui lòng nhấn vào liên kết dưới đây:\n" +
+                "</p>\n" +
+
+                "<p class=\"email-content\">\n" +
+                "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>" +
+                "</p>\n" +
+
+                "<p class=\"email-content\">\n" +
+                "Nếu bạn không yêu cầu hướng dẫn khôi phục mật khẩu hoặc không nhớ việc này, hãy bỏ qua email này. Liên kết xác nhận sẽ hết hạn sau 24 giờ.\n" +
+                "<br>\n" +
+                "Chân thành cảm ơn,\n" +
+                "<br>\n" +
+                "Đội ngũ Glacat\n" +
+                "</p>";
         try {
 
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -91,9 +113,23 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     public void sendEmail1(TaiKhoan taiKhoan, String url, String random) {
         String from = "daspabitra55@gmail.com";
         String to = taiKhoan.getEmail();
-        String subject = "Account Verfication";
-        String content = "Dear [[name]],<br>" + "Please click the link below to verify your registration:<br>"
-                + random + "Thank you,<br>" + "Becoder";
+        String subject = "Chào mừng bạn đến với Glacat - Xác Minh Tài Khoản của Bạn";
+        String content =
+                "<p class=\"email-content\" style=\"font-family: 'Arial', sans-serif;font-size: 16px;color: #333;line-height: 1.5;\">\n" +
+                        "Chào [[name]], <br>\n" +
+                        "Chúc mừng! Tài khoản Khách Hàng mới của bạn tại Glacat đã được tạo thành công. Để bảo vệ tính bảo mật của tài khoản, chúng tôi cần xác minh rằng địa chỉ email này thuộc về bạn.\n" +
+                        "</p>\n" +
+
+                        "<p class=\"email-content\">\n" +
+                        "**Mã Xác Minh Tài Khoản:\n" +
+                        "<span class=\"verification-code\" style=\"color: #ff0000;font-weight: bold;\">" + random + "</span> **\n" +
+                        "</p>\n" +
+
+                        "<p class=\"email-content\">\n" +
+                        "Hãy sử dụng mã xác minh trên để hoàn tất quá trình đăng ký của bạn. Nếu bạn không thực hiện thao tác này, tài khoản của bạn có thể không được kích hoạt.\n" +
+                        "<br>\n" +
+                        "Cảm ơn bạn đã chọn Glacat! Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, đừng ngần ngại liên hệ với chúng tôi.\n" +
+                        "</p>";
         try {
 
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -149,5 +185,12 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         }
 
         return newuser;
+    }
+
+    @Override
+    public TaiKhoan getTaiKhoanByName(String name) {
+
+        return repository.findByTenTaiKhoan(name).orElse(null);
+
     }
 }

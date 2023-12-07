@@ -31,7 +31,6 @@ public class NhanVienController {
     @Autowired
     NhanVienService taiKhoanService;
 
-
     @Autowired
     DiaChiService diaChiService;
 
@@ -41,8 +40,6 @@ public class NhanVienController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    private Date currentDate = new Date();
 
     @GetMapping()
     public String hienThi(Model model) {
@@ -100,17 +97,18 @@ public class NhanVienController {
         } else if (!taiKhoanService.checkTenTkTrungSua(taiKhoan.getId(), taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
+            model.addAttribute("checkTenTrung", "Tên tài khoản đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/sua-nhan-vien";
         } else if (!taiKhoanService.checkEmailSua(taiKhoan.getId(), taiKhoan.getEmail())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/sua-nhan-vien";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            taiKhoan.setNgaySua(currentDate);
+            taiKhoan.setNgaySua(new Date());
             VaiTro vaiTro = new VaiTro();
             vaiTro.setId(Long.valueOf(1));
             taiKhoan.setVaiTro(vaiTro);
@@ -146,15 +144,15 @@ public class NhanVienController {
         else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
-            model.addAttribute("checkEmailTrung", "Email phẩm đã tồn tại");
+            model.addAttribute("checkTenTrung", "Tên tài khoản đã tồn tại");
+            model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/nhan-vien";
         }
         else if (!taiKhoanService.checkEmail(taiKhoan.getEmail())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkEmailTrung", "Email phẩm đã tồn tại");
+            model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/nhan-vien";
         }
@@ -165,13 +163,13 @@ public class NhanVienController {
             url = url.replace(request.getServletPath(), "");
             taiKhoanService.sendEmail(userInfo, url, random2);
             System.out.println(userInfo);
-            userInfo.setNgayTao(currentDate);
-            userInfo.setNgaySua(currentDate);
+            userInfo.setNgayTao(new Date());
+            userInfo.setNgaySua(new Date());
             userInfo.setMatKhau(passwordEncoder.encode(random2));
             VaiTro vaiTro = new VaiTro();
             vaiTro.setId(Long.valueOf(1));
             userInfo.setVaiTro(vaiTro);
-            userInfo.setTrangThai(1);
+            userInfo.setTrangThai(0);
             userInfo.setVaiTro(vaiTro);
             taiKhoanService.update(userInfo);
             return "redirect:/admin/nhan-vien";

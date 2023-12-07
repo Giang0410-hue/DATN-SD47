@@ -33,4 +33,17 @@ public class LichSuHoaDonServieImpl implements LichSuHoaDonService {
     public void saveOrUpdate(LichSuHoaDon lichSuHoaDon) {
         lichSuHoaDonRepository.save(lichSuHoaDon);
     }
+
+    @Override
+    public List<LichSuHoaDon> findByIdhd(Long idhd) {
+        return lichSuHoaDonRepository.findByIdHd(idhd);
+    }
+
+    @Override
+    public List<LichSuHoaDon> findByIdhdNgaySuaAsc(Long idhd) {
+
+        return lichSuHoaDonRepository.findByIdhdNgaySuaAsc(idhd);
+
+    }
+
 }

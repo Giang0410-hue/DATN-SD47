@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Glacat</title>
@@ -41,22 +42,26 @@
 
                     <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                         <div class="site-top-icons">
-                            <ul>
-                                <li>
-                                    <a href="#"><span class="icon icon-person"></span></a>
+                            <ul class="nav nav-pills" style="margin-left: 54%">
+                                <li class="nav-item dropdown" >
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                       role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="/don-mua">Đơn Mua</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/logout}">Đăng Xuất</a></li>
+                                    </ul>
                                 </li>
-                                <li>
-                                    <a href="#"><span class="icon icon-heart-o"></span></a>
-                                </li>
-                                <li>
-                                    <a href="/cart" class="site-cart">
+
+                                <!--                                <li class="nav-item" style="margin-left: -15%">-->
+<!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
+<!--                                </li>-->
+                                <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
+                                    <a class="site-cart" href="/cart">
                                         <span class="icon icon-shopping_cart"></span>
-                                        <span class="count">2</span>
+                                        <span class="count" th:text="${soLuongSPGioHangCT}"></span>
                                     </a>
-                                </li>
-                                <li class="d-inline-block d-md-none ml-md-0">
-                                    <a href="#" class="site-menu-toggle js-menu-toggle"><span
-                                            class="icon-menu"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -92,7 +97,7 @@
                 </ul>
                 </li> -->
                     <li><a href="/shop">Sản phẩm</a></li>
-                    <li><a href="contact.html">Liên hệ</a></li>
+                    <li><a href="/lien-he">Liên hệ</a></li>
                 </ul>
             </div>
         </nav>
@@ -109,23 +114,18 @@
         </div>
     </div>
 
-    <div class="site-section">
+    <div class="site-section" >
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <h2 class="h3 mb-3 text-black">Get In Touch</h2>
+                <div class="col-md-7" style="margin: auto">
+                    <h2 class="h3 mb-3 text-black">Liên Hệ</h2>
                 </div>
-                <div class="col-md-7">
-                    <form action="#" method="post">
+                <div class="col-md-7" style="margin: auto">
+                    <form action="#">
                         <div class="p-3 p-lg-5 border">
                             <div class="form-group row">
-                                <div class="col-md-6">
-                                    <label for="c_fname" class="text-black">First Name <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="c_fname" name="c_fname" />
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="c_lname" class="text-black">Last Name <span
+                                <div class="col-md-12">
+                                    <label for="c_lname" class="text-black">Họ và tên <span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="c_lname" name="c_lname" />
                                 </div>
@@ -140,14 +140,16 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label for="c_subject" class="text-black">Subject </label>
+                                    <label for="c_subject" class="text-black">Chủ đề <span
+                                            class="text-danger">*</span></label></label>
                                     <input type="text" class="form-control" id="c_subject" name="c_subject" />
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label for="c_message" class="text-black">Message </label>
+                                    <label for="c_message" class="text-black">Tin nhắn <span
+                                            class="text-danger">*</span></label></label>
                                     <textarea name="c_message" id="c_message" cols="30" rows="7"
                                               class="form-control"></textarea>
                                 </div>
@@ -155,7 +157,7 @@
                             <div class="form-group row">
                                 <div class="col-lg-12">
                                     <input type="submit" class="btn btn-primary btn-lg btn-block"
-                                           value="Send Message" />
+                                           value="Gửi" />
                                 </div>
                             </div>
                         </div>
@@ -260,23 +262,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row pt-5 mt-5 text-center">
-                <div class="col-md-12">
-                    <p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;
 
-
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        All rights reserved | This template is made with
-                        <i class="icon-heart" aria-hidden="true"></i> by
-                        <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
-                </div>
-            </div>
         </div>
     </footer>
 </div>

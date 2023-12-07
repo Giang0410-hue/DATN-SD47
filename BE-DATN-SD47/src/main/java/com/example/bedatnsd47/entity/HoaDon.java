@@ -1,6 +1,5 @@
 package com.example.bedatnsd47.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,17 +10,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
@@ -83,16 +84,12 @@ public class HoaDon {
     private Date ngayMongMuon;
 
     @Column(name = "ngay_tao")
+    @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
     private Date ngayTao;
 
     @Column(name = "ngay_sua")
+    @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
     private Date ngaySua;
-
-    @Column(name = "nguoi_tao", length = 100)
-    private String nguoiTao;
-
-    @Column(name = "nguoi_sua", length = 100)
-    private String nguoiSua;
 
     @Column(name = "trang_thai")
     private Integer trangThai;
@@ -120,18 +117,29 @@ public class HoaDon {
         return total;
     }
 
-    public static String timeFm(LocalDateTime currentTime) {
-        // LocalDateTime currentTime = LocalDateTime.now();
-
-        // Định dạng thời gian theo yêu cầu: giờ, phút, ngày, tháng, năm
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
-        String formattedTime = currentTime.format(formatter);
-        return formattedTime;
-    }
+    
 
     public Long tongTienHoaDonKhiGiam() {
 
         return this.tongTienHoaDon() + this.getPhiShip();
+    }
+
+    public Long getGiamGia() {
+        if (this.voucher != null) {
+            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
+            Long giam = (this.tongTienHoaDon() * ptGiam) / 100;
+            return giam;
+        }
+        return (long) 0;
+    }
+
+    public Long getPhanTramGiam() {
+        if (this.voucher != null) {
+            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
+
+            return ptGiam;
+        }
+        return (long) 0;
     }
 
     public String getStringTrangThai() {
@@ -147,8 +155,12 @@ public class HoaDon {
                 return "Hoàn thành";
             case 4:
                 return "Chờ thanh toán";
-                case 5:
+            case 5:
                 return "Đã hủy";
+            case 6:
+                return "Xác nhận đổi trả";
+            case 7:
+                return "Hoàn thành đổi trả";
             default:
                 break;
         }

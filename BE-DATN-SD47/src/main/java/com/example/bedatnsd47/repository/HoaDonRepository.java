@@ -28,6 +28,16 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
     @Query("Select hd from HoaDon hd where hd.trangThai=:tt order by hd.ngaySua desc")
     List<HoaDon> find5ByTrangThai(@Param("tt") Integer trangThai);
 
+<<<<<<< HEAD
+    @Query(value = "select * from hoa_don where tai_khoan_id = :idTaiKhoan order by ngay_sua desc",nativeQuery = true)
+    List<HoaDon> findAllHoaDonByTaiKhoanOrderByNgaySua(@Param("idTaiKhoan")Long idTaiKhoan);
+
+    @Query(value = "select * from hoa_don where tai_khoan_id = :idTaiKhoan and trang_thai = :trangThai order by ngay_sua desc",nativeQuery = true)
+    List<HoaDon> findAllHoaDonByTaiKhoanAndTrangThaiOrderByNgaySua(@Param("idTaiKhoan")Long idTaiKhoan,@Param("trangThai")Integer trangThai);
+
+    @Query(value = "select hoa_don.id from hoa_don where trang_thai = 3",nativeQuery = true)
+    List<Long> fillAllIdHoaDonTrangThaiHoanThanh();
+=======
     @Query("select COUNT(hd) from HoaDon hd where CAST(hd.ngayTao AS DATE) = :ngayTao")
     Integer countHoaDonNgay(@Param("ngayTao") Date ngayTao);
 
@@ -65,5 +75,6 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
     @Query("SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE CAST(hd.ngayTao AS DATE) BETWEEN :startDate AND :endDate ")
     Long sumGiaTriHoaDonBetween(@Param("startDate") Date startDate,
                                 @Param("endDate") Date endDate);
+>>>>>>> giangmt
 
 }

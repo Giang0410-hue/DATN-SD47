@@ -12,6 +12,8 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> getAllCtspOneSanPham();
 
+//    List<ChiTietSanPham> getAllCtspOneSanPhamMinGia();
+
     List<ChiTietSanPham> getAllDangHoatDong();
 
     List<ChiTietSanPham> getAllNgungHoatDong();
@@ -35,12 +37,28 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> getAllById(Long id);
 
-    List<ChiTietSanPham> getAllbyIdSPAndIdMS(Long idSanPham,Long idMauSac);
+    List<ChiTietSanPham> getAllbyIdSPAndIdMS(Long idSanPham, Long idMauSac);
 
     List<ChiTietSanPham> getAllCtspByIdSanPham(Long idSanPham);
 
     List<ChiTietSanPham> fillAllDangHoatDongLonHon0();
 
+    Page<List<ChiTietSanPham>> searchAll(Integer pageNo,Integer size, String tenSanPham, List<Long> idMauSac, List<Long> idKichCo,
+                                         List<Long> idLoaiDe, List<Long> idThuongHieu, Long minGia, Long maxGia);
+
+    List<Long> getAllIdMauSacCTSP();
+
+    List<Long> getAllIdKichCoCTSP();
+
+    List<Long> getAllIdLoaiDeCTSP();
+
+    List<Long> getAllIdThuongHieuCTSP();
+
+    Long getAllMinGiaCTSP();
+
+    Long getAllMaxGiaCTSP();
+
+    Integer checkPage(Integer page);
     List<Object[]> danhSachHangSapHet(Integer soLuong);
 
 }

@@ -27,6 +27,10 @@ public interface HoaDonService {
 
     List<HoaDon> findAllOrderByNgaySua();
 
+    List<HoaDon> getAllHoaDonByTaiKhoanOrderByNgaySua(Long idTaiKhoan);
+
+    List<HoaDon> getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(Long idTaiKhoan,Integer trangThai);
+
     Integer countHoaDonDay(Date ngayTao);
 
     Long sumHoaDonDay(Date ngayTao);

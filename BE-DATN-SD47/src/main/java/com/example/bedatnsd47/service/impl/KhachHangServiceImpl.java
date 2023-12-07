@@ -86,6 +86,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public boolean checkTenTaiKhoanTrung(String ten) {
         for (TaiKhoan sp : repository.findAll()) {
+            if(sp.getGioiTinh()==null){
+                continue;
+            }
             if (sp.getTenTaiKhoan().equalsIgnoreCase(ten)) {
                 return false;
             }
@@ -96,6 +99,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public boolean checkEmail(String email) {
         for (TaiKhoan sp : repository.findAll()) {
+            if(sp.getGioiTinh()==null){
+                continue;
+            }
             if (sp.getEmail().equalsIgnoreCase(email)) {
                 return false;
             }
@@ -106,6 +112,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public boolean checkTenTkTrungSua(Long id, String ten) {
         for (TaiKhoan sp : repository.findAll()) {
+            if(sp.getGioiTinh()==null){
+                continue;
+            }
             if (sp.getTenTaiKhoan().equalsIgnoreCase(ten)) {
                 if (!sp.getId().equals(id)) {
                     return false;
@@ -119,6 +128,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public boolean checkEmailSua(Long id, String email) {
         for (TaiKhoan sp : repository.findAll()) {
+            if(sp.getGioiTinh()==null){
+                continue;
+            }
             if (sp.getEmail().equalsIgnoreCase(email)) {
                 if (!sp.getId().equals(id)) {
                     return false;
@@ -136,8 +148,14 @@ public class KhachHangServiceImpl implements KhachHangService {
     public void sendEmail(TaiKhoan taiKhoan, String path, String random) {
         String from = "daspabitra55@gmail.com";
         String to = taiKhoan.getEmail();
-        String subject = "Account Verfication";
-        String content = "Khách hàng" + "<br>" + "Tài khoản  " + taiKhoan.getTenTaiKhoan() + "<br>" + "Mật khẩu   " + random;
+        String subject = "Chào mừng bạn đến với Glacat - Tài khoản Khách Hàng mới đã được tạo";
+        String content =
+                "Chào bạn," + "<br>" +
+                        "Chúc mừng! Tài khoản Khách Hàng mới của bạn tại Glacat đã được tạo thành công. Dưới đây là thông tin đăng nhập của bạn:" + "<br>" +
+                        "- Tài khoản:  " + taiKhoan.getTenTaiKhoan() + "<br>" +
+                        "- Mật khẩu:   " + random +
+                        "<br>" +
+                        "Cảm ơn bạn đã chọn Glacat! Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, đừng ngần ngại liên hệ với chúng tôi.";
         try {
 
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -160,5 +178,10 @@ public class KhachHangServiceImpl implements KhachHangService {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void addKhachLe() {
+        repository.addKhachLe();
     }
 }

@@ -6,6 +6,8 @@
     <title>Glacat</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link href="../../static/img/favicon.png" rel="icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"/>
     <link rel="stylesheet" href="../../static/fonts/icomoon/style.css"/>
@@ -23,7 +25,6 @@
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
-
 <body>
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
@@ -45,22 +46,26 @@
 
                     <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                         <div class="site-top-icons">
-                            <ul>
-                                <li>
-                                    <a href="#"><span class="icon icon-person"></span></a>
+                            <ul class="nav nav-pills" style="margin-left: 54%">
+                                <li class="nav-item dropdown" >
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                       role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="/don-mua">Đơn Mua</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/logout}">Đăng Xuất</a></li>
+                                    </ul>
                                 </li>
-                                <li>
-                                    <a href="#"><span class="icon icon-heart-o"></span></a>
-                                </li>
-                                <li>
-                                    <a href="/cart" class="site-cart">
+
+                                <!--                                <li class="nav-item" style="margin-left: -15%">-->
+<!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
+<!--                                </li>-->
+                                <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
+                                    <a class="site-cart" href="/cart">
                                         <span class="icon icon-shopping_cart"></span>
-                                        <span class="count" th:text="${soLuongSPGioHangCT}"></span>
+                                        <span class="count" id="soLuongGHCT" th:text="${soLuongSPGioHangCT}"></span>
                                     </a>
-                                </li>
-                                <li class="d-inline-block d-md-none ml-md-0">
-                                    <a href="#" class="site-menu-toggle js-menu-toggle"><span
-                                            class="icon-menu"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -96,7 +101,7 @@
                 </ul>
                 </li> -->
                     <li><a href="/shop">Sản phẩm</a></li>
-                    <li><a href="contact.html">Liên hệ</a></li>
+                    <li><a href="/lien-he">Liên hệ</a></li>
                 </ul>
             </div>
         </nav>
@@ -120,12 +125,12 @@
                     <div class="product-image">
                         <div class="product-image-main" style="background-color: white">
                             <img th:if="${not #lists.isEmpty(chiTietSp.sanPham.listHinhAnhSanPham)}"
-                                 th:src="@{'../../../static/img/' + ${chiTietSp.sanPham.listHinhAnhSanPham[0].url}}"
+                                 th:src="@{'../../../static/img/ImgShoe/' + ${chiTietSp.sanPham.listHinhAnhSanPham[0].url}}"
                                  alt="" id="product-main-image"/>
                         </div>
                         <div class="product-image-slider">
                             <img th:each="anh : ${chiTietSp.sanPham.listHinhAnhSanPham}"
-                                 th:src="@{'../../../static/img/' + ${anh.url}}" alt="" class="image-list"/>
+                                 th:src="@{'../../../static/img/ImgShoe/' + ${anh.url}}" alt="" class="image-list"/>
                         </div>
                     </div>
                     <script>
@@ -374,28 +379,64 @@
 
                                 var rqIdChiTietSp = document.getElementById('idChiTietSp');
                                 var rqIdChiTietSp = rqIdChiTietSp.value;
+                                var soLuongTruoc = 0;
 
-                                // Lấy URL cần gửi phương thức POST
-                                var url = '/gio-hang-chi-tiet/add/' + rqIdChiTietSp + '/' + soLuongAdd; // Thay thế bằng URL thực tế
-
-                                // Thực hiện phương thức POST
-                                fetch(url, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    }
-                                })
-                                    .then(response => {
-                                        if (response.ok) {
-                                            // Xử lý kết quả nếu cần
-                                            console.log('Đã thêm vào giỏ hàng');
+                                //check số lượng trong giỏ hàng chi tiết
+                                fetch('/shop-single/check-so-luong/' + rqIdChiTietSp)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        soLuongTruoc = data;
+                                        var soLuongTonInt = parseInt(fillErro.innerText);
+                                        if (soLuongTonInt == soLuongTruoc||soLuongTruoc>soLuongTonInt) {
+                                            console.log("Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.")
+                                            //thông báo lỗi
+                                            $('#checkSoLuongGHCT').modal('show')
+                                            return false;
                                         } else {
-                                            throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
+                                            // Lấy URL cần gửi phương thức POST
+                                            var url = '/gio-hang-chi-tiet/add/' + rqIdChiTietSp + '/' + soLuongAdd; // Thay thế bằng URL thực tế
+                                            // Thực hiện phương thức POST
+                                            fetch(url, {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                }
+                                            })
+                                                .then(response => {
+                                                    if (response.ok) {
+                                                        //thông báo
+                                                        var toast = new bootstrap.Toast(document.getElementById('thongBaoThemThanhCong'));
+                                                        toast.show();
+                                                        console.log('Đã thêm vào giỏ hàng');
+
+                                                        //update số lượng
+                                                        fetch('/shop-single/get-so-luong')
+                                                            .then(response => response.json())
+                                                            .then(data => {
+                                                                soLuongTruoc = data;
+                                                                var soLuongGHCT = document.getElementById("soLuongGHCT")
+                                                                soLuongGHCT.innerHTML = ''
+                                                                soLuongGHCT.innerText = soLuongTruoc
+                                                                console.log("Sô lượng GHCT: " + soLuongTruoc)
+                                                            })
+                                                            .catch(error => {
+                                                                console.error('Lỗi trong quá trình lấy số lượng từ cơ sở dữ liệu:', error)
+                                                            });
+
+                                                    } else {
+                                                        throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
+                                                    }
+                                                })
+                                                .catch(error => {
+                                                    console.error(error);
+                                                });
                                         }
                                     })
                                     .catch(error => {
-                                        console.error(error);
+                                        console.error('Lỗi trong quá trình lấy số lượng từ cơ sở dữ liệu:', error)
                                     });
+
+
                             }
 
                             function themVaoGioHangNhanh() {
@@ -460,7 +501,7 @@
                                         if (response.ok) {
                                             // Xử lý kết quả nếu cần
                                             console.log('Đã thêm vào giỏ hàng');
-                                            window.location.href = '/cart?checkGHCT=true';
+                                            window.location.href = '/cart?checkGHCT=true1';
                                         } else {
                                             throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
                                         }
@@ -477,7 +518,8 @@
                         </div>
                         <div class="product-size">
                             <h4>Số lượng</h4>
-                            <input type="number" name="soLuong" id="soLuong" class="form-control" min="1" step="1" oninput="limitInput(this)">
+                            <input type="number" name="soLuong" id="soLuong" class="form-control" min="1" step="1"
+                                   oninput="limitInput(this)">
                             <input type="hidden" name="idChiTietSp" id="idChiTietSp">
                             <span id="so-luong-ton"></span>
                         </div>
@@ -485,17 +527,89 @@
                         <span class="divider"></span>
 
                         <div class="product-btn-group">
-                            <button onclick="themVaoGioHangNhanh()" class="button buy-now"><i class='bx bxs-zap'></i>Mua Ngay</button>
-                            <button onclick="themVaoGioHang()" class="button add-cart">
+                            <button onclick="themVaoGioHangNhanh()" class="button buy-now"><i class='bx bxs-zap'></i>Mua
+                                Ngay
+                            </button>
+                            <button onclick="return themVaoGioHang()" id="buttonAddCart" class="button add-cart">
                                 <i class='bx bxs-cart'></i> Thêm vào giỏ
                             </button>
-                            <div class="button heart"><i class='bx bxs-heart'></i> Add to Wishlist</div>
+<!--                            <button id="favoriteButton" class="button heart">-->
+<!--                                <i id="heartIcon" class='bx bxs-heart'></i>Thích-->
+<!--                            </button>-->
+                            <!--                            <button class="button heart">-->
+                            <!--                                <i id="heartIcon2" class='bx bxs-heart'></i>Thích-->
+                            <!--                            </button>-->
+                            <style>
+                                .button.heart {
+                                    background-color: transparent;
+                                    border: none;
+                                    cursor: pointer;
+                                }
+
+                                .button.heart:focus {
+                                    outline: none;
+                                }
+
+                                .bxs-heart {
+                                    color: #f3a7a7; /* Màu trái tim không được chọn */
+                                }
+
+                                .bxs-heart.favorited {
+                                    color: #ff0000; /* Màu trái tim khi được chọn */
+                                }
+
+                                #heartIcon2 {
+                                    color: red;
+                                }
+
+                            </style>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="toast-container position-fixed top-50 start-50 translate-middle">
+        <div id="thongBaoThemThanhCong" class="toast" role="alert" aria-live="assertive" data-bs-delay="500"
+             aria-atomic="true"
+             style="background-color: #7e7e7e;">
+            <div class="toast-body center-image" style=";display: flex;justify-content: center;align-items: center;">
+                <img src="../../static/img/successful_notification.png" alt="Notification Image"
+                     style="margin-top:7%;width: 12%;height: 12%;">
+            </div>
+            <div class="toast-body" style="color: white;display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin-bottom: 7%;
+            text-align: center;">
+                Sản phẩm đã được thêm vào Giỏ hàng.
+            </div>
+        </div>
+    </div>
+    <!-- Modal thông báo xác nhận đặt hàng-->
+    <div class="modal fade" id="checkSoLuongGHCT" tabindex="-1"
+         aria-labelledby="checkSoLuongGHCTLabel" data-bs-backdrop="static"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border: none;display: flex;justify-content: center;align-items: center;">
+                    <img src="../../static/img/successful_danger.png" alt="Notification Image"
+                         style="margin-top:2%;width: 12%;height: 12%;margin-bottom: -3%">
+                </div>
+                <div class="modal-body" style="border: none">.
+                    <p style="text-align: center;">Số lượng sản phẩm này trong giỏ hàng đã đạt tối đa.
+                    </p>
+                </div>
+                <div class="modal-footer" style="border: none;">
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal thông báo xác nhận đặt hàng end-->
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -1019,43 +1133,19 @@
                         </ul>
                     </div>
 
-                    <div class="block-7">
-                        <form action="#" method="post">
-                            <label for="email_subscribe" class="footer-heading">Subscribe</label>
-                            <div class="form-group">
-                                <input type="text" class="form-control py-4" id="email_subscribe"
-                                       placeholder="Email"/>
-                                <input type="submit" class="btn btn-sm btn-primary" value="Send"/>
-                            </div>
-                        </form>
-                    </div>
+
                 </div>
             </div>
-            <div class="row pt-5 mt-5 text-center">
-                <div class="col-md-12">
-                    <p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;
 
-
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        All rights reserved | This template is made with
-                        <i class="icon-heart" aria-hidden="true"></i> by
-                        <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
-                </div>
-            </div>
         </div>
     </footer>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script src="../../static/js/jquery-3.3.1.min.js"></script>
 <script src="../../static/js/jquery-ui.js"></script>
 <script src="../../static/js/popper.min.js"></script>
-<script src="../../static/js/bootstrap.min.js"></script>
+<!--   //lõi-->
 <script src="../../static/js/owl.carousel.min.js"></script>
 <script src="../../static/js/jquery.magnific-popup.min.js"></script>
 <script src="../../static/js/aos.js"></script>

@@ -10,4 +10,8 @@ public interface LichSuHoaDonService {
     LichSuHoaDon findById(Long id);
     void deleteById(Long id);
     void saveOrUpdate(LichSuHoaDon lichSuHoaDon);
+    List<LichSuHoaDon> findByIdhd(Long idhd);
+
+    List<LichSuHoaDon> findByIdhdNgaySuaAsc(Long idhd);
+
 }

@@ -19,6 +19,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 
 @Entity
@@ -48,6 +51,14 @@ public class ChiTietSanPham {
     @Min(value = 10000, message = "Giá  nhỏ nhất là 10000")
     @Max(value = 1000000000, message = "Giá lớn nhất là 1000000000")
     private Long giaHienHanh;
+
+    @Column(name = "ngay_tao")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date ngayTao;
+
+    @Column(name = "ngay_sua")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date ngaySua;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
