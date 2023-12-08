@@ -19,6 +19,8 @@ public interface VoucherService {
 
     List<Voucher> fillAll();
 
+    List<Voucher> fillDangDienRaAndSapDienRa();
+
     List<Voucher> fillAllDaKetThuc();
 
     List<Voucher> fillAllSapDienRa();
