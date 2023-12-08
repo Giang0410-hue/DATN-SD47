@@ -262,6 +262,7 @@
                                         <!--                                        <th>Màu Sắc</th>-->
                                         <th>Thương Hiệu</th>
                                         <th>Giá Bán</th>
+                                        <th>Trạng Thái</th>
                                         <th>Hành Động</th>
                                     </tr>
                                     </thead>
@@ -281,6 +282,8 @@
                                         <!--                                        <td class="trangthainkd" th:if="${chiTietSP.trangThai==1}">Ngừng kinh-->
                                         <!--                                            doanh-->
                                         <!--                                        </td>-->
+                                        <td class="trangthaidhd" th:if="${chiTietSP.trangThai==0}">Đang Hoạt Động</td>
+                                        <td class="trangthainhd" th:if="${chiTietSP.trangThai==1}">Ngừng Hoạt Động</td>
                                         <td>
                                             <a th:href="@{/admin/san-pham-chi-tiet/view-update/{id}(id=${chiTietSP.sanPham.id})}"
                                                class="btn btn-info">
@@ -296,6 +299,7 @@
                                         <!--                                        <th>Số Lượng</th>-->
                                         <th>Thương Hiệu</th>
                                         <th>Giá Bán</th>
+                                        <th>Trạng Thái</th>
                                         <!--                                        <th>Kích Cỡ</th>-->
                                         <!--                                        <th>Màu Sắc</th>-->
                                         <th>Hành Động</th>
@@ -496,7 +500,7 @@
                                                         const checkDonGia = donGiaInputs[i].value;
                                                         const errorDiv = document.getElementById("checkDonGia" + (i * 2 + 2));
 
-                                                        if (checkDonGia < 10000 || checkDonGia >= 1000000000) {
+                                                        if (checkDonGia < 10000 || checkDonGia > 1000000000) {
                                                             hasError = true; // Có lỗi
                                                             errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
                                                             errorDiv.textContent = (checkDonGia < 10000) ? "Giá phải >= 10000" : "Giá phải <= 1000000000"; // Hiển thị thông báo lỗi
@@ -513,7 +517,7 @@
                                                             hasError = true; // Có lỗi
                                                             errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
                                                             errorDiv.textContent = "Không được để null"; // Hiển thị thông báo lỗi
-                                                        } else if (checkSoLuong < 0 || checkSoLuong >= 100000) {
+                                                        } else if (checkSoLuong < 0 || checkSoLuong > 100000) {
                                                             hasError = true; // Có lỗi
                                                             errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
                                                             errorDiv.textContent = (checkSoLuong < 0) ? "Số lượng phải >= 0" : "Số lượng phải <= 100000"; // Hiển thị thông báo lỗi

@@ -48,7 +48,7 @@ import java.util.List;
 //@RequestMapping("/home")
 public class HomeController {
 
-    private Long idTaiKhoan = Long.valueOf(2);
+    private Long idTaiKhoan = Long.valueOf(8);
 
     @Autowired
     private ChiTietSanPhamSerivce chiTietSanPhamSerivce;
@@ -101,6 +101,15 @@ public class HomeController {
 //        TaiKhoan taiKhoan = taiKhoanService.getTaiKhoanByName(principal.getName());
 //        idTaiKhoan = taiKhoan.getId();
         model.addAttribute("listTop5HDCT", hoaDonChiTietService.finTop5HDCT());
+        Integer inTK = null;
+        if (inTK != null) {
+            TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+            model.addAttribute("checkDangNhap", "true");
+            model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+        }else {
+            model.addAttribute("checkDangNhap", "false");
+        }
+
         return "/customer-template/ban-hang-customer";
 
     }
@@ -350,23 +359,17 @@ public class HomeController {
 
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
-//        Page<List<ChiTietSanPham>> chiTietSanPham = chiTietSanPhamSerivce.searchAll(pageNo,keyword,MauSac,KichCo,LoaiDe,ThuongHieu,minPrice,maxPrice);
-        model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.searchAll(page, size, keyword, MauSac, KichCo, LoaiDe, ThuongHieu, minPrice, maxPrice).stream().toList());
-        Integer pageCout = (int) Math.ceil((double) chiTietSanPhamSerivce.getAllDangHoatDong().size() / size);
-        System.out.println(chiTietSanPhamSerivce.getAllDangHoatDong().size() + "*****");
-        model.addAttribute("pageCount", pageCout);
+        if (chiTietSanPhamSerivce.searchAll(page, size, keyword, MauSac, KichCo, LoaiDe, ThuongHieu, minPrice, maxPrice).isEmpty()) {
+            model.addAttribute("checkListChiTietSP", "true");
+        } else {
+            model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.searchAll(page, size, keyword, MauSac, KichCo, LoaiDe, ThuongHieu, minPrice, maxPrice).stream().toList());
+        }
+        model.addAttribute("pageCount", chiTietSanPhamSerivce.searchAll(page, size, keyword, MauSac, KichCo, LoaiDe, ThuongHieu, minPrice, maxPrice).getTotalPages());
         model.addAttribute("listMauSac", mauSacService.findAll());
         model.addAttribute("listKichCo", kichCoService.findAll());
         model.addAttribute("listLoaiDe", loaiDeService.findAll());
         model.addAttribute("listThuongHieu", thuongHieuService.getAllDangHoatDong());
         return "/customer-template/shop";
-    }
-
-    @GetMapping("/test")
-    public String shopSingle(
-    ) {
-
-        return "/customer-template/testin";
     }
 
     @GetMapping("/chi-tiet-san-pham/{idSanPham}/{idMauSac}")
@@ -390,6 +393,7 @@ public class HomeController {
         model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
         model.addAttribute("chiTietSp", ChiTietSanPham);
         model.addAttribute("listChiTietSp", listChiTietSanPham);
+        model.addAttribute("listTop5HDCT", hoaDonChiTietService.finTop5HDCT());
         return "/customer-template/shop-single";
     }
 
@@ -414,9 +418,21 @@ public class HomeController {
     }
 
     @GetMapping("/about")
-    public String about() {
-
+    public String about(
+            Model model
+    ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
         return "/customer-template/about";
+    }
+
+    @GetMapping("/chinh-sach")
+    public String chinhSach(
+            Model model
+    ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+        return "/customer-template/chinh-sach";
     }
 
     @GetMapping("/thong-tin-khach-hang")
@@ -580,18 +596,6 @@ public class HomeController {
         System.out.println(lichSuHoaDonService.findById(idHoaDon));
         return "/customer-template/don-mua-chi-tiet";
     }
-//    @GetMapping("/detail-hoa-don")
-//    public String detail(
-//            Model model
-//    ) {
-//        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
-//        model.addAttribute("soLuongSPGioHangCT", gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
-//        model.addAttribute("byHoaDon", hoaDonService.findById(Long.valueOf(10172)));
-//        model.addAttribute("listLichSuHoaDon", lichSuHoaDonService.findByIdhdNgaySuaAsc(Long.valueOf(10172)));
-//        System.out.println(lichSuHoaDonService.findById(Long.valueOf(10172)));
-//        return "/admin-template/detail-hoa-don";
-//    }
-
 
     @GetMapping("/thankyou")
     public String thankYou(
