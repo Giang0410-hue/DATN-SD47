@@ -30,5 +30,8 @@ public interface VoucherRepository extends JpaRepository<Voucher, Long> {
     @Query(value = "SELECT MAX(CONVERT(varchar, SUBSTRING(ma_voucher,9,10))) from voucher",nativeQuery = true)
     Integer index();
 
+    @Query(value = "select * from voucher where trang_thai = 0 or trang_thai = 2 ORDER BY ngay_tao DESC",nativeQuery = true)
+    List<Voucher> fillDangDienRaAndSapDienRa();
+
 }
 

@@ -141,8 +141,6 @@ public class VoucherController {
             voucher.setNgayTao(currentDate);
             voucher.setTrangThai(2);
             voucherService.update(voucher);
-            System.out.println("Ngay Bat Dau received at controller: " + voucher.getNgayBatDau());
-
             return "redirect:/admin/voucher";
         }
     }

@@ -262,13 +262,20 @@
                                               th:action="@{/admin/voucher/add}" method="post"
                                               enctype="multipart/form-data"
                                               th:object="${voucher}">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <label class="form-label">
                                                     <span class="dau-sao">*</span>Mã voucher:</label>
                                                 <input type="text" class="form-control" placeholder="Nhập mã voucher"
                                                        th:field="*{maVoucher}">
                                                 <span class="check-loi" th:errors="*{maVoucher}"></span>
                                                 <span class="check-loi" th:text="${checkMaTrung}"></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">
+                                                    <span class="dau-sao">*</span>Giá trị giảm tối đa:</label>
+                                                <input type="text" class="form-control" placeholder="Nhập giá trị giảm tối đa"
+                                                       th:field="*{giamToiDa}">
+                                                <span class="check-loi" th:errors="*{giamToiDa}"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">
@@ -377,6 +384,7 @@
                                 <th>Tên Voucher</th>
                                 <th>Đơn Tối Thiểu</th>
                                 <th>Giảm</th>
+                                <th>Giảm tối đa</th>
                                 <th>Số Lượng</th>
                                 <th>Trạng Thái</th>
                                 <th>Ngày bắt đầu</th>
@@ -391,12 +399,13 @@
                                 <td th:text="${voucher.tenVoucher}"></td>
                                 <td th:text="${voucher.giaTriDonToiThieu}"></td>
                                 <td th:text="${voucher.phanTramGiam + '%'}"></td>
+                                <td th:text="${voucher.giamToiDa}"></td>
                                 <td th:text="${voucher.soLuong}"></td>
                                 <td class="trangthaidkd" th:if="${voucher.trangThai==0}">Đang diễn ra</td>
                                 <td class="trangthainkd" th:if="${voucher.trangThai==1}">Đã kết thúc</td>
                                 <td class="trangthaisdr" th:if="${voucher.trangThai==2}">Sắp diễn ra</td>
-                                <td th:text="${voucher.ngayBatDau}"></td>
-                                <td th:text="${voucher.ngayKetThuc}"></td>
+                                <td th:text="${#temporals.format(voucher.ngayBatDau, 'HH:mm dd/MM/yyyy')}"></td>
+                                <td th:text="${#temporals.format(voucher.ngayKetThuc, 'HH:mm dd/MM/yyyy')}"></td>
                                 <td>
                                     <!-- button và model -->
                                     <a th:href="@{/admin/voucher/view-update/{id}(id=${voucher.id})}"
