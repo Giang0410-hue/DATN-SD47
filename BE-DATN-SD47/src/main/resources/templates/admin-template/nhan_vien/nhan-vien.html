@@ -352,7 +352,7 @@
                                 <td th:text="${nhanVien.getHoVaTen()}"></td>
                                 <td th:text="${nhanVien.email}"></td>
                                 <td th:text="${nhanVien.soDienThoai}"></td>
-                                <td th:text="${nhanVien.ngayTao}"></td>
+                                <td th:text="${#dates.format(nhanVien.ngayTao, 'HH:mm dd/MM/yyyy')}"></td>
                                 <td class="trangthaidkd" th:if="${nhanVien.trangThai==0}">Đang hoạt động</td>
                                 <td class="trangthainkd" th:if="${nhanVien.trangThai==1}">Ngừng hoạt động</td>
                                 <td>
