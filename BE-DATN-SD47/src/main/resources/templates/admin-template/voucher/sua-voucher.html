@@ -49,7 +49,7 @@
     </div><!-- End Logo -->
 
 
-<nav class="header-nav ms-auto">
+    <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
             <li class="nav-item dropdown pe-3">
 
@@ -63,16 +63,16 @@
                         <span>Nhân Viên</span>
                     </li>
 
-                      <!--                    <li>-->
-<!--                        <hr class="dropdown-divider">-->
-<!--                    </li>-->
+                    <!--                    <li>-->
+                    <!--                        <hr class="dropdown-divider">-->
+                    <!--                    </li>-->
 
-<!--                    <li>-->
-<!--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">-->
-<!--                            <i class="bi bi-person"></i>-->
-<!--                            <span>Thông tin của tôi</span>-->
-<!--                        </a>-->
-<!--                    </li>-->
+                    <!--                    <li>-->
+                    <!--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">-->
+                    <!--                            <i class="bi bi-person"></i>-->
+                    <!--                            <span>Thông tin của tôi</span>-->
+                    <!--                        </a>-->
+                    <!--                    </li>-->
 
                     <li>
                         <hr class="dropdown-divider">
@@ -152,7 +152,7 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
-               <i class="bi bi-receipt-cutoff"></i>
+                <i class="bi bi-receipt-cutoff"></i>
                 <span>Quản Lý Hóa Đơn</span>
             </a>
         </li><!-- End Forms Nav -->
@@ -215,14 +215,21 @@
                                     <input hidden type="text" th:field="*{id}">
                                     <input hidden type="date" th:field="*{ngayTao}">
                                     <!--                                    <input hidden type="text" th:field="*{maVoucher}">-->
-                                    <input hidden type="text" th:field="*{trangThai}">
-                                    <div class="col-md-12">
+                                    <!--                                    <input hidden type="text" th:field="*{trangThai}">-->
+                                    <div class="col-md-6">
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Mã voucher:</label>
                                         <input type="text" class="form-control" placeholder="Nhập mã voucher"
                                                th:field="*{maVoucher}">
                                         <span class="check-loi" th:errors="*{maVoucher}"></span>
                                         <span class="check-loi" th:text="${checkMaTrung}"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">
+                                            <span class="dau-sao">*</span>Giá trị giảm tối đa:</label>
+                                        <input type="text" class="form-control" placeholder="Nhập giá trị giảm tối đa"
+                                               th:field="*{giamToiDa}">
+                                        <span class="check-loi" th:errors="*{giamToiDa}"></span>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">
@@ -272,7 +279,8 @@
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Ngày kết
                                             thúc:</label>
-                                        <input type="datetime-local" class="form-control" th:field="*{ngayKetThuc}" onchange="validateDateEndUpdate()" id="ngayKetThuc">
+                                        <input type="datetime-local" class="form-control" th:field="*{ngayKetThuc}"
+                                               onchange="validateDateEndUpdate()" id="ngayKetThuc">
                                         <span class="check-loi" th:errors="*{ngayKetThuc}"></span>
                                         <span class="check-loi" th:if="${checkNgayKetThuc=='ngayKetThuc'}">Ngày kết thúc phải sau ngày tạo</span>
                                         <br>
@@ -280,29 +288,37 @@
                                               style="color: red;font-size: 14px;font-weight: bold;"></span>
 
                                     </div>
-                                    <!--                                    <div class="search-transearch-trag-thai" style="margin-top: 4%;">-->
-                                    <!--                                        <label style="margin-left:17%;">Trạng thái:</label>-->
-                                    <!--                                        <input class="form-check-input" type="radio" name="gridRadios"-->
-                                    <!--                                               value="2"-->
-                                    <!--                                               style="margin-left:10%;" checked th:field="*{trangThai}">-->
-                                    <!--                                        <label class="form-check-label">-->
-                                    <!--                                            Sắp diễn ra-->
-                                    <!--                                        </label>-->
+                                    <div class="search-transearch-trag-thai" style="margin-top: 4%;">
+                                        <label style="margin-left:30%;">Trạng thái:</label>
+                                        <input hidden class="form-check-input" type="radio" name="gridRadios"
+                                               value="2"
+                                               style="margin-left:10%;" checked th:field="*{trangThai}">
+<!--                                        <label class="form-check-label">-->
+<!--                                            Sắp diễn ra-->
+<!--                                        </label>-->
 
-                                    <!--                                        <input class="form-check-input" type="radio" name="gridRadios"-->
-                                    <!--                                               value="0"-->
-                                    <!--                                               style="margin-left:5%;" th:field="*{trangThai}" checked>-->
-                                    <!--                                        <label class="form-check-label">-->
-                                    <!--                                            Đang diễn ra-->
-                                    <!--                                        </label>-->
+                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                               value="0"
+                                               style="margin-left:5%;" th:if="*{trangThai == 2}" disabled th:field="*{trangThai}"
+                                                checked>
+                                        <label class="form-check-label" th:if="*{trangThai == 2}" disabled >
+                                            Đang diễn ra
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                               value="0"
+                                               style="margin-left:5%;" th:if="*{trangThai == 0||trangThai == 1}" th:field="*{trangThai}"
+                                               checked>
+                                        <label class="form-check-label" th:if="*{trangThai == 0||trangThai == 1}" >
+                                            Đang diễn ra
+                                        </label>
 
-                                    <!--                                        <input class="form-check-input" type="radio" name="gridRadios"-->
-                                    <!--                                               value="1"-->
-                                    <!--                                               style="margin-left:5%;" checked th:field="*{trangThai}">-->
-                                    <!--                                        <label class="form-check-label">-->
-                                    <!--                                            Đã kết thúc-->
-                                    <!--                                        </label>-->
-                                    <!--                                    </div>-->
+                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                               value="1"
+                                               style="margin-left:5%;" checked th:field="*{trangThai}">
+                                        <label>
+                                            Đã kết thúc
+                                        </label>
+                                    </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-warning">Update</button>
                                     </div>
