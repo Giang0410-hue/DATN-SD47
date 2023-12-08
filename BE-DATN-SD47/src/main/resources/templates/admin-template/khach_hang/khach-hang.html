@@ -335,7 +335,7 @@
                                 <td th:text="${khachHang.getHoVaTen()}"></td>
                                 <td th:text="${khachHang.email}"></td>
                                 <td th:text="${khachHang.soDienThoai}"></td>
-                                <td th:text="${khachHang.ngayTao}"></td>
+                                <td th:text="${#dates.format(khachHang.ngayTao, 'HH:mm dd/MM/yyyy')}"></td>
                                 <td class="trangthaidkd" th:if="${khachHang.trangThai==0}">Đang hoạt động</td>
                                 <td class="trangthainkd" th:if="${khachHang.trangThai==1}">Ngừng hoạt động</td>
                                 <td>

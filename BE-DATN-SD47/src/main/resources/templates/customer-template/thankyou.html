@@ -30,8 +30,58 @@
                     <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
                         <form action="" class="site-block-top-search">
                             <span class="icon icon-search2"></span>
-                            <input type="text" class="form-control border-0" placeholder="Search" />
-                        </form>
+                            <input type="text" class="form-control border-0" id="timKiemAll"
+                                   placeholder="Tìm kiếm theo tên sản phẩm"/>
+                            <script>
+                                var inputElementTimKiemAll = document.getElementById('timKiemAll');
+
+                                inputElementTimKiemAll.addEventListener('blur', function () {
+                                    var inputValueTimKiemAll = inputElementTimKiemAll.value;
+                                    console.log('Giá trị của input:', inputValueTimKiemAll);
+
+                                    var fullUrl = "http://localhost:8080/shop"
+
+                                    if (inputValueTimKiemAll !== '') {
+                                        fullUrl = updateQueryStringParameterAll('keyword', inputValueTimKiemAll, fullUrl);
+                                    } else {
+                                        fullUrl = removeQueryStringParameterAll('keyword', fullUrl);
+                                    }
+
+                                    window.location.href = fullUrl
+
+
+                                });
+
+                                // Hàm cập nhật giá trị của query parameter trong URL
+                                function updateQueryStringParameterAll(key, value, url) {
+                                    var regex = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                                    var separator = url.indexOf('?') !== -1 ? "&" : "?";
+                                    if (url.match(regex)) {
+                                        return url.replace(regex, '$1' + key + "=" + value + '$2');
+                                    } else {
+                                        return url + separator + key + "=" + value;
+                                    }
+                                }
+
+                                // Hàm xóa query parameter khỏi URL
+                                function removeQueryStringParameterAll(key, url) {
+                                    var urlParts = url.split('?');
+                                    if (urlParts.length >= 2) {
+                                        var prefix = encodeURIComponent(key) + '=';
+                                        var queryString = urlParts[1].split('&');
+
+                                        for (var i = queryString.length - 1; i >= 0; i--) {
+                                            if (queryString[i].lastIndexOf(prefix, 0) !== -1) {
+                                                queryString.splice(i, 1);
+                                            }
+                                        }
+
+                                        url = urlParts[0] + (queryString.length > 0 ? '?' + queryString.join('&') : '');
+                                    }
+
+                                    return url;
+                                }
+                            </script>                        </form>
                     </div>
 
                     <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
@@ -97,7 +147,9 @@
               </ul>
                 </li> -->
                     <li><a href="/shop">Sản phẩm</a></li>
+                    <li><a href="/about">Về chúng tôi</a></li>
                     <li><a href="/lien-he">Liên hệ</a></li>
+                    <li><a href="/chinh-sach">Chính Sách</a></li>
                 </ul>
             </div>
         </nav>

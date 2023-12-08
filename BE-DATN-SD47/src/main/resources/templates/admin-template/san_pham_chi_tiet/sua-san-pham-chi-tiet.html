@@ -245,7 +245,7 @@
                                         </label>
                                         <!-- Kiểm tra nếu sanPhamDetail không null thì hiển thị giá trị, ngược lại hiển thị một giá trị mặc định hoặc không hiển thị gì cả -->
                                         <input type="text" class="form-control"
-                                               th:value="${listChiTietSP[0].ngayTao}"
+                                               th:value="${#dates.format(listChiTietSP[0].ngayTao, 'HH:mm dd/MM/yyyy')}"
                                                disabled>
 
                                     </div>
@@ -255,7 +255,7 @@
                                         </label>
                                         <!-- Kiểm tra nếu sanPhamDetail không null thì hiển thị giá trị, ngược lại hiển thị một giá trị mặc định hoặc không hiển thị gì cả -->
                                         <input type="text" class="form-control"
-                                               th:value="${listChiTietSP[0].ngaySua}"
+                                               th:value="${#dates.format(listChiTietSP[0].ngaySua, 'HH:mm dd/MM/yyyy')}"
                                                disabled>
 
                                     </div>
