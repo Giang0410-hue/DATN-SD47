@@ -1,6 +1,5 @@
 package com.example.bedatnsd47.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,14 +11,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
@@ -27,6 +30,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "hoa_don")
+@Builder
 public class HoaDon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,13 +46,13 @@ public class HoaDon {
     private Integer loaiHoaDon;
 
     @Column(name = "phi_ship")
-    private Double phiShip;
+    private Long phiShip;
 
     @Column(name = "tong_tien")
-    private Double tongTien;
+    private Long tongTien;
 
     @Column(name = "tong_tien_khi_giam")
-    private Double tongTienKhiGiam;
+    private Long tongTienKhiGiam;
 
     @Column(name = "ghi_chu", length = 255)
     private String ghiChu;
@@ -58,6 +62,14 @@ public class HoaDon {
 
     @Column(name = "sdt_nguoi_nhan", length = 15)
     private String sdtNguoiNhan;
+    @Column(name = "thanh_pho", length = 50)
+    private String thanhPho;
+
+    @Column(name = "quan_huyen", length = 50)
+    private String quanHuyen;
+
+    @Column(name = "phuong_xa", length = 50)
+    private String phuongXa;
 
     @Column(name = "dia_chi_nguoi_nhan", length = 100)
     private String diaChiNguoiNhan;
@@ -72,32 +84,87 @@ public class HoaDon {
     private Date ngayMongMuon;
 
     @Column(name = "ngay_tao")
+    @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
     private Date ngayTao;
 
     @Column(name = "ngay_sua")
+    @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
     private Date ngaySua;
-
-    @Column(name = "nguoi_tao", length = 100)
-    private String nguoiTao;
-
-    @Column(name = "nguoi_sua", length = 100)
-    private String nguoiSua;
 
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(fetch = FetchType.LAZY )
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "voucher_id", referencedColumnName = "id")
     private Voucher voucher;
 
-    @ManyToOne(fetch = FetchType.LAZY )
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tai_khoan_id", referencedColumnName = "id")
     private TaiKhoan taiKhoan;
 
     @OneToMany(mappedBy = "hoaDon")
     private List<HoaDonChiTiet> lstHoaDonChiTiet;
 
-    @ManyToOne(fetch = FetchType.LAZY )
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "phuong_thuc_thanh_toan_id", referencedColumnName = "id")
     private PhuongThucThanhToan phuongThucThanhToan;
+
+    public Long tongTienHoaDon() {
+        Long total = (long) 0;
+        for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
+            total += hoaDonChiTiet.tongTien();
+        }
+        return total;
+    }
+
+    
+
+    public Long tongTienHoaDonKhiGiam() {
+
+        return this.tongTienHoaDon() + this.getPhiShip();
+    }
+
+    public Long getGiamGia() {
+        if (this.voucher != null) {
+            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
+            Long giam = (this.tongTienHoaDon() * ptGiam) / 100;
+            return giam;
+        }
+        return (long) 0;
+    }
+
+    public Long getPhanTramGiam() {
+        if (this.voucher != null) {
+            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
+
+            return ptGiam;
+        }
+        return (long) 0;
+    }
+
+    public String getStringTrangThai() {
+        switch (this.trangThai) {
+            case 0:
+                return "Chờ xác nhận";
+            case 1:
+                return "Chờ giao";
+            case 2:
+                return "Đang giao";
+
+            case 3:
+                return "Hoàn thành";
+            case 4:
+                return "Chờ thanh toán";
+            case 5:
+                return "Đã hủy";
+            case 6:
+                return "Xác nhận đổi trả";
+            case 7:
+                return "Hoàn thành đổi trả";
+            default:
+                break;
+        }
+        return "";
+    }
+
 }

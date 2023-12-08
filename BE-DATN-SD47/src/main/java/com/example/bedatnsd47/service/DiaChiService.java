@@ -23,4 +23,6 @@ public interface DiaChiService {
 
     DiaChi getById(Long id);
 
+    List<DiaChi> getAllTrangThai(Integer trangThai);
+
 }

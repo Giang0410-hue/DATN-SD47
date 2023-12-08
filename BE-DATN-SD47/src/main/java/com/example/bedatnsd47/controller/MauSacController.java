@@ -27,8 +27,6 @@ public class MauSacController {
     @Autowired
     MauSacService mauSacService;
 
-    private Date currentDate = new Date();
-
     @GetMapping()
     public String hienThi(
             Model model) {
@@ -78,7 +76,7 @@ public class MauSacController {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             MauSac ms = mauSacService.getById(mauSac.getId());
             mauSac.setNgayTao(ms.getNgayTao());
-            mauSac.setNgaySua(currentDate);
+            mauSac.setNgaySua(new Date());
             mauSacService.update(mauSac);
             return "redirect:/admin/mau-sac";
         }
@@ -103,7 +101,8 @@ public class MauSacController {
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             mauSac.setMaMau("MS" + mauSacService.genMaTuDong());
-            mauSac.setNgayTao(currentDate);
+            mauSac.setNgayTao(new Date());
+            mauSac.setNgaySua(new Date());
             mauSac.setTrangThai(0);
             mauSacService.update(mauSac);
             return "redirect:/admin/mau-sac";

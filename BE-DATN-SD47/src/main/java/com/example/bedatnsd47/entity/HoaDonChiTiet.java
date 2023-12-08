@@ -1,6 +1,5 @@
 package com.example.bedatnsd47.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,7 +30,7 @@ public class HoaDonChiTiet {
     private Integer soLuong;
 
     @Column(name = "don_gia")
-    private Double donGia;
+    private Long donGia;
 
     @Column(name = "ghi_chu", length = 255)
     private String ghiChu;
@@ -48,6 +47,9 @@ public class HoaDonChiTiet {
     @Column(name = "nguoi_sua", length = 100)
     private String nguoiSua;
 
+    @Column(name = "trang_thai")
+    private Integer trangThai;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hoa_don_id", referencedColumnName = "id")
     private HoaDon hoaDon;
@@ -56,7 +58,7 @@ public class HoaDonChiTiet {
     @JoinColumn(name = "chi_tiet_san_pham_id", referencedColumnName = "id")
     private ChiTietSanPham chiTietSanPham;
 
-    public Double tongTien(){
+    public Long tongTien(){
         return this.donGia*this.soLuong;
     }
 }

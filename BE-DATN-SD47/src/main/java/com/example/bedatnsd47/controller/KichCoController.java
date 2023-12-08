@@ -22,8 +22,6 @@ public class KichCoController {
     @Autowired
     private KichCoService kichCoService;
 
-    private Date currentDate = new Date();
-
     @GetMapping()
     public String hienThi(
             Model model
@@ -82,7 +80,7 @@ public class KichCoController {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             KichCo kt = kichCoService.getById(kichCo.getId());
             kichCo.setNgayTao(kt.getNgayTao());
-            kichCo.setNgaySua(currentDate);
+            kichCo.setNgaySua(new Date());
             kichCoService.update(kichCo);
             return "redirect:/admin/kich-co";
         }
@@ -109,7 +107,8 @@ public class KichCoController {
             return "/admin-template/kich_co/kich-co";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            kichCo.setNgayTao(currentDate);
+            kichCo.setNgayTao(new Date());
+            kichCo.setNgaySua(new Date());
             kichCo.setTrangThai(0);
             kichCoService.save(kichCo);
             return "redirect:/admin/kich-co";

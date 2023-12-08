@@ -24,7 +24,6 @@ public class DiaChiServiceImpl implements DiaChiService {
 
     @Override
     public List<DiaChi> getAllByTaiKhoan(Long id) {
-
         return diaChiRepository.getAllByIdTaiKhoan(id);
 
     }
@@ -81,4 +80,10 @@ public class DiaChiServiceImpl implements DiaChiService {
         return diaChiRepository.findById(id).get();
 
     }
+
+    @Override
+    public List<DiaChi> getAllTrangThai(Integer trangThai) {
+        return diaChiRepository.fillAllByTrangThai(trangThai);
+    }
+
 }

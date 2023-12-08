@@ -6,8 +6,10 @@ import com.example.bedatnsd47.entity.VaiTro;
 import com.example.bedatnsd47.service.DiaChiService;
 import com.example.bedatnsd47.service.KhachHangService;
 import com.example.bedatnsd47.service.NhanVienService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,10 +18,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/admin/nhan-vien")
@@ -27,11 +31,15 @@ public class NhanVienController {
     @Autowired
     NhanVienService taiKhoanService;
 
-
     @Autowired
     DiaChiService diaChiService;
 
-    private Date currentDate = new Date();
+    String random2 = ranDom1();
+
+    TaiKhoan userInfo = new TaiKhoan();
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping()
     public String hienThi(Model model) {
@@ -60,17 +68,9 @@ public class NhanVienController {
             Model model,
             @PathVariable("id") Long id
     ) {
-//        List<DiaChi> listDiaChi = diaChiService.getAllByTaiKhoan(id);
+
         TaiKhoan taiKhoan = taiKhoanService.getById(id);
-//        model.addAttribute("listDiaChi", listDiaChi);
-//        model.addAttribute("idKhachHangUpdate", id);
-
-//        check button add
-//        model.addAttribute("checkAdd", "add");
-
-//        model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
         model.addAttribute("nhanVien", taiKhoan);
-//        model.addAttribute("diaChi", new DiaChi());
         return "/admin-template/nhan_vien/sua-nhan-vien";
 
     }
@@ -94,22 +94,23 @@ public class NhanVienController {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkNgaySinh", "ngaySinh");
             return "/admin-template/nhan_vien/sua-nhan-vien";
-        } else if (!taiKhoanService.checkTenTkTrungSua(taiKhoan.getId(), taiKhoan.getTen_tai_khoan())) {
+        } else if (!taiKhoanService.checkTenTkTrungSua(taiKhoan.getId(), taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
+            model.addAttribute("checkTenTrung", "Tên tài khoản đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/sua-nhan-vien";
         } else if (!taiKhoanService.checkEmailSua(taiKhoan.getId(), taiKhoan.getEmail())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
+            model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/sua-nhan-vien";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            taiKhoan.setNgaySua(currentDate);
+            taiKhoan.setNgaySua(new Date());
             VaiTro vaiTro = new VaiTro();
-            vaiTro.setId(Long.valueOf(2));
+            vaiTro.setId(Long.valueOf(1));
             taiKhoan.setVaiTro(vaiTro);
             taiKhoan.setTrangThai(taiKhoan.getTrangThai());
             taiKhoanService.update(taiKhoan);
@@ -121,8 +122,11 @@ public class NhanVienController {
     public String add(@Valid @ModelAttribute("nhanVien") TaiKhoan taiKhoan,
                       BindingResult result,
                       Model model,
-                      RedirectAttributes redirectAttributes
+                      RedirectAttributes redirectAttributes,
+                      HttpServletRequest request,
+                      @RequestParam("email") String email
     ) {
+        userInfo = taiKhoan;
         TaiKhoan taiKhoanEntity = new TaiKhoan();
         taiKhoanEntity.setNgaySinh(taiKhoan.getNgaySinh());
         if (result.hasErrors()) {
@@ -136,29 +140,61 @@ public class NhanVienController {
             model.addAttribute("checkNgaySinh", "ngaySinh");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/nhan-vien";
-        } else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTen_tai_khoan())) {
+        }
+        else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkTenTrung", "Tên tài khoản phẩm đã tồn tại");
-            model.addAttribute("checkEmailTrung", "Email phẩm đã tồn tại");
+            model.addAttribute("checkTenTrung", "Tên tài khoản đã tồn tại");
+            model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/nhan-vien";
-        } else if (!taiKhoanService.checkEmail(taiKhoan.getEmail())) {
+        }
+        else if (!taiKhoanService.checkEmail(taiKhoan.getEmail())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
-            model.addAttribute("checkEmailTrung", "Email phẩm đã tồn tại");
+            model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/nhan-vien";
-        } else {
+        }
+        else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            taiKhoan.setNgayTao(currentDate);
-            taiKhoan.setNgaySua(currentDate);
+            String url = request.getRequestURL().toString();
+            System.out.println(url);
+            url = url.replace(request.getServletPath(), "");
+            taiKhoanService.sendEmail(userInfo, url, random2);
+            System.out.println(userInfo);
+            userInfo.setNgayTao(new Date());
+            userInfo.setNgaySua(new Date());
+            userInfo.setMatKhau(passwordEncoder.encode(random2));
             VaiTro vaiTro = new VaiTro();
-            vaiTro.setId(Long.valueOf(2));
-            taiKhoan.setVaiTro(vaiTro);
-            taiKhoan.setTrangThai(0);
-            taiKhoanService.update(taiKhoan);
+            vaiTro.setId(Long.valueOf(1));
+            userInfo.setVaiTro(vaiTro);
+            userInfo.setTrangThai(0);
+            userInfo.setVaiTro(vaiTro);
+            taiKhoanService.update(userInfo);
             return "redirect:/admin/nhan-vien";
         }
+    }
+
+    public String ranDom1() {
+        // Khai báo một mảng chứa 6 số nguyên ngẫu nhiên
+        String ran = "";
+        int[] randomNumbers = new int[6];
+
+        // Tạo một đối tượng Random
+        Random random = new Random();
+
+        // Đổ số nguyên ngẫu nhiên vào mảng
+        for (int i = 0; i < 6; i++) {
+            randomNumbers[i] = random.nextInt(100); // Giới hạn số ngẫu nhiên từ 0 đến 99
+        }
+
+        // In ra các số nguyên ngẫu nhiên trong mảng
+        System.out.println("Dãy 6 số nguyên ngẫu nhiên:");
+        for (int number : randomNumbers) {
+            ran = ran + number;
+            System.out.println(number);
+        }
+        return ran;
     }
 }

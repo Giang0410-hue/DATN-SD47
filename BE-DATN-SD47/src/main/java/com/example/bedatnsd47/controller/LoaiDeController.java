@@ -23,8 +23,6 @@ public class LoaiDeController {
     @Autowired
     LoaiDeService loaiDeService;
 
-    private Date currentDate = new Date();
-
     @GetMapping("")
     public String hienThi(
             Model model
@@ -81,7 +79,7 @@ public class LoaiDeController {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             LoaiDe ld = loaiDeService.getById(loaiDe.getId());
             loaiDe.setNgayTao(ld.getNgayTao());
-            loaiDe.setNgaySua(currentDate);
+            loaiDe.setNgaySua(new Date());
             loaiDeService.update(loaiDe);
             return "redirect:/admin/loai-de";
         }
@@ -107,8 +105,8 @@ public class LoaiDeController {
             return "/admin-template/loai_de/loai-de";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            loaiDe.setNgayTao(currentDate);
-            loaiDe.setNgaySua(currentDate);
+            loaiDe.setNgayTao(new Date());
+            loaiDe.setNgaySua(new Date());
             loaiDe.setTrangThai(0);
             loaiDeService.save(loaiDe);
             return "redirect:/admin/loai-de";

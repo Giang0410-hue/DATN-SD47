@@ -27,8 +27,14 @@ public interface KhachHangService {
 
     boolean checkEmail(String email);
 
-    boolean checkTenTkTrungSua(Long id,String ten);
+    boolean checkTenTkTrungSua(Long id, String ten);
 
-    boolean checkEmailSua(Long id,String email);
+    boolean checkEmailSua(Long id, String email);
+
+    TaiKhoan findKhachLe();
+
+    void addKhachLe();
+
+    public void sendEmail(TaiKhoan taiKhoan, String path, String random);
 
 }

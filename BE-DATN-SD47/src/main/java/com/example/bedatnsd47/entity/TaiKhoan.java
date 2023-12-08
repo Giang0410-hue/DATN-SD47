@@ -9,12 +9,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.GroupSequence;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.groups.Default;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,7 +35,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "tai_khoan")
-
+@Builder
 public class TaiKhoan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +58,7 @@ public class TaiKhoan {
             Calendar cal = Calendar.getInstance();
             cal.setTime(ngaySinh);
             int year = cal.get(Calendar.YEAR);
-            return year >= 1923;
+            return year >= 1900;
         }
         return true; // Truong ngaySinh co the de trong
     }
@@ -63,7 +69,7 @@ public class TaiKhoan {
 
     @Column(name = "so_dien_thoai", length = 15)
     @NotBlank(message = "Số điện thoai không được trống")
-    @Pattern(regexp = "^0\\d{9,10}", message = "SĐT phải là số và bắt đầu bằng 0 và có 10-11 số")
+    @Pattern(regexp = "^(0[35789][0-9]{8,9})$", message = "Số điện thoại không hợp lệ")
     private String soDienThoai;
 
     @Column(name = "email", length = 255)
@@ -71,32 +77,16 @@ public class TaiKhoan {
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Email không hợp lệ")
     private String email;
 
-    @Column(name = "thanh_pho", length = 50)
-    @NotBlank(message = "Thành phố không được trống")
-    private String thanhPho;
-
-    @Column(name = "quan_huyen", length = 50)
-    @NotBlank(message = "Quận huyện không được trống")
-    private String quanHuyen;
-
-    @Column(name = "phuong_xa", length = 50)
-    @NotBlank(message = "Phường xã không được trống")
-    private String phuongXa;
-
-    @Column(name = "dia_chi_cu_the", length = 100)
-    @NotBlank(message = "Địa chỉ cụ thể không được trống")
-    private String diaChiCuThe;
-
     @Column(name = "ten_tai_khoan", length = 100)
     @NotBlank(message = "Tên tài khoản không được trống")
-    private String ten_tai_khoan;
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Tên tài khoản không hợp lệ")
+    private String tenTaiKhoan;
 
-    @Column(name = "mat_khau", length = 30)
-    @NotBlank(message = "Mật khẩu không được trống")
+    @Column(name = "mat_khau")
+//    @NotBlank(message = "Mật khẩu không được trống")
     private String matKhau;
 
     @Column(name = "ngay_tao")
-//    @NotNull(message = "Ngày tạo không được trống")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayTao;
 
@@ -111,4 +101,9 @@ public class TaiKhoan {
     @JoinColumn(name = "vai_tro_id", referencedColumnName = "id")
     private VaiTro vaiTro;
 
+    @OneToMany(mappedBy = "taiKhoan")
+    List<DiaChi> lstDiaChi;
+
+    @OneToOne(mappedBy = "taiKhoan")
+    GioHang gioHang;
 }
