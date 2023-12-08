@@ -43,7 +43,6 @@ public class KhachHangController {
 
     String random3 = ranDom1();
 
-    TaiKhoan userInfo = new TaiKhoan();
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -286,7 +285,7 @@ public class KhachHangController {
                       HttpServletRequest request,
                       @RequestParam("email") String email
     ) {
-        userInfo = taiKhoan;
+        TaiKhoan userInfo = taiKhoan;
         TaiKhoan taiKhoanEntity = new TaiKhoan();
         taiKhoanEntity.setNgaySinh(taiKhoan.getNgaySinh());
         if (result.hasErrors()) {
