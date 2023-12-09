@@ -108,4 +108,9 @@ public class HoaDonServiceImpl implements HoaDonService {
         return hoaDonRepository.sumGiaTriHoaDonBetween(startDate,endDate);
     }
 
+    @Override
+    public void deleteHoaDonHoanTra() {
+        // TODO Auto-generated method stub
+        hoaDonRepository.deleteHoaDonHoanTra();
+    }
 }

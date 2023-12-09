@@ -30,7 +30,7 @@ public interface ChiTietSanPhamSerivce {
             List<String> listSoLuong, List<String> listDonGia);
 
     ChiTietSanPham update(ChiTietSanPham chiTietSanPham);
-
+   void checkSoLuongBang0();
     void remove(Long id);
 
     ChiTietSanPham getById(Long id);

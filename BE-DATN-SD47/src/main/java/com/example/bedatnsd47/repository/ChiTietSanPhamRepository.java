@@ -1,9 +1,13 @@
 package com.example.bedatnsd47.repository;
 
 import com.example.bedatnsd47.entity.ChiTietSanPham;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -145,7 +149,17 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
             "JOIN thuong_hieu th ON s.thuong_hieu_id = th.id", nativeQuery = true)
     List<Long> getAllIdThuongHieuCTSP();
 
+<<<<<<< HEAD
     @Query("select ctsp.sanPham.ten,ctsp.kichCo.ten,ctsp.mauSac.ten,ctsp.loaiDe.ten,ctsp.soLuong from ChiTietSanPham ctsp where ctsp.soLuong <= :soLuong and ctsp.trangThai = 0")
     List<Object[]> danhSachHangSapHet(@Param("soLuong")Integer soLuong);
 
+=======
+
+    @Transactional
+    @Modifying
+    @Query(value = "update chi_tiet_san_pham \r\n" + //
+                    "set trang_thai=1\r\n" + //
+                    "where so_luong =0", nativeQuery = true)
+    void checkSoLuongBang0();
+>>>>>>> longnhph27503
 }

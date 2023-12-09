@@ -59,19 +59,23 @@ public class LichSuHoaDon {
             case 1:
                 return "Đã xác nhận";
             case 2:
-                return "Đã bàn giao cho đơn vị vận chuyển";
+                return "Đã giao cho đơn vị vận chuyển";
             case 3:
-                return "Đã giao";
+                return "Đã nhận được hàng";
             case 4:
-                return "Đặt hàng thành công";
+                return "Đổi hàng thành công";
             case 5:
                 return "Đã hủy";
             case 6:
-                return "Đã thanh toán";
-            case 7:
-                return "Trả hàng";
+                return "Hoàn trả";
             case 8:
-                return "Rollback";
+                return "Quay lại";
+
+
+
+
+
+
             case 20:
                 return "Tạo hóa đơn";
             case 21:
@@ -79,7 +83,7 @@ public class LichSuHoaDon {
             case 22:
                 return "Đã bàn giao cho đơn vị vận chuyển";
             case 23:
-                return "Đã giao";
+                return "Đã nhận được hàng";
             case 24:
                 return "Đặt hàng thành công";
             case 25:
@@ -87,7 +91,7 @@ public class LichSuHoaDon {
             case 26:
                 return "Đã thanh toán";
             case 27:
-                return "Trả hàng";
+                return "Hoàn trả";
             default:
                 return "";
 

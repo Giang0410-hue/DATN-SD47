@@ -48,7 +48,7 @@ import java.util.List;
 //@RequestMapping("/home")
 public class HomeController {
 
-    private Long idTaiKhoan = Long.valueOf(8);
+    private Long idTaiKhoan = Long.valueOf(2);
 
     @Autowired
     private ChiTietSanPhamSerivce chiTietSanPhamSerivce;
