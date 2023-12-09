@@ -28,4 +28,6 @@ public interface HoaDonService {
     List<HoaDon> getAllHoaDonByTaiKhoanOrderByNgaySua(Long idTaiKhoan);
 
     List<HoaDon> getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(Long idTaiKhoan,Integer trangThai);
+
+    void deleteHoaDonHoanTra();
 }

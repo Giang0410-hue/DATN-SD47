@@ -72,4 +72,10 @@ public class HoaDonServiceImpl implements HoaDonService {
         return hoaDonRepository.findAllHoaDonByTaiKhoanOrderByNgaySua(idTaiKhoan);
 
     }
+
+    @Override
+    public void deleteHoaDonHoanTra() {
+        // TODO Auto-generated method stub
+        hoaDonRepository.deleteHoaDonHoanTra();
+    }
 }

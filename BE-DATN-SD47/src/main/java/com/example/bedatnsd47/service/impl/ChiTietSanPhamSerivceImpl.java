@@ -239,4 +239,9 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
         return page;
     }
 
+    @Override
+    public void checkSoLuongBang0() {
+        repository.checkSoLuongBang0();
+    }
+
 }
