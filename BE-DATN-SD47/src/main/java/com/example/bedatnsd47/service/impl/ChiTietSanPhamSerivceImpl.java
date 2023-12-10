@@ -149,6 +149,13 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     }
 
     @Override
+    public ChiTietSanPham saveExcel(ChiTietSanPham chiTietSanPham) {
+
+        return repository.save(chiTietSanPham);
+
+    }
+
+    @Override
     public void remove(Long id) {
 
         repository.deleteById(id);

@@ -31,6 +31,8 @@ public interface ChiTietSanPhamSerivce {
 
     ChiTietSanPham update(ChiTietSanPham chiTietSanPham);
 
+    ChiTietSanPham saveExcel(ChiTietSanPham chiTietSanPham);
+
     void remove(Long id);
 
     ChiTietSanPham getById(Long id);

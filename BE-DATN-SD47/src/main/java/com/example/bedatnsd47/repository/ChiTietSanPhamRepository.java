@@ -148,4 +148,7 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
     @Query("select ctsp.sanPham.ten,ctsp.kichCo.ten,ctsp.mauSac.ten,ctsp.loaiDe.ten,ctsp.soLuong from ChiTietSanPham ctsp where ctsp.soLuong <= :soLuong and ctsp.trangThai = 0")
     List<Object[]> danhSachHangSapHet(@Param("soLuong")Integer soLuong);
 
+    @Query(value = "select * from chi_tiet_san_pham where san_pham_id = :idSanPham and mau_sac_id = :idMauSac and loai_de_id = :idLoaiDe and kich_co_id = :idKichCo", nativeQuery = true)
+    ChiTietSanPham findChiTietSanPham(@Param("idSanPham") Long idSanPham, @Param("idMauSac") Long idMauSac, @Param("idLoaiDe") Long idLoaiDe, @Param("idKichCo") Long idKichCo);
+
 }

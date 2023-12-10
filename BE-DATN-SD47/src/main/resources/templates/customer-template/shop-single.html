@@ -100,9 +100,9 @@
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                                        role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
+                                        <li><a class="dropdown-item" href="/user/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="/don-mua">Đơn Mua</a></li>
+                                        <li><a class="dropdown-item" href="/user/don-mua">Đơn Mua</a></li>
                                         <li><a class="dropdown-item" th:href="@{/logout}">Đăng Xuất</a></li>
                                     </ul>
                                 </li>
@@ -111,7 +111,7 @@
 <!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
 <!--                                </li>-->
                                 <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
-                                    <a class="site-cart" href="/cart">
+                                    <a class="site-cart" href="/user/cart">
                                         <span class="icon icon-shopping_cart"></span>
                                         <span class="count" id="soLuongGHCT" th:text="${soLuongSPGioHangCT}"></span>
                                     </a>
@@ -276,7 +276,7 @@
                             // Định nghĩa hàm để lấy danh sách kích cỡ bằng idMauSac
                             function getAllbyIdSPAndIdMS(idSanPham, idMauSac) {
                                 var xhr = new XMLHttpRequest();
-                                xhr.open('GET', '/chi-tiet-san-pham/' + idSanPham + '/' + idMauSac, true);
+                                xhr.open('GET', '/user/chi-tiet-san-pham/' + idSanPham + '/' + idMauSac, true);
                                 xhr.setRequestHeader('Content-Type', 'application/json');
 
                                 xhr.onreadystatechange = function () {
@@ -433,7 +433,7 @@
                                 var soLuongTruoc = 0;
 
                                 //check số lượng trong giỏ hàng chi tiết
-                                fetch('/shop-single/check-so-luong/' + rqIdChiTietSp)
+                                fetch('/user/shop-single/check-so-luong/' + rqIdChiTietSp)
                                     .then(response => response.json())
                                     .then(data => {
                                         soLuongTruoc = data;
@@ -445,7 +445,7 @@
                                             return false;
                                         } else {
                                             // Lấy URL cần gửi phương thức POST
-                                            var url = '/gio-hang-chi-tiet/add/' + rqIdChiTietSp + '/' + soLuongAdd; // Thay thế bằng URL thực tế
+                                            var url = '/user/gio-hang-chi-tiet/add/' + rqIdChiTietSp + '/' + soLuongAdd; // Thay thế bằng URL thực tế
                                             // Thực hiện phương thức POST
                                             fetch(url, {
                                                 method: 'POST',
@@ -461,14 +461,14 @@
                                                         console.log('Đã thêm vào giỏ hàng');
 
                                                         //update số lượng
-                                                        fetch('/shop-single/get-so-luong')
+                                                        fetch('/user/shop-single/get-so-luong')
                                                             .then(response => response.json())
                                                             .then(data => {
                                                                 soLuongTruoc = data;
                                                                 var soLuongGHCT = document.getElementById("soLuongGHCT")
                                                                 soLuongGHCT.innerHTML = ''
                                                                 soLuongGHCT.innerText = soLuongTruoc
-                                                                console.log("Sô lượng GHCT: " + soLuongTruoc)
+                                                                console.log("Sô lượng GHCT trong giỏ: " + soLuongTruoc)
                                                             })
                                                             .catch(error => {
                                                                 console.error('Lỗi trong quá trình lấy số lượng từ cơ sở dữ liệu:', error)
@@ -539,7 +539,7 @@
                                 var rqIdChiTietSp = rqIdChiTietSp.value;
 
                                 // Lấy URL cần gửi phương thức POST
-                                var url = '/gio-hang-chi-tiet/add-fast/' + rqIdChiTietSp + '/' + soLuongAdd; // Thay thế bằng URL thực tế
+                                var url = '/user/gio-hang-chi-tiet/add-fast/' + rqIdChiTietSp + '/' + soLuongAdd; // Thay thế bằng URL thực tế
 
                                 // Thực hiện phương thức POST
                                 fetch(url, {
@@ -552,7 +552,7 @@
                                         if (response.ok) {
                                             // Xử lý kết quả nếu cần
                                             console.log('Đã thêm vào giỏ hàng');
-                                            window.location.href = '/cart?checkGHCT=true1';
+                                            window.location.href = '/user/cart?checkGHCT=true1';
                                         } else {
                                             throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
                                         }
@@ -1068,7 +1068,7 @@
                                         <div class="container" style="width: 90%" >
                                             <div class="pf-card" style="margin-top: -30%">
                                                 <a class="product-item"
-                                                   th:href="@{/shop-single/{id}(id=${hoaDonCT.chiTietSanPham.sanPham.id})}">
+                                                   th:href="@{/user/shop-single/{id}(id=${hoaDonCT.chiTietSanPham.sanPham.id})}">
                                                     <!--                                            <input type="hidden" th:value="${chiTiepSp.sanPham.ten}">-->
                                                     <!--                                            <input type="hidden" th:value="${chiTiepSp.sanPham.id}">-->
                                                     <div class="product-thumbnail-container">
@@ -1107,58 +1107,54 @@
                 <div class="col-lg-6 mb-5 mb-lg-0">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="footer-heading mb-4">Navigations</h3>
+                            <h3 class="footer-heading mb-4">Điều hướng</h3>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <ul class="list-unstyled">
-                                <li><a href="#">Sell online</a></li>
-                                <li><a href="#">Features</a></li>
-                                <li><a href="#">Shopping cart</a></li>
-                                <li><a href="#">Store builder</a></li>
+                                <li><a href="#">Vận chuyển</a></li>
+                                <li><a href="#">Khu vực</a></li>
+                                <li><a href="#">Kênh bán hàng</a></li>
                             </ul>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <ul class="list-unstyled">
-                                <li><a href="#">Mobile commerce</a></li>
-                                <li><a href="#">Dropshipping</a></li>
-                                <li><a href="#">Website development</a></li>
+                                <li><a href="/about">Đội ngũ</a></li>
+                                <li><a href="/chinh-sach">Trả hàng</a></li>
+                                <li><a href="#">Bảo mật</a></li>
                             </ul>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <ul class="list-unstyled">
-                                <li><a href="#">Point of sale</a></li>
-                                <li><a href="#">Hardware</a></li>
-                                <li><a href="#">Software</a></li>
+                                <li><a href="/lien-he">Liên hệ</a></li>
+                                <li><a href="/lien-he">Chăm sóc khách hàng</a></li>
+                                <li><a href="/lien-he">Phản hồi</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
-                    <h3 class="footer-heading mb-4">Promo</h3>
-                    <a href="#" class="block-6">
+                    <h3 class="footer-heading mb-4">Mẫu mã</h3>
+                    <a href="/shop" class="block-6">
                         <img src="../../static/img/hero_1.jpg" alt="Image placeholder"
                              class="img-fluid rounded mb-4"/>
                         <h3 class="font-weight-light mb-0">
-                            Finding Your Perfect Shoes
+                            Tìm đôi giày hoàn hảo của bạn
                         </h3>
-                        <p>Promo from nuary 15 &mdash; 25, 2019</p>
                     </a>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="block-5 mb-5">
-                        <h3 class="footer-heading mb-4">Contact Info</h3>
+                        <h3 class="footer-heading mb-4">Thông tin liên lạc</h3>
                         <ul class="list-unstyled">
                             <li class="address">
-                                203 Fake St. Mountain View, San Francisco, California, USA
+                                13 P. Trịnh Văn Bô, Xuân Phương, Nam Từ Liêm, Hà Nội, Việt Nam
                             </li>
                             <li class="phone">
-                                <a href="tel://23923929210">+2 392 3929 210</a>
+                                <a href="tel://23923929210">+84 377 463 664</a>
                             </li>
-                            <li class="email">emailaddress@domain.com</li>
+                            <li class="email">glacatshopshoes@gmail.com</li>
                         </ul>
                     </div>
-
-
                 </div>
             </div>
 

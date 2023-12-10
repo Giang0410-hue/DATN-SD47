@@ -1,7 +1,14 @@
 package com.example.bedatnsd47.controller;
 
+import com.example.bedatnsd47.config.ExportFileCTSP;
+import com.example.bedatnsd47.config.ImportFileExcelCTSP;
 import com.example.bedatnsd47.entity.ChiTietSanPham;
 import com.example.bedatnsd47.entity.SanPham;
+import com.example.bedatnsd47.repository.ChiTietSanPhamRepository;
+import com.example.bedatnsd47.repository.KichCoRepository;
+import com.example.bedatnsd47.repository.LoaiDeRepository;
+import com.example.bedatnsd47.repository.MauSacRepository;
+import com.example.bedatnsd47.repository.SanPhamRepository;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import com.example.bedatnsd47.service.HinhAnhSanPhamSerivce;
 import com.example.bedatnsd47.service.KichCoService;
@@ -23,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -51,7 +59,21 @@ public class ChiTietSanPhamController {
     @Autowired
     private LoaiDeService loaiDeService;
 
-    private Date currentDate = new Date();
+    @Autowired
+    private ChiTietSanPhamRepository chiTietSanPhamRepository;
+
+    @Autowired
+    private SanPhamRepository sanPhamRepository;
+
+    @Autowired
+    private MauSacRepository mauSacRepository;
+
+    @Autowired
+    private KichCoRepository kichThuocRepository;
+
+    @Autowired
+    private LoaiDeRepository deGiayRepository;
+
 
     private Model getString(Model model) {
         model.addAttribute("listSanPham", sanPhamSerivce.getAllDangHoatDong());
@@ -162,6 +184,63 @@ public class ChiTietSanPhamController {
     ) {
         attributes.addFlashAttribute("checkThongBao", "thanhCong");
         chiTietSanPhamSerivce.add(listSanPham, listKichCo, listMauSac, listLoaiDe, listSoLuong, listDonGia);
+        return "redirect:/admin/san-pham-chi-tiet";
+    }
+
+    @PostMapping("import-excel")
+    public String importExcel(
+            @RequestParam("file") MultipartFile file,
+            RedirectAttributes attributes
+
+    ) throws IOException {
+        if (!file.isEmpty()) {
+            String directory = "D:\\DATN-SD47\\BE-DATN-SD47";
+            String fileName = file.getOriginalFilename();
+            String filePath = directory + "\\" + fileName;
+            ImportFileExcelCTSP importFileExcelCTSP = new ImportFileExcelCTSP();
+            try {
+                importFileExcelCTSP.ImportFile(filePath, sanPhamRepository, mauSacRepository, kichThuocRepository,
+                        deGiayRepository, chiTietSanPhamRepository, chiTietSanPhamSerivce, attributes);
+                if (importFileExcelCTSP.checkLoi() > 0) {
+                    attributes.addFlashAttribute("checkTab", "true");
+                    attributes.addFlashAttribute("checkThongBao", "thanhCong");
+                    attributes.addFlashAttribute("thongBaoLoiImport", "Đã thêm sản phẩm thành công nhưng có một số sản phẩm lỗi, mời bạn check lại trên file excel");
+                    return "redirect:/admin/san-pham-chi-tiet";
+                }
+            } catch (Exception e) {
+                attributes.addFlashAttribute("checkTab", "true");
+                attributes.addFlashAttribute("checkThongBao", "thaiBai");
+                attributes.addFlashAttribute("thongBaoLoiImport", "Sai định dạng file");
+                return "redirect:/admin/san-pham-chi-tiet";
+            }
+            attributes.addFlashAttribute("checkThongBao", "thanhCong");
+            return "redirect:/admin/san-pham-chi-tiet";
+        }
+        attributes.addFlashAttribute("checkTab", "true");
+        attributes.addFlashAttribute("thongBaoLoiImport", "Bạn chưa chọn file excel nào");
+        attributes.addFlashAttribute("checkThongBao", "thaiBai");
+        return "redirect:/admin/san-pham-chi-tiet";
+    }
+
+    @GetMapping("export-excel")
+    public String exportExcel(
+            RedirectAttributes attributes
+    ) throws IOException {
+        ExportFileCTSP exportFileCTSP = new ExportFileCTSP();
+        exportFileCTSP.ExportFileExcel(chiTietSanPhamSerivce);
+        attributes.addFlashAttribute("checkTab", "true");
+        attributes.addFlashAttribute("checkThongBao", "thanhCong");
+        return "redirect:/admin/san-pham-chi-tiet";
+    }
+
+    @GetMapping("file-mau-excel")
+    public String fileMauExcel(
+            RedirectAttributes attributes
+    ) throws IOException {
+        ExportFileCTSP exportFileCTSP = new ExportFileCTSP();
+        exportFileCTSP.ExportFileExcelMau(chiTietSanPhamSerivce);
+        attributes.addFlashAttribute("checkTab", "true");
+        attributes.addFlashAttribute("checkThongBao", "thanhCong");
         return "redirect:/admin/san-pham-chi-tiet";
     }
 

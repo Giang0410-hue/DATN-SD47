@@ -72,16 +72,16 @@
                         <span>Nhân Viên</span>
                     </li>
 
-                      <!--                    <li>-->
-<!--                        <hr class="dropdown-divider">-->
-<!--                    </li>-->
+                    <!--                    <li>-->
+                    <!--                        <hr class="dropdown-divider">-->
+                    <!--                    </li>-->
 
-<!--                    <li>-->
-<!--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">-->
-<!--                            <i class="bi bi-person"></i>-->
-<!--                            <span>Thông tin của tôi</span>-->
-<!--                        </a>-->
-<!--                    </li>-->
+                    <!--                    <li>-->
+                    <!--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">-->
+                    <!--                            <i class="bi bi-person"></i>-->
+                    <!--                            <span>Thông tin của tôi</span>-->
+                    <!--                        </a>-->
+                    <!--                    </li>-->
 
                     <li>
                         <hr class="dropdown-divider">
@@ -161,7 +161,7 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
-               <i class="bi bi-receipt-cutoff"></i>
+                <i class="bi bi-receipt-cutoff"></i>
                 <span>Quản Lý Hóa Đơn</span>
             </a>
         </li><!-- End Forms Nav -->
@@ -231,7 +231,7 @@
 
                                 <!--    tìm kiếm theo trạng thái-->
                                 <div class="row g-3" style="margin-top: 2%;margin-bottom: 2%">
-                                    <div class="col-md-10">
+                                    <div class="col-md-8">
                                         <label>Trạng thái:</label>
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
                                             <a href="/admin/san-pham-chi-tiet"
@@ -242,7 +242,9 @@
                                                 Ngừng hoạt động</a>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
+                                        <a th:href="@{/admin/san-pham-chi-tiet/export-excel}" style="margin-left: 15%"
+                                           class="btn btn-primary">Xuất File</a>
                                         <a href="/admin/san-pham-chi-tiet" style="float: right"
                                            class="btn btn-primary">
                                             <i class="bi bi-arrow-clockwise"> Làm mới</i>
@@ -312,6 +314,34 @@
 
                             <!-- chi tiết sp - tạo mới -->
                             <div class="tab-pane fade" id="create" role="tabpanel" aria-labelledby="create-tab">
+<!--                                <script th:if="${checkTabTest=='true'}">-->
+<!--                                    // Đoạn mã JavaScript để chuyển sang tab "Tạo mới" nếu có lỗi-->
+<!--                                    document.addEventListener("DOMContentLoaded", function () {-->
+<!--                                        // Kiểm tra nếu có lỗi-->
+<!--                                        var hasError = true; // Đây là biến đại diện cho việc có lỗi-->
+
+<!--                                        if (hasError) {-->
+<!--                                            // Sử dụng JavaScript để chuyển sang tab "Tạo mới"-->
+<!--                                            var createTab = document.getElementById("create-tab");-->
+<!--                                            createTab.classList.add("active");-->
+<!--                                            createTab.setAttribute("aria-selected", "true");-->
+
+<!--                                            // Hiển thị nội dung của tab "Tạo mới"-->
+<!--                                            var createTabContent = document.getElementById("create");-->
+<!--                                            createTabContent.classList.add("active", "show");-->
+
+<!--                                            // Loại bỏ lớp active khỏi tab "Danh Sách"-->
+<!--                                            var listTab = document.getElementById("list-tab");-->
+<!--                                            listTab.classList.remove("active");-->
+<!--                                            listTab.setAttribute("aria-selected", "false");-->
+
+<!--                                            // Ẩn nội dung của tab "Danh Sách"-->
+<!--                                            var listTabContent = document.getElementById("list");-->
+<!--                                            listTabContent.classList.remove("active", "show");-->
+<!--                                        }-->
+<!--                                    });-->
+
+<!--                                </script>-->
                                 <script th:if="${checkTab=='true'}">
                                     // Đoạn mã JavaScript để chuyển sang tab "Tạo mới" nếu có lỗi
                                     document.addEventListener("DOMContentLoaded", function () {
@@ -347,6 +377,21 @@
                                         myModal.show();
                                     });
                                 </script>
+
+                                <form th:action="@{/admin/san-pham-chi-tiet/import-excel}"
+                                      style="border: 1px solid #c3c3c3;border-radius: 20px;margin-top: 2%"
+                                      enctype="multipart/form-data"
+                                      method="post" class="row">
+                                    <div class="col-md-12" style="margin-top: 3%">
+                                        <input type="file" class="form-control" name="file">
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 3%;margin-bottom: 3%">
+                                        <div class="check-loi" th:text="${thongBaoLoiImport}"></div>
+                                        <button type="submit" style="float: right" class="btn btn-success">Nhập Excel</button>
+                                        <a th:href="@{/admin/san-pham-chi-tiet/file-mau-excel}" style="float: right;margin-right: 10%"
+                                           class="btn btn-primary">Xuất File Mẫu</a>
+                                    </div>
+                                </form>
 
                                 <!-- from thêm chi tiết sản phẩm -->
                                 <form th:action="@{/admin/san-pham-chi-tiet/add}" class="row g-3"
@@ -402,7 +447,8 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         Nhập tất cả số lượng:
-                                                        <input class="form-control" type="number" oninput="updateInputsSoLuong(this)">
+                                                        <input class="form-control" type="number"
+                                                               oninput="updateInputsSoLuong(this)">
                                                         <script>
                                                             function updateInputsSoLuong(sourceInput) {
                                                                 // Lấy giá trị của input nguồn
@@ -418,7 +464,8 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         Nhập tất cả giá:
-                                                        <input  class="form-control" type="number" oninput="updateInputsGia(this)">
+                                                        <input class="form-control" type="number"
+                                                               oninput="updateInputsGia(this)">
                                                         <script>
                                                             function updateInputsGia(sourceInput) {
                                                                 // Lấy giá trị của input nguồn
