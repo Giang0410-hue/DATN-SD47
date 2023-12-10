@@ -547,10 +547,10 @@
                                                         const checkDonGia = donGiaInputs[i].value;
                                                         const errorDiv = document.getElementById("checkDonGia" + (i * 2 + 2));
 
-                                                        if (checkDonGia < 10000 || checkDonGia > 1000000000) {
+                                                        if (checkDonGia < 1 || checkDonGia > 1000000000) {
                                                             hasError = true; // Có lỗi
                                                             errorDiv.style.display = "block"; // Hiển thị div thông báo lỗi
-                                                            errorDiv.textContent = (checkDonGia < 10000) ? "Giá phải >= 10000" : "Giá phải <= 1000000000"; // Hiển thị thông báo lỗi
+                                                            errorDiv.textContent = (checkDonGia < 1) ? "Giá phải >= 1" : "Giá phải <= 1000000000"; // Hiển thị thông báo lỗi
                                                         } else {
                                                             errorDiv.style.display = "none"; // Ẩn div thông báo lỗi nếu giá trị hợp lệ
                                                         }

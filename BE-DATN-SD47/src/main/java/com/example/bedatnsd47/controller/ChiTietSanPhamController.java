@@ -200,7 +200,7 @@ public class ChiTietSanPhamController {
             ImportFileExcelCTSP importFileExcelCTSP = new ImportFileExcelCTSP();
             try {
                 importFileExcelCTSP.ImportFile(filePath, sanPhamRepository, mauSacRepository, kichThuocRepository,
-                        deGiayRepository, chiTietSanPhamRepository, chiTietSanPhamSerivce, attributes);
+                        deGiayRepository, chiTietSanPhamRepository, chiTietSanPhamSerivce);
                 if (importFileExcelCTSP.checkLoi() > 0) {
                     attributes.addFlashAttribute("checkTab", "true");
                     attributes.addFlashAttribute("checkThongBao", "thanhCong");

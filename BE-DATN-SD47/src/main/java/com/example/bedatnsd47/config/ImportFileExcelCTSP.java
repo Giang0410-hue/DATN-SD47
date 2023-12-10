@@ -38,8 +38,7 @@ public class ImportFileExcelCTSP {
     public void ImportFile(
             String path, SanPhamRepository sanPhamRepository, MauSacRepository mauSacRepository,
             KichCoRepository kichThuocRepository, LoaiDeRepository deGiayRepository,
-            ChiTietSanPhamRepository chiTietSanPhamRepository, ChiTietSanPhamSerivce chiTietSanPhamService,
-            RedirectAttributes attributes) throws Exception {
+            ChiTietSanPhamRepository chiTietSanPhamRepository, ChiTietSanPhamSerivce chiTietSanPhamService) throws Exception {
 
         FileInputStream fileExcel = new FileInputStream(new File(path));
         Workbook workbook = new XSSFWorkbook(fileExcel);
@@ -101,6 +100,7 @@ public class ImportFileExcelCTSP {
                 }
                 workbook.close();
             } catch (Exception e) {
+                e.printStackTrace();
                 listIndex.add(index);
                 continue;
             }
