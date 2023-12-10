@@ -2,13 +2,10 @@ package com.example.bedatnsd47.repository;
 
 import com.example.bedatnsd47.entity.HoaDon;
 
-<<<<<<< HEAD
 import java.time.LocalDate;
 import java.util.Date;
-=======
 import jakarta.transaction.Transactional;
 
->>>>>>> longnhph27503
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -44,7 +41,6 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
     @Query(value = "select hoa_don.id from hoa_don where trang_thai = 3", nativeQuery = true)
     List<Long> fillAllIdHoaDonTrangThaiHoanThanh();
 
-<<<<<<< HEAD
     @Query("select COUNT(hd) from HoaDon hd where CAST(hd.ngayTao AS DATE) = :ngayTao")
     Integer countHoaDonNgay(@Param("ngayTao") Date ngayTao);
 
@@ -82,13 +78,11 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
     @Query("SELECT SUM(hd.tongTien) FROM HoaDon hd WHERE CAST(hd.ngayTao AS DATE) BETWEEN :startDate AND :endDate ")
     Long sumGiaTriHoaDonBetween(@Param("startDate") Date startDate,
                                 @Param("endDate") Date endDate);
-=======
     @Transactional
     @Modifying
     @Query(value = "delete hoa_don_chi_tiet where hoa_don_id in(select id from hoa_don where ma_hoa_don like '%DOITRA')\r\n"
             + //
             "delete hoa_don where ma_hoa_don like '%DOITRA'", nativeQuery = true)
     void deleteHoaDonHoanTra();
->>>>>>> longnhph27503
 
 }
