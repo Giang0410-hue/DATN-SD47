@@ -1284,8 +1284,7 @@
                                                                             </div>
                                                                         </td>
 
-                                                                        <td
-                                                                            th:if="${hoaDon.trangThai==3&&obj.trangThai !=2}">
+                                                                        <td th:if="${obj.trangThai !=2}">
                                                                             <div class="button-table">
                                                                                 <button type="button"
                                                                                     class="btn btn-primary"
@@ -1339,112 +1338,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </td>
-                                                                        <td
-                                                                            th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=3&&hoaDon.trangThai!=5}">
-                                                                            <div class="button-table">
-                                                                                <!-- delete Hóa đơn chi tiết -->
 
-                                                                                <!-- Button trigger modal -->
-
-                                                                                <button type="button"
-                                                                                    class="btn btn-primary"
-                                                                                    th:data-bs-toggle="modal"
-                                                                                    th:data-bs-target="${'#modalEditSoLuong'+obj.id}">
-                                                                                    <i class="bi bi-pencil-fill"></i>
-                                                                                    <input type="hidden" name="idHdct"
-                                                                                        th:value="${obj.id}">
-                                                                                </button>
-
-
-
-
-
-
-
-                                                                                <!-- Modal update sl-->
-                                                                                <div class="modal fade"
-                                                                                    th:id="${'modalEditSoLuong'+obj.id}"
-                                                                                    tabindex="-1"
-                                                                                    aria-labelledby="exampleModalLabel"
-                                                                                    aria-hidden="true">
-                                                                                    <div class="modal-dialog">
-                                                                                        <div class="modal-content">
-                                                                                            <div class="modal-header">
-                                                                                                <h1 class="modal-title fs-5"
-                                                                                                    id="exampleModalLabel">
-                                                                                                    Nhập
-                                                                                                    số lượng</h1>
-
-
-                                                                                            </div>
-                                                                                            <div class="modal-body">
-                                                                                                <p>(Sẵn
-                                                                                                    [[${obj.ChiTietSanPham.soLuong}]]
-                                                                                                    sản phẩm )</p>
-                                                                                                <input type="number"
-                                                                                                    name="soLuongEdit"
-                                                                                                    th:id="${'soLuongEdit'+obj.id}">
-                                                                                            </div>
-                                                                                            <div class="modal-footer">
-                                                                                                <button type="button"
-                                                                                                    class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Close
-                                                                                                </button>
-                                                                                                <button
-                                                                                                    th:onclick="'validateAndSubmit('+${obj.ChiTietSanPham.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
-                                                                                                    type="button"
-                                                                                                    class="btn btn-primary">Save
-                                                                                                    changes
-                                                                                                </button>
-
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <button type="button"
-                                                                                    class="btn btn-danger"
-                                                                                    th:data-bs-toggle="modal"
-                                                                                    th:data-bs-target="${'#modalDeleteHdct'+obj.id}">
-                                                                                    <i class="bi bi-trash-fill"></i></i>
-                                                                                </button>
-                                                                                <div class="modal fade"
-                                                                                    th:id="${'modalDeleteHdct'+obj.id}"
-                                                                                    tabindex="-1" role="dialog"
-                                                                                    aria-labelledby="modalTitleId"
-                                                                                    aria-hidden="true">
-                                                                                    <div class="modal-dialog"
-                                                                                        role="document">
-                                                                                        <div class="modal-content">
-                                                                                            <div class="modal-header">
-                                                                                                <h5 class="modal-title"
-                                                                                                    id="modalTitleId">
-                                                                                                    Xác
-                                                                                                    nhận
-                                                                                                </h5>
-
-                                                                                            </div>
-                                                                                            <div class="modal-body">
-                                                                                                <div
-                                                                                                    class="container-fluid">
-                                                                                                    Xóa
-                                                                                                    [[${obj.ChiTietSanPham.SanPham.ten}]]
-                                                                                                    ?
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="modal-footer">
-                                                                                                <button type="button"
-                                                                                                    class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Close</button>
-                                                                                                <a th:href="@{'/ban-hang-tai-quay/hoa-don-chi-tiet/delete/'+${obj.id}}"
-                                                                                                    class="btn btn-danger">Xóa
-                                                                                                </a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </td>
                                                                     </form>
                                                                 </tr>
 
@@ -1485,8 +1379,7 @@
                                                                     <th scope="col">Sản phẩm</th>
                                                                     <th scope="col">Số lượng</th>
                                                                     <th scope="col">Thành tiền</th>
-                                                                    <th scope="col"
-                                                                        th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=5&&hoaDon.trangThai==3}">
+                                                                    <th scope="col">
                                                                         Thao tác</th>
 
                                                                 </tr>
@@ -1538,13 +1431,13 @@
                                                                             </div>
                                                                         </td>
 
-                                                                        <td th:if="${hoaDon.trangThai==3}">
+                                                                        <td>
                                                                             <div class="button-table">
                                                                                 <button type="button"
                                                                                     class="btn btn-primary"
                                                                                     th:data-bs-toggle="modal"
                                                                                     th:data-bs-target="${'#modalEditSoLuongTra'+obj.id}">
-                                                                                    X
+                                                                                    Sửa
                                                                                     <input type="hidden" name="idHdct"
                                                                                         th:value="${obj.id}">
                                                                                 </button>
@@ -1592,112 +1485,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </td>
-                                                                        <td
-                                                                            th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=3&&hoaDon.trangThai!=5}">
-                                                                            <div class="button-table">
-                                                                                <!-- delete Hóa đơn chi tiết -->
 
-                                                                                <!-- Button trigger modal -->
-
-                                                                                <button type="button"
-                                                                                    class="btn btn-primary"
-                                                                                    th:data-bs-toggle="modal"
-                                                                                    th:data-bs-target="${'#modalEditSoLuong'+obj.id}">
-                                                                                    <i class="bi bi-pencil-fill"></i>
-                                                                                    <input type="hidden" name="idHdct"
-                                                                                        th:value="${obj.id}">
-                                                                                </button>
-
-
-
-
-
-
-
-                                                                                <!-- Modal update sl-->
-                                                                                <div class="modal fade"
-                                                                                    th:id="${'modalEditSoLuong'+obj.id}"
-                                                                                    tabindex="-1"
-                                                                                    aria-labelledby="exampleModalLabel"
-                                                                                    aria-hidden="true">
-                                                                                    <div class="modal-dialog">
-                                                                                        <div class="modal-content">
-                                                                                            <div class="modal-header">
-                                                                                                <h1 class="modal-title fs-5"
-                                                                                                    id="exampleModalLabel">
-                                                                                                    Nhập
-                                                                                                    số lượng</h1>
-
-
-                                                                                            </div>
-                                                                                            <div class="modal-body">
-                                                                                                <p>(Sẵn
-                                                                                                    [[${obj.ChiTietSanPham.soLuong}]]
-                                                                                                    sản phẩm )</p>
-                                                                                                <input type="number"
-                                                                                                    name="soLuongEdit"
-                                                                                                    th:id="${'soLuongEdit'+obj.id}">
-                                                                                            </div>
-                                                                                            <div class="modal-footer">
-                                                                                                <button type="button"
-                                                                                                    class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Close
-                                                                                                </button>
-                                                                                                <button
-                                                                                                    th:onclick="'validateAndSubmit('+${obj.ChiTietSanPham.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
-                                                                                                    type="button"
-                                                                                                    class="btn btn-primary">Save
-                                                                                                    changes
-                                                                                                </button>
-
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <button type="button"
-                                                                                    class="btn btn-danger"
-                                                                                    th:data-bs-toggle="modal"
-                                                                                    th:data-bs-target="${'#modalDeleteHdct'+obj.id}">
-                                                                                    <i class="bi bi-trash-fill"></i></i>
-                                                                                </button>
-                                                                                <div class="modal fade"
-                                                                                    th:id="${'modalDeleteHdct'+obj.id}"
-                                                                                    tabindex="-1" role="dialog"
-                                                                                    aria-labelledby="modalTitleId"
-                                                                                    aria-hidden="true">
-                                                                                    <div class="modal-dialog"
-                                                                                        role="document">
-                                                                                        <div class="modal-content">
-                                                                                            <div class="modal-header">
-                                                                                                <h5 class="modal-title"
-                                                                                                    id="modalTitleId">
-                                                                                                    Xác
-                                                                                                    nhận
-                                                                                                </h5>
-
-                                                                                            </div>
-                                                                                            <div class="modal-body">
-                                                                                                <div
-                                                                                                    class="container-fluid">
-                                                                                                    Xóa
-                                                                                                    [[${obj.ChiTietSanPham.SanPham.ten}]]
-                                                                                                    ?
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="modal-footer">
-                                                                                                <button type="button"
-                                                                                                    class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Close</button>
-                                                                                                <a th:href="@{'/ban-hang-tai-quay/hoa-don-chi-tiet/delete/'+${obj.id}}"
-                                                                                                    class="btn btn-danger">Xóa
-                                                                                                </a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </td>
                                                                     </form>
                                                                 </tr>
 
@@ -2329,26 +2117,13 @@
     <!--Thông báo thành công-->
     <div class="toast-container position-fixed top-0 end-0 p-3">
         <script th:if="${checkThongBao=='thanhCong'}">
-            // <script>
-            //     function showToast() {
-            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
-            //         liveToast.show();
-            //
-            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
-            //         liveToast.show();
-            //
-            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
-            //         liveToast.show();
-            //     }
-            //     // Show the toast when the page loads
-            //     document.addEventListener('DOMContentLoaded', showToast);
-            //
             window.addEventListener('DOMContentLoaded', (event) => {
                 // Hiển thị modal
                 var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
                 liveToast.show();
             });
         </script>
+
         <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
             style="  background-color: rgba(62, 189, 97,0.2);border:2px solid #3ebd61;  border-radius:1rem;">
             <div class="toast-body">
@@ -2358,11 +2133,11 @@
                     </div>
                     <div class="col-md-8" style=" margin-top:6.3%">
                         <span style="
-                        text-align: center;
-                        font-size: 1rem; /* Kích thước phông chữ */
-                        font-weight: bold; /* Độ đậm của chữ */
-                        color: #3ebd61;">
-                            Thành công</span>
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #3ebd61;">
+                            [[${thongBao}]]</span>
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
@@ -2373,21 +2148,47 @@
             </div>
         </div>
     </div>
-
-
     <!--Thông báo thành công end-->
+
+    <!--Thông báo cảnh báo-->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <script th:if="${checkThongBao=='canhBao'}">
+            window.addEventListener('DOMContentLoaded', (event) => {
+                // Hiển thị modal
+                var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+                liveToast.show();
+            });
+        </script>
+        <div id="liveToastWarning" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+            style=" background-color: rgba(239, 148, 0, 0.2);border:2px solid #fcca1b;  border-radius:1rem;">
+            <div class="toast-body">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <img src="../../../static/img/successful_warning.png" alt="" style="margin: auto">
+                    </div>
+                    <div class="col-md-8" style=" margin-top:6.3%">
+                        <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #fcca1b;">
+                            [[${thongBao}]]</span>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Thông báo cảnh báo end-->
 
     <!--Thông báo thất bại-->
     <div class="toast-container position-fixed top-0 end-0 p-3">
-        <script th:if="${checkThongBao=='thaiBai'}">
-            // <script>
-            //     function showToast() {
-            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
-            //         liveToast.show();
-            //     }
-            //     // Show the toast when the page loads
-            //     document.addEventListener('DOMContentLoaded', showToast);
-            //
+        <script th:if="${checkThongBao=='thatBai'}">
+
             window.addEventListener('DOMContentLoaded', (event) => {
                 // Hiển thị modal
                 var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
@@ -2403,11 +2204,11 @@
                     </div>
                     <div class="col-md-8" style=" margin-top:6.3%">
                         <span style="
-                        text-align: center;
-                        font-size: 1rem; /* Kích thước phông chữ */
-                        font-weight: bold; /* Độ đậm của chữ */
-                        color: white;">
-                            Lỗi</span>
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: white;">
+                            [[${thongBao}]]</span>
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"

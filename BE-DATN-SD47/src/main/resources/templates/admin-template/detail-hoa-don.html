@@ -304,11 +304,11 @@
                                                                             <span th:case="0">Đã Đặt Hàng</span>
                                                                             <span th:case="1">Đã Xác Nhận</span>
                                                                             <span th:case="2">Đã Giao Cho ĐVVC</span>
-                                                                            <span th:case="3">Đã Nhận Được Hàng</span>
+                                                                            <span th:case="3">Đã Nhận Hàng</span>
                                                                             <!--                                                            <span th:case="4" th:text="Hoàn Trả Thành Công"></span>-->
                                                                         </span>
                                                                         <span class="status-end"
-                                                                            th:text="${lshd.ngaySua}"></span>
+                                                                            th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
                                                                     </div>
 
                                                                     <!--                                                <div class="image-order-status image-order-status-new active img-circle">-->
@@ -367,12 +367,12 @@
                                                                                 <span th:case="1">Đã Xác Nhận</span>
                                                                                 <span th:case="2">Đã Giao Cho
                                                                                     ĐVVC</span>
-                                                                                <span th:case="3">Đã Nhận Được
+                                                                                <span th:case="3">Đã Nhận
                                                                                     Hàng</span>
                                                                                 <!--                                                            <span th:case="11">Hoàn Trả Thành Công</span>-->
                                                                             </span>
                                                                             <span class="status-end"
-                                                                                th:text="${lshd.ngaySua}"></span>
+                                                                                th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -388,12 +388,12 @@
                                                                                 <span class="status"
                                                                                     th:switch="${lshd.trangThai}">
                                                                                     <span th:case="0">Đã Đặt Hàng</span>
-                                                                                    <span th:case="3">Đã Nhận Được
+                                                                                    <span th:case="3">Đã Nhận
                                                                                         Hàng</span>
                                                                                     <!--<span th:case="4" th:text="Hoàn Trả Thành Công"></span>-->
                                                                                 </span>
                                                                                 <span class="status-end"
-                                                                                    th:text="${lshd.ngaySua}"></span>
+                                                                                    th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -415,7 +415,7 @@
                                                                             <span th:case="5">Đã Hủy</span>
                                                                         </span>
                                                                         <span class="status-end"
-                                                                            th:text="${lshd.ngaySua}"></span>
+                                                                            th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
                                                                     </div>
                                                                 </div>
                                                                 <div th:if="${listLichSuHoaDon.size()==3}">
@@ -432,7 +432,7 @@
                                                                             <span th:case="5">Đã Hủy</span>
                                                                         </span>
                                                                         <span class="status-end"
-                                                                            th:text="${lshd.ngaySua}"></span>
+                                                                            th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -497,9 +497,9 @@
 
                                         <button id="btnInHoaDon" class="btn btn-primary">In hóa đơn</button>
 
-                                        <button th:if="${hoaDon.trangThai>0}" data-bs-toggle="modal"
-                                            data-bs-target="#rollback" type="button" class="btn btn-primary"><i
-                                                class="bi bi-arrow-90deg-left"></i></button>
+                                        <button th:if="${hoaDon.trangThai>0&&hoaDon.trangThai!=6}"
+                                            data-bs-toggle="modal" data-bs-target="#rollback" type="button"
+                                            class="btn btn-primary">Quay lại</button>
                                         <button th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}" type="button"
                                             class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#ghiChuHuy">Hủy</button>
@@ -636,8 +636,9 @@
                                                                             <td>
                                                                                 [[${lshd.getStringTrangThai()}]]
                                                                             </td>
-                                                                            <td>
-                                                                                [[${lshd.ngaySua}]]
+                                                                            <td
+                                                                                th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}">
+
                                                                             </td>
                                                                             <td>
                                                                                 [[${lshd.nguoiSua}]]
@@ -1424,7 +1425,7 @@
 
                                                                     // Đặt tên thành phố vào thẻ có class là phuongXaColumn trong dòng hiện tại
                                                                     var phuongXaColumn = document.getElementById('phuongXaColumn');
-                                                                    phuongXaColumn.innerText = ',  '+phuongXa.WardName + ',';
+                                                                    phuongXaColumn.innerText = ',  ' + phuongXa.WardName + ',';
                                                                     document.getElementById('phuongXaColumnIn').innerText = phuongXa.WardName + ',';
                                                                 })
                                                                 .catch(error => {
@@ -1784,7 +1785,7 @@
                                                             color: black;">Thông tin thanh toán</h4>
                                                             <div class="thong-tin-tt-2">
 
-<!-- 
+                                                                <!-- 
                                                                 <div class="row">
                                                                     <div class="col">
                                                                         <h6>Phương thức thanh toán:</h6>
@@ -1896,9 +1897,7 @@
                                                                                         </div>
                                                                                         <div class="modal-footer">
                                                                                             <a th:href="@{'/ban-hang-tai-quay/hoa-don/bo-voucher/'+${hoaDon.id}}"
-                                                                                                
-                                                                                                class="btn btn-secondary"
-                                                                                                >Bỏ
+                                                                                                class="btn btn-secondary">Bỏ
                                                                                                 chọn
                                                                                             </a>
                                                                                             <button type="button"
@@ -2353,8 +2352,11 @@
                                 id="phiVanChuyenIn">[[${hoaDon.phiShip}]]
                             </span> VND</span>
                     </p>
-                    <p><span class="info-label">Thành tiền:</span> <span class="info-value"><span
+                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()>0}"><span class="info-label">Thành tiền:</span> <span class="info-value"><span
                                 id="thanhTienIn">[[${hoaDon.tongTienHoaDonDaNhan()+hoaDon.phiShip-hoaDon.getGiamGia()}]]</span>
+                            VND</span></p>
+                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()00}"><span class="info-label">Thành tiền:</span> <span class="info-value"><span
+                                id="thanhTienIn">0</span>
                             VND</span></p>
                 </div>
             </div>
@@ -2459,10 +2461,12 @@
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
     <script src='https://github.com/jasonday/printThis/blob/master/printThis.js'></script>
     <script>
+
         document.addEventListener('DOMContentLoaded', function () {
             $(".inHoaDon").hide();
         });
         $('#btnInHoaDon').click(function () {
+            $("#liveToastSuccess").hide();
             $(".hoaDonTong").hide();
             $(".inHoaDon").show();
             $('#pdfDocument').attr('src', 'https://connect-hm.top/pdf/test.pdf');
@@ -2492,26 +2496,13 @@
     <!--Thông báo thành công-->
     <div class="toast-container position-fixed top-0 end-0 p-3">
         <script th:if="${checkThongBao=='thanhCong'}">
-            // <script>
-            //     function showToast() {
-            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
-            //         liveToast.show();
-            //
-            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
-            //         liveToast.show();
-            //
-            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
-            //         liveToast.show();
-            //     }
-            //     // Show the toast when the page loads
-            //     document.addEventListener('DOMContentLoaded', showToast);
-            //
             window.addEventListener('DOMContentLoaded', (event) => {
                 // Hiển thị modal
                 var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
                 liveToast.show();
             });
         </script>
+
         <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
             style="  background-color: rgba(62, 189, 97,0.2);border:2px solid #3ebd61;  border-radius:1rem;">
             <div class="toast-body">
@@ -2521,11 +2512,11 @@
                     </div>
                     <div class="col-md-8" style=" margin-top:6.3%">
                         <span style="
-                        text-align: center;
-                        font-size: 1rem; /* Kích thước phông chữ */
-                        font-weight: bold; /* Độ đậm của chữ */
-                        color: #3ebd61;">
-                            Thành công</span>
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #3ebd61;">
+                            [[${thongBao}]]</span>
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
@@ -2538,17 +2529,45 @@
     </div>
     <!--Thông báo thành công end-->
 
+    <!--Thông báo cảnh báo-->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <script th:if="${checkThongBao=='canhBao'}">
+            window.addEventListener('DOMContentLoaded', (event) => {
+                // Hiển thị modal
+                var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+                liveToast.show();
+            });
+        </script>
+        <div id="liveToastWarning" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+            style=" background-color: rgba(239, 148, 0, 0.2);border:2px solid #fcca1b;  border-radius:1rem;">
+            <div class="toast-body">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <img src="../../../static/img/successful_warning.png" alt="" style="margin: auto">
+                    </div>
+                    <div class="col-md-8" style=" margin-top:6.3%">
+                        <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #fcca1b;">
+                            [[${thongBao}]]</span>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Thông báo cảnh báo end-->
+
     <!--Thông báo thất bại-->
     <div class="toast-container position-fixed top-0 end-0 p-3">
-        <script th:if="${checkThongBao=='thaiBai'}">
-            // <script>
-            //     function showToast() {
-            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
-            //         liveToast.show();
-            //     }
-            //     // Show the toast when the page loads
-            //     document.addEventListener('DOMContentLoaded', showToast);
-            //
+        <script th:if="${checkThongBao=='thatBai'}">
+
             window.addEventListener('DOMContentLoaded', (event) => {
                 // Hiển thị modal
                 var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
@@ -2564,11 +2583,11 @@
                     </div>
                     <div class="col-md-8" style=" margin-top:6.3%">
                         <span style="
-                        text-align: center;
-                        font-size: 1rem; /* Kích thước phông chữ */
-                        font-weight: bold; /* Độ đậm của chữ */
-                        color: white;">
-                            Lỗi</span>
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: white;">
+                            [[${thongBao}]]</span>
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"

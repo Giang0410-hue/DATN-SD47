@@ -230,18 +230,7 @@
                                                 </div>
                                             </div>
 
-                                            <script>
-                                                var modalId = document.getElementById('modalId');
 
-                                                modalId.addEventListener('show.bs.modal', function (event) {
-                                                    // Button that triggered the modal
-                                                    let button = event.relatedTarget;
-                                                    // Extract info from data-bs-* attributes
-                                                    let recipient = button.getAttribute('data-bs-whatever');
-
-                                                    // Use above variables to manipulate the DOM
-                                                });
-                                            </script>
 
                                             <script>
                                                 document.getElementById("postLink").addEventListener("click", function (event) {
@@ -353,49 +342,48 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <form
-                                                th:action="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
-                                                method="post">
-                                                <!-- Button trigger modal -->
+                                                <form th:action="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
+                                                    method="post">
+                                                    <!-- Button trigger modal -->
 
 
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="ghiChu" tabindex="-1" role="dialog"
-                                                    aria-labelledby="modalTitleId" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="modalTitleId">Xác
-                                                                    nhận
-                                                                </h5>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="container-fluid">
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="ghiChu" tabindex="-1" role="dialog"
+                                                        aria-labelledby="modalTitleId" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="modalTitleId">Xác
+                                                                        nhận
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="container-fluid">
 
-                                                                    <div class="mb-3">
-                                                                        <label for="" class="form-label">Lý
-                                                                            do</label>
-                                                                        <input type="text" class="form-control"
-                                                                            name="ghiChu" id=""
-                                                                            aria-describedby="helpId"
-                                                                            placeholder="">
-                                                                        <small id="helpId"
-                                                                            class="form-text text-muted">Viết rõ
-                                                                            vào
-                                                                            đây</small>
+                                                                        <div class="mb-3">
+                                                                            <label for="" class="form-label">Lý
+                                                                                do</label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="ghiChu" id=""
+                                                                                aria-describedby="helpId"
+                                                                                placeholder="">
+                                                                            <small id="helpId"
+                                                                                class="form-text text-muted">Viết rõ
+                                                                                vào
+                                                                                đây</small>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Đóng</button>
-                                                                <button class="btn btn-danger"
-                                                                    type="submit">Hủy</button>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Đóng</button>
+                                                                    <button class="btn btn-danger"
+                                                                        type="submit">Hủy</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </form>
+                                                </form>
                                                 <div
                                                     th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=3&&hoaDon.trangThai!=5}">
 
@@ -403,25 +391,14 @@
 
 
 
-                                                    <script>
-                                                        var modalId = document.getElementById('modalId');
 
-                                                        modalId.addEventListener('show.bs.modal', function (event) {
-                                                            // Button that triggered the modal
-                                                            let button = event.relatedTarget;
-                                                            // Extract info from data-bs-* attributes
-                                                            let recipient = button.getAttribute('data-bs-whatever');
-
-                                                            // Use above variables to manipulate the DOM
-                                                        });
-                                                    </script>
 
                                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                                         data-bs-target="#ghiChu">
                                                         Hủy
                                                         hóa đơn
                                                     </button>
-                                                    
+
 
 
 
@@ -432,6 +409,7 @@
                                                         th:data-bs-target="${'#addsp'+hoaDon.id}">
                                                         Thêm sản phẩm
                                                     </button>
+
                                                 </div>
                                                 <!-- Modal -->
 
@@ -647,7 +625,8 @@
                                                                                         <button
                                                                                             th:onclick="'validateAndSubmitTraHang('+${obj.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
                                                                                             type="button"
-                                                                                            class="btn btn-primary">Xác nhận
+                                                                                            class="btn btn-primary">Xác
+                                                                                            nhận
                                                                                         </button>
 
                                                                                     </div>
@@ -693,9 +672,10 @@
                                                                                         <input type="number"
                                                                                             name="soLuongEdit"
                                                                                             th:id="${'soLuongEdit'+obj.id}">
-                                                                                            
+
                                                                                     </div>
-                                                                                    <small id="errorSoLuongEdit"></small>
+                                                                                    <small
+                                                                                        id="errorSoLuongEdit"></small>
                                                                                     <div class="modal-footer">
                                                                                         <button type="button"
                                                                                             class="btn btn-secondary"
@@ -704,7 +684,8 @@
                                                                                         <button
                                                                                             th:onclick="'validateAndSubmit('+${obj.ChiTietSanPham.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
                                                                                             type="button"
-                                                                                            class="btn btn-primary">Xác nhận
+                                                                                            class="btn btn-primary">Xác
+                                                                                            nhận
                                                                                         </button>
 
                                                                                     </div>
@@ -774,18 +755,7 @@
                                             <!-- Modal -->
 
 
-                                            <script>
-                                                var modalId = document.getElementById('modalId');
 
-                                                modalId.addEventListener('show.bs.modal', function (event) {
-                                                    // Button that triggered the modal
-                                                    let button = event.relatedTarget;
-                                                    // Extract info from data-bs-* attributes
-                                                    let recipient = button.getAttribute('data-bs-whatever');
-
-                                                    // Use above variables to manipulate the DOM
-                                                });
-                                            </script>
 
                                             <div class="line"></div>
 
@@ -1613,9 +1583,9 @@
                                                                         rows="3">[[${hoaDon.ghiChu}]]</textarea>
                                                                 </div>
                                                                 <div class="row">
-                                                                    
+
                                                                     <div class="col" style="margin-top: 3%;">
-                                                                        
+
                                                                         <div class="form-check form-switch">
                                                                             Lưu địa chỉ
                                                                             <input class="form-check-input"
@@ -1940,8 +1910,7 @@
                                                             </button>
                                                             <button onclick="return validateThanhToan()" id="thanhToan"
                                                                 th:if="${#lists.size(hoaDon.lstHoaDonChiTiet) !=0}"
-                                                                type="button" class="btn btn-success"
-                                                                >Thanh toán
+                                                                type="button" class="btn btn-success">Thanh toán
 
                                                             </button>
                                                             <!-- Button trigger modal -->
@@ -1969,18 +1938,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <script>
-                                                                var modalId = document.getElementById('modalId');
 
-                                                                modalId.addEventListener('show.bs.modal', function (event) {
-                                                                    // Button that triggered the modal
-                                                                    let button = event.relatedTarget;
-                                                                    // Extract info from data-bs-* attributes
-                                                                    let recipient = button.getAttribute('data-bs-whatever');
-
-                                                                    // Use above variables to manipulate the DOM
-                                                                });
-                                                            </script>
 
                                                         </div>
 
@@ -2023,18 +1981,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <script>
-                                                            var modalId = document.getElementById('modalId');
 
-                                                            modalId.addEventListener('show.bs.modal', function (event) {
-                                                                // Button that triggered the modal
-                                                                let button = event.relatedTarget;
-                                                                // Extract info from data-bs-* attributes
-                                                                let recipient = button.getAttribute('data-bs-whatever');
-
-                                                                // Use above variables to manipulate the DOM
-                                                            });
-                                                        </script>
 
 
                                                         <button id="thanhToan" th:case="0" type="button"
@@ -2196,7 +2143,13 @@
                                                 </div>
                                                 <!-- Modal voucher end -->
 
-
+                                                <script th:if="${batModal=='ok'}">
+                                                    window.addEventListener('DOMContentLoaded', (event) => {
+                                                        // Hiển thị modal
+                                                        var myModal = new bootstrap.Modal(document.getElementById('addsp[[${hoaDon.id}]]'));
+                                                        myModal.show();
+                                                    });
+                                                </script>
                                             </div>
                                         </div>
                                     </div>
@@ -2231,10 +2184,12 @@
         .hidden {
             display: none;
         }
-        small{
+
+        small {
             /* font-weight: bold; */
             color: red;
         }
+
         .show {
             display: block;
         }
@@ -2518,26 +2473,13 @@
     <!--Thông báo thành công-->
     <div class="toast-container position-fixed top-0 end-0 p-3">
         <script th:if="${checkThongBao=='thanhCong'}">
-            // <script>
-            //     function showToast() {
-            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
-            //         liveToast.show();
-            //
-            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
-            //         liveToast.show();
-            //
-            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
-            //         liveToast.show();
-            //     }
-            //     // Show the toast when the page loads
-            //     document.addEventListener('DOMContentLoaded', showToast);
-            //
             window.addEventListener('DOMContentLoaded', (event) => {
                 // Hiển thị modal
                 var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
                 liveToast.show();
             });
         </script>
+
         <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
             style="  background-color: rgba(62, 189, 97,0.2);border:2px solid #3ebd61;  border-radius:1rem;">
             <div class="toast-body">
@@ -2551,7 +2493,7 @@
                     font-size: 1rem; /* Kích thước phông chữ */
                     font-weight: bold; /* Độ đậm của chữ */
                     color: #3ebd61;">
-                            Thành công</span>
+                            [[${thongBao}]]</span>
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
@@ -2564,17 +2506,45 @@
     </div>
     <!--Thông báo thành công end-->
 
+    <!--Thông báo cảnh báo-->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <script th:if="${checkThongBao=='canhBao'}">
+            window.addEventListener('DOMContentLoaded', (event) => {
+                // Hiển thị modal
+                var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+                liveToast.show();
+            });
+        </script>
+        <div id="liveToastWarning" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+            style=" background-color: rgba(239, 148, 0, 0.2);border:2px solid #fcca1b;  border-radius:1rem;">
+            <div class="toast-body">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <img src="../../../static/img/successful_warning.png" alt="" style="margin: auto">
+                    </div>
+                    <div class="col-md-8" style=" margin-top:6.3%">
+                        <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #fcca1b;">
+                            [[${thongBao}]]</span>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Thông báo cảnh báo end-->
+
     <!--Thông báo thất bại-->
     <div class="toast-container position-fixed top-0 end-0 p-3">
-        <script th:if="${checkThongBao=='thaiBai'}">
-            // <script>
-            //     function showToast() {
-            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
-            //         liveToast.show();
-            //     }
-            //     // Show the toast when the page loads
-            //     document.addEventListener('DOMContentLoaded', showToast);
-            //
+        <script th:if="${checkThongBao=='thatBai'}">
+
             window.addEventListener('DOMContentLoaded', (event) => {
                 // Hiển thị modal
                 var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
@@ -2594,7 +2564,7 @@
                     font-size: 1rem; /* Kích thước phông chữ */
                     font-weight: bold; /* Độ đậm của chữ */
                     color: white;">
-                            Lỗi</span>
+                            [[${thongBao}]]</span>
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
