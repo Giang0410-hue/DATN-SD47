@@ -28,6 +28,7 @@
             var hoaDon2 = [[${countHoaDon2}]];
             var hoaDon3 = [[${countHoaDon3}]];
             var hoaDon5 = [[${countHoaDon5}]];
+            var hoaDon6 = [[${countHoaDon6}]];
             // Create columns for the DataTable
             data.addColumn('string');
             data.addColumn('number', 'Devices');
@@ -38,6 +39,7 @@
                 ['Đang giao', hoaDon2],
                 ['Hoàn thành', hoaDon3],
                 ['Đã huỷ', hoaDon5],
+                ['Hoàn trả', hoaDon6],
             ]);
             //Create option for chart
             var options = {
@@ -62,12 +64,12 @@
                 formattedThongKeData = thongKeData.map(function (item) {
                     return [(item[0]), item[1], item[2]];
                 });
-                formattedThongKeData.unshift(['Ngày', 'Số lượng sản phẩm', 'Số hóa đơn']);
+                formattedThongKeData.unshift(['Ngày', 'Số lượng sản phẩm', 'Số hóa đơn hoàn thành']);
                 // Sử dụng mảng JSON trong JavaScript
                 console.log(formattedThongKeData);
             } else {
                 // Nếu không có dữ liệu, sử dụng mảng mẫu hoặc mảng rỗng
-                formattedThongKeData = [['Ngày', 'Số lượng sản phẩm', 'Số hóa đơn']];
+                formattedThongKeData = [['Ngày', 'Số lượng sản phẩm', 'Số hóa đơn hoàn thành']];
             }
             /*]]>*/
             var data = google.visualization.arrayToDataTable(formattedThongKeData);
@@ -369,34 +371,112 @@
                                             <span th:text="${sumHoaDonMonth != null ? #numbers.formatDecimal(sumHoaDonMonth, 0, 'COMMA', 0, 'POINT') + ' VNĐ' : '0 VNĐ'}"></span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" style="margin-top: 2%">
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon0Between">
                                         <div class="columnThongKe">
                                             <h3>Hóa đơn chờ xác nhận </h3>
-                                            <span th:text="${sumSanPham != null ? sumSanPham + ' sản phẩm' : '0 hóa đơn'}"></span>
+                                            <span th:text="${countHoaDonChoXacNhanBetween != null ? countHoaDonChoXacNhanBetween + ' hóa đơn' : '0 hóa đơn'}"></span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" style="margin-top: 2%">
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon1Between">
                                         <div class="columnThongKe">
                                             <h3>Hóa đơn chờ giao </h3>
-                                            <span th:text="${sumSanPham != null ? sumSanPham + ' sản phẩm' : '0 hóa đơn'}"></span>
+                                            <span th:text="${countHoaDonChoGiaoBetween != null ? countHoaDonChoGiaoBetween + ' hóa đơn' : '0 hóa đơn'}"></span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" style="margin-top: 2%">
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon2Between">
                                         <div class="columnThongKe">
                                             <h3>Hóa đơn đang giao </h3>
-                                            <span th:text="${sumSanPham != null ? sumSanPham + ' sản phẩm' : '0 hóa đơn'}"></span>
+                                            <span th:text="${countHoaDonDangGiaoBetween != null ? countHoaDonDangGiaoBetween + ' hóa đơn' : '0 hóa đơn'}"></span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" style="margin-top: 2%">
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon3Between">
                                         <div class="columnThongKe">
                                             <h3>Hóa đơn hoàn thành </h3>
-                                            <span th:text="${sumSanPham != null ? sumSanPham + ' sản phẩm' : '0 hóa đơn'}"></span>
+                                            <span th:text="${countHoaDonHoanThanhBetween != null ? countHoaDonHoanThanhBetween + ' hóa đơn' : '0 hóa đơn'}"></span>
                                         </div>
                                     </div>
-                                    <div class="col-md-12" style="margin-top: 2%">
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon5Between">
                                         <div class="columnThongKe">
                                             <h3>Hóa đơn hủy </h3>
-                                            <span th:text="${sumSanPham != null ? sumSanPham + ' sản phẩm' : '0 hóa đơn'}"></span>
+                                            <span th:text="${countHoaDonDaHuyBetween != null ? countHoaDonDaHuyBetween + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon6Between">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn hoàn trả </h3>
+                                            <span th:text="${countHoaDonTraBetween != null ? countHoaDonTraBetween + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon0Ngay">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn chờ xác nhận </h3>
+                                            <span th:text="${countHoaDonChoXacNhanNgay != null ? countHoaDonChoXacNhanNgay + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon1Ngay">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn chờ giao </h3>
+                                            <span th:text="${countHoaDonChoGiaoNgay!= null ? countHoaDonChoGiaoNgay + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon2Ngay">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn đang giao </h3>
+                                            <span th:text="${countHoaDonDangGiaoNgay != null ? countHoaDonDangGiaoNgay + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon3Ngay">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn hoàn thành </h3>
+                                            <span th:text="${countHoaDonHoanThanhNgay != null ? countHoaDonHoanThanhNgay + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon5Ngay">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn hủy </h3>
+                                            <span th:text="${countHoaDonDaHuyNgay != null ? countHoaDonDaHuyNgay + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon6Ngay">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn hoàn trả </h3>
+                                            <span th:text="${countHoaDonTraNgay != null ? countHoaDonTraNgay + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon0Thang">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn chờ xác nhận </h3>
+                                            <span th:text="${countHoaDonChoXacNhanThang != null ? countHoaDonChoXacNhanThang + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon1Thang">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn chờ giao </h3>
+                                            <span th:text="${countHoaDonChoGiaoThang != null ? countHoaDonChoGiaoThang + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon2Thang">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn đang giao </h3>
+                                            <span th:text="${countHoaDonDangGiaoThang != null ? countHoaDonDangGiaoThang + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon3Thang">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn hoàn thành </h3>
+                                            <span th:text="${countHoaDonHoanThanhThang != null ? countHoaDonHoanThanhThang + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon5Thang">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn hủy </h3>
+                                            <span th:text="${countHoaDonDaHuyThang != null ? countHoaDonDaHuyThang + ' hóa đơn' : '0 hóa đơn'}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 2%" id="hoaDon6Thang">
+                                        <div class="columnThongKe">
+                                            <h3>Hóa đơn hoàn trả </h3>
+                                            <span th:text="${countHoaDonTraThang != null ? countHoaDonTraThang + ' hóa đơn' : '0 hóa đơn'}"></span>
                                         </div>
                                     </div>
                                     <!--                                    <div class="col-md-6">-->
@@ -424,7 +504,7 @@
                                         <th>STT</th>
                                         <th>Sản phẩm</th>
                                         <th>Số Lượng bán</th>
-                                        <th>Doanh thu</th>
+<!--                                        <th>Doanh thu</th>-->
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -432,7 +512,7 @@
                                         <td th:text="${iterStat.index+1}"></td>
                                         <td th:text="${row[0]}"></td>
                                         <td th:text="${row[1]}"></td>
-                                        <td th:text="${#numbers.formatDecimal(row[2], 0, 'COMMA', 0, 'POINT')}+ ' VNĐ'"></td>
+<!--                                        <td th:text="${#numbers.formatDecimal(row[2], 0, 'COMMA', 0, 'POINT')}+ ' VNĐ'"></td>-->
                                     </tr>
                                     </tbody>
                                 </table>
@@ -445,7 +525,7 @@
                                         <th>STT</th>
                                         <th>Sản phẩm</th>
                                         <th>Số Lượng bán</th>
-                                        <th>Doanh thu</th>
+<!--                                        <th>Doanh thu</th>-->
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -453,7 +533,7 @@
                                         <td th:text="${iterStat.index+1}"></td>
                                         <td th:text="${row[0]}"></td>
                                         <td th:text="${row[1]}"></td>
-                                        <td th:text="${#numbers.formatDecimal(row[2], 0, 'COMMA', 0, 'POINT')}+ ' VNĐ'"></td>
+<!--                                        <td th:text="${#numbers.formatDecimal(row[2], 0, 'COMMA', 0, 'POINT')}+ ' VNĐ'"></td>-->
                                     </tr>
                                     </tbody>
                                 </table>
@@ -466,7 +546,7 @@
                                         <th>STT</th>
                                         <th>Sản phẩm</th>
                                         <th>Số Lượng bán</th>
-                                        <th>Doanh thu</th>
+<!--                                        <th>Doanh thu</th>-->
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -474,7 +554,7 @@
                                         <td th:text="${iterStat.index+1}"></td>
                                         <td th:text="${row[0]}"></td>
                                         <td th:text="${row[1]}"></td>
-                                        <td th:text="${#numbers.formatDecimal(row[2], 0, 'COMMA', 0, 'POINT')}+ ' VNĐ'"></td>
+<!--                                        <td th:text="${#numbers.formatDecimal(row[2], 0, 'COMMA', 0, 'POINT')}+ ' VNĐ'"></td>-->
                                     </tr>
                                     </tbody>
                                 </table>
@@ -482,42 +562,42 @@
                             <hr>
                             <div id="chart_div" style="margin-left: 22%"></div>
                             <hr>
-                            <h2 style="margin-top: 5%">Biểu đồ tình hình kinh doanh</h2>
-                            <form th:action="@{/admin/thong-ke/count-range}" th:method="post" id="form2"
-                                  class="row g-3" onsubmit="return validateDateRange()">
-                                <!--                                Từ ngày: <input type="date" name="startDateChart"-->
-                                <!--                                                th:value="${startDateChart != null ? #dates.format(startDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"-->
-                                <!--                                                id="tuNgay"-->
-                                <!--                                                required>-->
-                                <!--                                Đến ngày: <input type="date" name="endDateChart"-->
-                                <!--                                                 th:value="${endDateChart != null ? #dates.format(endDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"-->
-                                <!--                                                 id="denNgay"-->
-                                <!--                                                 required>-->
-                                <!--                                <button type="submit" class="btn btn-primary">Tìm</button>-->
+<!--                            <h2 style="margin-top: 5%">Biểu đồ tình hình kinh doanh</h2>-->
+<!--                            <form th:action="@{/admin/thong-ke/count-range}" th:method="post" id="form2"-->
+<!--                                  class="row g-3" onsubmit="return validateDateRange()">-->
+<!--                                &lt;!&ndash;                                Từ ngày: <input type="date" name="startDateChart"&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                                th:value="${startDateChart != null ? #dates.format(startDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                                id="tuNgay"&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                                required>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                Đến ngày: <input type="date" name="endDateChart"&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                                 th:value="${endDateChart != null ? #dates.format(endDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                                 id="denNgay"&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                                 required>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                <button type="submit" class="btn btn-primary">Tìm</button>&ndash;&gt;-->
 
-                                <div class="col-md-3">
-                                    <label class="form-label">Từ ngày:</label>
-                                    <input type="date" name="startDateChart" class="form-control"
-                                           th:value="${startDateChart != null ? #dates.format(startDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-                                           id="tuNgay"
-                                           required>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label">Đến ngày:</label>
-                                    <input type="date" name="endDateChart" class="form-control"
-                                           th:value="${endDateChart != null ? #dates.format(endDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-                                           id="denNgay"
-                                           required>
-                                </div>
-                                <div class="col-md-3">
-                                    <button type="submit" style="margin-top: 11.5%" class="btn btn-primary">Tìm kiếm
-                                    </button>
-                                </div>
-                            </form>
-                            <span id="error-message-start"
-                                  style="color: red;font-size: 14px;font-weight: bold;"></span>
-                            <div id="columnchart_material" style="width: 1100px; height: 500px;"></div>
-                            <hr>
+<!--                                <div class="col-md-3">-->
+<!--                                    <label class="form-label">Từ ngày:</label>-->
+<!--                                    <input type="date" name="startDateChart" class="form-control"-->
+<!--                                           th:value="${startDateChart != null ? #dates.format(startDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"-->
+<!--                                           id="tuNgay"-->
+<!--                                           required>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-3">-->
+<!--                                    <label class="form-label">Đến ngày:</label>-->
+<!--                                    <input type="date" name="endDateChart" class="form-control"-->
+<!--                                           th:value="${endDateChart != null ? #dates.format(endDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"-->
+<!--                                           id="denNgay"-->
+<!--                                           required>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-3">-->
+<!--                                    <button type="submit" style="margin-top: 11.5%" class="btn btn-primary">Tìm kiếm-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                            <span id="error-message-start"-->
+<!--                                  style="color: red;font-size: 14px;font-weight: bold;"></span>-->
+<!--                            <div id="columnchart_material" style="width: 1100px; height: 500px;"></div>-->
+<!--                            <hr>-->
                             <h1 style="margin-top: 5%">Danh sách sản phẩm sắp hết hàng</h1>
                             <table border="1" id="example">
                                 <thead>
@@ -729,6 +809,24 @@
         document.getElementById('hoaDonBetween').style.display = 'none';
         document.getElementById('doanhThuBetween').style.display = 'none';
         document.getElementById('top5Between').style.display = 'none';
+        document.getElementById('hoaDon0Between').style.display = 'none';
+        document.getElementById('hoaDon1Between').style.display = 'none';
+        document.getElementById('hoaDon2Between').style.display = 'none';
+        document.getElementById('hoaDon3Between').style.display = 'none';
+        document.getElementById('hoaDon5Between').style.display = 'none';
+        document.getElementById('hoaDon6Between').style.display = 'none';
+        document.getElementById('hoaDon0Ngay').style.display = 'block';
+        document.getElementById('hoaDon1Ngay').style.display = 'block';
+        document.getElementById('hoaDon2Ngay').style.display = 'block';
+        document.getElementById('hoaDon3Ngay').style.display = 'block';
+        document.getElementById('hoaDon5Ngay').style.display = 'block';
+        document.getElementById('hoaDon6Ngay').style.display = 'block';
+        document.getElementById('hoaDon0Thang').style.display = 'none';
+        document.getElementById('hoaDon1Thang').style.display = 'none';
+        document.getElementById('hoaDon2Thang').style.display = 'none';
+        document.getElementById('hoaDon3Thang').style.display = 'none';
+        document.getElementById('hoaDon5Thang').style.display = 'none';
+        document.getElementById('hoaDon6Thang').style.display = 'none';
     }
 
     function showHoaDonThang() {
@@ -745,6 +843,24 @@
         document.getElementById('hoaDonBetween').style.display = 'none';
         document.getElementById('doanhThuBetween').style.display = 'none';
         document.getElementById('top5Between').style.display = 'none';
+        document.getElementById('hoaDon0Between').style.display = 'none';
+        document.getElementById('hoaDon1Between').style.display = 'none';
+        document.getElementById('hoaDon2Between').style.display = 'none';
+        document.getElementById('hoaDon3Between').style.display = 'none';
+        document.getElementById('hoaDon5Between').style.display = 'none';
+        document.getElementById('hoaDon6Between').style.display = 'none';
+        document.getElementById('hoaDon0Ngay').style.display = 'none';
+        document.getElementById('hoaDon1Ngay').style.display = 'none';
+        document.getElementById('hoaDon2Ngay').style.display = 'none';
+        document.getElementById('hoaDon3Ngay').style.display = 'none';
+        document.getElementById('hoaDon5Ngay').style.display = 'none';
+        document.getElementById('hoaDon6Ngay').style.display = 'none';
+        document.getElementById('hoaDon0Thang').style.display = 'block';
+        document.getElementById('hoaDon1Thang').style.display = 'block';
+        document.getElementById('hoaDon2Thang').style.display = 'block';
+        document.getElementById('hoaDon3Thang').style.display = 'block';
+        document.getElementById('hoaDon5Thang').style.display = 'block';
+        document.getElementById('hoaDon6Thang').style.display = 'block';
     }
 
     function showHoaDonBetween() {
@@ -761,7 +877,24 @@
         document.getElementById('inputSearch').style.display = 'block';
         document.getElementById('hoaDonBetween').style.display = 'block';
         document.getElementById('doanhThuBetween').style.display = 'block';
-
+        document.getElementById('hoaDon0Between').style.display = 'block';
+        document.getElementById('hoaDon1Between').style.display = 'block';
+        document.getElementById('hoaDon2Between').style.display = 'block';
+        document.getElementById('hoaDon3Between').style.display = 'block';
+        document.getElementById('hoaDon5Between').style.display = 'block';
+        document.getElementById('hoaDon6Between').style.display = 'block';
+        document.getElementById('hoaDon0Ngay').style.display = 'none';
+        document.getElementById('hoaDon1Ngay').style.display = 'none';
+        document.getElementById('hoaDon2Ngay').style.display = 'none';
+        document.getElementById('hoaDon3Ngay').style.display = 'none';
+        document.getElementById('hoaDon5Ngay').style.display = 'none';
+        document.getElementById('hoaDon6Ngay').style.display = 'none';
+        document.getElementById('hoaDon0Thang').style.display = 'none';
+        document.getElementById('hoaDon1Thang').style.display = 'none';
+        document.getElementById('hoaDon2Thang').style.display = 'none';
+        document.getElementById('hoaDon3Thang').style.display = 'none';
+        document.getElementById('hoaDon5Thang').style.display = 'none';
+        document.getElementById('hoaDon6Thang').style.display = 'none';
     }
 
     window.onload = function () {
