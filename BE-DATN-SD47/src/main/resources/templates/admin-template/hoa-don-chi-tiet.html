@@ -152,6 +152,12 @@
                 </a>
             </li>
             <!-- End Forms Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
+                   <i class="bi bi-receipt-cutoff"></i>
+                    <span>Trả hàng</span>
+                </a>
+            </li><!-- End Forms Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
@@ -1058,8 +1064,9 @@
                                                 <div class="row g-3" style=" margin-bottom: 2%;">
 
                                                     <!-- Button trigger modal -->
-                                                    <div class="col-sm-12">
-                                                        <button
+                                                    
+                                                    <div  class="col-sm-12">
+                                                        <button th:disabled="${hoaDon.TaiKhoan.tenTaiKhoan==null}"
                                                             th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=3&&hoaDon.trangThai!=5}"
                                                             id="checkBtnGiaoHang" type="button" class="btn btn-primary"
                                                             data-bs-toggle="modal" style="float: right;"
@@ -1582,7 +1589,8 @@
                                                                         class="form-control"
                                                                         rows="3">[[${hoaDon.ghiChu}]]</textarea>
                                                                 </div>
-                                                                <div class="row">
+                                                               <!-- <span th:text="${hoaDon.TaiKhoan.tenTaiKhoan!=null}"></span> -->
+                                                                <div th:if="${#lists.size(lstTaiKhoanDc.lstDiaChi) <6&&hoaDon.TaiKhoan.tenTaiKhoan!=null}" class="row">
 
                                                                     <div class="col" style="margin-top: 3%;">
 
@@ -1590,7 +1598,7 @@
                                                                             Lưu địa chỉ
                                                                             <input class="form-check-input"
                                                                                 type="checkbox" role="switch"
-                                                                                name="treo">
+                                                                                name="luuDiaChi">
 
                                                                         </div>
                                                                     </div>
