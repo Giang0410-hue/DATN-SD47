@@ -74,6 +74,10 @@ public class ImportFileExcelCTSP {
                     listIndex.add(index);
                     continue;
                 }
+                if (Integer.parseInt(soLuongTon) < 0 || Integer.parseInt(giaBan) < 0) {
+                    listIndex.add(index);
+                    continue;
+                }
 
                 ChiTietSanPham chiTietSanPham = new ChiTietSanPham();
                 ChiTietSanPham chiTietSanPhamCheck =
@@ -99,6 +103,7 @@ public class ImportFileExcelCTSP {
                     chiTietSanPhamService.saveExcel(chiTietSanPhamCheck);
                 }
                 workbook.close();
+
             } catch (Exception e) {
                 e.printStackTrace();
                 listIndex.add(index);
