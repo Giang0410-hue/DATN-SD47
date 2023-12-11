@@ -5,6 +5,7 @@ import com.example.bedatnsd47.entity.HoaDon;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
@@ -29,7 +30,7 @@ public interface HoaDonService {
 
     List<HoaDon> getAllHoaDonByTaiKhoanOrderByNgaySua(Long idTaiKhoan);
 
-    List<HoaDon> getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(Long idTaiKhoan,Integer trangThai);
+    List<HoaDon> getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(Long idTaiKhoan, Integer trangThai);
 
     Integer countHoaDonDay(Date ngayTao);
 
@@ -47,6 +48,21 @@ public interface HoaDonService {
     Long sumGiaTriHoaDonBetween(Date startDate,
                                 Date endDate);
 
+    Integer countHoaDonTrangThaiBetween(Date startDate,
+                                        Date endDate,
+                                        Integer trangThai);
+
+    Integer countHoaDonTrangThaiNgay(Date ngayTao,
+                                     Integer trangThai);
+
+    Integer countHoaDonTrangThaiThang(Date ngayTao,
+                                      Integer trangThai);
+
+    Integer countHoaDonAll();
+
+    Long sumGiaTriHoaDonAll();
+
     void deleteHoaDonHoanTra();
 
+    
 }

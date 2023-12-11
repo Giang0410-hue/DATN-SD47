@@ -68,15 +68,17 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
+    public Integer countHoaDonDay(Date ngayTao) {
+        return hoaDonRepository.countHoaDonNgay(ngayTao);
+    }
+
+    @Override
     public List<HoaDon> getAllHoaDonByTaiKhoanOrderByNgaySua(Long idTaiKhoan) {
 
         return hoaDonRepository.findAllHoaDonByTaiKhoanOrderByNgaySua(idTaiKhoan);
 
     }
 
-    public Integer countHoaDonDay(Date ngayTao) {
-        return hoaDonRepository.countHoaDonNgay(ngayTao);
-    }
 
     @Override
     public Long sumHoaDonDay(Date ngayTao) {
@@ -109,6 +111,30 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
+    public Integer countHoaDonTrangThaiBetween(Date startDate, Date endDate, Integer trangThai) {
+        return hoaDonRepository.countHoaDonTrangThaiBetween(startDate, endDate, trangThai);
+    }
+
+    @Override
+    public Integer countHoaDonTrangThaiNgay(Date ngayTao, Integer trangThai) {
+        return hoaDonRepository.countHoaDonTrangThaiNgay(ngayTao, trangThai);
+    }
+
+    @Override
+    public Integer countHoaDonTrangThaiThang(Date ngayTao, Integer trangThai) {
+        return hoaDonRepository.countHoaDonTrangThaiThang(ngayTao, trangThai);
+    }
+
+    @Override
+    public Integer countHoaDonAll() {
+        return hoaDonRepository.countHoaDonAll();
+    }
+
+    @Override
+    public Long sumGiaTriHoaDonAll() {
+        return hoaDonRepository.sumGiaTriHoaDonAll();
+    }
+
     public void deleteHoaDonHoanTra() {
         // TODO Auto-generated method stub
         hoaDonRepository.deleteHoaDonHoanTra();
