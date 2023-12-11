@@ -450,7 +450,9 @@ public class BanHangController {
         checkVoucher();
         request.setAttribute("hoaDon", hd);
         request.setAttribute("byHoaDon", hd);
-
+        if (hd.getTrangThai() == 4) {
+            return "redirect:/ban-hang-tai-quay/hoa-don/" + idhdc;
+        }
         return "/admin-template/detail-hoa-don";
     }
 
@@ -640,7 +642,7 @@ public class BanHangController {
             @RequestParam(defaultValue = "") String thanhPho,
             @RequestParam(defaultValue = "") String quanHuyen, @RequestParam(defaultValue = "") String phuongXa,
             @RequestParam String voucherID, @RequestParam String ghiChuThanhToan,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes, @RequestParam(defaultValue = "") String luuDiaChi) {
         thongBao(redirectAttributes, "Thành công", 1);
         HoaDon hd = hoaDonService.findById(idhdc);
         chiTietSanPhamSerivce.checkSoLuongBang0();
@@ -649,6 +651,7 @@ public class BanHangController {
         if (voucherID != "") {
             hd.setVoucher(voucherService.findById(Long.parseLong(voucherID)));
         }
+
         switch (hd.getTrangThai()) {
             case -1:
                 if (treo.equals("on")) {
@@ -666,7 +669,20 @@ public class BanHangController {
                     hd.setThanhPho(thanhPho);
                     hd.setQuanHuyen(quanHuyen);
                     hd.setPhuongXa(phuongXa);
-
+                    if (luuDiaChi.equals("on") && hd.getTaiKhoan().getTenTaiKhoan() != null) {
+                        if (hd.getTaiKhoan().getLstDiaChi().size() < 5) {
+                            DiaChi dc = new DiaChi();
+                            dc.setQuanHuyen(quanHuyen);
+                            dc.setPhuongXa(phuongXa);
+                            dc.setThanhPho(thanhPho);
+                            dc.setDiaChiCuThe(inputDcct);
+                            dc.setTaiKhoan(hd.getTaiKhoan());
+                            dc.setNgaySua(new Date());
+                            dc.setNgayTao(new Date());
+                            dc.setTrangThai(1);
+                            diaChiService.save(dc);
+                        }
+                    }
                 } else {
                     // Hoàn thành
                     addLichSuHoaDon(hd.getId(), ghiChuThanhToan, 3);
@@ -736,11 +752,51 @@ public class BanHangController {
                 hd.setNgaySua(new Date());
                 break;
             case 4:
-                addLichSuHoaDon(hd.getId(), ghiChuThanhToan, 3);
-                hd.setTrangThai(3);
-                hd.setNgaySua(new Date());
-                hd.setNgayThanhToan(new Date());
-                updateSl(hd);
+                if (giaoHang.equals("on")) {
+                    // Giao hàng
+                    addLichSuHoaDon(hd.getId(), ghiChuThanhToan, 1);
+                    hd.setTrangThai(1);
+                    hd.setPhiShip(phiShip);
+                    hd.setSdtNguoiNhan(inputSoDienThoai);
+                    hd.setNguoiNhan(inputHoVaTen);
+                    hd.setDiaChiNguoiNhan(inputDcct);
+                    hd.setGhiChu(inputGhiChu);
+                    hd.setThanhPho(thanhPho);
+                    hd.setQuanHuyen(quanHuyen);
+                    hd.setPhuongXa(phuongXa);
+                    if (luuDiaChi.equals("on") && hd.getTaiKhoan().getTenTaiKhoan() != null) {
+                        if (hd.getTaiKhoan().getLstDiaChi().size() < 5) {
+                            DiaChi dc = new DiaChi();
+                            dc.setQuanHuyen(quanHuyen);
+                            dc.setPhuongXa(phuongXa);
+                            dc.setThanhPho(thanhPho);
+                            dc.setDiaChiCuThe(inputDcct);
+                            dc.setTaiKhoan(hd.getTaiKhoan());
+                            dc.setNgaySua(new Date());
+                            dc.setNgayTao(new Date());
+                            dc.setTrangThai(1);
+                            diaChiService.save(dc);
+                        }
+                    }
+                } else {
+                    // Hoàn thành
+                    addLichSuHoaDon(hd.getId(), ghiChuThanhToan, 3);
+                    hd.setTrangThai(3);
+                    hd.setNgayThanhToan(new Date());
+                    hd.setNgaySua(new Date());
+                    hd.setTongTien(hd.tongTienHoaDon());
+                    hd.setTongTienKhiGiam(hd.tongTienHoaDon() - giamGia);
+
+                    if (hd.getNguoiNhan() == null) {
+                        hd.setNguoiNhan("Khách lẻ");
+                    }
+                    updateSl(hd);
+                }
+                // addLichSuHoaDon(hd.getId(), ghiChuThanhToan, 3);
+                // hd.setTrangThai(3);
+                // hd.setNgaySua(new Date());
+                // hd.setNgayThanhToan(new Date());
+                // updateSl(hd);
                 break;
             case 6:
                 hd.setTrangThai(7);
@@ -751,7 +807,9 @@ public class BanHangController {
         hd.setTongTien(hd.tongTienHoaDon() + phiShip);
         hd.setTongTienKhiGiam(hd.tongTienHoaDon() + phiShip - giamGia);
         hoaDonService.saveOrUpdate(hd);
-
+        if (hd.getTrangThai() == 4) {
+            return "redirect:/ban-hang-tai-quay/hoa-don";
+        }
         return "redirect:/ban-hang-tai-quay/hoa-don/detail/" + idhdc;
     }
 
