@@ -16,8 +16,7 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, Lo
     @Query("Select hdct from HoaDonChiTiet hdct where hdct.id=:idHoaDon")
     List<HoaDonChiTiet> findByIdHoaDon(@Param("idHoaDon") Long idHoaDon);
 
-    @Query(value = "select top 5 * from hoa_don_chi_tiet where hoa_don_id in (:listIdHoaDon) order by so_luong desc", nativeQuery = true)
-    List<HoaDonChiTiet> fillAllIdHoaDonTrangThaiHoanThanh(@Param("listIdHoaDon") List<Long> listIdHoaDon);
+
 
     @Query(value = "WITH RankedHoaDonChiTiet AS (\n" +
             "  SELECT\n" +
