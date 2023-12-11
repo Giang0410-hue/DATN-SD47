@@ -50,7 +50,7 @@ public class FormLoginContrller {
         return "dang-nhap";
     }
 
-    @GetMapping("/login/erorr")
+    @GetMapping("/login-error")
     public String loginErorr(
             Model model
     ) {

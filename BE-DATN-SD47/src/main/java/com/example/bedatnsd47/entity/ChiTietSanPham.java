@@ -20,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.util.Date;
 
@@ -48,7 +49,7 @@ public class ChiTietSanPham {
 
     @Column(name = "gia_hien_hanh")
     @NotNull(message = "Giá không được trống.")
-    @Min(value = 10000, message = "Giá  nhỏ nhất là 10000")
+    @Min(value = 1, message = "Giá  nhỏ nhất là 1")
     @Max(value = 1000000000, message = "Giá lớn nhất là 1000000000")
     private Long giaHienHanh;
 

@@ -9,7 +9,8 @@
     <title>Glacat</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-
+    <link href="../../../static/img/favicon.png" rel="icon">
+    <link href="../../../static/img/apple-touch-icon.png" rel="apple-touch-icon">
     <!--    thư viện của bảng tích hợp tìm kiếm-->
     <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
     <!--    thư viện của bảng tích hợp tìm kiếm end-->
@@ -32,7 +33,7 @@
     </div><!-- End Logo -->
 
 
-<nav class="header-nav ms-auto">
+    <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
             <li class="nav-item dropdown pe-3">
 
@@ -46,16 +47,16 @@
                         <span>Nhân Viên</span>
                     </li>
 
-                      <!--                    <li>-->
-<!--                        <hr class="dropdown-divider">-->
-<!--                    </li>-->
+                    <!--                    <li>-->
+                    <!--                        <hr class="dropdown-divider">-->
+                    <!--                    </li>-->
 
-<!--                    <li>-->
-<!--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">-->
-<!--                            <i class="bi bi-person"></i>-->
-<!--                            <span>Thông tin của tôi</span>-->
-<!--                        </a>-->
-<!--                    </li>-->
+                    <!--                    <li>-->
+                    <!--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">-->
+                    <!--                            <i class="bi bi-person"></i>-->
+                    <!--                            <span>Thông tin của tôi</span>-->
+                    <!--                        </a>-->
+                    <!--                    </li>-->
 
                     <li>
                         <hr class="dropdown-divider">
@@ -135,7 +136,7 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
-               <i class="bi bi-receipt-cutoff"></i>
+                <i class="bi bi-receipt-cutoff"></i>
                 <span>Quản Lý Hóa Đơn</span>
             </a>
         </li><!-- End Forms Nav -->
@@ -247,7 +248,7 @@
                                                     Hiệu</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" id="themThuongHieu"
-                                                           placeholder="Nhập thương hiệu"  th:field="*{ten}" >
+                                                           placeholder="Nhập thương hiệu" th:field="*{ten}">
                                                     <span class="check-loi" th:errors="*{ten}"></span>
                                                     <span class="check-loi" th:text="${checkTenTrungDiaChi}"></span>
 
@@ -515,6 +516,7 @@
         margin-left: -80%;
         margin-bottom: 10%;
     }
+
     /*select hiển thị mục*/
     .dataTables_length label {
         white-space: nowrap; /* Ngăn các phần tử xuống dòng */
