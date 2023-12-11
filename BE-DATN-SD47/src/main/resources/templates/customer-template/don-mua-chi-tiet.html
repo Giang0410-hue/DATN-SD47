@@ -654,7 +654,7 @@
                             <tr>
                                 <td colspan="2">Voucher</td>
                                 <td class="tien-table"
-                                    th:text="${byHoaDon.tongTienKhiGiam - (byHoaDon.tongTien + byHoaDon.phiShip )+ ' VND'}">
+                                    th:text="${byHoaDon.getGiamGia()+ ' VND'}">
                                     30000VND
                                 </td>
                             </tr>
