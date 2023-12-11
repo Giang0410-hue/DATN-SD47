@@ -69,7 +69,7 @@ public class LichSuHoaDon {
             case 6:
                 return "Hoàn trả";
             case 8:
-                return "Quay lại";
+                return "Hoàn tác";
 
 
 
@@ -89,9 +89,8 @@ public class LichSuHoaDon {
             case 25:
                 return "Đã hủy";
             case 26:
-                return "Đã thanh toán";
-            case 27:
                 return "Hoàn trả";
+            
             default:
                 return "";
 
