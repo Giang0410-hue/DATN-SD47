@@ -53,6 +53,48 @@
     </div><!-- End Logo -->
 
 
+<nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+            <li class="nav-item dropdown pe-3">
+
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <span class="d-none d-md-block dropdown-toggle ps-2">Nguyễn Tuấn Anh</span>
+                </a><!-- End Profile Iamge Icon -->
+
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                    <li class="dropdown-header">
+                        <h6>Nguyễn Tuấn Anh</h6>
+                        <span>Nhân Viên</span>
+                    </li>
+
+                      <!--                    <li>-->
+<!--                        <hr class="dropdown-divider">-->
+<!--                    </li>-->
+
+<!--                    <li>-->
+<!--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">-->
+<!--                            <i class="bi bi-person"></i>-->
+<!--                            <span>Thông tin của tôi</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" th:href="@{/logout}">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Đăng Xuất</span>
+                        </a>
+                    </li>
+
+                </ul><!-- End Profile Dropdown Items -->
+            </li><!-- End Profile Nav -->
+
+        </ul>
+    </nav><!-- End Icons Navigation -->
+
 </header><!-- End Header -->
 
 <!-- ======= Sidebar ======= -->
@@ -68,7 +110,7 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don">
-                <i class="bi bi-grid"></i>
+                <i class="bi bi-shop"></i>
                 <span>Bán Hàng</span>
             </a>
         </li><!-- End Dashboard Nav -->
@@ -114,14 +156,21 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
-                <i class="bi bi-envelope"></i>
-                <span>Hóa Đơn</span>
+               <i class="bi bi-receipt-cutoff"></i>
+                <span>Quản Lý Hóa Đơn</span>
+            </a>
+        </li><!-- End Forms Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
+               <i class="bi bi-receipt-cutoff"></i>
+                <span>Trả hàng</span>
             </a>
         </li><!-- End Forms Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>Quản Lý Tài Khoản</span><i
+                <i class="bi bi-person-vcard"></i><span>Quản Lý Tài Khoản</span><i
                     class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
@@ -140,7 +189,7 @@
 
         <li class="nav-item">
             <a class="nav-link" href="/admin/voucher">
-                <i class="bi bi-envelope"></i>
+                <i class="bi bi-ticket-perforated-fill"></i>
                 <span>Quản Lý Voucher</span>
             </a>
         </li><!-- End Icons Nav -->
@@ -220,13 +269,20 @@
                                               th:action="@{/admin/voucher/add}" method="post"
                                               enctype="multipart/form-data"
                                               th:object="${voucher}">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <label class="form-label">
                                                     <span class="dau-sao">*</span>Mã voucher:</label>
                                                 <input type="text" class="form-control" placeholder="Nhập mã voucher"
                                                        th:field="*{maVoucher}">
                                                 <span class="check-loi" th:errors="*{maVoucher}"></span>
                                                 <span class="check-loi" th:text="${checkMaTrung}"></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">
+                                                    <span class="dau-sao">*</span>Giá trị giảm tối đa:</label>
+                                                <input type="text" class="form-control" placeholder="Nhập giá trị giảm tối đa"
+                                                       th:field="*{giamToiDa}">
+                                                <span class="check-loi" th:errors="*{giamToiDa}"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">
@@ -335,6 +391,7 @@
                                 <th>Tên Voucher</th>
                                 <th>Đơn Tối Thiểu</th>
                                 <th>Giảm</th>
+                                <th>Giảm tối đa</th>
                                 <th>Số Lượng</th>
                                 <th>Trạng Thái</th>
                                 <th>Ngày bắt đầu</th>
@@ -349,12 +406,13 @@
                                 <td th:text="${voucher.tenVoucher}"></td>
                                 <td th:text="${voucher.giaTriDonToiThieu}"></td>
                                 <td th:text="${voucher.phanTramGiam + '%'}"></td>
+                                <td th:text="${voucher.giamToiDa}"></td>
                                 <td th:text="${voucher.soLuong}"></td>
                                 <td class="trangthaidkd" th:if="${voucher.trangThai==0}">Đang diễn ra</td>
                                 <td class="trangthainkd" th:if="${voucher.trangThai==1}">Đã kết thúc</td>
                                 <td class="trangthaisdr" th:if="${voucher.trangThai==2}">Sắp diễn ra</td>
-                                <td th:text="${voucher.ngayBatDau}"></td>
-                                <td th:text="${voucher.ngayKetThuc}"></td>
+                                <td th:text="${#temporals.format(voucher.ngayBatDau, 'HH:mm dd/MM/yyyy')}"></td>
+                                <td th:text="${#temporals.format(voucher.ngayKetThuc, 'HH:mm dd/MM/yyyy')}"></td>
                                 <td>
                                     <!-- button và model -->
                                     <a th:href="@{/admin/voucher/view-update/{id}(id=${voucher.id})}"
@@ -572,14 +630,14 @@
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
-        &copy; Copyright <strong><span>Glacat</span></strong>. All Rights Reserved
+        <!-- &copy; Copyright <strong><span>Glacat</span></strong>. All Rights Reserved -->
     </div>
     <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Website bán giày Glacat
     </div>
 </footer><!-- End Footer -->
 
@@ -597,7 +655,7 @@
 <script src="../../../static/vendor/php-email-form/validate.js"></script>
 
 <!-- Template Main JS File -->
-<script src="../../../static/js/main.js"></script>
+<script src="../../../static/js/main-off.js"></script>
 
 <!--    thư viện của bảng tích hợp tìm kiếm-->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>

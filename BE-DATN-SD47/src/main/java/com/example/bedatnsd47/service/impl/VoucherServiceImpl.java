@@ -52,6 +52,11 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
+    public List<Voucher> fillDangDienRaAndSapDienRa() {
+        return voucherRepository.fillDangDienRaAndSapDienRa();
+    }
+
+    @Override
     public List<Voucher> fillAllDaKetThuc() {
         return voucherRepository.fillAllDaKetThuc();
     }
@@ -151,9 +156,9 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Override
     @Transactional
-    @Scheduled(fixedRate = 100000)
+    @Scheduled(fixedRate = 60000)
     public void updateVoucherStatus() {
-        List<Voucher> vouchers = voucherRepository.fillAll();
+        List<Voucher> vouchers = voucherRepository.fillDangDienRaAndSapDienRa();
         LocalDateTime currentDateTime = LocalDateTime.now();
         for (Voucher voucher : vouchers) {
             if (currentDateTime.isBefore(voucher.getNgayBatDau())) {

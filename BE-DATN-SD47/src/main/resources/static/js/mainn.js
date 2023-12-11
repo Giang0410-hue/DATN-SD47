@@ -40,7 +40,7 @@ $(document).ready(function () {
 
         // Tiếp tục với cập nhật số lượng
         $.ajax({
-            url: '/cart/update/' + id,
+            url: '/user/cart/update/' + id,
             type: 'GET',
             data: {soLuong: soLuongMoi},
             success: function (data) {
@@ -59,6 +59,8 @@ $(document).ready(function () {
 
     }
 });
+
+
 $(document).ready(function () {
     // Kích hoạt tooltip
 

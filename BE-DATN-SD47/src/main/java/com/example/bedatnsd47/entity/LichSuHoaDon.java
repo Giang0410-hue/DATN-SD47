@@ -1,6 +1,5 @@
 package com.example.bedatnsd47.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,6 +16,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "lich_su_hoa_don")
 @Data
@@ -27,11 +28,13 @@ public class LichSuHoaDon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @Column(name = "ngay_tao")
+    @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
     private Date ngayTao;
 
     @Column(name = "ngay_sua")
+    @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
     private Date ngaySua;
 
     @Column(name = "ghi_chu", length = 255)
@@ -44,6 +47,8 @@ public class LichSuHoaDon {
     @JoinColumn(name = "hoa_don_id", referencedColumnName = "id")
     private HoaDon hoaDon;
 
+    private String nguoiSua;
+
     public String getStringTrangThai() {
         if (this.trangThai == null) {
             return "Trạng thái null";
@@ -54,17 +59,38 @@ public class LichSuHoaDon {
             case 1:
                 return "Đã xác nhận";
             case 2:
-                return "Đã bàn giao cho đơn vị vận chuyển";
+                return "Đã giao cho đơn vị vận chuyển";
             case 3:
-                return "Đã giao";
+                return "Đã nhận được hàng";
             case 4:
-                return "Đặt hàng thành công";
+                return "Đổi hàng thành công";
             case 5:
                 return "Đã hủy";
             case 6:
-                return "Đã thanh toán";
-            case 7:
-                return "Trả hàng";
+                return "Hoàn trả";
+            case 8:
+                return "Hoàn tác";
+
+
+
+
+
+
+            case 20:
+                return "Tạo hóa đơn";
+            case 21:
+                return "Đã xác nhận";
+            case 22:
+                return "Đã bàn giao cho đơn vị vận chuyển";
+            case 23:
+                return "Đã nhận được hàng";
+            case 24:
+                return "Đặt hàng thành công";
+            case 25:
+                return "Đã hủy";
+            case 26:
+                return "Hoàn trả";
+            
             default:
                 return "";
 

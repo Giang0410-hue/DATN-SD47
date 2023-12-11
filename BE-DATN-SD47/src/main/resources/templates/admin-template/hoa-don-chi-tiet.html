@@ -8,7 +8,7 @@
     <title>Glacat</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-
+    <link href="../../../static/img/favicon.png" rel="icon">
 
     <!--    thư viện của bảng tích hợp tìm kiếm-->
     <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
@@ -44,6 +44,48 @@
         </div><!-- End Logo -->
 
 
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">Nguyễn Tuấn Anh</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>Nguyễn Tuấn Anh</h6>
+                            <span>Nhân Viên</span>
+                        </li>
+
+                        <!--                    <li>-->
+                        <!--                        <hr class="dropdown-divider">-->
+                        <!--                    </li>-->
+
+                        <!--                    <li>-->
+                        <!--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">-->
+                        <!--                            <i class="bi bi-person"></i>-->
+                        <!--                            <span>Thông tin của tôi</span>-->
+                        <!--                        </a>-->
+                        <!--                    </li>-->
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" th:href="@{/logout}">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Đăng Xuất</span>
+                            </a>
+                        </li>
+
+                    </ul><!-- End Profile Dropdown Items -->
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
     </header><!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
@@ -59,7 +101,7 @@
 
             <li class="nav-item">
                 <a class="nav-link " href="/ban-hang-tai-quay/hoa-don">
-                    <i class="bi bi-grid"></i>
+                    <i class="bi bi-shop"></i>
                     <span>Bán Hàng</span>
                 </a>
             </li><!-- End Bán Hàng Tại Quầy Nav -->
@@ -105,15 +147,21 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
-                    <i class="bi bi-envelope"></i>
-                    <span>Hóa Đơn</span>
+                    <i class="bi bi-receipt-cutoff"></i>
+                    <span>Quản Lý Hóa Đơn</span>
                 </a>
             </li>
             <!-- End Forms Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
+                   <i class="bi bi-receipt-cutoff"></i>
+                    <span>Trả hàng</span>
+                </a>
+            </li><!-- End Forms Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Quản Lý Tài Khoản</span><i
+                    <i class="bi bi-person-vcard"></i><span>Quản Lý Tài Khoản</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -132,7 +180,7 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/admin/voucher">
-                    <i class="bi bi-envelope"></i>
+                    <i class="bi bi-ticket-perforated-fill"></i>
                     <span>Quản Lý Voucher</span>
                 </a>
             </li>
@@ -188,18 +236,7 @@
                                                 </div>
                                             </div>
 
-                                            <script>
-                                                var modalId = document.getElementById('modalId');
 
-                                                modalId.addEventListener('show.bs.modal', function (event) {
-                                                    // Button that triggered the modal
-                                                    let button = event.relatedTarget;
-                                                    // Extract info from data-bs-* attributes
-                                                    let recipient = button.getAttribute('data-bs-whatever');
-
-                                                    // Use above variables to manipulate the DOM
-                                                });
-                                            </script>
 
                                             <script>
                                                 document.getElementById("postLink").addEventListener("click", function (event) {
@@ -248,10 +285,10 @@
                                         <div> <!-- div tổng của hóa đơn chi tiết -->
 
                                             <div class="them-moi-sp">
-                                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                <!-- <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                                     data-bs-target="#lshdModal">
                                                     Lịch sử hóa đơn
-                                                </button>
+                                                </button> -->
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="lshdModal" tabindex="-1" role="dialog"
                                                     aria-labelledby="modalTitleId" aria-hidden="true">
@@ -311,7 +348,48 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <form th:action="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
+                                                    method="post">
+                                                    <!-- Button trigger modal -->
 
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="ghiChu" tabindex="-1" role="dialog"
+                                                        aria-labelledby="modalTitleId" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="modalTitleId">Xác
+                                                                        nhận
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="container-fluid">
+
+                                                                        <div class="mb-3">
+                                                                            <label for="" class="form-label">Lý
+                                                                                do</label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="ghiChu" id=""
+                                                                                aria-describedby="helpId"
+                                                                                placeholder="">
+                                                                            <small id="helpId"
+                                                                                class="form-text text-muted">Viết rõ
+                                                                                vào
+                                                                                đây</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Đóng</button>
+                                                                    <button class="btn btn-danger"
+                                                                        type="submit">Hủy</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                                 <div
                                                     th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=3&&hoaDon.trangThai!=5}">
 
@@ -319,67 +397,14 @@
 
 
 
-                                                    <script>
-                                                        var modalId = document.getElementById('modalId');
-
-                                                        modalId.addEventListener('show.bs.modal', function (event) {
-                                                            // Button that triggered the modal
-                                                            let button = event.relatedTarget;
-                                                            // Extract info from data-bs-* attributes
-                                                            let recipient = button.getAttribute('data-bs-whatever');
-
-                                                            // Use above variables to manipulate the DOM
-                                                        });
-                                                    </script>
 
 
-                                                    <form
-                                                        th:action="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
-                                                        method="post">
-                                                        <!-- Button trigger modal -->
-                                                        <button type="button" class="btn btn-danger"
-                                                            data-bs-toggle="modal" data-bs-target="#ghiChu">
-                                                            Hủy
-                                                            hóa đơn
-                                                        </button>
+                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#ghiChu">
+                                                        Hủy
+                                                        hóa đơn
+                                                    </button>
 
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="ghiChu" tabindex="-1" role="dialog"
-                                                            aria-labelledby="modalTitleId" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="modalTitleId">Xác
-                                                                            nhận
-                                                                        </h5>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="container-fluid">
-
-                                                                            <div class="mb-3">
-                                                                                <label for="" class="form-label">Lý
-                                                                                    do</label>
-                                                                                <input type="text" class="form-control"
-                                                                                    name="ghiChu" id=""
-                                                                                    aria-describedby="helpId"
-                                                                                    placeholder="">
-                                                                                <small id="helpId"
-                                                                                    class="form-text text-muted">Viết rõ
-                                                                                    vào
-                                                                                    đây</small>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary"
-                                                                            data-bs-dismiss="modal">Đóng</button>
-                                                                        <button class="btn btn-danger"
-                                                                            type="submit">Hủy</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
 
 
 
@@ -390,6 +415,7 @@
                                                         th:data-bs-target="${'#addsp'+hoaDon.id}">
                                                         Thêm sản phẩm
                                                     </button>
+
                                                 </div>
                                                 <!-- Modal -->
 
@@ -408,11 +434,11 @@
                                                                 <table id="example" class="display">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>STT</th>
-                                                                            <th>Sản Phẩm</th>
-                                                                            <th>Số Lượng</th>
-                                                                            <th>Giá Bán</th>
-                                                                            <th>Hành Động</th>
+                                                                            <th scope="col">STT</th>
+                                                                            <th scope="col">Sản Phẩm</th>
+                                                                            <th scope="col">Số Lượng</th>
+                                                                            <th scope="col">Giá Bán</th>
+                                                                            <th scope="col">Hành Động</th>
                                                                         </tr>
                                                                         <thead>
                                                                         <tbody>
@@ -425,35 +451,35 @@
                                                                                         type="hidden" name="idHoaDon">
                                                                                     <input th:value="${ctsp.id}"
                                                                                         type="hidden" name="idCtsp">
-                                                                                    <td>[[${state.index+1}]]
-                                                                                    </td>
-                                                                                    <td>
+
+                                                                                    <th scope="row" style="width: 5%;"
+                                                                                        th:text="${state.index+1}"></th>
+                                                                                    <td style="width: 50%;">
                                                                                         <div class="row">
                                                                                             <div class="col-4">
-                                                                                                <img class="fixed-image"
-                                                                                                    th:src="@{'../../../static/img/' + ${ctsp.sanPham.listHinhAnhSanPham[0].url}}"
-                                                                                                    alt="Image">
+                                                                                                <img th:src="@{'../../../static/img/ImgShoe/' + ${ctsp.SanPham.listHinhAnhSanPham[0].url}}"
+                                                                                                    class="fixed-image">
                                                                                             </div>
+
                                                                                             <div class="col-8">
-                                                                                                <div
-                                                                                                    class="info-price-sp">
-                                                                                                    <h6
-                                                                                                        th:text="${ctsp.sanPham.ten}">
-                                                                                                    </h6>
-                                                                                                    <span>Màu:
+                                                                                                <div class="info-price">
+                                                                                                    <h6>[[${ctsp.SanPham.ten}]]
+                                                                                                        [
                                                                                                         [[${ctsp.MauSac.ten}]]
                                                                                                         -
-                                                                                                        Kích
-                                                                                                        cỡ:
-                                                                                                        [[${ctsp.KichCo.ten}]]</span>
-                                                                                                    <p>Loại
-                                                                                                        đế
-                                                                                                        :
+                                                                                                        [[${ctsp.KichCo.ten}]]
+                                                                                                        ]
+                                                                                                    </h6>
+                                                                                                    <span>Đơn giá: <span
+                                                                                                            class="gia">
+                                                                                                            [[${ctsp.giaHienHanh}]]
+                                                                                                            VND</span></span>
+                                                                                                    <p>Loại đế:
                                                                                                         [[${ctsp.LoaiDe.ten}]]
                                                                                                     </p>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            </divF>
+                                                                                        </div>
                                                                                     </td>
                                                                                     <td>
                                                                                         [[${ctsp.soLuong}]]
@@ -512,7 +538,6 @@
                                                             <th scope="col">Sản phẩm</th>
                                                             <th scope="col">Số lượng</th>
                                                             <th scope="col">Thành tiền</th>
-                                                            <th scope="col">Trạng thái</th>
                                                             <th scope="col"
                                                                 th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=5}">
                                                                 Thao tác</th>
@@ -532,13 +557,18 @@
                                                                 <td>
                                                                     <div class="row">
                                                                         <div class="col-4">
-                                                                            <img th:src="@{'../../../static/img/' + ${obj.ChiTietSanPham.SanPham.listHinhAnhSanPham[0].url}}"
+                                                                            <img th:src="@{'../../../static/img/ImgShoe/' + ${obj.ChiTietSanPham.SanPham.listHinhAnhSanPham[0].url}}"
                                                                                 class="fixed-image">
                                                                         </div>
 
                                                                         <div class="col-8">
                                                                             <div class="info-price">
                                                                                 <h6>[[${obj.ChiTietSanPham.SanPham.ten}]]
+                                                                                    [
+                                                                                    [[${obj.ChiTietSanPham.MauSac.ten}]]
+                                                                                    -
+                                                                                    [[${obj.ChiTietSanPham.KichCo.ten}]]
+                                                                                    ]
                                                                                 </h6>
                                                                                 <span>Đơn giá: <span class="gia">
                                                                                         [[${obj.donGia}]]
@@ -559,17 +589,7 @@
                                                                         [[${obj.tongTien()}]] VND
                                                                     </div>
                                                                 </td>
-                                                                <td>
-                                                                    <p th:if="${obj.trangThai==2}">
-                                                                        Hàng trả
-                                                                    </p>
-                                                                    <p th:if="${obj.trangThai==1}">
-                                                                        Hàng đổi
-                                                                    </p>
-                                                                    <p th:if="${obj.trangThai==0}">
-                                                                        Hàng bình thường
-                                                                    </p>
-                                                                </td>
+
                                                                 <td th:if="${hoaDon.trangThai==3}">
                                                                     <div class="button-table">
                                                                         <button type="button" class="btn btn-primary"
@@ -606,13 +626,13 @@
                                                                                     <div class="modal-footer">
                                                                                         <button type="button"
                                                                                             class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close
+                                                                                            data-bs-dismiss="modal">Đóng
                                                                                         </button>
                                                                                         <button
                                                                                             th:onclick="'validateAndSubmitTraHang('+${obj.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
                                                                                             type="button"
-                                                                                            class="btn btn-primary">Save
-                                                                                            changes
+                                                                                            class="btn btn-primary">Xác
+                                                                                            nhận
                                                                                         </button>
 
                                                                                     </div>
@@ -658,17 +678,20 @@
                                                                                         <input type="number"
                                                                                             name="soLuongEdit"
                                                                                             th:id="${'soLuongEdit'+obj.id}">
+
                                                                                     </div>
+                                                                                    <small
+                                                                                        id="errorSoLuongEdit"></small>
                                                                                     <div class="modal-footer">
                                                                                         <button type="button"
                                                                                             class="btn btn-secondary"
-                                                                                            data-bs-dismiss="modal">Close
+                                                                                            data-bs-dismiss="modal">Đóng
                                                                                         </button>
                                                                                         <button
                                                                                             th:onclick="'validateAndSubmit('+${obj.ChiTietSanPham.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
                                                                                             type="button"
-                                                                                            class="btn btn-primary">Save
-                                                                                            changes
+                                                                                            class="btn btn-primary">Xác
+                                                                                            nhận
                                                                                         </button>
 
                                                                                     </div>
@@ -738,18 +761,7 @@
                                             <!-- Modal -->
 
 
-                                            <script>
-                                                var modalId = document.getElementById('modalId');
 
-                                                modalId.addEventListener('show.bs.modal', function (event) {
-                                                    // Button that triggered the modal
-                                                    let button = event.relatedTarget;
-                                                    // Extract info from data-bs-* attributes
-                                                    let recipient = button.getAttribute('data-bs-whatever');
-
-                                                    // Use above variables to manipulate the DOM
-                                                });
-                                            </script>
 
                                             <div class="line"></div>
 
@@ -791,7 +803,7 @@
                                                                                     class="btn btn-primary"
                                                                                     data-bs-toggle="modal"
                                                                                     style="float: right;"
-                                                                                    data-bs-target="#khachhang">
+                                                                                    data-bs-target="#them-khach-hang">
                                                                                     Thêm mới
                                                                                 </button>
                                                                             </div>
@@ -879,87 +891,142 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- Modal thêm mới khách hàng -->
-                                                    <div class="modal fade" id="khachhang" tabindex="-1"
-                                                        aria-labelledby="khachhangLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="them-kh-tabs">
-                                                                <div class="modal-content" style="width: 150%;">
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="them-khach-hang" tabindex="-1"
+                                                        aria-labelledby="them-khach-hangLabel" aria-hidden="true">
 
-                                                                    <!-- form thêm mới khách hàng nhanh -->
-                                                                    <form action="">
-                                                                        <div class="modal-header">
-                                                                            <h1 class="modal-title fs-5"
-                                                                                style="margin: auto;"
-                                                                                id="khachhangLabel">
-                                                                                Thêm mới khách hàng</h1>
+                                                        <!--js bật modal khi check-->
+                                                        <script th:if="${checkModal=='modal'}">
+                                                            window.addEventListener('DOMContentLoaded', (event) => {
+                                                                // Hiển thị modal
+                                                                var myModal = new bootstrap.Modal(document.getElementById('them-khach-hang'));
+                                                                myModal.show();
+                                                            });
+                                                        </script>
+                                                        <!--js bật modal khi check-->
+
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5"
+                                                                        id="them-khach-hangLabel">Thêm Khách Hàng</h1>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <!-- form thêm khách hàng -->
+                                                                    <form onsubmit="return validThemKhachHang()"
+                                                                        class="row g-3"
+                                                                        style="margin-top: 1%;margin-bottom: 5%;"
+                                                                        method="post" enctype="multipart/form-data"
+                                                                        th:action="@{/ban-hang-tai-quay/khach-hang/them-nhanh}"
+                                                                        th:object="${khachHang}">
+                                                                        <div class="col-md-6">
+                                                                            <label class="form-label">
+                                                                                <span class="dau-sao">*</span>Tên tài
+                                                                                khoản:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                placeholder="Nhập tên tài khoản"
+                                                                                th:field="*{tenTaiKhoan}">
+                                                                            <!-- <span class="check-loi" th:errors="*{tenTaiKhoan}"></span> -->
+                                                                            <span id="errorTenTaiKhoan"
+                                                                                class="check-loi"
+                                                                                th:text="${checkTenTrung}"></span>
+                                                                            <!-- <span class="check-loi"
+                                                                                id="errorTenTaiKhoan"></span> -->
                                                                         </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="mb-3">
-                                                                                <label class="col-form-label">
-                                                                                    <span style="color: red;">*</span>
-                                                                                    Tên khách hàng:
-                                                                                </label>
-                                                                                <input type="text" class="form-control"
-                                                                                    placeholder="Nhập tên khách hàng">
-                                                                            </div>
-                                                                            <div class="mb-3">
-                                                                                <label class="col-form-label">
-                                                                                    <span style="color: red;">*</span>
-                                                                                    Số điện thoại:
-                                                                                </label>
-                                                                                <input type="text" class="form-control"
-                                                                                    placeholder="Nhập tên khách hàng">
-                                                                            </div>
-                                                                            <div class="mb-3">
-                                                                                <label class="col-form-label">
-                                                                                    <span style="color: red;">*</span>
-                                                                                    Email:
-                                                                                </label>
-                                                                                <input type="text" class="form-control"
-                                                                                    placeholder="Nhập tên khách hàng">
-                                                                            </div>
-                                                                            <div class="row mb-3">
-                                                                                <label
-                                                                                    class="col-sm-2 col-form-label"><span
-                                                                                        style="color: red;">*</span>Giới
-                                                                                    tính</label>
-                                                                                <div class="col-sm-10"
-                                                                                    style="margin-top: 1%;">
-                                                                                    <input class="form-check-input"
-                                                                                        type="radio" name="gridRadios"
-                                                                                        value="Nam">
-                                                                                    <label class="form-check-label"
-                                                                                        style="margin-right: 4%;">
-                                                                                        Nam
-                                                                                    </label>
-                                                                                    <input class="form-check-input"
-                                                                                        type="radio" name="gridRadios"
-                                                                                        value="Nữ">
-                                                                                    <label class="form-check-label">
-                                                                                        Nữ
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
+                                                                        <div class="col-md-6">
+                                                                            <label class="form-label">
+                                                                                <span class="dau-sao">*</span>Tên khách
+                                                                                hàng:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                placeholder="Nhập khách hàng"
+                                                                                th:field="*{hoVaTen}">
+                                                                            <span class="check-loi"
+                                                                                id="errorHoVaTen"></span>
+
+                                                                            <!-- <span class="check-loi" th:errors="*{hoVaTen}"></span> -->
                                                                         </div>
+                                                                        <div class="col-md-6">
+                                                                            <label class="form-label">
+                                                                                <span class="dau-sao">*</span>Ngày
+                                                                                sinh:</label>
+                                                                            <input type="date" class="form-control"
+                                                                                th:field="*{ngaySinh}">
+                                                                            <!-- <span class="check-loi" th:errors="*{ngaySinh}"></span> -->
+                                                                            <span class="check-loi"
+                                                                                id="errorNgaySinh"></span>
+
+                                                                            <span class="check-loi"
+                                                                                th:if="${checkNgaySinh=='ngaySinh'}">Năm
+                                                                                sinh phải lớn 1900</span>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <label class="form-label">
+                                                                                <span class="dau-sao">*</span>Giới
+                                                                                tính:</label>
+                                                                            <div style="margin-top: 1%;">
+                                                                                <input class="form-check-input"
+                                                                                    type="radio" name="gridRadios"
+                                                                                    style="margin-left:5%;" checked
+                                                                                    th:field="*{gioiTinh}" value="0">
+                                                                                <label class="form-check-label">
+                                                                                    Nam
+                                                                                </label>
+
+                                                                                <input class="form-check-input"
+                                                                                    type="radio" name="gridRadios"
+                                                                                    style="margin-left:5%;"
+                                                                                    th:field="*{gioiTinh}" value="1">
+                                                                                <label class="form-check-label">
+                                                                                    Nữ
+                                                                                </label>
+                                                                            </div>
+                                                                            <!-- <span class="check-loi" th:errors="*{gioiTinh}"></span> -->
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <label class="form-label">
+                                                                                <span class="dau-sao">*</span>Số điện
+                                                                                thoại:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                placeholder="Nhập số điện thoại"
+                                                                                th:field="*{soDienThoai}">
+                                                                            <!-- <span class="check-loi" th:errors="*{soDienThoai}"></span> -->
+                                                                            <span class="check-loi"
+                                                                                id="errorsoDienThoai"></span>
+
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <label class="form-label">
+                                                                                <span
+                                                                                    class="dau-sao">*</span>Email:</label>
+                                                                            <input type="email" class="form-control"
+                                                                                placeholder="Nhập email"
+                                                                                th:field="*{email}" name="email">
+                                                                            <!-- <span class="check-loi" th:errors="*{email}"></span> -->
+
+                                                                            <span id="errorEmail" class="check-loi"
+                                                                                th:text="${checkEmailTrung}"></span>
+
+                                                                        </div>
+
                                                                         <div class="modal-footer">
                                                                             <button type="button"
                                                                                 class="btn btn-secondary"
-                                                                                data-bs-dismiss="modal">Đóng
+                                                                                data-bs-dismiss="modal">
+                                                                                Đóng
                                                                             </button>
                                                                             <button type="submit"
-                                                                                class="btn btn-success">Thêm
-                                                                            </button>
+                                                                                class="btn btn-success">Thêm</button>
                                                                         </div>
                                                                     </form>
-                                                                    <!-- form thêm mới khách hàng nhanh end -->
-
+                                                                    <!-- form thêm khách hàng end-->
 
                                                                 </div>
-                                                            </div>
 
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <!-- Modal end-->
 
                                                 </div>
 
@@ -997,8 +1064,9 @@
                                                 <div class="row g-3" style=" margin-bottom: 2%;">
 
                                                     <!-- Button trigger modal -->
-                                                    <div class="col-sm-12">
-                                                        <button
+                                                    
+                                                    <div  class="col-sm-12">
+                                                        <button th:disabled="${hoaDon.TaiKhoan.tenTaiKhoan==null}"
                                                             th:if="${hoaDon.trangThai!=2&&hoaDon.trangThai!=3&&hoaDon.trangThai!=5}"
                                                             id="checkBtnGiaoHang" type="button" class="btn btn-primary"
                                                             data-bs-toggle="modal" style="float: right;"
@@ -1038,18 +1106,18 @@
                                                                             <thead>
                                                                             <tbody>
 
-                                                                                <tr
-                                                                                    th:each="dc,state : ${lstTaiKhoanDc.lstDiaChi}">
+                                                                                <tr th:each="dc,state : ${lstTaiKhoanDc.lstDiaChi}"
+                                                                                    class="diaChiRow">
                                                                                     <form
                                                                                         action="/ban-hang-tai-quay/hoa-don/add-dia-chi"
                                                                                         method="post">
                                                                                         <td th:text="${state.index+1}">
                                                                                         </td>
-                                                                                        <td th:text="${dc.phuongXa}">
+                                                                                        <td class="phuongXaColumn">
                                                                                         </td>
-                                                                                        <td th:text="${dc.quanHuyen}">
+                                                                                        <td class="quanHuyenColumn">
                                                                                         </td>
-                                                                                        <td th:text="${dc.thanhPho}">
+                                                                                        <td class="thanhPhoColumn">
                                                                                         </td>
                                                                                         <td th:text="${dc.diaChiCuThe}">
 
@@ -1083,26 +1151,115 @@
                                                                             </tr>
                                                                         </tfoot>
                                                                     </table>
-                                                                    <nav aria-label="Page navigation example">
-                                                                        <ul class="pagination">
-                                                                            <li class="page-item">
-                                                                                <a class="page-link" href="#">
-                                                                                    <i class="bi bi-chevron-left"></i>
-                                                                                </a>
-                                                                            </li>
-                                                                            <li class="page-item"><a class="page-link"
-                                                                                    href="#">1</a></li>
-                                                                            <li class="page-item"><a class="page-link"
-                                                                                    href="#">2</a></li>
-                                                                            <li class="page-item"><a class="page-link"
-                                                                                    href="#">3</a></li>
-                                                                            <li class="page-item">
-                                                                                <a class="page-link" href="#">
-                                                                                    <i class="bi bi-chevron-right"></i>
-                                                                                </a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </nav>
+                                                                    <!-- detail api địa chỉ lẻn bảng-->
+                                                                    <script th:inline="javascript">
+
+                                                                        document.addEventListener('DOMContentLoaded', function () {
+                                                                            console.log("thanhPho")
+                                                                            fetch('https://online-gateway.ghn.vn/shiip/public-api/master-data/province', {
+                                                                                method: 'GET',
+                                                                                headers: {
+                                                                                    'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+                                                                                    'Content-Type': 'application/json',
+                                                                                },
+                                                                            })
+                                                                                .then(response => response.json())
+                                                                                .then(data => {
+                                                                                    // Lấy giá trị id thành phố từ thymeleaf
+                                                                                    var idThanhPhoArray = /*[[ ${lstTaiKhoanDc.lstDiaChi.![thanhPho] }]]*/[];
+                                                                                    console.log("thanhPho1")
+                                                                                    // Duyệt qua mỗi dòng trong bảng
+                                                                                    document.querySelectorAll('.diaChiRow').forEach((row, index) => {
+                                                                                        // Lấy id thành phố cho dòng hiện tại
+                                                                                        var idThanhPho = idThanhPhoArray[index];
+
+                                                                                        // Tìm thành phố trong data.data dựa trên id
+                                                                                        var thanhPho = data.data.find(city => city.ProvinceID == idThanhPho);
+                                                                                        console.log(thanhPho.ProvinceName)
+                                                                                        console.log("thanhPho")
+                                                                                        // Đặt tên thành phố vào thẻ có class là thanhPhoColumn trong dòng hiện tại
+                                                                                        var thanhPhoColumn = row.querySelector('.thanhPhoColumn');
+                                                                                        if (thanhPhoColumn && thanhPho) {
+                                                                                            thanhPhoColumn.innerText = thanhPho.ProvinceName;
+                                                                                        }
+                                                                                    });
+                                                                                })
+                                                                                .catch(error => {
+                                                                                    console.error('Lỗi khi tải dữ liệu thành phố:', error);
+                                                                                });
+
+                                                                            // Hàm để tải và populate quận/huyện
+                                                                            fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/district`, {
+                                                                                method: 'GET',
+                                                                                headers: {
+                                                                                    'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+                                                                                    'Content-Type': 'application/json',
+                                                                                },
+                                                                            })
+                                                                                .then(response => response.json())
+                                                                                .then(data => {
+                                                                                    // Lấy giá trị id thành phố từ thymeleaf
+                                                                                    var idQuanHuyenArray = /*[[ ${lstTaiKhoanDc.lstDiaChi.![quanHuyen] }]]*/[];
+                                                                                    // Duyệt qua mỗi dòng trong bảng
+                                                                                    document.querySelectorAll('.diaChiRow').forEach((row, index) => {
+                                                                                        // Lấy id thành phố cho dòng hiện tại
+                                                                                        var idQuanHuyen = idQuanHuyenArray[index];
+
+                                                                                        // Tìm thành phố trong data.data dựa trên id
+                                                                                        var quanHuyen = data.data.find(district => district.DistrictID == idQuanHuyen);
+
+                                                                                        // Đặt tên thành phố vào thẻ có class là quanHuyenColumn trong dòng hiện tại
+                                                                                        var quanHuyenColumn = row.querySelector('.quanHuyenColumn');
+                                                                                        if (quanHuyenColumn && quanHuyen) {
+                                                                                            quanHuyenColumn.innerText = quanHuyen.DistrictName;
+                                                                                        }
+                                                                                    });
+                                                                                })
+                                                                                .catch(error => {
+                                                                                    console.error('Lỗi khi tải dữ liệu quận:', error);
+                                                                                });
+
+
+                                                                            // Lấy danh sách id quận/huyện từ một danh sách district
+                                                                            var idQuanHuyenArray = /*[[ ${lstTaiKhoanDc.lstDiaChi.![quanHuyen] }]]*/[];
+                                                                            // Lặp qua từng id quận/huyện và gọi API cho mỗi id
+                                                                            idQuanHuyenArray.forEach(idQuanHuyen => {
+                                                                                fetch(`https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${idQuanHuyen}`, {
+                                                                                    method: 'GET',
+                                                                                    headers: {
+                                                                                        'token': 'd900c67f-742d-11ee-96dc-de6f804954c9',
+                                                                                        'Content-Type': 'application/json',
+                                                                                    },
+                                                                                })
+                                                                                    .then(response => response.json())
+                                                                                    .then(data => {
+                                                                                        // Lấy giá trị id thành phố từ thymeleaf
+                                                                                        var idPhuongXaArray = /*[[ ${lstTaiKhoanDc.lstDiaChi.![phuongXa] }]]*/[];
+                                                                                        // Duyệt qua mỗi dòng trong bảng
+                                                                                        document.querySelectorAll('.diaChiRow').forEach((row, index) => {
+                                                                                            // Lấy id thành phố cho dòng hiện tại
+                                                                                            var idPhuongXa = idPhuongXaArray[index];
+
+                                                                                            // Tìm thành phố trong data.data dựa trên id
+                                                                                            var phuongXa = data.data.find(ward => ward.WardCode == idPhuongXa);
+                                                                                            console.log(phuongXa)
+
+                                                                                            // Đặt tên thành phố vào thẻ có class là phuongXaColumn trong dòng hiện tại
+                                                                                            var phuongXaColumn = row.querySelector('.phuongXaColumn');
+                                                                                            if (phuongXaColumn && phuongXa) {
+                                                                                                phuongXaColumn.innerText = phuongXa.WardName;
+                                                                                            }
+
+                                                                                        });
+                                                                                    })
+                                                                                    .catch(error => {
+                                                                                        console.error('Lỗi khi tải dữ liệu xã:', error);
+                                                                                    });
+                                                                            });
+                                                                        });
+
+                                                                    </script>
+                                                                    <!-- detail api địa chỉ end-->
 
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -1432,6 +1589,22 @@
                                                                         class="form-control"
                                                                         rows="3">[[${hoaDon.ghiChu}]]</textarea>
                                                                 </div>
+                                                               <!-- <span th:text="${hoaDon.TaiKhoan.tenTaiKhoan!=null}"></span> -->
+                                                                <div th:if="${#lists.size(lstTaiKhoanDc.lstDiaChi) <6&&hoaDon.TaiKhoan.tenTaiKhoan!=null}" class="row">
+
+                                                                    <div class="col" style="margin-top: 3%;">
+
+                                                                        <div class="form-check form-switch">
+                                                                            Lưu địa chỉ
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox" role="switch"
+                                                                                name="luuDiaChi">
+
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1478,6 +1651,7 @@
                                                                                 toggleVisibility.addEventListener('change', function () {
                                                                                     const checkGiaoHang = document.getElementById('checkGiaoHang')
                                                                                     if (this.checked) {
+
                                                                                         console.log('Checkbox is checked');
                                                                                         calculateShippingFee();
                                                                                         // congHaiInputVaCapNhatTongGia();
@@ -1538,7 +1712,7 @@
                                                                                 aria-label="Coupon Code"
                                                                                 aria-describedby="button-addon2" />
                                                                             <button
-                                                                                th:if="${hoaDon.trangThai==-1&&hoaDon.taiKhoan.hoVaTen!='Khách lẻ'}"
+                                                                                th:if="${hoaDon.trangThai==-1&&hoaDon.taiKhoan.tenTaiKhoan!=null}"
                                                                                 class="btn btn-primary btn-sm"
                                                                                 type="button"
                                                                                 onclick="checkAndDisplayVouchers()"
@@ -1691,7 +1865,8 @@
                                                                     </div>
                                                                     <div class="col">
 
-                                                                        <input id="tienKhachTra" class="thong-tin-gia"
+                                                                        <input cla id="tienKhachTra"
+                                                                            class="thong-tin-gia form-control"
                                                                             type="number">
                                                                     </div>
 
@@ -1741,11 +1916,9 @@
                                                                 data-bs-toggle="modal" data-bs-target="#gioHangTrong">
                                                                 Thanh toán
                                                             </button>
-                                                            <button id="thanhToan"
+                                                            <button onclick="return validateThanhToan()" id="thanhToan"
                                                                 th:if="${#lists.size(hoaDon.lstHoaDonChiTiet) !=0}"
-                                                                type="button" class="btn btn-success"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#ghiChuThanhToan">Thanh toán
+                                                                type="button" class="btn btn-success">Thanh toán
 
                                                             </button>
                                                             <!-- Button trigger modal -->
@@ -1773,18 +1946,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <script>
-                                                                var modalId = document.getElementById('modalId');
 
-                                                                modalId.addEventListener('show.bs.modal', function (event) {
-                                                                    // Button that triggered the modal
-                                                                    let button = event.relatedTarget;
-                                                                    // Extract info from data-bs-* attributes
-                                                                    let recipient = button.getAttribute('data-bs-whatever');
-
-                                                                    // Use above variables to manipulate the DOM
-                                                                });
-                                                            </script>
 
                                                         </div>
 
@@ -1806,36 +1968,28 @@
                                                                             <div class="mb-3">
                                                                                 <label for="" class="form-label">Ghi
                                                                                     chú</label>
-                                                                                    <textarea class="form-control"
-                                                                                    name="ghiChuThanhToan" id="nhapGhiChu" cols="30" rows="10"></textarea>
-                                                                                
-                                                                                <small style="color: red;" id="errorGhiChuThanhToan"
+                                                                                <textarea class="form-control"
+                                                                                    name="ghiChuThanhToan"
+                                                                                    id="nhapGhiChu" cols="30"
+                                                                                    rows="3"></textarea>
+
+                                                                                <small style="color: red;"
+                                                                                    id="errorGhiChuThanhToan"
                                                                                     class="form-text "></small>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"
-                                                                            data-bs-dismiss="modal">Close</button>
+                                                                            data-bs-dismiss="modal">Đóng</button>
                                                                         <button type="submit"
-                                                                            class="btn btn-primary">Save</button>
+                                                                            class="btn btn-primary">Xác nhận</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <script>
-                                                            var modalId = document.getElementById('modalId');
 
-                                                            modalId.addEventListener('show.bs.modal', function (event) {
-                                                                // Button that triggered the modal
-                                                                let button = event.relatedTarget;
-                                                                // Extract info from data-bs-* attributes
-                                                                let recipient = button.getAttribute('data-bs-whatever');
-
-                                                                // Use above variables to manipulate the DOM
-                                                            });
-                                                        </script>
 
 
                                                         <button id="thanhToan" th:case="0" type="button"
@@ -1860,9 +2014,9 @@
                                                                 data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
                                                                 style="float: right;" class="btn btn-success">Từ chối
                                                             </button> -->
-                                                            <button id="thanhToan"  type="button"
-                                                                data-bs-toggle="modal" data-bs-target="#ghiChuThanhToan"
-                                                                style="float: right;" class="btn btn-success">Xác nhận
+                                                            <button id="thanhToan" type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#ghiChuThanhToan" style="float: right;"
+                                                                class="btn btn-success">Xác nhận
                                                                 trả hàng
                                                             </button>
                                                         </div>
@@ -1997,7 +2151,13 @@
                                                 </div>
                                                 <!-- Modal voucher end -->
 
-
+                                                <script th:if="${batModal=='ok'}">
+                                                    window.addEventListener('DOMContentLoaded', (event) => {
+                                                        // Hiển thị modal
+                                                        var myModal = new bootstrap.Modal(document.getElementById('addsp[[${hoaDon.id}]]'));
+                                                        myModal.show();
+                                                    });
+                                                </script>
                                             </div>
                                         </div>
                                     </div>
@@ -2012,14 +2172,14 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Glacat</span></strong>. All Rights Reserved
+            <!-- &copy; Copyright <strong><span>Glacat</span></strong>. All Rights Reserved -->
         </div>
         <div class="credits">
             <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you purchased the pro version. -->
             <!-- Licensing information: https://bootstrapmade.com/license/ -->
             <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            Website bán giày Glacat
         </div>
     </footer><!-- End Footer -->
 
@@ -2031,6 +2191,11 @@
     <style>
         .hidden {
             display: none;
+        }
+
+        small {
+            /* font-weight: bold; */
+            color: red;
         }
 
         .show {
@@ -2313,6 +2478,113 @@
 
 
     </script>
+    <!--Thông báo thành công-->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <script th:if="${checkThongBao=='thanhCong'}">
+            window.addEventListener('DOMContentLoaded', (event) => {
+                // Hiển thị modal
+                var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+                liveToast.show();
+            });
+        </script>
+
+        <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+            style="  background-color: rgba(62, 189, 97,0.2);border:2px solid #3ebd61;  border-radius:1rem;">
+            <div class="toast-body">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <img src="../../../static/img/successful_notification.png" alt="" style="margin: auto">
+                    </div>
+                    <div class="col-md-8" style=" margin-top:6.3%">
+                        <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #3ebd61;">
+                            [[${thongBao}]]</span>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Thông báo thành công end-->
+
+    <!--Thông báo cảnh báo-->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <script th:if="${checkThongBao=='canhBao'}">
+            window.addEventListener('DOMContentLoaded', (event) => {
+                // Hiển thị modal
+                var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+                liveToast.show();
+            });
+        </script>
+        <div id="liveToastWarning" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+            style=" background-color: rgba(239, 148, 0, 0.2);border:2px solid #fcca1b;  border-radius:1rem;">
+            <div class="toast-body">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <img src="../../../static/img/successful_warning.png" alt="" style="margin: auto">
+                    </div>
+                    <div class="col-md-8" style=" margin-top:6.3%">
+                        <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #fcca1b;">
+                            [[${thongBao}]]</span>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Thông báo cảnh báo end-->
+
+    <!--Thông báo thất bại-->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <script th:if="${checkThongBao=='thatBai'}">
+
+            window.addEventListener('DOMContentLoaded', (event) => {
+                // Hiển thị modal
+                var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+                liveToast.show();
+            });
+        </script>
+        <div id="liveToastDanger" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+            style="background-color: rgb(252,134,134);border:2px solid #ff2020;border-radius:1rem;">
+            <div class="toast-body">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <img src="../../../static/img/successful_danger.png" alt="" style="margin: auto">
+                    </div>
+                    <div class="col-md-8" style=" margin-top:6.3%">
+                        <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: white;">
+                            [[${thongBao}]]</span>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Thông báo thất bại end-->
 </body>
+
 
 </html>

@@ -6,6 +6,7 @@ import com.example.bedatnsd47.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -71,5 +72,45 @@ public class HoaDonServiceImpl implements HoaDonService {
 
         return hoaDonRepository.findAllHoaDonByTaiKhoanOrderByNgaySua(idTaiKhoan);
 
+    }
+
+    public Integer countHoaDonDay(Date ngayTao) {
+        return hoaDonRepository.countHoaDonNgay(ngayTao);
+    }
+
+    @Override
+    public Long sumHoaDonDay(Date ngayTao) {
+        return hoaDonRepository.sumGiaTriHoaDonNgay(ngayTao);
+    }
+
+    @Override
+    public Integer countHoaDonMonth(Date ngayTao) {
+        return hoaDonRepository.countHoaDonThang(ngayTao);
+    }
+
+    @Override
+    public Long sumHoaDonMonth(Date ngayTao) {
+        return hoaDonRepository.sumGiaTriHoaDonThang(ngayTao);
+    }
+
+    @Override
+    public Integer countHoaDon(Integer trangThai) {
+        return hoaDonRepository.countHoaDon(trangThai);
+    }
+
+    @Override
+    public Integer countHoaDonBetween(Date startDate, Date endDate) {
+        return hoaDonRepository.countHoaDonBetween(startDate,endDate);
+    }
+
+    @Override
+    public Long sumGiaTriHoaDonBetween(Date startDate, Date endDate) {
+        return hoaDonRepository.sumGiaTriHoaDonBetween(startDate,endDate);
+    }
+
+    @Override
+    public void deleteHoaDonHoanTra() {
+        // TODO Auto-generated method stub
+        hoaDonRepository.deleteHoaDonHoanTra();
     }
 }

@@ -41,7 +41,56 @@
                     <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
                         <form action="" class="site-block-top-search">
                             <span class="icon icon-search2"></span>
-                            <input type="text" class="form-control border-0" placeholder="Search"/>
+                            <input type="text" class="form-control border-0" id="timKiemAll" placeholder="Tìm kiếm theo tên sản phẩm"/>
+                            <script>
+                                var inputElementTimKiemAll = document.getElementById('timKiemAll');
+
+                                inputElementTimKiemAll.addEventListener('blur', function () {
+                                    var inputValueTimKiemAll = inputElementTimKiemAll.value;
+                                    console.log('Giá trị của input:', inputValueTimKiemAll);
+
+                                    var fullUrl = "http://localhost:8080/shop"
+
+                                    if (inputValueTimKiemAll !== '') {
+                                        fullUrl = updateQueryStringParameterAll('keyword', inputValueTimKiemAll, fullUrl);
+                                    } else {
+                                        fullUrl = removeQueryStringParameterAll('keyword', fullUrl);
+                                    }
+
+                                    window.location.href = fullUrl
+
+
+                                });
+                                // Hàm cập nhật giá trị của query parameter trong URL
+                                function updateQueryStringParameterAll(key, value, url) {
+                                    var regex = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                                    var separator = url.indexOf('?') !== -1 ? "&" : "?";
+                                    if (url.match(regex)) {
+                                        return url.replace(regex, '$1' + key + "=" + value + '$2');
+                                    } else {
+                                        return url + separator + key + "=" + value;
+                                    }
+                                }
+
+                                // Hàm xóa query parameter khỏi URL
+                                function removeQueryStringParameterAll(key, url) {
+                                    var urlParts = url.split('?');
+                                    if (urlParts.length >= 2) {
+                                        var prefix = encodeURIComponent(key) + '=';
+                                        var queryString = urlParts[1].split('&');
+
+                                        for (var i = queryString.length - 1; i >= 0; i--) {
+                                            if (queryString[i].lastIndexOf(prefix, 0) !== -1) {
+                                                queryString.splice(i, 1);
+                                            }
+                                        }
+
+                                        url = urlParts[0] + (queryString.length > 0 ? '?' + queryString.join('&') : '');
+                                    }
+
+                                    return url;
+                                }
+                            </script>
                         </form>
                     </div>
 
@@ -58,9 +107,9 @@
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                                        role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
+                                        <li><a class="dropdown-item" href="/user/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="/don-mua">Đơn Mua</a></li>
+                                        <li><a class="dropdown-item" href="/user/don-mua">Đơn Mua</a></li>
                                         <li><a class="dropdown-item" th:href="@{/logout}">Đăng Xuất</a></li>
                                     </ul>
                                 </li>
@@ -69,7 +118,7 @@
 <!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
 <!--                                </li>-->
                                 <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
-                                    <a class="site-cart" href="/cart">
+                                    <a class="site-cart" href="/user/cart">
                                         <span class="icon icon-shopping_cart"></span>
                                         <span class="count" th:text="${soLuongSPGioHangCT}"></span>
                                     </a>
@@ -108,7 +157,9 @@
               </ul>
                 </li> -->
                     <li><a href="/shop">Sản phẩm</a></li>
+                    <li><a href="/about">Về chúng tôi</a></li>
                     <li><a href="/lien-he">Liên hệ</a></li>
+                    <li><a href="/chinh-sach">Chính Sách</a></li>
                 </ul>
             </div>
         </nav>
@@ -138,17 +189,17 @@
                             </a>
                             <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                                 <li>
-                                    <a href="/thong-tin-khach-hang">
+                                    <a href="/user/thong-tin-khach-hang">
                                         <i class="bi bi-circle"></i><span>Hồ Sơ</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/dia-chi" class="active">
+                                    <a href="/user/dia-chi" class="active">
                                         <i class="bi bi-circle"></i><span>Địa Chỉ</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/mat-khau">
+                                    <a href="/user/mat-khau">
                                         <i class="bi bi-circle"></i><span>Đổi Mật Khẩu</span>
                                     </a>
                                 </li>
@@ -156,7 +207,7 @@
                         </li><!-- End Components Nav -->
 
                         <li class="nav-item">
-                            <a class="nav-link collapsed" href="/don-mua">
+                            <a class="nav-link collapsed" href="/user/don-mua">
                                 <i class="bi bi-receipt-cutoff"></i>
                                 <span>Đơn Mua</span>
                             </a>
@@ -196,7 +247,7 @@
                                                     </h3>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form id="myFormAdd" th:action="@{/dia-chi/add}"
+                                                    <form id="myFormAdd" th:action="@{/user/dia-chi/add}"
                                                           method="post"
                                                           onsubmit="return submitFormAndReloadAdd(event)">
                                                         <div class="form-group row">
@@ -415,7 +466,7 @@
                                                 <div class="modal-body">
 
                                                     <!--form sửa địa chỉ-->
-                                                    <form th:id="${'myForm'+diaChi.id}" th:action="@{/dia-chi/update}"
+                                                    <form th:id="${'myForm'+diaChi.id}" th:action="@{/user/dia-chi/update}"
                                                           method="post"
                                                           th:onsubmit="'submitFormAndReload(event,'+ ${diaChi.id} + ')'">
                                                         <div class="row mb-3">
@@ -687,7 +738,7 @@
                                                     <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Trở lại
                                                     </button>
-                                                    <a th:href="@{/dia-chi/delete/{id}(id=${diaChi.id})}"
+                                                    <a th:href="@{/user/dia-chi/delete/{id}(id=${diaChi.id})}"
                                                        class="btn btn-danger">
                                                         Xác nhận
                                                     </a>
@@ -981,92 +1032,63 @@
         </div>
     </div>
 
-    <footer class="site-footer border-top">
+    <footer class="site-footer border-top" style="margin-top: 5%">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 mb-5 mb-lg-0">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="footer-heading mb-4">Navigations</h3>
+                            <h3 class="footer-heading mb-4">Điều hướng</h3>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <ul class="list-unstyled">
-                                <li><a href="#">Sell online</a></li>
-                                <li><a href="#">Features</a></li>
-                                <li><a href="#">Shopping cart</a></li>
-                                <li><a href="#">Store builder</a></li>
+                                <li><a href="#">Vận chuyển</a></li>
+                                <li><a href="#">Khu vực</a></li>
+                                <li><a href="#">Kênh bán hàng</a></li>
                             </ul>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <ul class="list-unstyled">
-                                <li><a href="#">Mobile commerce</a></li>
-                                <li><a href="#">Dropshipping</a></li>
-                                <li><a href="#">Website development</a></li>
+                                <li><a href="/about">Đội ngũ</a></li>
+                                <li><a href="/chinh-sach">Trả hàng</a></li>
+                                <li><a href="#">Bảo mật</a></li>
                             </ul>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <ul class="list-unstyled">
-                                <li><a href="#">Point of sale</a></li>
-                                <li><a href="#">Hardware</a></li>
-                                <li><a href="#">Software</a></li>
+                                <li><a href="/lien-he">Liên hệ</a></li>
+                                <li><a href="/lien-he">Chăm sóc khách hàng</a></li>
+                                <li><a href="/lien-he">Phản hồi</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
-                    <h3 class="footer-heading mb-4">Promo</h3>
-                    <a href="#" class="block-6">
+                    <h3 class="footer-heading mb-4">Mẫu mã</h3>
+                    <a href="/shop" class="block-6">
                         <img src="../../static/img/hero_1.jpg" alt="Image placeholder"
                              class="img-fluid rounded mb-4"/>
                         <h3 class="font-weight-light mb-0">
-                            Finding Your Perfect Shoes
+                            Tìm đôi giày hoàn hảo của bạn
                         </h3>
-                        <p>Promo from nuary 15 &mdash; 25, 2019</p>
                     </a>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="block-5 mb-5">
-                        <h3 class="footer-heading mb-4">Contact Info</h3>
+                        <h3 class="footer-heading mb-4">Thông tin liên lạc</h3>
                         <ul class="list-unstyled">
                             <li class="address">
-                                203 Fake St. Mountain View, San Francisco, California, USA
+                                13 P. Trịnh Văn Bô, Xuân Phương, Nam Từ Liêm, Hà Nội, Việt Nam
                             </li>
                             <li class="phone">
-                                <a href="tel://23923929210">+2 392 3929 210</a>
+                                <a href="tel://23923929210">+84 377 463 664</a>
                             </li>
-                            <li class="email">emailaddress@domain.com</li>
+                            <li class="email">glacatshopshoes@gmail.com</li>
                         </ul>
                     </div>
-
-                    <div class="block-7">
-                        <form action="#" method="post">
-                            <label for="email_subscribe" class="footer-heading">Subscribe</label>
-                            <div class="form-group">
-                                <input type="text" class="form-control py-4" id="email_subscribe"
-                                       placeholder="Email"/>
-                                <input type="submit" class="btn btn-sm btn-primary" value="Send"/>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
-            <div class="row pt-5 mt-5 text-center">
-                <div class="col-md-12">
-                    <p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;
 
-
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        All rights reserved | This template is made with
-                        <i class="icon-heart" aria-hidden="true"></i> by
-                        <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
-                </div>
-            </div>
         </div>
     </footer>
 </div>
