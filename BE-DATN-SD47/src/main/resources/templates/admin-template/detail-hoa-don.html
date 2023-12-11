@@ -172,6 +172,13 @@
                 </li><!-- End Forms Nav -->
 
                 <li class="nav-item">
+                    <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
+                       <i class="bi bi-receipt-cutoff"></i>
+                        <span>Trả hàng</span>
+                    </a>
+                </li><!-- End Forms Nav -->
+
+                <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                         <i class="bi bi-person-vcard"></i><span>Quản Lý Tài Khoản</span><i
                             class="bi bi-chevron-down ms-auto"></i>
@@ -501,7 +508,7 @@
 
                                         <button th:if="${hoaDon.trangThai>0&&hoaDon.trangThai!=6}"
                                             data-bs-toggle="modal" data-bs-target="#rollback" type="button"
-                                            class="btn btn-primary">Quay lại</button>
+                                            class="btn btn-primary">Hoàn tác</button>
                                         <button th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}" type="button"
                                             class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#ghiChuHuy">Hủy</button>
@@ -1157,7 +1164,7 @@
 
 
                                                                     <!-- table DC -->
-                                                                    <table id="example2" class="display">
+                                                                    <table>
                                                                         <thead>
                                                                             <tr>
                                                                                 <th scope="col">STT</th>
@@ -1485,7 +1492,7 @@
                                                                             Danh sách sản phẩm
                                                                         </h1>
                                                                     </div>
-                                                                    <table id="example" class="display">
+                                                                    <table  id="example1" class="display">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th scope="col">STT</th>
@@ -1559,15 +1566,15 @@
                                                                                 </tr>
 
                                                                             </tbody>
-                                                                        <tfoot hidden="hidden">
-                                                                            <tr>
-                                                                                <th>STT</th>
-                                                                                <th>Sản Phẩm</th>
-                                                                                <th>Số Lượng</th>
-                                                                                <th>Giá Bán</th>
-                                                                                <th>Hành Động</th>
-                                                                            </tr>
-                                                                        </tfoot>
+                                                                            <tfoot hidden="hidden">
+                                                                                <tr>
+                                                                                    <th scope="col">STT</th>
+                                                                                    <th scope="col">Sản Phẩm</th>
+                                                                                    <th scope="col">Số Lượng</th>
+                                                                                    <th scope="col">Giá Bán</th>
+                                                                                    <th scope="col">Hành Động</th>
+                                                                                </tr>
+                                                                            </tfoot>
                                                                     </table>
 
                                                                 </div>
@@ -1583,7 +1590,7 @@
                                                     <!-- bảng sản phẩm -->
 
                                                     <div class="table-ban-hang">
-                                                        <table class="sanpham-table">
+                                                        <table  id="example" class="display sanpham-table">
                                                             <thead>
                                                                 <tr>
                                                                     <th scope="col">STT</th>
@@ -1761,6 +1768,18 @@
 
 
                                                             </tbody>
+                                                            <tfoot hidden="hidden">
+                                                                <tr>
+                                                                    <th scope="col">STT</th>
+                                                                    <th scope="col">Sản phẩm</th>
+                                                                    <th scope="col">Số lượng</th>
+                                                                    <th scope="col">Trạng thái</th>
+                                                                    <th scope="col">Thành tiền</th>
+                                                                    <th scope="col"
+                                                                        th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}">
+                                                                        Thao tác</th>
+                                                                </tr>
+                                                            </tfoot>
 
                                                         </table>
                                                         <!-- Check giỏ hàng trống -->
@@ -2202,82 +2221,9 @@
         }
     </script>
     <!--  css + js chọn voucher-->
-    <!--    thư viện của bảng tích hợp tìm kiếm-->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
-    <script>
-        $(document).ready(function () {
-            var table = $('#example').DataTable({
-                "language": {
-                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
-                    "emptyTable": "Không có kết quả nào được tìm thấy",
-                    "zeroRecords": "Không có kết quả phù hợp",
-                    "infoEmpty": "Không có dữ liệu để hiển thị"
-                },
-                "initComplete": function (settings, json) {
-                    // CSS changes
-                    $('#example_filter input[type="search"]').addClass('form-control');
-                    $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
-                    $('#example_filter label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).replaceWith(' ');
-
-                    $('#example_length label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).first().replaceWith('Hiển thị');
-                    $('#example_length label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).last().replaceWith('mục');
-
-                    $('#example_length select').addClass('form-select');
-                }
-            });
-
-            table.on('draw.dt', function () {
-                var pageInfo = table.page.info();
-
-                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
-                $('#example_info').html(newInfo);
-
-            });
-        });
-    </script>
-    <style>
-        small {
-            /* font-weight: bold; */
-            color: red;
-        }
+    
 
 
-        /*input tìm kiếm*/
-        #example_filter input[type="search"] {
-            width: 180%;
-            margin-left: -80%;
-            margin-bottom: 10%;
-        }
-
-        /*select hiển thị mục*/
-        .dataTables_length label {
-            white-space: nowrap;
-            /* Ngăn các phần tử xuống dòng */
-            display: flex;
-            /* Hiển thị label và select trên cùng một dòng */
-            align-items: center;
-            /* Canh chỉnh label và select theo chiều dọc */
-        }
-
-        .dataTables_length select {
-            margin-left: 5px;
-            /* Tạo khoảng cách giữa label và select */
-        }
-
-        .dataTables_length label:after {
-            /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
-            content: '';
-            /* Xóa nội dung */
-        }
-    </style>
-    <!--    thư viện của bảng tích hợp tìm kiếm end-->
 
 
     <div class="inHoaDon">
@@ -2326,7 +2272,9 @@
                             </td>
                             <td th:text="${obj.soLuong}"></td>
                             <td th:text="${obj.chiTietSanPham.giaHienHanh}"></td>
-                            <td th:text="${obj.soLuong*obj.chiTietSanPham.giaHienHanh}"></td>
+                            <td th:if="${obj.trangThai==0}" th:text="${obj.soLuong*obj.chiTietSanPham.giaHienHanh}"></td>
+                            <td th:if="${obj.trangThai==2}" th:text="0"></td>
+                            
                             <td>
                                 <span th:if="${obj.trangThai ==0}">Đã
                                     nhận</span>
@@ -2334,7 +2282,6 @@
                                     trả</span>
                             </td>
                         </tr>
-
                     </tbody>
                 </table>
             </div>
@@ -2346,19 +2293,24 @@
                             class="info-value">[[${hoaDon.tongTienHoaDonDaNhan()}]] VND</span>
                     </p>
 
-                    <p><span class="info-label">Giảm giá:</span> <span class="info-value"><span
+                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()>0}"><span class="info-label">Giảm giá:</span> <span class="info-value"><span
                                 id="giamGiaIn">[[${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}]]
                             </span> VND</span>
                     </p>
-                    <p><span class="info-label">Phí vận chuyển:</span> <span class="info-value"><span
+                    <p  th:if="${hoaDon.tongTienHoaDonDaNhan()>0}"><span class="info-label">Phí vận chuyển:</span> <span class="info-value"><span
                                 id="phiVanChuyenIn">[[${hoaDon.phiShip}]]
                             </span> VND</span>
                     </p>
-                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()>0}"><span class="info-label">Thành tiền:</span> <span class="info-value"><span
+                    <p  th:if="${hoaDon.tongTienHoaDonDaNhan()==0}"><span class="info-label">Phí vận chuyển:</span> <span class="info-value"><span
+                                id="phiVanChuyenIn">0
+                            </span> VND</span>
+                    </p>
+                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()>0}"><span class="info-label">Thành tiền:</span> <span
+                            class="info-value"><span
                                 id="thanhTienIn">[[${hoaDon.tongTienHoaDonDaNhan()+hoaDon.phiShip-hoaDon.getGiamGia()}]]</span>
                             VND</span></p>
-                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()00}"><span class="info-label">Thành tiền:</span> <span class="info-value"><span
-                                id="thanhTienIn">0</span>
+                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()==0}"><span class="info-label">Thành tiền:</span> <span
+                            class="info-value"><span id="thanhTienIn">0</span>
                             VND</span></p>
                 </div>
             </div>
@@ -2479,6 +2431,155 @@
             }, 1);
         });
     </script>
+
+
+    <!--    thư viện của bảng tích hợp tìm kiếm-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                "language": {
+                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                    "emptyTable": "Không có kết quả nào được tìm thấy",
+                    "zeroRecords": "Không có kết quả phù hợp",
+                    "infoEmpty": "Không có dữ liệu để hiển thị"
+                },
+                "initComplete": function (settings, json) {
+                    // CSS changes
+                    $('#example_filter input[type="search"]').addClass('form-control');
+                    $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                    $('#example_filter label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).replaceWith(' ');
+
+                    $('#example_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).first().replaceWith('Hiển thị');
+                    $('#example_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).last().replaceWith('mục');
+
+                    $('#example_length select').addClass('form-select');
+                }
+            });
+
+            table.on('draw.dt', function () {
+                var pageInfo = table.page.info();
+
+                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+                $('#example_info').html(newInfo);
+
+            });
+        });
+
+        $(document).ready(function () {
+            var table = $('#example1').DataTable({
+                "language": {
+                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                    "emptyTable": "Không có kết quả nào được tìm thấy",
+                    "zeroRecords": "Không có kết quả phù hợp",
+                    "infoEmpty": "Không có dữ liệu để hiển thị"
+                },
+                "initComplete": function (settings, json) {
+                    // CSS changes
+                    $('#example1_filter input[type="search"]').addClass('form-control');
+                    $('#example1_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                    $('#example1_filter label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).replaceWith(' ');
+
+                    $('#example1_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).first().replaceWith('Hiển thị');
+                    $('#example1_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).last().replaceWith('mục');
+
+                    $('#example1_length select').addClass('form-select');
+                }
+            });
+
+            table.on('draw.dt', function () {
+                var pageInfo = table.page.info();
+
+                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+                $('#example1_info').html(newInfo);
+
+            });
+        });
+
+        $(document).ready(function () {
+            var table = $('#example2').DataTable({
+                "language": {
+                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                    "emptyTable": "Không có kết quả nào được tìm thấy",
+                    "zeroRecords": "Không có kết quả phù hợp",
+                    "infoEmpty": "Không có dữ liệu để hiển thị"
+                },
+                "initComplete": function (settings, json) {
+                    // CSS changes
+                    $('#example2_filter input[type="search"]').addClass('form-control');
+                    $('#example2_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                    $('#example2_filter label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).replaceWith(' ');
+
+                    $('#example2_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).first().replaceWith('Hiển thị');
+                    $('#example2_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).last().replaceWith('mục');
+
+                    $('#example2_length select').addClass('form-select');
+                }
+            });
+
+            table.on('draw.dt', function () {
+                var pageInfo = table.page.info();
+
+                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+                $('#example2_info').html(newInfo);
+
+            });
+        });
+    </script>
+    <style>
+        /*input tìm kiếm*/
+        #example_filter input[type="search"] {
+            width: 180%;
+            margin-left: -80%;
+            margin-bottom: 10%;
+        }
+
+        /*select hiển thị mục*/
+        .dataTables_length label {
+            white-space: nowrap;
+            /* Ngăn các phần tử xuống dòng */
+            display: flex;
+            /* Hiển thị label và select trên cùng một dòng */
+            align-items: center;
+            /* Canh chỉnh label và select theo chiều dọc */
+        }
+
+        .dataTables_length select {
+            margin-left: 5px;
+            /* Tạo khoảng cách giữa label và select */
+        }
+
+        .dataTables_length label:after {
+            /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
+            content: '';
+            /* Xóa nội dung */
+        }
+
+        .errorInput {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
 
 
     <!-- Vendor JS Files -->
