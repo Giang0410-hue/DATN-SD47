@@ -16,6 +16,8 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, Lo
     @Query("Select hdct from HoaDonChiTiet hdct where hdct.id=:idHoaDon")
     List<HoaDonChiTiet> findByIdHoaDon(@Param("idHoaDon") Long idHoaDon);
 
+
+
     @Query(value = "WITH RankedHoaDonChiTiet AS (\n" +
             "  SELECT\n" +
             "    h.*,\n" +
@@ -49,28 +51,30 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, Lo
             "ORDER BY so_luong DESC",nativeQuery = true)
     List<HoaDonChiTiet> fillAllIdHoaDonTrangThaiHoanThanh(@Param("listIdHoaDon")List<Long> listIdHoaDon);
 
-    @Query("SELECT SUM(hd.soLuong) FROM HoaDonChiTiet hd WHERE MONTH(hd.ngayTao) = MONTH(:ngayTao)")
+    
+    @Query("SELECT SUM(hd.soLuong) FROM HoaDonChiTiet hd WHERE hd.trangThai=0 and hd.hoaDon.trangThai =3 and MONTH(hd.hoaDon.ngayTao) = MONTH(:ngayTao)")
     Integer sumSanPhamHoaDonThang(@Param("ngayTao") Date ngayTao);
 
-    @Query("select SUM(hd.soLuong) from HoaDonChiTiet hd where CAST(hd.ngayTao AS DATE) = :ngayTao")
+    @Query("select SUM(hd.soLuong) from HoaDonChiTiet hd where hd.trangThai=0 and hd.hoaDon.trangThai =3 and CAST(hd.hoaDon.ngayTao AS DATE) = :ngayTao")
     Integer sumSanPhamHoaDonNgay(@Param("ngayTao") Date ngayTao);
 
-    @Query("select SUM(hd.soLuong) from HoaDonChiTiet hd where CAST(hd.ngayTao AS DATE) BETWEEN :startDate AND :endDate")
+    @Query("select SUM(hd.soLuong) from HoaDonChiTiet hd where hd.trangThai=0 and hd.hoaDon.trangThai = 3 and CAST(hd.hoaDon.ngayTao AS DATE) BETWEEN :startDate AND :endDate")
     Integer sumSanPhamHoaDonBetween(@Param("startDate") Date startDate,
                                     @Param("endDate") Date endDate);
 
-    @Query("SELECT CAST(hd.ngayTao AS DATE) AS ngay, SUM(hd.soLuong), COUNT(DISTINCT hd.hoaDon) " +
+    @Query("SELECT CAST(hd.hoaDon.ngayTao AS DATE) AS ngay, SUM(hd.soLuong), COUNT(DISTINCT hd.hoaDon) " +
             "FROM HoaDonChiTiet hd " +
-            "WHERE CAST(hd.ngayTao AS DATE) BETWEEN :startDateChart AND :endDateChart " +
-            "GROUP BY CAST(hd.ngayTao AS DATE)")
+            "WHERE hd.trangThai = 0 and hd.hoaDon.trangThai =3 and CAST(hd.hoaDon.ngayTao AS DATE) BETWEEN :startDateChart AND :endDateChart " +
+            "GROUP BY CAST(hd.hoaDon.ngayTao AS DATE)")
     List<Object[]> thongKeSanPhamTheoNgay(
             @Param("startDateChart") Date startDateChart,
             @Param("endDateChart") Date endDateChart
     );
 
+
     @Query("SELECT h.chiTietSanPham.sanPham.ten, SUM(h.soLuong),SUM(h.donGia)" +
             "FROM HoaDonChiTiet h " +
-            "WHERE MONTH(h.ngayTao) = MONTH(:ngayTao)" +
+            "WHERE MONTH(h.hoaDon.ngayTao) = MONTH(:ngayTao) and h.trangThai = 0 and h.hoaDon.trangThai = 3" +
             "GROUP BY h.chiTietSanPham.sanPham.ten " +
             "ORDER BY SUM(h.soLuong) DESC ")
     List<Object[]> findByTongSoLuongThang(@Param("ngayTao") Date ngayTao);
@@ -78,7 +82,7 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, Lo
 
     @Query("SELECT h.chiTietSanPham.sanPham.ten, SUM(h.soLuong),SUM(h.donGia)" +
             "FROM HoaDonChiTiet h " +
-            "WHERE CAST(h.ngayTao AS DATE) = :ngayTao " +
+            "WHERE CAST(h.hoaDon.ngayTao AS DATE) = :ngayTao and h.trangThai = 0 and h.hoaDon.trangThai = 3 " +
             "GROUP BY h.chiTietSanPham.sanPham.ten " +
             "ORDER BY SUM(h.soLuong) DESC ")
     List<Object[]> findByTongSoLuongNgay(@Param("ngayTao") Date ngayTao);
@@ -86,10 +90,20 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, Lo
 
     @Query("SELECT h.chiTietSanPham.sanPham.ten, SUM(h.soLuong),SUM(h.donGia)" +
             "FROM HoaDonChiTiet h " +
-            "WHERE CAST(h.ngayTao AS DATE) BETWEEN :startDate AND :endDate " +
+            "WHERE h.trangThai = 0 and h.hoaDon.trangThai = 3 and CAST(h.hoaDon.ngayTao AS DATE) BETWEEN :startDate AND :endDate " +
             "GROUP BY h.chiTietSanPham.sanPham.ten " +
             "ORDER BY SUM(h.soLuong) DESC ")
     List<Object[]> findByTongSoLuongBetween(
             @Param("startDate") Date startDate,
             @Param("endDate") Date endDate);
+
+    @Query("select SUM(hd.soLuong) from HoaDonChiTiet hd where hd.trangThai=0 and hd.hoaDon.trangThai =3")
+    Integer sumSanPhamHoaDonAll();
+
+    @Query("SELECT h.chiTietSanPham.sanPham.ten, SUM(h.soLuong),SUM(h.donGia)" +
+            "FROM HoaDonChiTiet h " +
+            "WHERE h.trangThai = 0 and h.hoaDon.trangThai = 3" +
+            "GROUP BY h.chiTietSanPham.sanPham.ten " +
+            "ORDER BY SUM(h.soLuong) DESC ")
+    List<Object[]> findByTongSoLuongAll();
 }
