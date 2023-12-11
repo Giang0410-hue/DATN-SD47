@@ -503,10 +503,10 @@
                                         <!-- <button type="button" class="btn btn-primary">In hóa đơn</button> -->
                                         <!-- <a th:href="@{'/ban-hang-tai-quay/hoa-don/exportPdf/'+${hoaDon.id}}"
                                         class="btn btn-primary">In hóa đơn</a> -->
-
+                                    <!-- [[${checkRollback}]] -->
                                         <button id="btnInHoaDon" class="btn btn-primary">In hóa đơn</button>
-
-                                        <button th:if="${hoaDon.trangThai>0&&hoaDon.trangThai!=6}"
+                                            
+                                        <button th:if="${hoaDon.trangThai>0&&hoaDon.trangThai!=6&&checkRollback!=8}"
                                             data-bs-toggle="modal" data-bs-target="#rollback" type="button"
                                             class="btn btn-primary">Hoàn tác</button>
                                         <button th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}" type="button"
@@ -625,7 +625,7 @@
                                                                     Lịch sử hóa đơn
                                                                 </h1>
                                                             </div>
-                                                            <table>
+                                                            <table  id="example2" class="display">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>STT</th>
@@ -660,7 +660,15 @@
                                                                         </tr>
 
                                                                     </tbody>
-
+                                                                    <tfoot hidden="hidden">
+                                                                        <tr>
+                                                                            <th>STT</th>
+                                                                            <th>Hành động</th>
+                                                                            <th>Thời gian</th>
+                                                                            <th>Nhân viên</th>
+                                                                            <th>Ghi chú</th>
+                                                                        </tr>
+                                                                    </tfoot>
                                                             </table>
                                                         </div>
                                                     </div>
