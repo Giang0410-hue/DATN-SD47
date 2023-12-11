@@ -41,7 +41,56 @@
                     <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
                         <form action="" class="site-block-top-search">
                             <span class="icon icon-search2"></span>
-                            <input type="text" class="form-control border-0" placeholder="Search"/>
+                            <input type="text" class="form-control border-0" id="timKiemAll" placeholder="Tìm kiếm theo tên sản phẩm"/>
+                            <script>
+                                var inputElementTimKiemAll = document.getElementById('timKiemAll');
+
+                                inputElementTimKiemAll.addEventListener('blur', function () {
+                                    var inputValueTimKiemAll = inputElementTimKiemAll.value;
+                                    console.log('Giá trị của input:', inputValueTimKiemAll);
+
+                                    var fullUrl = "http://localhost:8080/shop"
+
+                                    if (inputValueTimKiemAll !== '') {
+                                        fullUrl = updateQueryStringParameterAll('keyword', inputValueTimKiemAll, fullUrl);
+                                    } else {
+                                        fullUrl = removeQueryStringParameterAll('keyword', fullUrl);
+                                    }
+
+                                    window.location.href = fullUrl
+
+
+                                });
+                                // Hàm cập nhật giá trị của query parameter trong URL
+                                function updateQueryStringParameterAll(key, value, url) {
+                                    var regex = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                                    var separator = url.indexOf('?') !== -1 ? "&" : "?";
+                                    if (url.match(regex)) {
+                                        return url.replace(regex, '$1' + key + "=" + value + '$2');
+                                    } else {
+                                        return url + separator + key + "=" + value;
+                                    }
+                                }
+
+                                // Hàm xóa query parameter khỏi URL
+                                function removeQueryStringParameterAll(key, url) {
+                                    var urlParts = url.split('?');
+                                    if (urlParts.length >= 2) {
+                                        var prefix = encodeURIComponent(key) + '=';
+                                        var queryString = urlParts[1].split('&');
+
+                                        for (var i = queryString.length - 1; i >= 0; i--) {
+                                            if (queryString[i].lastIndexOf(prefix, 0) !== -1) {
+                                                queryString.splice(i, 1);
+                                            }
+                                        }
+
+                                        url = urlParts[0] + (queryString.length > 0 ? '?' + queryString.join('&') : '');
+                                    }
+
+                                    return url;
+                                }
+                            </script>
                         </form>
                     </div>
 
@@ -58,9 +107,9 @@
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                                        role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
+                                        <li><a class="dropdown-item" href="/user/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="/don-mua">Đơn Mua</a></li>
+                                        <li><a class="dropdown-item" href="/user/don-mua">Đơn Mua</a></li>
                                         <li><a class="dropdown-item" th:href="@{/logout}">Đăng Xuất</a></li>
                                     </ul>
                                 </li>
@@ -69,7 +118,7 @@
 <!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
 <!--                                </li>-->
                                 <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
-                                    <a class="site-cart" href="/cart">
+                                    <a class="site-cart" href="/user/cart">
                                         <span class="icon icon-shopping_cart"></span>
                                         <span class="count" th:text="${soLuongSPGioHangCT}"></span>
                                     </a>
@@ -108,7 +157,9 @@
               </ul>
                 </li> -->
                     <li><a href="/shop">Sản phẩm</a></li>
+                    <li><a href="/about">Về chúng tôi</a></li>
                     <li><a href="/lien-he">Liên hệ</a></li>
+                    <li><a href="/chinh-sach">Chính Sách</a></li>
                 </ul>
             </div>
         </nav>
@@ -139,17 +190,17 @@
                             </a>
                             <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                                 <li>
-                                    <a href="/thong-tin-khach-hang">
+                                    <a href="/user/thong-tin-khach-hang">
                                         <i class="bi bi-circle"></i><span>Hồ Sơ</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/dia-chi">
+                                    <a href="/user/dia-chi">
                                         <i class="bi bi-circle"></i><span>Địa Chỉ</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/doi-mat-khau">
+                                    <a href="/user/mat-khau">
                                         <i class="bi bi-circle"></i><span>Đổi Mật Khẩu</span>
                                     </a>
                                 </li>
@@ -157,7 +208,7 @@
                         </li><!-- End Components Nav -->
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/don-mua">
+                            <a class="nav-link" href="/user/don-mua">
                                 <i class="bi bi-receipt-cutoff"></i>
                                 <span>Đơn Mua</span>
                             </a>
@@ -262,7 +313,7 @@
                                                         <h6 th:text="${ allHoaDon.maHoaDon}"></h6>
                                                     </div>
                                                     <div class="divider-line">
-                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}"
+                                                        <a th:href="@{/user/don-mua/{id}(id=${allHoaDon.id})}"
                                                            th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
                                                             giao thành công</a>
                                                         <h6 th:if="${allHoaDon.trangThai==0}">CHỜ XÁC NHẬN</h6>
@@ -280,7 +331,7 @@
                                                  th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
                                             <input type="hidden" th:name="${'listNameChiTietSP1'+allHoaDon.id}"
                                                    th:value="${listHoaDonCT.chiTietSanPham.id +' '+listHoaDonCT.chiTietSanPham.soLuong}">
-                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
+                                            <a th:href="@{/user/don-mua/{id}(id=${allHoaDon.id})}">
                                                 <div class="row">
                                                     <div class="col-md-10 d-flex align-items-center">
                                                         <img class="img-mid"
@@ -313,7 +364,7 @@
 
                                                         <form th:if="${allHoaDon.trangThai==0}"
 
-                                                              th:action="@{/huy-don/{id}(id=${allHoaDon.id})}"
+                                                              th:action="@{/user/huy-don/{id}(id=${allHoaDon.id})}"
                                                               method="get">
                                                             <!-- Button trigger modal -->
                                                             <button type="button" class="btn btn-danger"
@@ -389,7 +440,7 @@
                                                             <!-- Modal thông báo check hủy đơn hàng end-->
                                                         </form>
                                                         <form th:if="${allHoaDon.trangThai==1}"
-                                                              th:action="@{/huy-don/{id}(id=${allHoaDon.id})}"
+                                                              th:action="@{/user/huy-don/{id}(id=${allHoaDon.id})}"
                                                               method="get">
                                                             <!-- Button trigger modal -->
                                                             <button type="button" class="btn btn-danger"
@@ -479,7 +530,7 @@
                                                                 onclick="muaLai1(this)" class="btn btn-success">Mua Lại
                                                         </button>
 
-                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}"
+                                                        <a th:href="@{/user/don-mua/{id}(id=${allHoaDon.id})}"
                                                            th:if="${allHoaDon.trangThai==5}" class="btn btn-info">Xem
                                                             Chi Tiết Đơn Hủy</a>
                                                     </div>
@@ -558,7 +609,7 @@
                                     }
                                     console.log(filteredIds1)
 
-                                    var url = '/don-mua/mua-lai?options=' + filteredIds1;
+                                    var url = '/user/don-mua/mua-lai?options=' + filteredIds1;
                                     // Thực hiện phương thức POST
                                     fetch(url, {
                                         method: 'POST',
@@ -570,7 +621,7 @@
                                             if (response.ok) {
                                                 // Xử lý kết quả nếu cần
                                                 console.log('Đã thêm vào giỏ hàng');
-                                                window.location.href = '/cart?checkGHCT=true' + soLuongId1;
+                                                window.location.href = '/user/cart?checkGHCT=true' + soLuongId1;
                                             } else {
                                                 throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
                                             }
@@ -583,7 +634,7 @@
 
                                 // Xác nhận từ người dùng
                                 function confirmAction1() {
-                                    var url = '/don-mua/mua-lai?options=' + filteredIds1;
+                                    var url = '/user/don-mua/mua-lai?options=' + filteredIds1;
                                     // Thực hiện phương thức POST
                                     fetch(url, {
                                         method: 'POST',
@@ -595,7 +646,7 @@
                                             if (response.ok) {
                                                 // Xử lý kết quả nếu cần
                                                 console.log('Đã thêm vào giỏ hàng');
-                                                window.location.href = '/cart?checkGHCT=true' + soLuongId1;
+                                                window.location.href = '/user/cart?checkGHCT=true' + soLuongId1;
                                             } else {
                                                 throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
                                             }
@@ -647,7 +698,7 @@
                                         </section>
                                         <section class="section-mid"
                                                  th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
-                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
+                                            <a th:href="@{/user/don-mua/{id}(id=${allHoaDon.id})}">
                                                 <div class="row">
                                                     <div class="col-md-10 d-flex align-items-center">
                                                         <img class="img-mid"
@@ -678,7 +729,7 @@
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
                                                         <form
-                                                                th:action="@{/huy-don/{id}(id=${allHoaDon.id})}"
+                                                                th:action="@{/user/huy-don/{id}(id=${allHoaDon.id})}"
                                                                 method="get">
                                                             <!-- Button trigger modal -->
                                                             <button type="button" class="btn btn-danger"
@@ -808,7 +859,7 @@
                                         </section>
                                         <section class="section-mid"
                                                  th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
-                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
+                                            <a th:href="@{/user/don-mua/{id}(id=${allHoaDon.id})}">
                                                 <div class="row">
                                                     <div class="col-md-10 d-flex align-items-center">
                                                         <img class="img-mid"
@@ -839,7 +890,7 @@
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
                                                         <form
-                                                                th:action="@{/huy-don/{id}(id=${allHoaDon.id})}"
+                                                                th:action="@{/user/huy-don/{id}(id=${allHoaDon.id})}"
                                                                 method="get">
                                                             <!-- Button trigger modal -->
                                                             <button type="button" class="btn btn-danger"
@@ -969,7 +1020,7 @@
                                         </section>
                                         <section class="section-mid"
                                                  th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
-                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
+                                            <a th:href="@{/user/don-mua/{id}(id=${allHoaDon.id})}">
                                                 <div class="row">
                                                     <div class="col-md-10 d-flex align-items-center">
                                                         <img class="img-mid"
@@ -1041,7 +1092,7 @@
                                                         <h6 th:text="${ allHoaDon.maHoaDon}"></h6>
                                                     </div>
                                                     <div class="divider-line">
-                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}"
+                                                        <a th:href="@{/user/don-mua/{id}(id=${allHoaDon.id})}"
                                                            th:if="${allHoaDon.trangThai==3}">Đơn hàng đã được
                                                             giao thành công</a>
                                                         <h6 th:if="${allHoaDon.trangThai==0}">CHỜ XÁC NHẬN</h6>
@@ -1059,7 +1110,7 @@
                                                  th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
                                             <input type="hidden" th:name="${'listNameChiTietSP2'+allHoaDon.id}"
                                                    th:value="${listHoaDonCT.chiTietSanPham.id +' '+listHoaDonCT.chiTietSanPham.soLuong}">
-                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
+                                            <a th:href="@{/user/don-mua/{id}(id=${allHoaDon.id})}">
                                                 <div class="row">
                                                     <div class="col-md-10 d-flex align-items-center">
                                                         <img class="img-mid"
@@ -1168,7 +1219,7 @@
                                     }
                                     console.log(filteredIds2)
 
-                                    var url = '/don-mua/mua-lai?options=' + filteredIds2;
+                                    var url = '/user/don-mua/mua-lai?options=' + filteredIds2;
                                     // Thực hiện phương thức POST
                                     fetch(url, {
                                         method: 'POST',
@@ -1180,7 +1231,7 @@
                                             if (response.ok) {
                                                 // Xử lý kết quả nếu cần
                                                 console.log('Đã thêm vào giỏ hàng');
-                                                window.location.href = '/cart?checkGHCT=true' + soLuongId2;
+                                                window.location.href = '/user/cart?checkGHCT=true' + soLuongId2;
                                             } else {
                                                 throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
                                             }
@@ -1193,7 +1244,7 @@
 
                                 // Xác nhận từ người dùng
                                 function confirmAction2() {
-                                    var url = '/don-mua/mua-lai?options=' + filteredIds2;
+                                    var url = '/user/don-mua/mua-lai?options=' + filteredIds2;
                                     // Thực hiện phương thức POST
                                     fetch(url, {
                                         method: 'POST',
@@ -1205,7 +1256,7 @@
                                             if (response.ok) {
                                                 // Xử lý kết quả nếu cần
                                                 console.log('Đã thêm vào giỏ hàng');
-                                                window.location.href = '/cart?checkGHCT=true' + soLuongId2;
+                                                window.location.href = '/user/cart?checkGHCT=true' + soLuongId2;
                                             } else {
                                                 throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
                                             }
@@ -1260,7 +1311,7 @@
                                                  th:each="listHoaDonCT,stage : ${allHoaDon.lstHoaDonChiTiet}">
                                             <input type="hidden" th:name="${'listNameChiTietSP'+allHoaDon.id}"
                                                    th:value="${listHoaDonCT.chiTietSanPham.id +' '+listHoaDonCT.chiTietSanPham.soLuong}">
-                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
+                                            <a th:href="@{/user/don-mua/{id}(id=${allHoaDon.id})}">
                                                 <div class="row">
                                                     <div class="col-md-10 d-flex align-items-center">
                                                         <img class="img-mid"
@@ -1293,7 +1344,7 @@
                                                         <button type="button" th:data-index="${allHoaDon.id}"
                                                                 onclick="muaLai(this)" class="btn btn-success">Mua Lại
                                                         </button>
-                                                        <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}"
+                                                        <a th:href="@{/user/don-mua/{id}(id=${allHoaDon.id})}"
                                                            class="btn btn-info">Xem Chi Tiết Đơn Hủy</a>
                                                     </div>
                                                 </div>
@@ -1370,7 +1421,7 @@
                                     }
                                     console.log(filteredIds)
 
-                                    var url = '/don-mua/mua-lai?options=' + filteredIds;
+                                    var url = '/user/don-mua/mua-lai?options=' + filteredIds;
                                     // Thực hiện phương thức POST
                                     fetch(url, {
                                         method: 'POST',
@@ -1382,7 +1433,7 @@
                                             if (response.ok) {
                                                 // Xử lý kết quả nếu cần
                                                 console.log('Đã thêm vào giỏ hàng');
-                                                window.location.href = '/cart?checkGHCT=true' + soLuongId;
+                                                window.location.href = '/user/cart?checkGHCT=true' + soLuongId;
                                             } else {
                                                 throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
                                             }
@@ -1395,7 +1446,7 @@
 
                                 // Xác nhận từ người dùng
                                 function confirmAction() {
-                                    var url = '/don-mua/mua-lai?options=' + filteredIds;
+                                    var url = '/user/don-mua/mua-lai?options=' + filteredIds;
                                     // Thực hiện phương thức POST
                                     fetch(url, {
                                         method: 'POST',
@@ -1407,7 +1458,7 @@
                                             if (response.ok) {
                                                 // Xử lý kết quả nếu cần
                                                 console.log('Đã thêm vào giỏ hàng');
-                                                window.location.href = '/cart?checkGHCT=true' + soLuongId;
+                                                window.location.href = '/user/cart?checkGHCT=true' + soLuongId;
                                             } else {
                                                 throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
                                             }
@@ -1461,7 +1512,7 @@
                                         </section>
                                         <section class="section-mid"
                                                  th:each="listHoaDonCT : ${allHoaDon.lstHoaDonChiTiet}">
-                                            <a th:href="@{/don-mua/{id}(id=${allHoaDon.id})}">
+                                            <a th:href="@{/user/don-mua/{id}(id=${allHoaDon.id})}">
                                                 <div class="row">
                                                     <div class="col-md-10 d-flex align-items-center">
                                                         <img class="img-mid"
@@ -1523,7 +1574,7 @@
 
 </div>
 </div>
-<footer class="site-footer border-top">
+<footer class="site-footer border-top" style="margin-top: 5%">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 mb-5 mb-lg-0">

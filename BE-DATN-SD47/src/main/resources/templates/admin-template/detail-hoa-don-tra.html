@@ -11,10 +11,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-
-    <link href="../../../static/img/favicon.png" rel="icon">
-    <link href="../../../static/img/apple-touch-icon.png" rel="apple-touch-icon">
-
+    <link href="../../static/img/favicon.png" rel="icon">
+    <link href="../../static/img/apple-touch-icon.png" rel="apple-touch-icon">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
@@ -168,13 +166,13 @@
                     <a class="nav-link" href="/ban-hang-tai-quay/hoa-don/quan-ly">
                         <i class="bi bi-receipt-cutoff"></i>
                         <span>Quản Lý Hóa Đơn</span>
-                    </a>
-                </li><!-- End Forms Nav -->
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
-                       <i class="bi bi-receipt-cutoff"></i>
-                        <span>Trả hàng</span>
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
+                               <i class="bi bi-receipt-cutoff"></i>
+                                <span>Trả hàng</span>
+                            </a>
+                        </li><!-- End Forms Nav -->
                     </a>
                 </li><!-- End Forms Nav -->
 
@@ -210,7 +208,7 @@
         <main id="main" class="main">
 
             <div class="pagetitle">
-                <h1>Detail hóa đơn</h1>
+                <h1>Đổi trả</h1>
                 <!-- <div>
                     <table>
                         <tr th:each=" lshd: ${ lstLshd}">
@@ -245,214 +243,7 @@
                                 </section>
                             </div> -->
 
-                                    <div class="col-md-12">
-                                        <div style="width: 80%;margin: auto;margin-top: 5%;margin-bottom: 5%;">
-                                            <div class="row shop-tracking-status">
-                                                <div class="col-md-12">
-                                                    <div class="well">
-                                                        <div class="order-status">
-                                                            <div class="order-status-timeline">
-                                                                <!-- class names: c0 c1 c2 c3 and c4 -->
-                                                                <div th:if="${byHoaDon.trangThai==0}"
-                                                                    class="order-status-timeline-completion c0"></div>
-                                                                <div th:if="${byHoaDon.trangThai==1}"
-                                                                    class="order-status-timeline-completion c1"></div>
-                                                                <div th:if="${byHoaDon.trangThai==2}"
-                                                                    class="order-status-timeline-completion c2"></div>
 
-                                                                <div th:if="${byHoaDon.loaiHoaDon==1}">
-                                                                    <div th:if="${byHoaDon.trangThai==3}"
-                                                                        class="order-status-timeline-completion c3">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div th:if="${byHoaDon.loaiHoaDon==2}">
-                                                                    <div th:if="${listLichSuHoaDon.size()>2}">
-                                                                        <div th:if="${byHoaDon.trangThai==3}"
-                                                                            class="order-status-timeline-completion c3">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div th:if="${listLichSuHoaDon.size()==2}">
-                                                                        <div th:if="${byHoaDon.trangThai==3}"
-                                                                            class="order-status-timeline-completion c1">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-
-                                                                <div th:if="${listLichSuHoaDon.size()==2}">
-                                                                    <div th:if="${byHoaDon.trangThai==5}"
-                                                                        class="order-status-timeline-completion c1">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div th:if="${listLichSuHoaDon.size()==3}">
-                                                                    <div th:if="${byHoaDon.trangThai==5}"
-                                                                        class="order-status-timeline-completion c2">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div th:if="${byHoaDon.trangThai==6}"
-                                                                    class="order-status-timeline-completion c6"></div>
-                                                            </div>
-
-                                                            <!-- tất cả trạng thái hóa đơn - loại hóa đơn 1-->
-                                                            <div th:if="${byHoaDon.loaiHoaDon==1}">
-                                                                <div th:if="${byHoaDon.trangThai!=5}">
-                                                                    <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
-                                                                        th:class="'image-order-status image-order-status-' +
-                                                                    (${iterStat.index} == 0 ? 'new' :
-                                                                    (${iterStat.index} == 1 ? 'active' :
-                                                                    (${iterStat.index} == 2 ? 'intransit' :
-                                                                    (${iterStat.index} == 3 ? 'delivered' :
-                                                                    (${iterStat.index} == 4 ? 'completed' :
-                                                                     '')))))+ ' img-circle'">
-                                                                        <div class="icon"></div>
-                                                                        <span class="status"
-                                                                            th:switch="${lshd.trangThai}">
-                                                                            <span th:case="0">Đã Đặt Hàng</span>
-                                                                            <span th:case="1">Đã Xác Nhận</span>
-                                                                            <span th:case="2">Đã Giao Cho ĐVVC</span>
-                                                                            <span th:case="3">Đã Nhận Hàng</span>
-                                                                            <!--                                                            <span th:case="4" th:text="Hoàn Trả Thành Công"></span>-->
-                                                                        </span>
-                                                                        <span class="status-end"
-                                                                            th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
-                                                                    </div>
-
-                                                                    <!--                                                <div class="image-order-status image-order-status-new active img-circle">-->
-                                                                    <!--                                                    <div class="icon"></div>-->
-                                                                    <!--                                                    <span class="status">Đơn Hàng Đã Đặt</span>-->
-                                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                                    <!--                                                </div>-->
-                                                                    <!--                                                <div class="image-order-status image-order-status-new active img-circle">-->
-                                                                    <!--                                                    <div class="icon"></div>-->
-                                                                    <!--                                                    <span class="status">Đã Đặt Hàng</span>-->
-                                                                    <!--                                                    <span class="status-end"></span>-->
-                                                                    <!--                                                </div>-->
-                                                                    <!--                                                <div class="image-order-status image-order-status-active active img-circle">-->
-                                                                    <!--                                                    <div class="icon"></div>-->
-                                                                    <!--                                                    <span class="status">Chờ Xác Nhận</span>-->
-                                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                                    <!--                                                </div>-->
-                                                                    <!--                                                <div class="image-order-status image-order-status-intransit active img-circle">-->
-                                                                    <!--                                                    <div class="icon"></div>-->
-                                                                    <!--                                                    <span class="status">Chờ Giao</span>-->
-                                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                                    <!--                                                </div>-->
-                                                                    <!--                                                <div class="image-order-status image-order-status-delivered active img-circle">-->
-                                                                    <!--                                                    <div class="icon"></div>-->
-                                                                    <!--                                                    <span class="status">Đang Giao</span>-->
-                                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                                    <!--                                                </div>-->
-                                                                    <!--                                                <div class="image-order-status image-order-status-completed active img-circle">-->
-                                                                    <!--                                                    <div class="icon"></div>-->
-                                                                    <!--                                                    <span class="status">Đơn Hàng Đã Hoàn Thành</span>-->
-                                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                                    <!--                                                </div>-->
-                                                                </div>
-
-                                                            </div>
-                                                            <!-- tất cả trạng thái hóa đơn - loại hóa đơn 1-->
-
-
-                                                            <!--                                            cần check lại trạng thái lịch sử-->
-                                                            <!-- tất cả trạng thái hóa đơn - loại hóa đơn 2-->
-                                                            <div th:if="${byHoaDon.loaiHoaDon==2}">
-                                                                <div th:if="${listLichSuHoaDon.size()>1}">
-                                                                    <div th:if="${byHoaDon.trangThai!=5}">
-                                                                        <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
-                                                                            th:class="'image-order-status image-order-status-' +
-                                                                    (${iterStat.index} == 0 ? 'new' :
-                                                                    (${iterStat.index} == 1 ? 'active' :
-                                                                    (${iterStat.index} == 2 ? 'intransit' :
-                                                                    (${iterStat.index} == 3 ? 'delivered' :
-                                                                    (${iterStat.index} == 4 ? 'completed' :
-                                                                     '')))))+ ' img-circle'">
-                                                                            <div class="icon"></div>
-                                                                            <span class="status"
-                                                                                th:switch="${lshd.trangThai}">
-                                                                                <span th:case="0">Đã Đặt Hàng</span>
-                                                                                <span th:case="1">Đã Xác Nhận</span>
-                                                                                <span th:case="2">Đã Giao Cho
-                                                                                    ĐVVC</span>
-                                                                                <span th:case="3">Đã Nhận
-                                                                                    Hàng</span>
-                                                                                <!--                                                            <span th:case="11">Hoàn Trả Thành Công</span>-->
-                                                                            </span>
-                                                                            <span class="status-end"
-                                                                                th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div th:if="${byHoaDon.trangThai==3}">
-                                                                    <div th:if="${listLichSuHoaDon.size()==2}">
-                                                                        <div th:if="${byHoaDon.trangThai!=5}">
-                                                                            <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
-                                                                                th:class="'image-order-status image-order-status-' +
-                                                                    (${iterStat.index} == 0 ? 'new' :
-                                                                    (${iterStat.index} == 1 ? 'activeHoanThanh' :
-                                                                    ''))+ ' img-circle'">
-                                                                                <div class="icon"></div>
-                                                                                <span class="status"
-                                                                                    th:switch="${lshd.trangThai}">
-                                                                                    <span th:case="0">Đã Đặt Hàng</span>
-                                                                                    <span th:case="3">Đã Nhận
-                                                                                        Hàng</span>
-                                                                                    <!--<span th:case="4" th:text="Hoàn Trả Thành Công"></span>-->
-                                                                                </span>
-                                                                                <span class="status-end"
-                                                                                    th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- tất cả trạng thái hóa đơn - loại hóa đơn 2-->
-
-                                                            <!--trạng thái hủy-->
-                                                            <div th:if="${byHoaDon.trangThai==5}">
-                                                                <div th:if="${listLichSuHoaDon.size()==2}">
-                                                                    <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
-                                                                        th:class="'image-order-status image-order-status-' +
-                                                                    (${iterStat.index} == 0 ? 'new' :
-                                                                    (${iterStat.index} == 1 ? 'cancel' :''))+ ' img-circle'">
-                                                                        <div class="icon"></div>
-                                                                        <span class="status"
-                                                                            th:switch="${lshd.trangThai}">
-                                                                            <span th:case="0">Đã Đặt Hàng</span>
-                                                                            <span th:case="5">Đã Hủy</span>
-                                                                        </span>
-                                                                        <span class="status-end"
-                                                                            th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
-                                                                    </div>
-                                                                </div>
-                                                                <div th:if="${listLichSuHoaDon.size()==3}">
-                                                                    <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
-                                                                        th:class="'image-order-status image-order-status-' +
-                                                                    (${iterStat.index} == 0 ? 'new' :
-                                                                    (${iterStat.index} == 1 ? 'active' :
-                                                                    (${iterStat.index} == 2 ? 'cancel2' :'')))+ ' img-circle'">
-                                                                        <div class="icon"></div>
-                                                                        <span class="status"
-                                                                            th:switch="${lshd.trangThai}">
-                                                                            <span th:case="0">Đã Đặt Hàng</span>
-                                                                            <span th:case="1">Đã Xác Nhận</span>
-                                                                            <span th:case="5">Đã Hủy</span>
-                                                                        </span>
-                                                                        <span class="status-end"
-                                                                            th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--trạng thái hủy-->
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <form method="post" action="/ban-hang-tai-quay/hoa-don/xac-nhan">
                                         <input id="giamGiaInput" type="hidden"
                                             th:value="${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}" name="giamGia">
@@ -503,15 +294,15 @@
                                         <!-- <button type="button" class="btn btn-primary">In hóa đơn</button> -->
                                         <!-- <a th:href="@{'/ban-hang-tai-quay/hoa-don/exportPdf/'+${hoaDon.id}}"
                                         class="btn btn-primary">In hóa đơn</a> -->
-                                    <!-- [[${checkRollback}]] -->
-                                        <button id="btnInHoaDon" class="btn btn-primary">In hóa đơn</button>
-                                            
-                                        <button th:if="${hoaDon.trangThai>0&&hoaDon.trangThai!=6&&checkRollback!=8}"
-                                            data-bs-toggle="modal" data-bs-target="#rollback" type="button"
-                                            class="btn btn-primary">Hoàn tác</button>
+
+                                        <!-- <button id="btnInHoaDon" class="btn btn-primary">In hóa đơn</button>
+
+                                        <button th:if="${hoaDon.trangThai>0}" data-bs-toggle="modal"
+                                            data-bs-target="#rollback" type="button" class="btn btn-primary"><i
+                                                class="bi bi-arrow-90deg-left"></i></button>
                                         <button th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}" type="button"
                                             class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#ghiChuHuy">Hủy</button>
+                                            data-bs-target="#ghiChuHuy">Hủy</button> -->
 
 
 
@@ -570,49 +361,7 @@
                                             });
                                         </script>
 
-                                        <form th:action="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
-                                            method="post">
-                                            <!-- Button trigger modal -->
 
-
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="ghiChuHuy" tabindex="-1" role="dialog"
-                                                aria-labelledby="modalTitleId" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="modalTitleId">Xác
-                                                                nhận
-                                                            </h5>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="container-fluid">
-
-                                                                <div class="mb-3">
-                                                                    <label for="" class="form-label">Lý
-                                                                        do</label>
-                                                                    <textarea class="form-control" name="ghiChu" id=""
-                                                                        cols="30" rows="5"></textarea>
-
-                                                                    <small id="helpId" class="form-text text-muted">Viết
-                                                                        rõ
-                                                                        vào
-                                                                        đây</small>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Đóng</button>
-                                                            <button class="btn btn-danger" type="submit">Hủy</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <button style="float: right" type="button" class="btn btn-info"
-                                            data-bs-toggle="modal" data-bs-target="#lshdModal">Lịch sử</button>
-                                        <!-- Modal -->
                                         <div class="modal fade" id="lshdModal" tabindex="-1" role="dialog"
                                             aria-labelledby="modalTitleId" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -625,7 +374,7 @@
                                                                     Lịch sử hóa đơn
                                                                 </h1>
                                                             </div>
-                                                            <table  id="example2" class="display">
+                                                            <table>
                                                                 <thead>
                                                                     <tr>
                                                                         <th>STT</th>
@@ -645,9 +394,8 @@
                                                                             <td>
                                                                                 [[${lshd.getStringTrangThai()}]]
                                                                             </td>
-                                                                            <td
-                                                                                th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}">
-
+                                                                            <td>
+                                                                                [[${lshd.ngaySua}]]
                                                                             </td>
                                                                             <td>
                                                                                 [[${lshd.nguoiSua}]]
@@ -660,15 +408,7 @@
                                                                         </tr>
 
                                                                     </tbody>
-                                                                    <tfoot hidden="hidden">
-                                                                        <tr>
-                                                                            <th>STT</th>
-                                                                            <th>Hành động</th>
-                                                                            <th>Thời gian</th>
-                                                                            <th>Nhân viên</th>
-                                                                            <th>Ghi chú</th>
-                                                                        </tr>
-                                                                    </tfoot>
+
                                                             </table>
                                                         </div>
                                                     </div>
@@ -1172,7 +912,7 @@
 
 
                                                                     <!-- table DC -->
-                                                                    <table>
+                                                                    <table id="example2" class="display">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th scope="col">STT</th>
@@ -1363,7 +1103,7 @@
                                                             class="info-value">[[${hoaDon.sdtNguoiNhan}]]</span>
                                                     </p>
                                                     <p><span class="info-label">Địa chỉ:</span>
-                                                        <span class="info-value">[[${hoaDon.diaChiNguoiNhan}]]</span>
+                                                        <span class="info-value">[[${hoaDon.diaChiNguoiNhan}]],</span>
                                                         <span class="info-value" id="phuongXaColumn"></span>
                                                         <span class="info-value" id="quanHuyenColumn"></span>
                                                         <span class="info-value" id="thanhPhoColumn"></span>
@@ -1442,7 +1182,7 @@
 
                                                                     // Đặt tên thành phố vào thẻ có class là phuongXaColumn trong dòng hiện tại
                                                                     var phuongXaColumn = document.getElementById('phuongXaColumn');
-                                                                    phuongXaColumn.innerText = ',  ' + phuongXa.WardName + ',';
+                                                                    phuongXaColumn.innerText = phuongXa.WardName + ',';
                                                                     document.getElementById('phuongXaColumnIn').innerText = phuongXa.WardName + ',';
                                                                 })
                                                                 .catch(error => {
@@ -1477,137 +1217,24 @@
                                                 <div class="col-md-12">
                                                     <div class="">
                                                         <h4 style="font-weight: bold;">Thông tin sản phẩm đã mua</h4>
-                                                        <button th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}"
-                                                            onclick="handleButtonClick()" type="button"
-                                                            class="btn btn-primary" data-bs-toggle="modal"
-                                                            th:data-bs-target="${'#addsp'+hoaDon.id}">
-                                                            Thêm sản phẩm
-                                                        </button>
+
                                                     </div>
 
-                                                    <!-- Modal -->
 
 
-                                                    <div class="modal fade" th:id="${'addsp'+hoaDon.id}" tabindex="-1"
-                                                        aria-labelledby="themSanPhamLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-body">
-                                                                    <!-- form search -->
-                                                                    <div class="modal-header">
-                                                                        <h1 class="modal-title fs-5"
-                                                                            style="margin: auto;">
-                                                                            Danh sách sản phẩm
-                                                                        </h1>
-                                                                    </div>
-                                                                    <table  id="example1" class="display">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">STT</th>
-                                                                                <th scope="col">Sản Phẩm</th>
-                                                                                <th scope="col">Số Lượng</th>
-                                                                                <th scope="col">Giá Bán</th>
-                                                                                <th scope="col">Hành Động</th>
-                                                                            </tr>
-                                                                            <thead>
-                                                                            <tbody>
-                                                                                <tr th:each=" ctsp, state: ${lstCtsp}">
-                                                                                    <form
-                                                                                        action="/ban-hang-tai-quay/hoa-don-chi-tiet/add"
-                                                                                        method="post">
-                                                                                        <!-- input hidden -->
-                                                                                        <input th:value="${hoaDon.id}"
-                                                                                            type="hidden"
-                                                                                            name="idHoaDon">
-                                                                                        <input th:value="${ctsp.id}"
-                                                                                            type="hidden" name="idCtsp">
 
-                                                                                        <th scope="row"
-                                                                                            style="width: 5%;"
-                                                                                            th:text="${state.index+1}">
-                                                                                        </th>
-                                                                                        <td style="width: 50%;">
-                                                                                            <div class="row">
-                                                                                                <div class="col-4">
-                                                                                                    <img th:src="@{'../../../static/img/ImgShoe/' + ${ctsp.SanPham.listHinhAnhSanPham[0].url}}"
-                                                                                                        class="fixed-image">
-                                                                                                </div>
-
-                                                                                                <div class="col-8">
-                                                                                                    <div
-                                                                                                        class="info-price">
-                                                                                                        <h6>[[${ctsp.SanPham.ten}]]
-                                                                                                            [
-                                                                                                            [[${ctsp.MauSac.ten}]]
-                                                                                                            -
-                                                                                                            [[${ctsp.KichCo.ten}]]
-                                                                                                            ]
-                                                                                                        </h6>
-                                                                                                        <span>Đơn giá:
-                                                                                                            <span
-                                                                                                                class="gia">
-                                                                                                                [[${ctsp.giaHienHanh}]]
-                                                                                                                VND</span></span>
-                                                                                                        <p>Loại đế:
-                                                                                                            [[${ctsp.LoaiDe.ten}]]
-                                                                                                        </p>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            [[${ctsp.soLuong}]]
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            [[${ctsp.giaHienHanh}]]VND
-                                                                                        </td>
-                                                                                        <td>
-
-                                                                                            <button
-                                                                                                th:id="'themSp'+${ctsp.id}"
-                                                                                                type="submit"
-                                                                                                class="btn btn-success">Thêm
-                                                                                            </button>
-                                                                                            <!-- th:onclick="'handleButtonClick(`themSp'+${ctsp.id}+'`)'"  -->
-                                                                                        </td>
-                                                                                    </form>
-                                                                                </tr>
-
-                                                                            </tbody>
-                                                                            <tfoot hidden="hidden">
-                                                                                <tr>
-                                                                                    <th scope="col">STT</th>
-                                                                                    <th scope="col">Sản Phẩm</th>
-                                                                                    <th scope="col">Số Lượng</th>
-                                                                                    <th scope="col">Giá Bán</th>
-                                                                                    <th scope="col">Hành Động</th>
-                                                                                </tr>
-                                                                            </tfoot>
-                                                                    </table>
-
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Đóng
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- bảng sản phẩm -->
 
                                                     <div class="table-ban-hang">
-                                                        <table  id="example" class="display sanpham-table">
+                                                        <table class="sanpham-table">
                                                             <thead>
                                                                 <tr>
                                                                     <th scope="col">STT</th>
                                                                     <th scope="col">Sản phẩm</th>
                                                                     <th scope="col">Số lượng</th>
                                                                     <th scope="col">Trạng thái</th>
+
                                                                     <th scope="col">Thành tiền</th>
-                                                                    <th scope="col"
-                                                                        th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}">
+                                                                    <th scope="col">
                                                                         Thao tác</th>
 
                                                                 </tr>
@@ -1618,7 +1245,7 @@
                                                                 <tr th:each="obj, state:${hoaDon.lstHoaDonChiTiet}">
 
                                                                     <form th:id="${'myForm'+obj.id}"
-                                                                        action="/ban-hang-tai-quay/hoa-don-chi-tiet/update"
+                                                                        action="/ban-hang-tai-quay/hoa-don-chi-tiet/tra-hang"
                                                                         method="post">
 
                                                                         <th scope="row" th:text="${state.index+1}"></th>
@@ -1655,7 +1282,7 @@
                                                                         <td>
                                                                             <span th:if="${obj.trangThai ==0}">Đã
                                                                                 nhận</span>
-                                                                            <span th:if="${obj.trangThai ==2}">Hoàn
+                                                                            <span th:if="${obj.trangThai ==2}">Đã
                                                                                 trả</span>
                                                                         </td>
                                                                         <td>
@@ -1664,32 +1291,20 @@
                                                                             </div>
                                                                         </td>
 
-
-                                                                        <td
-                                                                            th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}">
+                                                                        <td th:if="${obj.trangThai !=2}">
                                                                             <div class="button-table">
-                                                                                <!-- delete Hóa đơn chi tiết -->
-
-                                                                                <!-- Button trigger modal -->
-
                                                                                 <button type="button"
                                                                                     class="btn btn-primary"
                                                                                     th:data-bs-toggle="modal"
-                                                                                    th:data-bs-target="${'#modalEditSoLuong'+obj.id}">
-                                                                                    <i class="bi bi-pencil-fill"></i>
+                                                                                    th:data-bs-target="${'#modalEditSoLuongTra'+obj.id}">
+                                                                                    Trả hàng
                                                                                     <input type="hidden" name="idHdct"
                                                                                         th:value="${obj.id}">
                                                                                 </button>
 
-
-
-
-
-
-
-                                                                                <!-- Modal update sl-->
+                                                                                <!-- Modal update sl tra -->
                                                                                 <div class="modal fade"
-                                                                                    th:id="${'modalEditSoLuong'+obj.id}"
+                                                                                    th:id="${'modalEditSoLuongTra'+obj.id}"
                                                                                     tabindex="-1"
                                                                                     aria-labelledby="exampleModalLabel"
                                                                                     aria-hidden="true">
@@ -1705,11 +1320,11 @@
                                                                                             </div>
                                                                                             <div class="modal-body">
                                                                                                 <p>(Sẵn
-                                                                                                    [[${obj.ChiTietSanPham.soLuong}]]
+                                                                                                    [[${obj.soLuong}]]
                                                                                                     sản phẩm )</p>
                                                                                                 <input type="number"
-                                                                                                    name="soLuongEdit"
-                                                                                                    th:id="${'soLuongEdit'+obj.id}">
+                                                                                                    name="soLuongEditTra"
+                                                                                                    th:id="${'soLuongEditTra'+obj.id}">
                                                                                             </div>
                                                                                             <div class="modal-footer">
                                                                                                 <button type="button"
@@ -1717,77 +1332,25 @@
                                                                                                     data-bs-dismiss="modal">Close
                                                                                                 </button>
                                                                                                 <button
-                                                                                                    th:onclick="'validateAndSubmit('+${obj.ChiTietSanPham.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
+                                                                                                    th:onclick="'validateAndSubmitTraHang('+${obj.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
                                                                                                     type="button"
                                                                                                     class="btn btn-primary">Save
                                                                                                     changes
                                                                                                 </button>
 
+
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <button type="button"
-                                                                                    class="btn btn-danger"
-                                                                                    th:data-bs-toggle="modal"
-                                                                                    th:data-bs-target="${'#modalDeleteHdct'+obj.id}">
-                                                                                    <i class="bi bi-trash-fill"></i></i>
-                                                                                </button>
-                                                                                <div class="modal fade"
-                                                                                    th:id="${'modalDeleteHdct'+obj.id}"
-                                                                                    tabindex="-1" role="dialog"
-                                                                                    aria-labelledby="modalTitleId"
-                                                                                    aria-hidden="true">
-                                                                                    <div class="modal-dialog"
-                                                                                        role="document">
-                                                                                        <div class="modal-content">
-                                                                                            <div class="modal-header">
-                                                                                                <h5 class="modal-title"
-                                                                                                    id="modalTitleId">
-                                                                                                    Xác
-                                                                                                    nhận
-                                                                                                </h5>
-
-                                                                                            </div>
-                                                                                            <div class="modal-body">
-                                                                                                <div
-                                                                                                    class="container-fluid">
-                                                                                                    Xóa
-                                                                                                    [[${obj.ChiTietSanPham.SanPham.ten}]]
-                                                                                                    ?
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="modal-footer">
-                                                                                                <button type="button"
-                                                                                                    class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Close</button>
-                                                                                                <a th:href="@{'/ban-hang-tai-quay/hoa-don-chi-tiet/delete/'+${obj.id}}"
-                                                                                                    class="btn btn-danger">Xóa
-                                                                                                </a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
                                                                             </div>
                                                                         </td>
+
                                                                     </form>
                                                                 </tr>
 
 
                                                             </tbody>
-                                                            <tfoot hidden="hidden">
-                                                                <tr>
-                                                                    <th scope="col">STT</th>
-                                                                    <th scope="col">Sản phẩm</th>
-                                                                    <th scope="col">Số lượng</th>
-                                                                    <th scope="col">Trạng thái</th>
-                                                                    <th scope="col">Thành tiền</th>
-                                                                    <th scope="col"
-                                                                        th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}">
-                                                                        Thao tác</th>
-                                                                </tr>
-                                                            </tfoot>
 
                                                         </table>
                                                         <!-- Check giỏ hàng trống -->
@@ -1802,7 +1365,153 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="ngan-cach">
 
+                                            </div>
+                                            <div th:if="${check!=0}" class="row">
+                                                <div class="col-md-12">
+                                                    <div class="">
+                                                        <h4 style="font-weight: bold;">Thông tin sản phẩm Đổi/Trả </h4>
+
+                                                    </div>
+
+
+                                                    <!-- bảng sản phẩm -->
+
+                                                    <div th:if="${check !=0}" class="table-ban-hang">
+                                                        <table class="sanpham-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">STT</th>
+                                                                    <th scope="col">Sản phẩm</th>
+                                                                    <th scope="col">Số lượng</th>
+                                                                    <th scope="col">Thành tiền</th>
+                                                                    <th scope="col">
+                                                                        Thao tác</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+
+                                                                <tr th:each="obj, state:${hdHangTra.lstHoaDonChiTiet}">
+
+                                                                    <form th:id="${'myForm'+obj.id}"
+                                                                        action="/ban-hang-tai-quay/hoa-don-chi-tiet/tra-hang"
+                                                                        method="post">
+
+                                                                        <th scope="row" th:text="${state.index+1}"></th>
+                                                                        <td>
+                                                                            <div class="row">
+                                                                                <div class="col-4">
+                                                                                    <img th:src="@{'../../../static/img/ImgShoe/' + ${obj.ChiTietSanPham.SanPham.listHinhAnhSanPham[0].url}}"
+                                                                                        class="fixed-image">
+                                                                                </div>
+
+                                                                                <div class="col-8">
+                                                                                    <div class="info-price">
+                                                                                        <h6>[[${obj.ChiTietSanPham.SanPham.ten}]]
+                                                                                            [
+                                                                                            [[${obj.ChiTietSanPham.MauSac.ten}]]
+                                                                                            -
+                                                                                            [[${obj.ChiTietSanPham.KichCo.ten}]]
+                                                                                            ]
+                                                                                        </h6>
+                                                                                        <span>Đơn giá: <span
+                                                                                                class="gia">
+                                                                                                [[${obj.donGia}]]
+                                                                                                VND</span></span>
+                                                                                        <p>Loại đế:
+                                                                                            [[${obj.ChiTietSanPham.LoaiDe.ten}]]
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            [[${obj.soLuong}]]
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div class="price-table">
+                                                                                [[${obj.tongTien()}]] VND
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div class="button-table">
+                                                                                <button type="button"
+                                                                                    class="btn btn-primary"
+                                                                                    th:data-bs-toggle="modal"
+                                                                                    th:data-bs-target="${'#modalEditSoLuongTra'+obj.id}">
+                                                                                    Sửa
+                                                                                    <input type="hidden" name="idHdct"
+                                                                                        th:value="${obj.id}">
+                                                                                </button>
+
+                                                                                <!-- Modal update sl tra -->
+                                                                                <div class="modal fade"
+                                                                                    th:id="${'modalEditSoLuongTra'+obj.id}"
+                                                                                    tabindex="-1"
+                                                                                    aria-labelledby="exampleModalLabel"
+                                                                                    aria-hidden="true">
+                                                                                    <div class="modal-dialog">
+                                                                                        <div class="modal-content">
+                                                                                            <div class="modal-header">
+                                                                                                <h1 class="modal-title fs-5"
+                                                                                                    id="exampleModalLabel">
+                                                                                                    Nhập
+                                                                                                    số lượng</h1>
+
+
+                                                                                            </div>
+                                                                                            <div class="modal-body">
+                                                                                                <p>(Sẵn
+                                                                                                    [[${obj.soLuong}]]
+                                                                                                    sản phẩm )</p>
+                                                                                                <input type="number"
+                                                                                                    name="soLuongEditTra"
+                                                                                                    th:id="${'soLuongEditTra'+obj.id}">
+                                                                                            </div>
+                                                                                            <div class="modal-footer">
+                                                                                                <button type="button"
+                                                                                                    class="btn btn-secondary"
+                                                                                                    data-bs-dismiss="modal">Close
+                                                                                                </button>
+                                                                                                <button
+                                                                                                    th:onclick="'validateAndSubmitTraHang('+${obj.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
+                                                                                                    type="button"
+                                                                                                    class="btn btn-primary">Save
+                                                                                                    changes
+                                                                                                </button>
+
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+
+                                                                    </form>
+                                                                </tr>
+
+
+                                                            </tbody>
+
+                                                        </table>
+                                                        <!-- Check giỏ hàng trống -->
+                                                        <div th:if="${#lists.size(hoaDon.lstHoaDonChiTiet) ==0}">
+                                                            <!-- giỏ hàng trống -->
+                                                            <div class="cart-no-product">
+                                                                <img src="/../static/img/cart.png" alt="">
+                                                                <span>Không có sản phẩm nào trong giỏ</span>
+                                                            </div>
+                                                            <input type="hidden">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="row" style="margin-top: 3%">
                                                 <div class="col-md-6">
                                                 </div>
@@ -1814,8 +1523,8 @@
                                                             color: black;">Thông tin thanh toán</h4>
                                                             <div class="thong-tin-tt-2">
 
-                                                                <!-- 
-                                                                <div class="row">
+
+                                                                <!-- <div class="row">
                                                                     <div class="col">
                                                                         <h6>Phương thức thanh toán:</h6>
                                                                     </div>
@@ -1829,119 +1538,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </div> -->
-                                                                <div class="row">
-                                                                    <div class="col">
-                                                                        <h6>Voucher: </h6>
-                                                                        <!-- Giảm [[${hoaDon.getPhanTramGiam()}]]% -->
-                                                                    </div>
-                                                                    <div class="col" style="margin-top: 1%">
-                                                                        <div class="input-group flex-nowrap">
-                                                                            <input type="text" class="form-control"
-                                                                                id="c_code" disabled
-                                                                                aria-label="Coupon Code"
-                                                                                aria-describedby="button-addon2" />
-                                                                            <button
-                                                                                th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}"
-                                                                                class="btn btn-primary btn-sm"
-                                                                                type="button"
-                                                                                onclick="checkAndDisplayVouchers()"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#voucher">
-                                                                                Chọn voucher
-                                                                            </button>
-                                                                            <!-- Modal -->
-                                                                            <div class="modal fade" id="voucher"
-                                                                                tabindex="-1"
-                                                                                aria-labelledby="voucherLabel"
-                                                                                aria-hidden="true">
-                                                                                <div class="modal-dialog">
-                                                                                    <div class="modal-content">
-                                                                                        <div class="modal-header">
-                                                                                            <h3 class="modal-title fs-5"
-                                                                                                style="margin: auto"
-                                                                                                id="voucherLabel">Chọn
-                                                                                                Voucher
-                                                                                            </h3>
-                                                                                        </div>
-                                                                                        <div class="modal-body">
-                                                                                            <div class="card mb-3"
-                                                                                                style="height: 10%"
-                                                                                                th:each="voucher : ${listVoucher}">
-                                                                                                <div class="row g-0">
-                                                                                                    <div
-                                                                                                        class="col-md-3">
-                                                                                                        <div class="card-body"
-                                                                                                            style="margin-left: 5px;margin-top: 15px">
-                                                                                                            <img th:src="@{../../../static/img/logo.png}"
-                                                                                                                style="margin-left: 15px"
-                                                                                                                class="img-fluid rounded-start"
-                                                                                                                alt="...">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div
-                                                                                                        class="col-md-7">
-                                                                                                        <div
-                                                                                                            class="card-body">
-                                                                                                            <h5 class="card-title"
-                                                                                                                style="margin-bottom: -3px"
-                                                                                                                th:text="${'Giảm '+ voucher.phanTramGiam + '%'}">
-                                                                                                            </h5>
-                                                                                                            <small
-                                                                                                                class="text-body-secondary"
-                                                                                                                style="display: block"
-                                                                                                                th:text="${'Đơn Tối Thiểu '+voucher.giaTriDonToiThieu + ' VND'}"></small>
-                                                                                                            <small
-                                                                                                                class="text-body-secondary"
-                                                                                                                style="display: block"
-                                                                                                                th:text="${'Số Lượng '+voucher.soLuong}"></small>
-                                                                                                            <small
-                                                                                                                class="text-body-secondary"
-                                                                                                                style="display: block"
-                                                                                                                th:text="${'Hạn Sử Dụng '+voucher.ngayKetThuc}"></small>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div
-                                                                                                        class="col-md-2">
-                                                                                                        <div
-                                                                                                            class="card-body">
-                                                                                                            <input
-                                                                                                                type="radio"
-                                                                                                                style="margin-top: 35px"
-                                                                                                                name="voucherRadio"
-                                                                                                                th:data-index="${voucher.id + ' ' +voucher.phanTramGiam}"
-                                                                                                                onchange="handleRadioVoucher(this)">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div
-                                                                                                        class="col-md-12">
-                                                                                                        <small
-                                                                                                            class="text-body-secondary"
-                                                                                                            style=" display: none;margin-left: 50px;color: red"
-                                                                                                            id="thongBaoThieuTien"></small>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
 
-
-                                                                                        </div>
-                                                                                        <div class="modal-footer">
-                                                                                            <a th:href="@{'/ban-hang-tai-quay/hoa-don/bo-voucher/'+${hoaDon.id}}"
-                                                                                                class="btn btn-secondary">Bỏ
-                                                                                                chọn
-                                                                                            </a>
-                                                                                            <button type="button"
-                                                                                                class="btn btn-secondary"
-                                                                                                data-bs-dismiss="modal">Quay
-                                                                                                lại
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
 
                                                                 <div class="row">
                                                                     <div class="col">
@@ -1949,7 +1546,7 @@
                                                                     </div>
                                                                     <div class="col">
                                                                         <h6 id="totalAmount" class="thong-tin-gia">
-                                                                            [[${hoaDon.tongTienHoaDonDaNhan()}]]
+                                                                            [[${hoaDon.tongTienHoaDon()}]]
                                                                             VND</h6>
                                                                         <input th:value="${hoaDon.tongTienHoaDon()}"
                                                                             type="hidden" name="tongTienHoaDon">
@@ -1983,35 +1580,6 @@
                                                                         </h6>
                                                                     </div>
                                                                 </div>
-                                                                <div th:if="${hoaDon.tongTienHoaDonHoanTra()>0&&hoaDon.tongTienHoaDonDaNhan!=0}"
-                                                                    class="row">
-                                                                    <div class="col">
-                                                                        <h6>Trả lại khách:</h6>
-                                                                        <!-- (Hoàn 1 phần) -->
-
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <h6 id="moneyVoucher" class="thong-tin-gia">
-                                                                            [[${hoaDon.tongTienHoaDonHoanTra()}]]
-                                                                            VND
-
-                                                                        </h6>
-                                                                    </div>
-                                                                </div>
-                                                                <div th:if="${hoaDon.tongTienHoaDonHoanTra()>0&&hoaDon.tongTienHoaDonDaNhan==0}"
-                                                                    class="row">
-                                                                    <div class="col">
-                                                                        <h6>Trả lại khách:</h6>
-                                                                        <!-- (hoàn hêt) -->
-
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <h6 id="moneyVoucher" class="thong-tin-gia">
-                                                                            [[${hoaDon.tongTienHoaDonHoanTra()+hoaDon.phiShip-hoaDon.getGiamGia()}]]
-                                                                            VND
-                                                                        </h6>
-                                                                    </div>
-                                                                </div>
 
                                                                 <div th:if="${hoaDon.trangThai==-1||hoaDon.trangThai==4}"
                                                                     class="row">
@@ -2041,54 +1609,106 @@
 
 
                                                                 </div>
-                                                                <div class="row"
-                                                                    th:if="${hoaDon.tongTienHoaDonHoanTra()==0}">
+                                                                <div class="row">
                                                                     <div class="col">
-                                                                        <h3>Tổng tiền:</h3>
+                                                                        <h6>Khách đã thanh toán:</h6>
                                                                     </div>
                                                                     <div class="col">
                                                                         <h6 class="thong-tin-gia" id="tongGiaH6"><span
                                                                                 id="tongGiaValue">[[${hoaDon.tongTienHoaDonKhiGiam()-hoaDon.getGiamGia()}]]</span>
                                                                             VND</h6>
-                                                                        <input
-                                                                            th:value="${hoaDon.tongTienHoaDonKhiGiam()}"
-                                                                            type="hidden" id="tongAll">
+
                                                                     </div>
 
 
                                                                 </div>
 
-                                                                <div class="row"
-                                                                    th:if="${ hoaDon.tongTienHoaDonDaNhan!=0&&hoaDon.tongTienHoaDonHoanTra!=0}">
+                                                                <div th:if="${check!=0}" class="row">
                                                                     <div class="col">
-                                                                        <h3>Tổng tiền:</h3>
-                                                                        <!-- khi hoàn trả 1 phần -->
+                                                                        <h6>Trả lại khách:</h6>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <h6 class="thong-tin-gia" id=""><span
-                                                                                id="">[[${hoaDon.tongTienHoaDonDaNhan()-hoaDon.getGiamGia()+hoaDon.phiShip}]]</span>
+                                                                        <h6 th:if="${hdHangTra.tongTienHoaDon() !=hoaDon.tongTienHoaDon()}"
+                                                                            class="thong-tin-gia" id="tongGiaH6"><span
+                                                                                id="tongGiaValue">[[${hdHangTra.tongTienHoaDon()}]]</span>
+                                                                            VND</h6>
+                                                                        <h6 th:if="${hdHangTra.tongTienHoaDon() ==hoaDon.tongTienHoaDon()}"
+                                                                            class="thong-tin-gia" id="tongGiaH6"><span
+                                                                                id="tongGiaValue">[[${hoaDon.tongTienHoaDonKhiGiam()-hoaDon.getGiamGia()}]]</span>
                                                                             VND</h6>
 
                                                                     </div>
 
 
                                                                 </div>
+                                                                <input th:value="${hoaDon.tongTienHoaDonKhiGiam()}"
+                                                                    type="hidden" id="tongAll">
+                                                                <!-- Button trigger modal -->
+                                                                <button
+                                                                    th:if="${check!=0&&hdHangTra.tongTienHoaDon()>0 }"
+                                                                    type="button" class="btn btn-primary"
+                                                                    data-bs-toggle="modal" data-bs-target="#modalId">
+                                                                    Xác nhận hoàn hàng
+                                                                </button>
 
-                                                                <div class="row"
-                                                                    th:if="${hoaDon.tongTienHoaDonDaNhan()==0}">
-                                                                    <div class="col">
-                                                                        <h3>Tổng tiền:</h3>
-                                                                        <!-- khi hoàn trả toàn phần -->
+
+
+                                                                <form method="post"
+                                                                    action="/ban-hang-tai-quay/doi-tra/xac-nhan">
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="modalId" tabindex="-1"
+                                                                        role="dialog" aria-labelledby="modalTitleId"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="modalTitleId">
+                                                                                        Bạn chắc chắn muốn trả hàng?
+                                                                                        (Không thể quay lại)
+                                                                                    </h5>
+
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="mb-3">
+                                                                                        <label for=""
+                                                                                            class="form-label">Nhập lý
+                                                                                            do</label>
+                                                                                        <textarea class="form-control"
+                                                                                            name="lyDo" id="lyDo"
+                                                                                            rows="3"></textarea>
+                                                                                    </div>
+
+
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">
+                                                                                        Đóng
+                                                                                    </button>
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-primary">Đồng
+                                                                                        ý</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col">
-                                                                        <h6 class="thong-tin-gia" id=""><span
-                                                                                id="">0</span>
-                                                                            VND</h6>
+                                                                </form>
 
-                                                                    </div>
+                                                                <script>
+                                                                    var modalId = document.getElementById('modalId');
 
+                                                                    modalId.addEventListener('show.bs.modal', function (event) {
+                                                                        // Button that triggered the modal
+                                                                        let button = event.relatedTarget;
+                                                                        // Extract info from data-bs-* attributes
+                                                                        let recipient = button.getAttribute('data-bs-whatever');
 
-                                                                </div>
+                                                                        // Use above variables to manipulate the DOM
+                                                                    });
+                                                                </script>
+
 
                                                             </div>
                                                         </div>
@@ -2229,9 +1849,82 @@
         }
     </script>
     <!--  css + js chọn voucher-->
-    
+    <!--    thư viện của bảng tích hợp tìm kiếm-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                "language": {
+                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                    "emptyTable": "Không có kết quả nào được tìm thấy",
+                    "zeroRecords": "Không có kết quả phù hợp",
+                    "infoEmpty": "Không có dữ liệu để hiển thị"
+                },
+                "initComplete": function (settings, json) {
+                    // CSS changes
+                    $('#example_filter input[type="search"]').addClass('form-control');
+                    $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
+                    $('#example_filter label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).replaceWith(' ');
+
+                    $('#example_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).first().replaceWith('Hiển thị');
+                    $('#example_length label').contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).last().replaceWith('mục');
+
+                    $('#example_length select').addClass('form-select');
+                }
+            });
+
+            table.on('draw.dt', function () {
+                var pageInfo = table.page.info();
+
+                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
+                $('#example_info').html(newInfo);
+
+            });
+        });
+    </script>
+    <style>
+        small {
+            /* font-weight: bold; */
+            color: red;
+        }
 
 
+        /*input tìm kiếm*/
+        #example_filter input[type="search"] {
+            width: 180%;
+            margin-left: -80%;
+            margin-bottom: 10%;
+        }
+
+        /*select hiển thị mục*/
+        .dataTables_length label {
+            white-space: nowrap;
+            /* Ngăn các phần tử xuống dòng */
+            display: flex;
+            /* Hiển thị label và select trên cùng một dòng */
+            align-items: center;
+            /* Canh chỉnh label và select theo chiều dọc */
+        }
+
+        .dataTables_length select {
+            margin-left: 5px;
+            /* Tạo khoảng cách giữa label và select */
+        }
+
+        .dataTables_length label:after {
+            /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
+            content: '';
+            /* Xóa nội dung */
+        }
+    </style>
+    <!--    thư viện của bảng tích hợp tìm kiếm end-->
 
 
     <div class="inHoaDon">
@@ -2264,32 +1957,17 @@
                             <th scope="col">Số Lượng</th>
                             <th scope="col">Giá gồm VAT</th>
                             <th scope="col">Thành Tiền</th>
-                            <th scope="col">Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="obj, state:${hoaDon.lstHoaDonChiTiet}">
                             <th th:text="${state.index+1}"></th>
-                            <td colspan="2">
-                                [[${obj.chiTietSanPham.SanPham.ten}]]
-                                [
-                                [[${obj.chiTietSanPham.MauSac.ten}]]
-                                -
-                                [[${obj.chiTietSanPham.KichCo.ten}]]
-                                ]
-                            </td>
+                            <td th:text="${obj.chiTietSanPham.sanPham.ten}" colspan="2"></td>
                             <td th:text="${obj.soLuong}"></td>
                             <td th:text="${obj.chiTietSanPham.giaHienHanh}"></td>
-                            <td th:if="${obj.trangThai==0}" th:text="${obj.soLuong*obj.chiTietSanPham.giaHienHanh}"></td>
-                            <td th:if="${obj.trangThai==2}" th:text="0"></td>
-                            
-                            <td>
-                                <span th:if="${obj.trangThai ==0}">Đã
-                                    nhận</span>
-                                <span th:if="${obj.trangThai ==2}">Hoàn
-                                    trả</span>
-                            </td>
+                            <td th:text="${obj.soLuong*obj.chiTietSanPham.giaHienHanh}"></td>
                         </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -2298,28 +1976,18 @@
                 <div class="border-hoadon-duoi"></div>
                 <div>
                     <p><span class="info-label">Tổng tiền:</span> <span
-                            class="info-value">[[${hoaDon.tongTienHoaDonDaNhan()}]] VND</span>
+                            class="info-value">[[${hoaDon.tongTienHoaDon()}]] VND</span>
                     </p>
-
-                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()>0}"><span class="info-label">Giảm giá:</span> <span class="info-value"><span
+                    <p><span class="info-label">Giảm giá:</span> <span class="info-value"><span
                                 id="giamGiaIn">[[${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}]]
                             </span> VND</span>
                     </p>
-                    <p  th:if="${hoaDon.tongTienHoaDonDaNhan()>0}"><span class="info-label">Phí vận chuyển:</span> <span class="info-value"><span
+                    <p><span class="info-label">Phí vận chuyển:</span> <span class="info-value"><span
                                 id="phiVanChuyenIn">[[${hoaDon.phiShip}]]
                             </span> VND</span>
                     </p>
-                    <p  th:if="${hoaDon.tongTienHoaDonDaNhan()==0}"><span class="info-label">Phí vận chuyển:</span> <span class="info-value"><span
-                                id="phiVanChuyenIn">0
-                            </span> VND</span>
-                    </p>
-                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()>0}"><span class="info-label">Thành tiền:</span> <span
-                            class="info-value"><span
-                                id="thanhTienIn">[[${hoaDon.tongTienHoaDonDaNhan()+hoaDon.phiShip-hoaDon.getGiamGia()}]]</span>
-                            VND</span></p>
-                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()==0}"><span class="info-label">Thành tiền:</span> <span
-                            class="info-value"><span id="thanhTienIn">0</span>
-                            VND</span></p>
+                    <p><span class="info-label">Thành tiền:</span> <span class="info-value"><span
+                                id="thanhTienIn">[[${hoaDon.tongTienHoaDonKhiGiam()}]]</span> VND</span></p>
                 </div>
             </div>
             <div class="col-md-12">
@@ -2423,12 +2091,10 @@
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
     <script src='https://github.com/jasonday/printThis/blob/master/printThis.js'></script>
     <script>
-
         document.addEventListener('DOMContentLoaded', function () {
             $(".inHoaDon").hide();
         });
         $('#btnInHoaDon').click(function () {
-            $("#liveToastSuccess").hide();
             $(".hoaDonTong").hide();
             $(".inHoaDon").show();
             $('#pdfDocument').attr('src', 'https://connect-hm.top/pdf/test.pdf');
@@ -2439,155 +2105,6 @@
             }, 1);
         });
     </script>
-
-
-    <!--    thư viện của bảng tích hợp tìm kiếm-->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js'></script>
-    <script>
-        $(document).ready(function () {
-            var table = $('#example').DataTable({
-                "language": {
-                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
-                    "emptyTable": "Không có kết quả nào được tìm thấy",
-                    "zeroRecords": "Không có kết quả phù hợp",
-                    "infoEmpty": "Không có dữ liệu để hiển thị"
-                },
-                "initComplete": function (settings, json) {
-                    // CSS changes
-                    $('#example_filter input[type="search"]').addClass('form-control');
-                    $('#example_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
-                    $('#example_filter label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).replaceWith(' ');
-
-                    $('#example_length label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).first().replaceWith('Hiển thị');
-                    $('#example_length label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).last().replaceWith('mục');
-
-                    $('#example_length select').addClass('form-select');
-                }
-            });
-
-            table.on('draw.dt', function () {
-                var pageInfo = table.page.info();
-
-                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
-                $('#example_info').html(newInfo);
-
-            });
-        });
-
-        $(document).ready(function () {
-            var table = $('#example1').DataTable({
-                "language": {
-                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
-                    "emptyTable": "Không có kết quả nào được tìm thấy",
-                    "zeroRecords": "Không có kết quả phù hợp",
-                    "infoEmpty": "Không có dữ liệu để hiển thị"
-                },
-                "initComplete": function (settings, json) {
-                    // CSS changes
-                    $('#example1_filter input[type="search"]').addClass('form-control');
-                    $('#example1_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
-                    $('#example1_filter label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).replaceWith(' ');
-
-                    $('#example1_length label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).first().replaceWith('Hiển thị');
-                    $('#example1_length label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).last().replaceWith('mục');
-
-                    $('#example1_length select').addClass('form-select');
-                }
-            });
-
-            table.on('draw.dt', function () {
-                var pageInfo = table.page.info();
-
-                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
-                $('#example1_info').html(newInfo);
-
-            });
-        });
-
-        $(document).ready(function () {
-            var table = $('#example2').DataTable({
-                "language": {
-                    "info": "Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
-                    "emptyTable": "Không có kết quả nào được tìm thấy",
-                    "zeroRecords": "Không có kết quả phù hợp",
-                    "infoEmpty": "Không có dữ liệu để hiển thị"
-                },
-                "initComplete": function (settings, json) {
-                    // CSS changes
-                    $('#example2_filter input[type="search"]').addClass('form-control');
-                    $('#example2_filter input[type="search"]').attr('placeholder', 'Tìm kiếm');
-                    $('#example2_filter label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).replaceWith(' ');
-
-                    $('#example2_length label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).first().replaceWith('Hiển thị');
-                    $('#example2_length label').contents().filter(function () {
-                        return this.nodeType === 3;
-                    }).last().replaceWith('mục');
-
-                    $('#example2_length select').addClass('form-select');
-                }
-            });
-
-            table.on('draw.dt', function () {
-                var pageInfo = table.page.info();
-
-                var newInfo = 'Hiển thị ' + pageInfo.start + ' đến ' + pageInfo.end + ' trong tổng số ' + pageInfo.recordsDisplay + ' kết quả';
-                $('#example2_info').html(newInfo);
-
-            });
-        });
-    </script>
-    <style>
-        /*input tìm kiếm*/
-        #example_filter input[type="search"] {
-            width: 180%;
-            margin-left: -80%;
-            margin-bottom: 10%;
-        }
-
-        /*select hiển thị mục*/
-        .dataTables_length label {
-            white-space: nowrap;
-            /* Ngăn các phần tử xuống dòng */
-            display: flex;
-            /* Hiển thị label và select trên cùng một dòng */
-            align-items: center;
-            /* Canh chỉnh label và select theo chiều dọc */
-        }
-
-        .dataTables_length select {
-            margin-left: 5px;
-            /* Tạo khoảng cách giữa label và select */
-        }
-
-        .dataTables_length label:after {
-            /* Sử dụng pseudo-element :after để ẩn văn bản cuối cùng */
-            content: '';
-            /* Xóa nội dung */
-        }
-
-        .errorInput {
-            color: red;
-            font-weight: bold;
-        }
-    </style>
-    <!--    thư viện của bảng tích hợp tìm kiếm end-->
 
 
     <!-- Vendor JS Files -->

@@ -85,7 +85,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/products/welcome", "/products/new", "/login", "/user/shop", "/test/**", "/register", "/saveTaiKhoan", "/verify", "/quen-mat-khau",
+                .requestMatchers("/home", "/shop", "/logout=true","/login", "/chinh-sach", "/login-error", "/about", "/lien-he", "/register", "/saveTaiKhoan", "/verify", "/quen-mat-khau",
                         "/them-tai-khoan", "/verify", "/reset-mat-khau", "/xac-minh", "/xac-minh/check").permitAll()
                 .requestMatchers("/style/", "/static/css/**", "/static/fonts/**", "/static/img/**", "/static/js/**", "/static/scss/**", "/static/vendor/**").permitAll()
                 .requestMatchers("/**").permitAll()
@@ -103,13 +103,14 @@ public class SecurityConfig {
                 .loginProcessingUrl("/login")
                 .loginPage("/login")
                 .successHandler(authenticationSuccessHandler())
-                .failureUrl("/login/erorr")
+                .failureUrl("/login-error")
                 // Khi đăng nhập sai username và password thì nhập lại
 //                .usernameParameter("username")// tham số này nhận từ form login ở bước 3 có input  name='username'
 //                .passwordParameter("password")// tham số này nhận từ form login ở bước 3 có input  name='password
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/logout=true")
                 .clearAuthentication(true) // Xóa thông tin đăng nhập
                 .invalidateHttpSession(true) // Hủy phiên đăng nhập
                 .deleteCookies("JSESSIONID") // Xóa cookies nếu cần

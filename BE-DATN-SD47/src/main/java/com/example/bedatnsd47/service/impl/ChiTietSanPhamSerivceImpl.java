@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -149,6 +150,13 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     }
 
     @Override
+    public ChiTietSanPham saveExcel(ChiTietSanPham chiTietSanPham) {
+
+        return repository.save(chiTietSanPham);
+
+    }
+
+    @Override
     public void remove(Long id) {
 
         repository.deleteById(id);
@@ -241,6 +249,11 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
     
     public List<Object[]> danhSachHangSapHet(Integer soLuong) {
         return repository.danhSachHangSapHet(soLuong);
+    }
+
+    @Override
+    public void checkSoLuongBang0() {
+        repository.checkSoLuongBang0();
     }
 
 }

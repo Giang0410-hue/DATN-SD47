@@ -12,7 +12,7 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> getAllCtspOneSanPham();
 
-//    List<ChiTietSanPham> getAllCtspOneSanPhamMinGia();
+    // List<ChiTietSanPham> getAllCtspOneSanPhamMinGia();
 
     List<ChiTietSanPham> getAllDangHoatDong();
 
@@ -31,6 +31,10 @@ public interface ChiTietSanPhamSerivce {
 
     ChiTietSanPham update(ChiTietSanPham chiTietSanPham);
 
+    void checkSoLuongBang0();
+
+    ChiTietSanPham saveExcel(ChiTietSanPham chiTietSanPham);
+
     void remove(Long id);
 
     ChiTietSanPham getById(Long id);
@@ -43,8 +47,9 @@ public interface ChiTietSanPhamSerivce {
 
     List<ChiTietSanPham> fillAllDangHoatDongLonHon0();
 
-    Page<List<ChiTietSanPham>> searchAll(Integer pageNo,Integer size, String tenSanPham, List<Long> idMauSac, List<Long> idKichCo,
-                                         List<Long> idLoaiDe, List<Long> idThuongHieu, Long minGia, Long maxGia);
+    Page<List<ChiTietSanPham>> searchAll(Integer pageNo, Integer size, String tenSanPham, List<Long> idMauSac,
+            List<Long> idKichCo,
+            List<Long> idLoaiDe, List<Long> idThuongHieu, Long minGia, Long maxGia);
 
     List<Long> getAllIdMauSacCTSP();
 
@@ -59,6 +64,7 @@ public interface ChiTietSanPhamSerivce {
     Long getAllMaxGiaCTSP();
 
     Integer checkPage(Integer page);
+
     List<Object[]> danhSachHangSapHet(Integer soLuong);
 
 }

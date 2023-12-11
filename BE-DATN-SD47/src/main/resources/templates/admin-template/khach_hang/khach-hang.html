@@ -10,6 +10,9 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
 
+    <link href="../../../static/img/favicon.png" rel="icon">
+    <link href="../../../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
     <!--    thư viện của bảng tích hợp tìm kiếm-->
     <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
     <!--    thư viện của bảng tích hợp tìm kiếm end-->
@@ -139,6 +142,13 @@
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
                <i class="bi bi-receipt-cutoff"></i>
                 <span>Quản Lý Hóa Đơn</span>
+            </a>
+        </li><!-- End Forms Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
+               <i class="bi bi-receipt-cutoff"></i>
+                <span>Trả hàng</span>
             </a>
         </li><!-- End Forms Nav -->
 
@@ -335,7 +345,7 @@
                                 <td th:text="${khachHang.getHoVaTen()}"></td>
                                 <td th:text="${khachHang.email}"></td>
                                 <td th:text="${khachHang.soDienThoai}"></td>
-                                <td th:text="${khachHang.ngayTao}"></td>
+                                <td th:text="${#dates.format(khachHang.ngayTao, 'HH:mm dd/MM/yyyy')}"></td>
                                 <td class="trangthaidkd" th:if="${khachHang.trangThai==0}">Đang hoạt động</td>
                                 <td class="trangthainkd" th:if="${khachHang.trangThai==1}">Ngừng hoạt động</td>
                                 <td>

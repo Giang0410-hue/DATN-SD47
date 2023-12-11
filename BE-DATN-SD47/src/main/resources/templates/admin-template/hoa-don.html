@@ -10,8 +10,10 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="../../static/img/favicon.png" rel="icon">
-    <link href="../../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <link href="../../../static/img/favicon.png" rel="icon">
+    <link href="../../../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -154,9 +156,16 @@
             </li><!-- End Components Nav -->
 
             <li class="nav-item">
-                <a class="nav-link" href="/ban-hang-tai-quay/hoa-don/quan-ly">
+                <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
                    <i class="bi bi-receipt-cutoff"></i>
                     <span>Quản Lý Hóa Đơn</span>
+                </a>
+            </li><!-- End Forms Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
+                   <i class="bi bi-receipt-cutoff"></i>
+                    <span>Trả hàng</span>
                 </a>
             </li><!-- End Forms Nav -->
 
@@ -265,15 +274,7 @@
                                         </span> -->
                                     </a>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="ex3-tab-7" data-bs-toggle="tab" href="#ex3-tabs-7"
-                                        role="tab" aria-controls="ex3-tabs-7" aria-selected="false">
-                                        Đổi trả
-                                        <!-- <span class="cart">
-                                            <span class="cart__count">[[${lstHdHuy.size()}]]</span>
-                                        </span> -->
-                                    </a>
-                                </li>
+                        
                             </ul>
                             <form onsubmit="return checkValidGhiChu()" method="post" action="/ban-hang-tai-quay/hoa-don/chuyen-nhanh">
                                 <div class="tab-content" id="ex2-content">
@@ -305,7 +306,7 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.ngayTao}"></td>
+                                                        <td th:text="${#dates.format(hd.ngayTao, 'HH:mm dd/MM/yyyy')}"></td>
                                                         <td>
                                                             <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
@@ -372,7 +373,7 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.ngayTao}"></td>
+                                                        <td th:text="${#dates.format(hd.ngayTao, 'HH:mm dd/MM/yyyy')}"></td>
                                                         <td>
                                                             <button th:onclick="'setInputIdHoaDon('+${hd.id}+')'"
                                                                 type="button" class="btn btn-primary"
@@ -435,7 +436,7 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.ngayTao}"></td>
+                                                        <td th:text="${#dates.format(hd.ngayTao, 'HH:mm dd/MM/yyyy')}"></td>
 
                                                         <td>
 
@@ -505,7 +506,7 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.ngayTao}"></td>
+                                                        <td th:text="${#dates.format(hd.ngayTao, 'HH:mm dd/MM/yyyy')}"></td>
 
                                                         <td>
                                                             <button th:onclick="'setInputIdHoaDon('+${hd.id}+')'"
@@ -570,7 +571,7 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.ngayTao}"></td>
+                                                        <td th:text="${#dates.format(hd.ngayTao, 'HH:mm dd/MM/yyyy')}"></td>
                                                         <td>
 
                                                             <a class="btn btn-info"
@@ -628,7 +629,7 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.ngayTao}"></td>
+                                                        <td th:text="${#dates.format(hd.ngayTao, 'HH:mm dd/MM/yyyy')}"></td>
                                                         <td>
                                                             <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
@@ -690,7 +691,7 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.ngayTao}"></td>
+                                                        <td th:text="${#dates.format(hd.ngayTao, 'HH:mm dd/MM/yyyy')}"></td>
                                                         <td>
                                                             <!-- Button trigger modal
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal"
@@ -752,7 +753,7 @@
                                                         <td th:text="${hd.nguoiNhan}"></td>
                                                         <td th:text="${hd.sdtNguoiNhan}">0377463664</td>
                                                         <td th:text="${hd.tongTienKhiGiam}">2.000.000</td>
-                                                        <td th:text="${hd.ngayTao}"></td>
+                                                        <td th:text="${#dates.format(hd.ngayTao, 'HH:mm dd/MM/yyyy')}"></td>
                                                         <td th:text="${hd.getStringTrangThai()}"></td>
 
                                                         <td>
@@ -790,7 +791,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input type="text" id="idHoaDon" name="idHoaDon">
+                                <input type="hidden" id="idHoaDon" name="idHoaDon">
                                 <script>
                                     function setInputIdHoaDon(id) {
                                         document.getElementById('idHoaDon').value = id;
@@ -949,6 +950,113 @@
             Website bán giày Glacat
         </div>
     </footer><!-- End Footer -->
+
+ <!--Thông báo thành công-->
+ <div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='thanhCong'}">
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastSuccess'));
+            liveToast.show();
+        });
+    </script>
+
+    <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="  background-color: rgba(62, 189, 97,0.2);border:2px solid #3ebd61;  border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_notification.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                        <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #3ebd61;">
+                            [[${thongBao}]]</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo thành công end-->
+
+<!--Thông báo cảnh báo-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='canhBao'}">
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastWarning" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style=" background-color: rgba(239, 148, 0, 0.2);border:2px solid #fcca1b;  border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_warning.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                        <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: #fcca1b;">
+                            [[${thongBao}]]</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo cảnh báo end-->
+
+<!--Thông báo thất bại-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='thatBai'}">
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('liveToastDanger'));
+            liveToast.show();
+        });
+    </script>
+    <div id="liveToastDanger" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="background-color: rgb(252,134,134);border:2px solid #ff2020;border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_danger.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                        <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: white;">
+                            [[${thongBao}]]</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo thất bại end-->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>

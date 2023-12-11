@@ -8,6 +8,7 @@
     <title>Glacat</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
+    <link href="../../../static/img/favicon.png" rel="icon">
     <!--    thư viện của bảng tích hợp tìm kiếm-->
     <link rel='stylesheet' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>
     <!--    thư viện của bảng tích hợp tìm kiếm end-->
@@ -136,7 +137,7 @@
     <div class="d-flex align-items-center justify-content-between">
         <a href="/ban-hang-tai-quay/hoa-don" class="logo d-flex align-items-center">
             <img src="../../../static/img/logo.png" alt="">
-            <span class="d-none d-lg-block">NiceAdmin</span>
+            <span class="d-none d-lg-block">Glacat</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -186,7 +187,6 @@
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
-
         <li class="nav-item">
             <a class="nav-link " href="/admin/thong-ke">
                 <i class="bi bi-graph-up-arrow"></i>
@@ -196,23 +196,24 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don">
-                <i class="bi bi-grid"></i>
+                <i class="bi bi-shop"></i>
                 <span>Bán Hàng</span>
             </a>
-        </li><!-- End Dashboard Nav -->
+        </li><!-- End Bán Hàng Tại Quầy Nav -->
+
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i><span>Quản Lý Sản Phẩm</span><i
                     class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="/admin/san-pham-chi-tiet">
                         <i class="bi bi-circle"></i><span>Sản Phẩm Chi Tiết</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../admin/san-pham">
+                    <a href="/admin/san-pham">
                         <i class="bi bi-circle"></i><span>Sản Phẩm</span>
                     </a>
                 </li>
@@ -232,21 +233,31 @@
                     </a>
                 </li>
                 <li>
-                    <a href="thong-ke.html">
+                    <a href="/admin/kich-co">
                         <i class="bi bi-circle"></i><span>Kích Cỡ</span>
                     </a>
                 </li>
             </ul>
         </li><!-- End Components Nav -->
+
         <li class="nav-item">
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
-                <i class="bi bi-envelope"></i>
-                <span>Hóa Đơn</span>
+                <i class="bi bi-receipt-cutoff"></i>
+                <span>Quản Lý Hóa Đơn</span>
+            </a>
+
+        </li><!-- End Forms Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
+               <i class="bi bi-receipt-cutoff"></i>
+                <span>Trả hàng</span>
             </a>
         </li><!-- End Forms Nav -->
+
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>Quản Lý Tài Khoản</span><i
+                <i class="bi bi-person-vcard"></i><span>Quản Lý Tài Khoản</span><i
                     class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -256,7 +267,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../admin/khach-hang">
+                    <a href="/admin/khach-hang">
                         <i class="bi bi-circle"></i><span>Quản lý khách hàng</span>
                     </a>
                 </li>
@@ -264,12 +275,14 @@
         </li><!-- End Tables Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="../admin/voucher">
-                <i class="bi bi-envelope"></i>
+            <a class="nav-link collapsed" href="/admin/voucher">
+                <i class="bi bi-ticket-perforated-fill"></i>
                 <span>Quản Lý Voucher</span>
             </a>
-        </li><!-- End Icons Nav -->
+        </li>
+        <!-- End Charts Nav -->
     </ul>
+
 
 </aside><!-- End Sidebar-->
 

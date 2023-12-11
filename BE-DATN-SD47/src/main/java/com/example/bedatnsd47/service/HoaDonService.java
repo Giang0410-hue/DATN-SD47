@@ -62,4 +62,7 @@ public interface HoaDonService {
 
     Long sumGiaTriHoaDonAll();
 
+    void deleteHoaDonHoanTra();
+
+    
 }

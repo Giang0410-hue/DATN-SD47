@@ -135,4 +135,8 @@ public class HoaDonServiceImpl implements HoaDonService {
         return hoaDonRepository.sumGiaTriHoaDonAll();
     }
 
+    public void deleteHoaDonHoanTra() {
+        // TODO Auto-generated method stub
+        hoaDonRepository.deleteHoaDonHoanTra();
+    }
 }
