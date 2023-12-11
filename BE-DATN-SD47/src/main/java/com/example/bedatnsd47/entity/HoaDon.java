@@ -117,6 +117,26 @@ public class HoaDon {
         return total;
     }
 
+    public Long tongTienHoaDonHoanTra() {
+        Long total = (long) 0;
+        for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
+            if(hoaDonChiTiet.getTrangThai()==2){
+                total += hoaDonChiTiet.tongTien();
+            }
+        }
+        return total;
+    }
+
+    public Long tongTienHoaDonDaNhan() {
+        Long total = (long) 0;
+        for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
+            if(hoaDonChiTiet.getTrangThai()==0){
+                total += hoaDonChiTiet.tongTien();
+            }
+        }
+        return total;
+    }
+
     
 
     public Long tongTienHoaDonKhiGiam() {
@@ -158,9 +178,10 @@ public class HoaDon {
             case 5:
                 return "Đã hủy";
             case 6:
-                return "Xác nhận đổi trả";
-            case 7:
-                return "Hoàn thành đổi trả";
+                return "Hoàn trả";
+            
+            case 8:
+                return "Đơn đổi trả tạm";
             default:
                 break;
         }

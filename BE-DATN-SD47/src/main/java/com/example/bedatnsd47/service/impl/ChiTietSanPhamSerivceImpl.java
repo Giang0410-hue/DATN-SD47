@@ -251,4 +251,9 @@ public class ChiTietSanPhamSerivceImpl implements ChiTietSanPhamSerivce {
         return repository.danhSachHangSapHet(soLuong);
     }
 
+    @Override
+    public void checkSoLuongBang0() {
+        repository.checkSoLuongBang0();
+    }
+
 }

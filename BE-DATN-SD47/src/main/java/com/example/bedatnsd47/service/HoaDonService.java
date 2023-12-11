@@ -47,4 +47,6 @@ public interface HoaDonService {
     Long sumGiaTriHoaDonBetween(Date startDate,
                                 Date endDate);
 
+    void deleteHoaDonHoanTra();
+
 }
