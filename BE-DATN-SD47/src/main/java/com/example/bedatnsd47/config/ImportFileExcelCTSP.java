@@ -74,7 +74,8 @@ public class ImportFileExcelCTSP {
                     listIndex.add(index);
                     continue;
                 }
-                if (Integer.parseInt(soLuongTon) <= 0||Integer.parseInt(giaBan) <= 0) {
+                if (Integer.parseInt(soLuongTon) <= 0 || Integer.parseInt(soLuongTon) > 99999 ||
+                        Integer.parseInt(giaBan) <= 0 || Integer.parseInt(giaBan) > 1000000000) {
                     listIndex.add(index);
                     continue;
                 }

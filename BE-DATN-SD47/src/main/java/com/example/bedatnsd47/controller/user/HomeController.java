@@ -568,12 +568,10 @@ public class HomeController {
         model.addAttribute("soLuongSPGioHangCT",
                 gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
         model.addAttribute("listAllHoaDon", hoaDonService.getAllHoaDonByTaiKhoanOrderByNgaySua(idTaiKhoan));
-        model.addAttribute("listHDChoXacNhan",
-                hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 0));
+        model.addAttribute("listHDChoXacNhan", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 0));
         model.addAttribute("listHDChoGiao", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 1));
         model.addAttribute("listHDDangGiao", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 2));
-        model.addAttribute("listHDHoanThanh",
-                hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 3));
+        model.addAttribute("listHDHoanThanh", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 3));
         model.addAttribute("listHDDaHuy", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 5));
         model.addAttribute("listHDTraHang", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 6));
         return "/customer-template/don-mua";
