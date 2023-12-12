@@ -46,7 +46,6 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-// @RequestMapping("/home")
 public class HomeController {
 
     // private Long idTaiKhoan = Long.valueOf(8);
@@ -646,6 +645,47 @@ public class HomeController {
             model.addAttribute("checkDangNhap", "false");
         }
         return "/customer-template/contact";
+    }
+
+    @GetMapping("/tra-cuu-don-hang")
+    public String traCuuHoaDon(
+            Model model) {
+        if (idTaiKhoan != null) {
+            TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+            model.addAttribute("checkDangNhap", "true");
+            model.addAttribute("soLuongSPGioHangCT",
+                    gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+        } else {
+            model.addAttribute("checkDangNhap", "false");
+        }
+        return "/customer-template/tra-cuu-don-hang";
+    }
+
+    @GetMapping("/tra-cuu-don-hang/{idHoaDon}/{email}")
+    public String detailTraCuuHoaDon(
+            @RequestParam("maDonHang") String maDonHang,
+            @RequestParam("sdt") String sdt,
+            Model model,
+            RedirectAttributes attributes
+    ) {
+        if (idTaiKhoan != null) {
+            TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+            model.addAttribute("checkDangNhap", "true");
+            model.addAttribute("soLuongSPGioHangCT",
+                    gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+        } else {
+            model.addAttribute("checkDangNhap", "false");
+        }
+        HoaDon hoaDon = hoaDonService.finByHoaDonMaHDSdt(maDonHang, sdt);
+        if (hoaDon == null) {
+            attributes.addFlashAttribute("checkLoiTraCuuHoaDon",
+                    "Không tìm thấy đơn hàng. Vui lòng kiểm tra lại mã đơn hàng và số điện thoại.");
+            return "redirect:/tra-cuu-don-hang";
+        } else {
+            model.addAttribute("byHoaDon", hoaDonService.findById(hoaDon.getId()));
+            model.addAttribute("listLichSuHoaDon", lichSuHoaDonService.findByIdhdNgaySuaAsc(hoaDon.getId()));
+        }
+        return "/customer-template/detail-tra-cuu-don-hang";
     }
 
 }

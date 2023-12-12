@@ -56,6 +56,11 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
+    public HoaDon finByHoaDonMaHDSdt(String maDonHang,String sdt) {
+        return hoaDonRepository.finByHoaDonMaHDSdt(maDonHang,sdt);
+    }
+
+    @Override
     public List<HoaDon> findAllOrderByNgaySua() {
         return hoaDonRepository.findAllOrderByNgaySua();
     }
