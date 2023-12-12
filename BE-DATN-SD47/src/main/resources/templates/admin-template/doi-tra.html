@@ -223,8 +223,8 @@
                         <script>
                             function clickDoiTra() {
                                 var maHoaDon = document.getElementById("maHoaDon").value
-                                var fullUrl = "http://localhost:8080/ban-hang-tai-quay/doi-tra/"
-                                window.location.href = fullUrl + maHoaDon
+                                var fullUrl = window.location.href;
+                                window.location.href = fullUrl+'/'+ maHoaDon
                             }
                         </script>
                     </div>
