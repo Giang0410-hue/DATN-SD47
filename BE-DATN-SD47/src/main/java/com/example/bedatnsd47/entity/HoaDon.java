@@ -120,7 +120,7 @@ public class HoaDon {
     public Long tongTienHoaDonHoanTra() {
         Long total = (long) 0;
         for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
-            if(hoaDonChiTiet.getTrangThai()==2){
+            if (hoaDonChiTiet.getTrangThai() == 2) {
                 total += hoaDonChiTiet.tongTien();
             }
         }
@@ -130,14 +130,13 @@ public class HoaDon {
     public Long tongTienHoaDonDaNhan() {
         Long total = (long) 0;
         for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
-            if(hoaDonChiTiet.getTrangThai()==0){
+            if (hoaDonChiTiet.getTrangThai() == 0) {
                 total += hoaDonChiTiet.tongTien();
             }
         }
         return total;
     }
 
-    
 
     public Long tongTienHoaDonKhiGiam() {
 
@@ -148,6 +147,10 @@ public class HoaDon {
         if (this.voucher != null) {
             Long ptGiam = this.voucher.getPhanTramGiam().longValue();
             Long giam = (this.tongTienHoaDon() * ptGiam) / 100;
+            Long giamToiDa = Long.valueOf(this.voucher.getGiamToiDa().longValue());
+            if (giam > giamToiDa) {
+                return giamToiDa;
+            }
             return giam;
         }
         return (long) 0;
@@ -179,7 +182,7 @@ public class HoaDon {
                 return "Đã hủy";
             case 6:
                 return "Hoàn trả";
-            
+
             case 8:
                 return "Đơn đổi trả tạm";
             default:

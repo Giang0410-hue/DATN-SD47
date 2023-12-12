@@ -104,7 +104,7 @@
                     <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                         <div class="site-top-icons">
                             <ul class="nav nav-pills" style="margin-left: 54%">
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown" th:if="${checkDangNhap=='true'}">
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                                        role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
                                     <ul class="dropdown-menu">
@@ -115,6 +115,14 @@
                                         <li><a class="dropdown-item" th:href="@{/logout}">Đăng Xuất</a></li>
                                     </ul>
                                 </li>
+                                <li class="nav-item dropdown" th:if="${checkDangNhap=='false'}">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                       role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/login">Đăng Nhập</a></li>
+
+                                    </ul>
+                                </li>
 
                                 <!--                                <li class="nav-item" style="margin-left: -15%">-->
                                 <!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
@@ -122,7 +130,8 @@
                                 <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
                                     <a class="site-cart" href="/user/cart">
                                         <span class="icon icon-shopping_cart"></span>
-                                        <span class="count" th:text="${soLuongSPGioHangCT}"></span>
+                                        <span class="count" th:if="${checkDangNhap=='true'}"
+                                              th:text="${soLuongSPGioHangCT}"></span>
                                     </a>
                                 </li>
                             </ul>
@@ -179,52 +188,9 @@
         </div>
     </div>
     <div class="container" style="max-width: 90%">
-        <div class="row">
-            <div class="col-md-2">
-                <aside id="sidebar" class="sidebar">
-
-                    <ul class="sidebar-nav" id="sidebar-nav">
-
-                        <li class="nav-item">
-                            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"
-                               href="#">
-                                <i class="bi bi-person-fill"></i><span>Tài khoản của tôi</span><i
-                                    class="bi bi-chevron-down ms-auto"></i>
-                            </a>
-                            <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                                <li>
-                                    <a href="/user/thong-tin-khach-hang">
-                                        <i class="bi bi-circle"></i><span>Hồ Sơ</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/user/dia-chi">
-                                        <i class="bi bi-circle"></i><span>Địa Chỉ</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/user/mat-khau">
-                                        <i class="bi bi-circle"></i><span>Đổi Mật Khẩu</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li><!-- End Components Nav -->
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user/don-mua">
-                                <i class="bi bi-receipt-cutoff"></i>
-                                <span>Đơn Mua</span>
-                            </a>
-                        </li><!-- End Forms Nav -->
-
-
-                    </ul>
-                </aside><!-- End Sidebar-->
-            </div>
-
-            <div class="col-md-10" style="background-color: #fafafa;margin-bottom: 5%">
+        <div class="row" style="margin-top: 5%;margin-bottom: 5%">
+            <div class="col-md-9" style="background-color: #fafafa;margin-bottom: 5%;margin: auto">
                 <div class="row">
-
                     <div class="col-md-12">
                         <section class="section-top-dmct">
                             <div class="row">
@@ -534,24 +500,7 @@
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <button th:if="${byHoaDon.trangThai==3}"
-                                                    type="button"
-                                                    style="float: right;color: white"
-                                                    th:data-index="${byHoaDon.id}"
-                                                    onclick="muaLai2(this)" class="btn btn-success">Mua Lại
-                                            </button>
-                                            <button th:if="${byHoaDon.trangThai==5}"
-                                                    type="button"
-                                                    style="float: right;color: white"
-                                                    th:data-index="${byHoaDon.id}"
-                                                    onclick="muaLai2(this)" class="btn btn-success">Mua Lại
-                                            </button>
-                                            <button th:if="${byHoaDon.trangThai==6}"
-                                                    type="button"
-                                                    style="float: right;color: white"
-                                                    th:data-index="${byHoaDon.id}"
-                                                    onclick="muaLai2(this)" class="btn btn-success">Mua Lại
-                                            </button>
+
                                         </div>
                                         <!--                                    <div class="col-md-12" style="margin-top: 2%">-->
                                         <!--                                        <button th:if="${byHoaDon.trangThai==6}"-->
@@ -613,117 +562,7 @@
                                 </div>
 
                             </div>
-                            <!-- Modal thông báo check chọn sản phẩm-->
-                            <div class="modal fade" id="checkMuaLai2" style="margin-top: 8%" tabindex="-1"
-                                 aria-labelledby="checkMuaLai2Label" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body" style="text-align: center;margin-top: 3%">
-                                            <p>Có sản phẩm đã hết hàng hoặc ngừng bán.
-                                            </p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Đóng
-                                            </button>
-                                            <button type="button" class="btn btn-primary"
-                                                    onclick="confirmAction2()">Xác nhận
-                                            </button>
-                                        </div>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Modal thông báo check chọn sản phẩm end-->
-                            <script>
-                                var filteredIds2 = [];
-                                var soLuongId2 = 0;
-
-                                function muaLai2(rowIndex) {
-                                    filteredIds2 = [];
-                                    soLuongId2 = 0;
-                                    var index = rowIndex.getAttribute('data-index');
-                                    console.log(index)
-                                    var listName = document.getElementsByName('listNameChiTietSP2' + index);
-                                    console.log(listName)
-                                    var listIdCTSP = [];
-
-                                    for (var i = 0; i < listName.length; i++) {
-                                        listIdCTSP.push(listName[i].value);
-                                    }
-                                    console.log(listIdCTSP)
-
-                                    var checkSoLuongBang0 = true
-                                    // Kiểm tra và in ra thông báo nếu có id chi tiết sản phẩm có số lượng bằng 0
-                                    for (var i = 0; i < listIdCTSP.length; i++) {
-                                        var parts = listIdCTSP[i].split(" ");
-                                        var id = parts[0];
-                                        var quantity = parseInt(parts[1]);
-
-                                        if (quantity == 0) {
-                                            checkSoLuongBang0 = false
-                                            continue
-                                        }
-
-                                        soLuongId2++;
-                                        filteredIds2.push(id);
-
-                                    }
-                                    if (checkSoLuongBang0) {
-                                        var url = '/user/don-mua/mua-lai?options=' + filteredIds2;
-                                        // Thực hiện phương thức POST
-                                        fetch(url, {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json'
-                                            }
-                                        })
-                                            .then(response => {
-                                                if (response.ok) {
-                                                    // Xử lý kết quả nếu cần
-                                                    console.log('Đã thêm vào giỏ hàng');
-                                                    window.location.href = '/user/cart?checkGHCT=true' + soLuongId2;
-                                                } else {
-                                                    throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
-                                                }
-                                            })
-                                            .catch(error => {
-                                                console.error(error);
-                                            });
-                                    } else {
-                                        $('#checkMuaLai2').modal('show');
-                                        return
-                                    }
-
-
-                                }
-
-                                // Xác nhận từ người dùng
-                                function confirmAction2() {
-                                    var url = '/user/don-mua/mua-lai?options=' + filteredIds2;
-                                    // Thực hiện phương thức POST
-                                    fetch(url, {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        }
-                                    })
-                                        .then(response => {
-                                            if (response.ok) {
-                                                // Xử lý kết quả nếu cần
-                                                console.log('Đã thêm vào giỏ hàng');
-                                                window.location.href = '/user/cart?checkGHCT=true' + soLuongId2;
-                                            } else {
-                                                throw new Error('Lỗi trong quá trình thêm vào giỏ hàng.');
-                                            }
-                                        })
-                                        .catch(error => {
-                                            console.error(error);
-                                        });
-                                    // Ẩn modal nếu cần
-                                    $('#checkMuaLai2').modal('hide');
-                                }
-                            </script>
                         </section>
 
                         <section class="section-bottom-table">
@@ -751,10 +590,10 @@
                                     <td class="tong-tien-table" th:text="${byHoaDon.tongTienKhiGiam+ ' VND'}">30000VND
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="2">Phương thức Thanh toán</td>
-                                    <td class="tien-table">Thanh toán khi nhận hàng</td>
-                                </tr>
+                                <!--                                <tr>-->
+                                <!--                                    <td colspan="2">Phương thức Thanh toán</td>-->
+                                <!--                                    <td class="tien-table">Thanh toán khi nhận hàng</td>-->
+                                <!--                                </tr>-->
                                 </tbody>
 
                                 <tbody th:if="${byHoaDon.trangThai==6}">
@@ -786,10 +625,10 @@
                                     <td class="tong-tien-table" th:text="${byHoaDon.tongTienKhiGiam+ ' VND'}">30000VND
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="2">Phương thức Thanh toán</td>
-                                    <td class="tien-table">Thanh toán khi nhận hàng</td>
-                                </tr>
+                                <!--                                <tr>-->
+                                <!--                                    <td colspan="2">Phương thức Thanh toán</td>-->
+                                <!--                                    <td class="tien-table">Thanh toán khi nhận hàng</td>-->
+                                <!--                                </tr>-->
                                 </tbody>
 
                             </table>

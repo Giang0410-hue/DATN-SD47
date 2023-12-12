@@ -68,12 +68,12 @@
 
                         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                             data-bs-toggle="dropdown">
-                            <span class="d-none d-md-block dropdown-toggle ps-2">Nguyễn Tuấn Anh</span>
+                            <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${tenNhanVien}"></span>
                         </a><!-- End Profile Iamge Icon -->
 
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                             <li class="dropdown-header">
-                                <h6>Nguyễn Tuấn Anh</h6>
+                                <h6 th:text="${tenNhanVien}"></h6>
                                 <span>Nhân Viên</span>
                             </li>
 
@@ -317,7 +317,7 @@
                                                             <span th:case="1">Đã Xác Nhận</span>
                                                             <span th:case="2">Đã Giao Cho ĐVVC</span>
                                                             <span th:case="3">Đã Nhận Được Hàng</span>
-                                                            <span th:case="6">Hoàn Trả Thành Công</span>
+                                                            <span th:case="6">Trả Hàng Thành Công</span>
                                                         </span>
                                                                         <span class="status-end" th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
                                                                     </div>
@@ -376,7 +376,7 @@
                                                             <span th:case="1">Đã Xác Nhận</span>
                                                             <span th:case="2">Đã Giao Cho ĐVVC</span>
                                                             <span th:case="3">Đã Nhận Được Hàng</span>
-                                                            <span th:case="6">Hoàn Trả Thành Công</span>
+                                                            <span th:case="6">Trả Hàng Thành Công</span>
                                                         </span>
                                                                             <span class="status-end" th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
                                                                         </div>
@@ -399,7 +399,7 @@
                                                             <span th:case="1">Đã Xác Nhận</span>
                                                             <span th:case="2">Đã Giao Cho ĐVVC</span>
                                                             <span th:case="3">Đã Nhận Được Hàng</span>
-                                                            <span th:case="6">Hoàn Trả Thành Công</span>
+                                                            <span th:case="6">Trả Hàng Thành Công</span>
                                                         </span>
                                                                                 <span class="status-end" th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
                                                                             </div>
@@ -415,7 +415,7 @@
                                                                                 <span class="status" th:switch="${lshd.trangThai}">
                                                             <span th:case="0">Đã Đặt Hàng</span>
                                                             <span th:case="3">Đã Nhận Được Hàng</span>
-                                                            <span th:case="6">Hoàn Trả Thành Công</span>
+                                                            <span th:case="6">Trả Hàng Thành Công</span>
                                                         </span>
                                                                                 <span class="status-end"
                                                                                       th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>

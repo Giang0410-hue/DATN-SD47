@@ -36,7 +36,8 @@
                     <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
                         <form action="" class="site-block-top-search">
                             <span class="icon icon-search2"></span>
-                            <input type="text" class="form-control border-0" id="timKiemAll" placeholder="Tìm kiếm theo tên sản phẩm"/>
+                            <input type="text" class="form-control border-0" id="timKiemAll"
+                                   placeholder="Tìm kiếm theo tên sản phẩm"/>
                             <script>
                                 var inputElementTimKiemAll = document.getElementById('timKiemAll');
 
@@ -56,6 +57,7 @@
 
 
                                 });
+
                                 // Hàm cập nhật giá trị của query parameter trong URL
                                 function updateQueryStringParameterAll(key, value, url) {
                                     var regex = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
@@ -98,11 +100,12 @@
                     <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                         <div class="site-top-icons">
                             <ul class="nav nav-pills" style="margin-left: 54%">
-                                <li class="nav-item dropdown" >
+                                <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                                        role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/user/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
+                                        <li><a class="dropdown-item" href="/user/thong-tin-khach-hang">Tài Khoản Của
+                                            Tôi</a>
                                         </li>
                                         <li><a class="dropdown-item" href="/user/don-mua">Đơn Mua</a></li>
                                         <li><a class="dropdown-item" th:href="@{/logout}">Đăng Xuất</a></li>
@@ -110,8 +113,8 @@
                                 </li>
 
                                 <!--                                <li class="nav-item" style="margin-left: -15%">-->
-<!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
-<!--                                </li>-->
+                                <!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
+                                <!--                                </li>-->
                                 <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
                                     <a class="site-cart" href="/user/cart">
                                         <span class="icon icon-shopping_cart"></span>
@@ -155,6 +158,7 @@
                     <li><a href="/about">Về chúng tôi</a></li>
                     <li><a href="/lien-he">Liên hệ</a></li>
                     <li><a href="/chinh-sach">Chính Sách</a></li>
+                    <li><a href="/tra-cuu-don-hang">Tra Cứu Đơn Hàng</a></li>
                 </ul>
             </div>
         </nav>
@@ -475,7 +479,8 @@
                                                 <div class="modal-body">
 
                                                     <!--form sửa địa chỉ-->
-                                                    <form th:id="${'myForm'+diaChi.id}" th:action="@{/user/dia-chi/update}"
+                                                    <form th:id="${'myForm'+diaChi.id}"
+                                                          th:action="@{/user/dia-chi/update}"
                                                           method="post"
                                                           th:onsubmit="'submitFormAndReload(event,'+ ${diaChi.id} + ')'">
                                                         <div class="row mb-3">
@@ -1491,6 +1496,9 @@
                                                                             th:text="${'Giảm '+ voucher.phanTramGiam + '%'}"></h5>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
+                                                                               th:text="${'Giảm tối đa '+voucher.giamToiDa + ' VND'}"></small>
+                                                                        <small class="text-body-secondary"
+                                                                               style="display: block"
                                                                                th:text="${'Đơn Tối Thiểu '+voucher.giaTriDonToiThieu + ' VND'}"></small>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
@@ -1536,10 +1544,12 @@
                                                                 // Chuyển đổi các phần tử thành số nguyên
                                                                 var idVoucher = parseInt(numbersArray[0], 10);
                                                                 var phamTramGiam = parseInt(numbersArray[1], 10);
+                                                                var giaTriGiam = parseInt(numbersArray[2], 10);
 
                                                                 // In ra kết quả
                                                                 console.log('Số thứ nhất:', idVoucher);
                                                                 console.log('Số thứ hai:', phamTramGiam);
+                                                                console.log('Số thứ 3:', giaTriGiam);
 
                                                                 var voucher1 = document.getElementById("voucherID");
                                                                 voucher1.value = idVoucher
@@ -1563,12 +1573,17 @@
                                                                 var tongTien = document.getElementById("tongTien");
                                                                 var tongTienHangInt = parseInt(tongTienHang.innerText);
 
-                                                                detailVoucher.value = -((tongTienHangInt * phamTramGiam) / 100).toFixed(0) + ' VND';
-                                                                moneyVoucher.innerText = ((tongTienHangInt * phamTramGiam) / 100).toFixed(0) + ' VND';
+                                                                var tongTienGiamTheoPhanTram = ((tongTienHangInt * phamTramGiam) / 100).toFixed(0)
+                                                                if (tongTienGiamTheoPhanTram > giaTriGiam){
+                                                                    tongTienGiamTheoPhanTram = giaTriGiam
+                                                                }
+                                                                console.log("số tiền được giảm là: " + tongTienGiamTheoPhanTram)
+                                                                detailVoucher.value = -tongTienGiamTheoPhanTram + ' VND';
+                                                                moneyVoucher.innerText = tongTienGiamTheoPhanTram + ' VND';
 
                                                                 tongTien.value = shippingFeeResultInt + tongTienHangInt;
-                                                                tongTienAndSale.value = shippingFeeResultInt + tongTienHangInt - ((tongTienHangInt * phamTramGiam) / 100).toFixed(0);
-                                                                totalElementSale.innerHTML = shippingFeeResultInt + tongTienHangInt - ((tongTienHangInt * phamTramGiam) / 100).toFixed(0) + ' VND';
+                                                                tongTienAndSale.value = shippingFeeResultInt + tongTienHangInt - tongTienGiamTheoPhanTram;
+                                                                totalElementSale.innerHTML = shippingFeeResultInt + tongTienHangInt - tongTienGiamTheoPhanTram + ' VND';
 
                                                                 $('#voucher').modal('hide')
 
