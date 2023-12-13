@@ -1,5 +1,6 @@
 package com.example.bedatnsd47.controller.user;
 
+import com.example.bedatnsd47.config.PrincipalCustom;
 import com.example.bedatnsd47.entity.ChiTietSanPham;
 import com.example.bedatnsd47.entity.DiaChi;
 import com.example.bedatnsd47.entity.GioHangChiTiet;
@@ -7,8 +8,6 @@ import com.example.bedatnsd47.entity.HoaDon;
 import com.example.bedatnsd47.entity.LichSuHoaDon;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.entity.VaiTro;
-import com.example.bedatnsd47.entity.Voucher;
-import com.example.bedatnsd47.repository.ChiTietSanPhamRepository;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import com.example.bedatnsd47.service.DiaChiService;
 import com.example.bedatnsd47.service.GioHangChiTietService;
@@ -24,9 +23,6 @@ import com.example.bedatnsd47.service.ThuongHieuService;
 import com.example.bedatnsd47.service.VoucherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,14 +35,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.awt.print.Pageable;
-import java.security.Principal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 @Controller
-public class HomeController {
+public class CustomersController {
 
     // private Long idTaiKhoan = Long.valueOf(8);
     private Long idTaiKhoan;
@@ -93,7 +87,9 @@ public class HomeController {
     @Autowired
     private LichSuHoaDonService lichSuHoaDonService;
 
-    @GetMapping("/logout=true")
+    private PrincipalCustom principalCustom = new PrincipalCustom();
+
+    @GetMapping("/logout/true")
     public String logout() {
         idTaiKhoan = null;
         return "dang-nhap";
@@ -101,17 +97,16 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(
-            Principal principal,
             Model model) {
-        if (principal != null) {
-            TaiKhoan taiKhoan = taiKhoanService.getTaiKhoanByName(principal.getName());
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
+            TaiKhoan taiKhoan = taiKhoanService.getTaiKhoanByName(principalCustom.getCurrentUserNameCustomer());
             idTaiKhoan = taiKhoan.getId();
         } else {
             idTaiKhoan = null;
         }
 
         model.addAttribute("listTop5HDCT", hoaDonChiTietService.finTop5HDCT());
-        if (idTaiKhoan != null) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
             TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
             model.addAttribute("checkDangNhap", "true");
             model.addAttribute("soLuongSPGioHangCT",
@@ -123,18 +118,6 @@ public class HomeController {
         return "/customer-template/ban-hang-customer";
 
     }
-    //
-    // @GetMapping("/dang-nhap")
-    // public String dangNhap() {
-    //
-    // return "/customer-template/dang-nhap";
-    // }
-    //
-    // @GetMapping("/dang-ky")
-    // public String dangKy() {
-    //
-    // return "/customer-template/dang-ky";
-    // }
 
     @GetMapping("/user/cart")
     public String cart(
@@ -363,7 +346,7 @@ public class HomeController {
             maxPrice = chiTietSanPhamSerivce.getAllMaxGiaCTSP();
         }
 
-        if (idTaiKhoan != null) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
             TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
             model.addAttribute("checkDangNhap", "true");
             model.addAttribute("soLuongSPGioHangCT",
@@ -441,7 +424,7 @@ public class HomeController {
     @GetMapping("/about")
     public String about(
             Model model) {
-        if (idTaiKhoan != null) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
             TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
             model.addAttribute("checkDangNhap", "true");
             model.addAttribute("soLuongSPGioHangCT",
@@ -455,7 +438,7 @@ public class HomeController {
     @GetMapping("/chinh-sach")
     public String chinhSach(
             Model model) {
-        if (idTaiKhoan != null) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
             TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
             model.addAttribute("checkDangNhap", "true");
             model.addAttribute("soLuongSPGioHangCT",
@@ -636,7 +619,7 @@ public class HomeController {
     @GetMapping("/lien-he")
     public String lienHe(
             Model model) {
-        if (idTaiKhoan != null) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
             TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
             model.addAttribute("checkDangNhap", "true");
             model.addAttribute("soLuongSPGioHangCT",
@@ -650,7 +633,7 @@ public class HomeController {
     @GetMapping("/tra-cuu-don-hang")
     public String traCuuHoaDon(
             Model model) {
-        if (idTaiKhoan != null) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
             TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
             model.addAttribute("checkDangNhap", "true");
             model.addAttribute("soLuongSPGioHangCT",
@@ -668,7 +651,7 @@ public class HomeController {
             Model model,
             RedirectAttributes attributes
     ) {
-        if (idTaiKhoan != null) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
             TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
             model.addAttribute("checkDangNhap", "true");
             model.addAttribute("soLuongSPGioHangCT",
@@ -676,6 +659,7 @@ public class HomeController {
         } else {
             model.addAttribute("checkDangNhap", "false");
         }
+
         HoaDon hoaDon = hoaDonService.finByHoaDonMaHDSdt(maDonHang, sdt);
         if (hoaDon == null) {
             attributes.addFlashAttribute("checkLoiTraCuuHoaDon",
@@ -688,4 +672,14 @@ public class HomeController {
         return "/customer-template/detail-tra-cuu-don-hang";
     }
 
+    @GetMapping("/gui-hoa-don-dien-tu")
+    public String test(){
+        hoaDonService.guiHoaDonDienTu();
+        return "redirect:/chinh-sach";
+    }
+    @GetMapping("/test")
+    public String test123(){
+        hoaDonService.guiHoaDonDienTu();
+        return "redirect:/chinh-sach";
+    }
 }

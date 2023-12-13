@@ -1496,16 +1496,16 @@
                                                                             th:text="${'Giảm '+ voucher.phanTramGiam + '%'}"></h5>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
-                                                                               th:text="${'Giảm tối đa '+voucher.giamToiDa + ' VND'}"></small>
+                                                                               th:text="${'Giảm tối đa ' + #strings.substringBefore(voucher.giamToiDa, '.') + ' VND'}"></small>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
-                                                                               th:text="${'Đơn Tối Thiểu '+voucher.giaTriDonToiThieu + ' VND'}"></small>
+                                                                               th:text="${'Đơn Tối Thiểu '+ #strings.substringBefore(voucher.giaTriDonToiThieu, '.') + ' VND'}"></small>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
                                                                                th:text="${'Số Lượng '+voucher.soLuong}"></small>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
-                                                                               th:text="${'Hạn Sử Dụng '+voucher.ngayKetThuc}"></small>
+                                                                               th:text="${'Hạn Sử Dụng '+#temporals.format(voucher.ngayKetThuc, 'dd/MM/yyyy')}"></small>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-2">
