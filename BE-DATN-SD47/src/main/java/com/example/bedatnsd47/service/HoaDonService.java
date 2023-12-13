@@ -26,6 +26,8 @@ public interface HoaDonService {
 
     HoaDon findByMa(String ma);
 
+    HoaDon finByHoaDonMaHDSdt(String maDonHang,String sdt);
+
     List<HoaDon> findAllOrderByNgaySua();
 
     List<HoaDon> getAllHoaDonByTaiKhoanOrderByNgaySua(Long idTaiKhoan);
@@ -63,6 +65,8 @@ public interface HoaDonService {
     Long sumGiaTriHoaDonAll();
 
     void deleteHoaDonHoanTra();
+
+    void guiHoaDonDienTu();
 
     
 }

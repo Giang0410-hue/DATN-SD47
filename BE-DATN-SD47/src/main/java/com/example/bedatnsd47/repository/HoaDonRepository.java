@@ -25,13 +25,16 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
     @Query("Select hd from HoaDon hd where hd.maHoaDon=:ma")
     HoaDon findByMa(@Param("ma") String ma);
 
+    @Query(value = "select * from hoa_don where ma_hoa_don = :maDonHang and sdt_nguoi_nhan = :sdt",nativeQuery = true)
+    HoaDon finByHoaDonMaHDSdt(@Param("maDonHang") String maDonHang,@Param("sdt") String sdt);
+
     @Query("select COUNT(hd) from HoaDon hd where hd.trangThai = -1")
     Integer countHoaDonTreo();
 
     @Query("Select hd from HoaDon hd where hd.trangThai=:tt order by hd.ngaySua desc")
     List<HoaDon> find5ByTrangThai(@Param("tt") Integer trangThai);
 
-    @Query(value = "select * from hoa_don where tai_khoan_id = :idTaiKhoan order by ngay_sua desc", nativeQuery = true)
+    @Query(value = "select * from hoa_don where tai_khoan_id = :idTaiKhoan and trang_thai != -1 order by ngay_sua desc", nativeQuery = true)
     List<HoaDon> findAllHoaDonByTaiKhoanOrderByNgaySua(@Param("idTaiKhoan") Long idTaiKhoan);
 
     @Query(value = "select * from hoa_don where tai_khoan_id = :idTaiKhoan and trang_thai = :trangThai order by ngay_sua desc", nativeQuery = true)

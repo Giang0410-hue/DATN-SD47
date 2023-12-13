@@ -1,6 +1,8 @@
 package com.example.bedatnsd47.controller;
 
+import com.example.bedatnsd47.config.PrincipalCustom;
 import com.example.bedatnsd47.entity.Voucher;
+import com.example.bedatnsd47.service.TaiKhoanService;
 import com.example.bedatnsd47.service.VoucherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
-import java.time.LocalDateTime;
 
 
 @Controller
@@ -21,11 +22,22 @@ public class VoucherController {
     @Autowired
     VoucherService voucherService;
 
+    @Autowired
+    TaiKhoanService taiKhoanService;
+
     private Date currentDate = new Date();
+
+    private PrincipalCustom principalCustom = new PrincipalCustom();
 
     @GetMapping()
     public String hienThi(
             Model model) {
+        String name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien",principalCustom.getCurrentUserNameAdmin());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listVoucher", voucherService.fillAll());
         model.addAttribute("voucher", new Voucher());
         return "/admin-template/voucher/voucher";
@@ -34,6 +46,12 @@ public class VoucherController {
     @GetMapping("/dang-dien-ra")
     public String hienThiDangHoatDong(
             Model model) {
+        String name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien",principalCustom.getCurrentUserNameAdmin());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listVoucher", voucherService.fillAllDangDienRa());
         model.addAttribute("voucher", new Voucher());
         return "/admin-template/voucher/voucher";
@@ -42,6 +60,12 @@ public class VoucherController {
     @GetMapping("/da-ket-thuc")
     public String hienThiNgungHoatDong(
             Model model) {
+        String name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien",principalCustom.getCurrentUserNameAdmin());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listVoucher", voucherService.fillAllDaKetThuc());
         model.addAttribute("voucher", new Voucher());
         return "/admin-template/voucher/voucher";
@@ -49,6 +73,12 @@ public class VoucherController {
     @GetMapping("/sap-dien-ra")
     public String hienThiSapDienRa(
             Model model) {
+        String name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien",principalCustom.getCurrentUserNameAdmin());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listVoucher", voucherService.fillAllSapDienRa());
         model.addAttribute("voucher", new Voucher());
         return "/admin-template/voucher/voucher";
@@ -58,6 +88,12 @@ public class VoucherController {
     public String viewUpdate(
             Model model,
             @PathVariable("id") Long id) {
+        String name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien",principalCustom.getCurrentUserNameAdmin());
+        } else {
+            return "redirect:/login";
+        }
         Voucher voucher = voucherService.getById(id);
         model.addAttribute("voucher", voucher);
         return "/admin-template/voucher/sua-voucher";

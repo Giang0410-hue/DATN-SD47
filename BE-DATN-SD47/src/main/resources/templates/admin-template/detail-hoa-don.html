@@ -68,12 +68,12 @@
 
                         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                             data-bs-toggle="dropdown">
-                            <span class="d-none d-md-block dropdown-toggle ps-2">Nguyễn Tuấn Anh</span>
+                            <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${tenNhanVien}"></span>
                         </a><!-- End Profile Iamge Icon -->
 
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                             <li class="dropdown-header">
-                                <h6>Nguyễn Tuấn Anh</h6>
+                                <h6 th:text="${tenNhanVien}"></h6>
                                 <span>Nhân Viên</span>
                             </li>
 
@@ -214,7 +214,7 @@
                 <!-- <div>
                     <table>
                         <tr th:each=" lshd: ${ lstLshd}">
-                            <td th:text="${lshd.ngaySua}"></td>
+                            <td th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></td>
                         </tr>
                     </table>
                 </div> -->
@@ -254,104 +254,104 @@
                                                             <div class="order-status-timeline">
                                                                 <!-- class names: c0 c1 c2 c3 and c4 -->
                                                                 <div th:if="${byHoaDon.trangThai==0}"
-                                                                    class="order-status-timeline-completion c0"></div>
+                                                                     class="order-status-timeline-completion c0"></div>
                                                                 <div th:if="${byHoaDon.trangThai==1}"
-                                                                    class="order-status-timeline-completion c1"></div>
+                                                                     class="order-status-timeline-completion c1"></div>
                                                                 <div th:if="${byHoaDon.trangThai==2}"
-                                                                    class="order-status-timeline-completion c2"></div>
+                                                                     class="order-status-timeline-completion c2"></div>
 
                                                                 <div th:if="${byHoaDon.loaiHoaDon==1}">
                                                                     <div th:if="${byHoaDon.trangThai==3}"
-                                                                        class="order-status-timeline-completion c3">
-                                                                    </div>
+                                                                         class="order-status-timeline-completion c3"></div>
                                                                 </div>
 
                                                                 <div th:if="${byHoaDon.loaiHoaDon==2}">
                                                                     <div th:if="${listLichSuHoaDon.size()>2}">
                                                                         <div th:if="${byHoaDon.trangThai==3}"
-                                                                            class="order-status-timeline-completion c3">
-                                                                        </div>
+                                                                             class="order-status-timeline-completion c3"></div>
                                                                     </div>
                                                                     <div th:if="${listLichSuHoaDon.size()==2}">
                                                                         <div th:if="${byHoaDon.trangThai==3}"
-                                                                            class="order-status-timeline-completion c1">
-                                                                        </div>
+                                                                             class="order-status-timeline-completion c1"></div>
+                                                                    </div>
+                                                                    <div th:if="${listLichSuHoaDon.size()==2}">
+                                                                        <div th:if="${byHoaDon.trangThai==6}"
+                                                                             class="order-status-timeline-completion c1"></div>
                                                                     </div>
                                                                 </div>
 
 
                                                                 <div th:if="${listLichSuHoaDon.size()==2}">
                                                                     <div th:if="${byHoaDon.trangThai==5}"
-                                                                        class="order-status-timeline-completion c1">
-                                                                    </div>
+                                                                         class="order-status-timeline-completion c1"></div>
                                                                 </div>
 
                                                                 <div th:if="${listLichSuHoaDon.size()==3}">
                                                                     <div th:if="${byHoaDon.trangThai==5}"
-                                                                        class="order-status-timeline-completion c2">
+                                                                         class="order-status-timeline-completion c2"></div>
+                                                                    <div th:if="${byHoaDon.trangThai==6}"
+                                                                         class="order-status-timeline-completion c2">
                                                                     </div>
                                                                 </div>
-
-                                                                <div th:if="${byHoaDon.trangThai==6}"
-                                                                    class="order-status-timeline-completion c6"></div>
+                                                                <div th:if="${listLichSuHoaDon.size()!=3}">
+                                                                    <div th:if="${byHoaDon.trangThai==6}"
+                                                                         class="order-status-timeline-completion c4">
+                                                                    </div>
+                                                                </div>
                                                             </div>
 
                                                             <!-- tất cả trạng thái hóa đơn - loại hóa đơn 1-->
                                                             <div th:if="${byHoaDon.loaiHoaDon==1}">
                                                                 <div th:if="${byHoaDon.trangThai!=5}">
                                                                     <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
-                                                                        th:class="'image-order-status image-order-status-' +
-                                                                    (${iterStat.index} == 0 ? 'new' :
-                                                                    (${iterStat.index} == 1 ? 'active' :
-                                                                    (${iterStat.index} == 2 ? 'intransit' :
-                                                                    (${iterStat.index} == 3 ? 'delivered' :
-                                                                    (${iterStat.index} == 4 ? 'completed' :
-                                                                     '')))))+ ' img-circle'">
+                                                                         th:class="'image-order-status image-order-status-' +
+                                                        (${iterStat.index} == 0 ? 'new' :
+                                                        (${iterStat.index} == 1 ? 'active' :
+                                                        (${iterStat.index} == 2 ? 'intransit' :
+                                                        (${iterStat.index} == 3 ? 'delivered' :
+                                                        (${iterStat.index} == 4 ? 'completed' :
+                                                         '')))))+ ' img-circle'">
                                                                         <div class="icon"></div>
-                                                                        <span class="status"
-                                                                            th:switch="${lshd.trangThai}">
-                                                                            <span th:case="0">Đã Đặt Hàng</span>
-                                                                            <span th:case="1">Đã Xác Nhận</span>
-                                                                            <span th:case="2">Đã Giao Cho ĐVVC</span>
-                                                                            <span th:case="3">Đã Nhận Hàng</span>
-                                                                            <!--                                                            <span th:case="4" th:text="Hoàn Trả Thành Công"></span>-->
-                                                                        </span>
-                                                                        <span class="status-end"
-                                                                            th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
+                                                                        <span class="status" th:switch="${lshd.trangThai}">
+                                                            <span th:case="0">Đã Đặt Hàng</span>
+                                                            <span th:case="1">Đã Xác Nhận</span>
+                                                            <span th:case="2">Đã Giao Cho ĐVVC</span>
+                                                            <span th:case="3">Đã Nhận Được Hàng</span>
+                                                            <span th:case="6">Trả Hàng Thành Công</span>
+                                                        </span>
+                                                                        <span class="status-end" th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
                                                                     </div>
-
-                                                                    <!--                                                <div class="image-order-status image-order-status-new active img-circle">-->
-                                                                    <!--                                                    <div class="icon"></div>-->
-                                                                    <!--                                                    <span class="status">Đơn Hàng Đã Đặt</span>-->
-                                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                                    <!--                                                </div>-->
-                                                                    <!--                                                <div class="image-order-status image-order-status-new active img-circle">-->
-                                                                    <!--                                                    <div class="icon"></div>-->
-                                                                    <!--                                                    <span class="status">Đã Đặt Hàng</span>-->
-                                                                    <!--                                                    <span class="status-end"></span>-->
-                                                                    <!--                                                </div>-->
-                                                                    <!--                                                <div class="image-order-status image-order-status-active active img-circle">-->
-                                                                    <!--                                                    <div class="icon"></div>-->
-                                                                    <!--                                                    <span class="status">Chờ Xác Nhận</span>-->
-                                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                                    <!--                                                </div>-->
-                                                                    <!--                                                <div class="image-order-status image-order-status-intransit active img-circle">-->
-                                                                    <!--                                                    <div class="icon"></div>-->
-                                                                    <!--                                                    <span class="status">Chờ Giao</span>-->
-                                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                                    <!--                                                </div>-->
-                                                                    <!--                                                <div class="image-order-status image-order-status-delivered active img-circle">-->
-                                                                    <!--                                                    <div class="icon"></div>-->
-                                                                    <!--                                                    <span class="status">Đang Giao</span>-->
-                                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                                    <!--                                                </div>-->
-                                                                    <!--                                                <div class="image-order-status image-order-status-completed active img-circle">-->
-                                                                    <!--                                                    <div class="icon"></div>-->
-                                                                    <!--                                                    <span class="status">Đơn Hàng Đã Hoàn Thành</span>-->
-                                                                    <!--                                                    <span class="status-end">01:35 21/11/2023</span>-->
-                                                                    <!--                                                </div>-->
                                                                 </div>
-
+                                                                <div th:if="${byHoaDon.trangThai==5}">
+                                                                    <div th:if="${listLichSuHoaDon.size()==2}">
+                                                                        <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
+                                                                             th:class="'image-order-status image-order-status-' +
+                                                        (${iterStat.index} == 0 ? 'new' :
+                                                        (${iterStat.index} == 1 ? 'cancel' :''))+ ' img-circle'">
+                                                                            <div class="icon"></div>
+                                                                            <span class="status" th:switch="${lshd.trangThai}">
+                                                            <span th:case="0">Đã Đặt Hàng</span>
+                                                            <span th:case="5">Đã Hủy</span>
+                                                        </span>
+                                                                            <span class="status-end" th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div th:if="${listLichSuHoaDon.size()==3}">
+                                                                        <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
+                                                                             th:class="'image-order-status image-order-status-' +
+                                                        (${iterStat.index} == 0 ? 'new' :
+                                                        (${iterStat.index} == 1 ? 'active' :
+                                                        (${iterStat.index} == 2 ? 'cancel2' :'')))+ ' img-circle'">
+                                                                            <div class="icon"></div>
+                                                                            <span class="status" th:switch="${lshd.trangThai}">
+                                                            <span th:case="0">Đã Đặt Hàng</span>
+                                                            <span th:case="1">Đã Xác Nhận</span>
+                                                            <span th:case="5">Đã Hủy</span>
+                                                        </span>
+                                                                            <span class="status-end" th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <!-- tất cả trạng thái hóa đơn - loại hóa đơn 1-->
 
@@ -360,93 +360,126 @@
                                                             <!-- tất cả trạng thái hóa đơn - loại hóa đơn 2-->
                                                             <div th:if="${byHoaDon.loaiHoaDon==2}">
                                                                 <div th:if="${listLichSuHoaDon.size()>1}">
-                                                                    <div th:if="${byHoaDon.trangThai!=5}">
+                                                                    <div th:if="${byHoaDon.trangThai!=5&&byHoaDon.trangThai!=6}">
                                                                         <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
-                                                                            th:class="'image-order-status image-order-status-' +
-                                                                    (${iterStat.index} == 0 ? 'new' :
-                                                                    (${iterStat.index} == 1 ? 'active' :
-                                                                    (${iterStat.index} == 2 ? 'intransit' :
-                                                                    (${iterStat.index} == 3 ? 'delivered' :
-                                                                    (${iterStat.index} == 4 ? 'completed' :
-                                                                     '')))))+ ' img-circle'">
+                                                                             th:class="'image-order-status image-order-status-' +
+                                                        (${iterStat.index} == 0 ? 'new' :
+                                                        (${iterStat.index} == 1 ? 'active' :
+                                                        (${iterStat.index} == 2 ? 'intransit' :
+                                                        (${iterStat.index} == 3 ? 'delivered' :
+                                                        (${iterStat.index} == 4 ? 'completed' :
+                                                        (${iterStat.index} == 5 ? 'activeHoanTra' :
+                                                         ''))))))+ ' img-circle'">
                                                                             <div class="icon"></div>
-                                                                            <span class="status"
-                                                                                th:switch="${lshd.trangThai}">
-                                                                                <span th:case="0">Đã Đặt Hàng</span>
-                                                                                <span th:case="1">Đã Xác Nhận</span>
-                                                                                <span th:case="2">Đã Giao Cho
-                                                                                    ĐVVC</span>
-                                                                                <span th:case="3">Đã Nhận
-                                                                                    Hàng</span>
-                                                                                <!--                                                            <span th:case="11">Hoàn Trả Thành Công</span>-->
-                                                                            </span>
-                                                                            <span class="status-end"
-                                                                                th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
+                                                                            <span class="status" th:switch="${lshd.trangThai}">
+                                                            <span th:case="0">Đã Đặt Hàng</span>
+                                                            <span th:case="1">Đã Xác Nhận</span>
+                                                            <span th:case="2">Đã Giao Cho ĐVVC</span>
+                                                            <span th:case="3">Đã Nhận Được Hàng</span>
+                                                            <span th:case="6">Trả Hàng Thành Công</span>
+                                                        </span>
+                                                                            <span class="status-end" th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
                                                                         </div>
                                                                     </div>
+                                                                    <!--check hoàn trả khi mua tại quầy-->
+                                                                    <div th:if="${byHoaDon.trangThai==6}">
+                                                                        <div th:if="${listLichSuHoaDon.size()==5}">
+                                                                            <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
+                                                                                 th:class="'image-order-status image-order-status-' +
+                                                        (${iterStat.index} == 0 ? 'new' :
+                                                        (${iterStat.index} == 1 ? 'active' :
+                                                        (${iterStat.index} == 2 ? 'intransit' :
+                                                        (${iterStat.index} == 3 ? 'delivered' :
+                                                        (${iterStat.index} == 4 ? 'completed' :
+                                                        (${iterStat.index} == 5 ? 'activeHoanTra' :
+                                                         ''))))))+ ' img-circle'">
+                                                                                <div class="icon"></div>
+                                                                                <span class="status" th:switch="${lshd.trangThai}">
+                                                            <span th:case="0">Đã Đặt Hàng</span>
+                                                            <span th:case="1">Đã Xác Nhận</span>
+                                                            <span th:case="2">Đã Giao Cho ĐVVC</span>
+                                                            <span th:case="3">Đã Nhận Được Hàng</span>
+                                                            <span th:case="6">Trả Hàng Thành Công</span>
+                                                        </span>
+                                                                                <span class="status-end" th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div th:if="${listLichSuHoaDon.size()==3}">
+                                                                            <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
+                                                                                 th:class="'image-order-status image-order-status-' +
+                                                        (${iterStat.index} == 0 ? 'new' :
+                                                        (${iterStat.index} == 1 ? 'activeHoanThanh' :
+                                                        (${iterStat.index} == 2 ? 'activeHoanTra2' :
+                                                         '')))+ ' img-circle'">
+                                                                                <div class="icon"></div>
+                                                                                <span class="status" th:switch="${lshd.trangThai}">
+                                                            <span th:case="0">Đã Đặt Hàng</span>
+                                                            <span th:case="3">Đã Nhận Được Hàng</span>
+                                                            <span th:case="6">Trả Hàng Thành Công</span>
+                                                        </span>
+                                                                                <span class="status-end"
+                                                                                      th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--check hoàn trả khi mua tại quầy end-->
                                                                 </div>
                                                                 <div th:if="${byHoaDon.trangThai==3}">
                                                                     <div th:if="${listLichSuHoaDon.size()==2}">
                                                                         <div th:if="${byHoaDon.trangThai!=5}">
                                                                             <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
-                                                                                th:class="'image-order-status image-order-status-' +
-                                                                    (${iterStat.index} == 0 ? 'new' :
-                                                                    (${iterStat.index} == 1 ? 'activeHoanThanh' :
-                                                                    ''))+ ' img-circle'">
+                                                                                 th:class="'image-order-status image-order-status-' +
+                                                        (${iterStat.index} == 0 ? 'new' :
+                                                        (${iterStat.index} == 1 ? 'activeHoanThanh' :
+                                                        ''))+ ' img-circle'">
                                                                                 <div class="icon"></div>
-                                                                                <span class="status"
-                                                                                    th:switch="${lshd.trangThai}">
-                                                                                    <span th:case="0">Đã Đặt Hàng</span>
-                                                                                    <span th:case="3">Đã Nhận
-                                                                                        Hàng</span>
-                                                                                    <!--<span th:case="4" th:text="Hoàn Trả Thành Công"></span>-->
-                                                                                </span>
+                                                                                <span class="status" th:switch="${lshd.trangThai}">
+                                                            <span th:case="0">Đã Đặt Hàng</span>
+                                                            <span th:case="3">Đã Nhận Được Hàng</span>
+                                                        </span>
                                                                                 <span class="status-end"
-                                                                                    th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
+                                                                                      th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <!-- tất cả trạng thái hóa đơn - loại hóa đơn 2-->
 
-                                                            <!--trạng thái hủy-->
-                                                            <div th:if="${byHoaDon.trangThai==5}">
-                                                                <div th:if="${listLichSuHoaDon.size()==2}">
-                                                                    <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
-                                                                        th:class="'image-order-status image-order-status-' +
-                                                                    (${iterStat.index} == 0 ? 'new' :
-                                                                    (${iterStat.index} == 1 ? 'cancel' :''))+ ' img-circle'">
-                                                                        <div class="icon"></div>
-                                                                        <span class="status"
-                                                                            th:switch="${lshd.trangThai}">
-                                                                            <span th:case="0">Đã Đặt Hàng</span>
-                                                                            <span th:case="5">Đã Hủy</span>
-                                                                        </span>
-                                                                        <span class="status-end"
-                                                                            th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
+                                                                <!-- tất cả trạng thái hóa đơn - loại hóa đơn 2-->
+
+                                                                <!--trạng thái hủy-->
+                                                                <div th:if="${byHoaDon.trangThai==5}">
+                                                                    <div th:if="${listLichSuHoaDon.size()==2}">
+                                                                        <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
+                                                                             th:class="'image-order-status image-order-status-' +
+                                                        (${iterStat.index} == 0 ? 'new' :
+                                                        (${iterStat.index} == 1 ? 'cancel' :''))+ ' img-circle'">
+                                                                            <div class="icon"></div>
+                                                                            <span class="status" th:switch="${lshd.trangThai}">
+                                                            <span th:case="0">Đã Đặt Hàng</span>
+                                                            <span th:case="5">Đã Hủy</span>
+                                                        </span>
+                                                                            <span class="status-end" th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div th:if="${listLichSuHoaDon.size()==3}">
+                                                                        <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
+                                                                             th:class="'image-order-status image-order-status-' +
+                                                        (${iterStat.index} == 0 ? 'new' :
+                                                        (${iterStat.index} == 1 ? 'active' :
+                                                        (${iterStat.index} == 2 ? 'cancel2' :'')))+ ' img-circle'">
+                                                                            <div class="icon"></div>
+                                                                            <span class="status" th:switch="${lshd.trangThai}">
+                                                            <span th:case="0">Đã Đặt Hàng</span>
+                                                            <span th:case="1">Đã Xác Nhận</span>
+                                                            <span th:case="5">Đã Hủy</span>
+                                                        </span>
+                                                                            <span class="status-end" th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div th:if="${listLichSuHoaDon.size()==3}">
-                                                                    <div th:each="lshd, iterStat : ${listLichSuHoaDon}"
-                                                                        th:class="'image-order-status image-order-status-' +
-                                                                    (${iterStat.index} == 0 ? 'new' :
-                                                                    (${iterStat.index} == 1 ? 'active' :
-                                                                    (${iterStat.index} == 2 ? 'cancel2' :'')))+ ' img-circle'">
-                                                                        <div class="icon"></div>
-                                                                        <span class="status"
-                                                                            th:switch="${lshd.trangThai}">
-                                                                            <span th:case="0">Đã Đặt Hàng</span>
-                                                                            <span th:case="1">Đã Xác Nhận</span>
-                                                                            <span th:case="5">Đã Hủy</span>
-                                                                        </span>
-                                                                        <span class="status-end"
-                                                                            th:text="${#dates.format(lshd.ngaySua, 'HH:mm dd/MM/yyyy')}"></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--trạng thái hủy-->
+                                                                <!--trạng thái hủy-->
 
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1945,11 +1978,11 @@
 
                                                                 <div class="row">
                                                                     <div class="col">
-                                                                        <h6>Tổng tiền sản phẩm:</h6>
+                                                                        <h6>Tổng tiền hàng:</h6>
                                                                     </div>
                                                                     <div class="col">
                                                                         <h6 id="totalAmount" class="thong-tin-gia">
-                                                                            [[${hoaDon.tongTienHoaDonDaNhan()}]]
+                                                                            [[${hoaDon.tongTienHoaDon()}]]
                                                                             VND</h6>
                                                                         <input th:value="${hoaDon.tongTienHoaDon()}"
                                                                             type="hidden" name="tongTienHoaDon">
@@ -1970,7 +2003,7 @@
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col">
-                                                                        <h6>Giảm giá:</h6>
+                                                                        <h6>Tiền giảm:</h6>
 
                                                                         <input id="giamGiaInput" type="hidden"
                                                                             th:value="${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}"
@@ -1978,7 +2011,7 @@
                                                                     </div>
                                                                     <div class="col">
                                                                         <h6 id="moneyVoucher" class="thong-tin-gia">
-                                                                            [[${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}]]
+                                                                            [[${hoaDon.getGiamGia()}]]
                                                                             VND
                                                                         </h6>
                                                                     </div>
@@ -1986,7 +2019,7 @@
                                                                 <div th:if="${hoaDon.tongTienHoaDonHoanTra()>0&&hoaDon.tongTienHoaDonDaNhan!=0}"
                                                                     class="row">
                                                                     <div class="col">
-                                                                        <h6>Trả lại khách:</h6>
+                                                                        <h6>Tổng tiền hoàn trả:</h6>
                                                                         <!-- (Hoàn 1 phần) -->
 
                                                                     </div>
@@ -2001,13 +2034,13 @@
                                                                 <div th:if="${hoaDon.tongTienHoaDonHoanTra()>0&&hoaDon.tongTienHoaDonDaNhan==0}"
                                                                     class="row">
                                                                     <div class="col">
-                                                                        <h6>Trả lại khách:</h6>
+                                                                        <h6>Tổng tiền hoàn trả:</h6>
                                                                         <!-- (hoàn hêt) -->
 
                                                                     </div>
                                                                     <div class="col">
                                                                         <h6 id="moneyVoucher" class="thong-tin-gia">
-                                                                            [[${hoaDon.tongTienHoaDonHoanTra()+hoaDon.phiShip-hoaDon.getGiamGia()}]]
+                                                                            [[${hoaDon.tongTienHoaDonHoanTra()-hoaDon.getGiamGia()}]]
                                                                             VND
                                                                         </h6>
                                                                     </div>
@@ -2041,32 +2074,18 @@
 
 
                                                                 </div>
+                                                               
+                                                                <div class="ngan-cach"> </div>
                                                                 <div class="row"
-                                                                    th:if="${hoaDon.tongTienHoaDonHoanTra()==0}">
+                                                                    >
                                                                     <div class="col">
-                                                                        <h3>Tổng tiền:</h3>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <h6 class="thong-tin-gia" id="tongGiaH6"><span
-                                                                                id="tongGiaValue">[[${hoaDon.tongTienHoaDonKhiGiam()-hoaDon.getGiamGia()}]]</span>
-                                                                            VND</h6>
-                                                                        <input
-                                                                            th:value="${hoaDon.tongTienHoaDonKhiGiam()}"
-                                                                            type="hidden" id="tongAll">
-                                                                    </div>
-
-
-                                                                </div>
-
-                                                                <div class="row"
-                                                                    th:if="${ hoaDon.tongTienHoaDonDaNhan!=0&&hoaDon.tongTienHoaDonHoanTra!=0}">
-                                                                    <div class="col">
-                                                                        <h3>Tổng tiền:</h3>
+                                                                        <h6>Tổng tiền thanh toán:</h6>
                                                                         <!-- khi hoàn trả 1 phần -->
                                                                     </div>
+                                                                    
                                                                     <div class="col">
                                                                         <h6 class="thong-tin-gia" id=""><span
-                                                                                id="">[[${hoaDon.tongTienHoaDonDaNhan()-hoaDon.getGiamGia()+hoaDon.phiShip}]]</span>
+                                                                                id="">[[${hoaDon.tongTienKhiGiam}]]</span>
                                                                             VND</h6>
 
                                                                     </div>
@@ -2074,21 +2093,7 @@
 
                                                                 </div>
 
-                                                                <div class="row"
-                                                                    th:if="${hoaDon.tongTienHoaDonDaNhan()==0}">
-                                                                    <div class="col">
-                                                                        <h3>Tổng tiền:</h3>
-                                                                        <!-- khi hoàn trả toàn phần -->
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <h6 class="thong-tin-gia" id=""><span
-                                                                                id="">0</span>
-                                                                            VND</h6>
-
-                                                                    </div>
-
-
-                                                                </div>
+                                                               
 
                                                             </div>
                                                         </div>
@@ -2280,8 +2285,8 @@
                             </td>
                             <td th:text="${obj.soLuong}"></td>
                             <td th:text="${obj.chiTietSanPham.giaHienHanh}"></td>
-                            <td th:if="${obj.trangThai==0}" th:text="${obj.soLuong*obj.chiTietSanPham.giaHienHanh}"></td>
-                            <td th:if="${obj.trangThai==2}" th:text="0"></td>
+                            <td th:text="${obj.soLuong*obj.chiTietSanPham.giaHienHanh}"></td>
+                            
                             
                             <td>
                                 <span th:if="${obj.trangThai ==0}">Đã
@@ -2297,28 +2302,28 @@
             <div class="col-md-12">
                 <div class="border-hoadon-duoi"></div>
                 <div>
-                    <p><span class="info-label">Tổng tiền:</span> <span
-                            class="info-value">[[${hoaDon.tongTienHoaDonDaNhan()}]] VND</span>
+                    <p><span class="info-label">Tổng tiền hàng:</span> <span
+                            class="info-value">[[${hoaDon.tongTienHoaDon}]] VND</span>
                     </p>
 
-                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()>0}"><span class="info-label">Giảm giá:</span> <span class="info-value"><span
-                                id="giamGiaIn">[[${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}]]
-                            </span> VND</span>
-                    </p>
-                    <p  th:if="${hoaDon.tongTienHoaDonDaNhan()>0}"><span class="info-label">Phí vận chuyển:</span> <span class="info-value"><span
+                    
+                    <p ><span class="info-label">Phí vận chuyển:</span> <span class="info-value"><span
                                 id="phiVanChuyenIn">[[${hoaDon.phiShip}]]
                             </span> VND</span>
                     </p>
-                    <p  th:if="${hoaDon.tongTienHoaDonDaNhan()==0}"><span class="info-label">Phí vận chuyển:</span> <span class="info-value"><span
-                                id="phiVanChuyenIn">0
-                            </span> VND</span>
-                    </p>
-                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()>0}"><span class="info-label">Thành tiền:</span> <span
-                            class="info-value"><span
-                                id="thanhTienIn">[[${hoaDon.tongTienHoaDonDaNhan()+hoaDon.phiShip-hoaDon.getGiamGia()}]]</span>
-                            VND</span></p>
-                    <p th:if="${hoaDon.tongTienHoaDonDaNhan()==0}"><span class="info-label">Thành tiền:</span> <span
-                            class="info-value"><span id="thanhTienIn">0</span>
+                    <p><span class="info-label">Tiền giảm:</span> <span class="info-value"><span
+                        id="giamGiaIn">[[${hoaDon.getGiamGia()}]]
+                    </span> VND</span>
+            </p>
+            <p th:if="${hoaDon.trangThai==6}"><span class="info-label">Tổng tiền hoàn trả:</span> <span
+                class="info-value"><span id="thanhTienIn">[[${hoaDon.tongTienHoaDonHoanTra()}]]</span>
+                VND</span></p>
+                <div class="row mb-4">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6"><div style="border-bottom: 1px solid gray; width: 50%; float: right;"></div></div>
+                </div>
+                    <p><span class="info-label">Tổng tiền thanh toán:</span> <span
+                            class="info-value"><span id="thanhTienIn">[[${hoaDon.tongTienKhiGiam}]]</span>
                             VND</span></p>
                 </div>
             </div>

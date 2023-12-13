@@ -66,7 +66,7 @@
 
                         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                             data-bs-toggle="dropdown">
-                            <span class="d-none d-md-block dropdown-toggle ps-2">Nguyễn Tuấn Anh</span>
+                            <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${tenNhanVien}"></span>
                         </a><!-- End Profile Iamge Icon -->
 
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -163,17 +163,19 @@
                 </li><!-- End Components Nav -->
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/ban-hang-tai-quay/hoa-don/quan-ly">
+                    <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
                         <i class="bi bi-receipt-cutoff"></i>
                         <span>Quản Lý Hóa Đơn</span>
-
-                        <li class="nav-item">
-                            <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
-                               <i class="bi bi-receipt-cutoff"></i>
-                                <span>Trả hàng</span>
-                            </a>
-                        </li><!-- End Forms Nav -->
                     </a>
+                </li><!-- End Forms Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link " href="/ban-hang-tai-quay/doi-tra">
+                        <i class="bi bi-receipt-cutoff"></i>
+                        <span>Trả hàng</span>
+                    </a>
+                </li><!-- End Forms Nav -->
+                </a>
                 </li><!-- End Forms Nav -->
 
                 <li class="nav-item">
@@ -1567,7 +1569,7 @@
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col">
-                                                                        <h6>Giảm giá:</h6>
+                                                                        <h6>Tiền giảm:</h6>
 
                                                                         <input id="giamGiaInput" type="hidden"
                                                                             th:value="${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}"
@@ -1575,7 +1577,7 @@
                                                                     </div>
                                                                     <div class="col">
                                                                         <h6 id="moneyVoucher" class="thong-tin-gia">
-                                                                            [[${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}]]
+                                                                            [[${hoaDon.getGiamGia()}]]
                                                                             VND
                                                                         </h6>
                                                                     </div>
@@ -1609,31 +1611,30 @@
 
 
                                                                 </div>
-                                                                <div class="row">
+
+
+                                                                <div th:if="${check!=0}" class="row">
                                                                     <div class="col">
-                                                                        <h6>Khách đã thanh toán:</h6>
+                                                                        <h6>Tổng tiền hàng trả:</h6>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <h6 class="thong-tin-gia" id="tongGiaH6"><span
-                                                                                id="tongGiaValue">[[${hoaDon.tongTienHoaDonKhiGiam()-hoaDon.getGiamGia()}]]</span>
+                                                                        <h6
+                                                                            class="thong-tin-gia" id=""><span
+                                                                                id="">[[${hdHangTra.tongTienHoaDon()}]]</span>
                                                                             VND</h6>
+                                                                        
 
                                                                     </div>
 
 
                                                                 </div>
-
-                                                                <div th:if="${check!=0}" class="row">
+                                                                <div class="ngan-cach"></div>
+                                                                <div class="row">
                                                                     <div class="col">
-                                                                        <h6>Trả lại khách:</h6>
+                                                                        <h6>Tổng tiền thanh toán:</h6>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <h6 th:if="${hdHangTra.tongTienHoaDon() !=hoaDon.tongTienHoaDon()}"
-                                                                            class="thong-tin-gia" id="tongGiaH6"><span
-                                                                                id="tongGiaValue">[[${hdHangTra.tongTienHoaDon()}]]</span>
-                                                                            VND</h6>
-                                                                        <h6 th:if="${hdHangTra.tongTienHoaDon() ==hoaDon.tongTienHoaDon()}"
-                                                                            class="thong-tin-gia" id="tongGiaH6"><span
+                                                                        <h6 class="thong-tin-gia" id="tongGiaH6"><span
                                                                                 id="tongGiaValue">[[${hoaDon.tongTienHoaDonKhiGiam()-hoaDon.getGiamGia()}]]</span>
                                                                             VND</h6>
 
