@@ -140,7 +140,7 @@ public class HoaDon {
 
     public Long tongTienHoaDonKhiGiam() {
 
-        return this.tongTienHoaDon() + this.getPhiShip();
+        return this.tongTienHoaDon() + this.getPhiShip()-this.getGiamGia();
     }
 
     public Long getGiamGia() {

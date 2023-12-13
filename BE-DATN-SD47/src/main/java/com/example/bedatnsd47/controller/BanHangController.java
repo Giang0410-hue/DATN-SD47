@@ -148,7 +148,9 @@ public class BanHangController {
     public String hoaDon(@PathVariable Long id, Model model) {
         chiTietSanPhamSerivce.checkSoLuongBang0();
         // request.setAttribute("hoaDonTra");
-        model.addAttribute("khachHang", new TaiKhoan());
+        TaiKhoan tk = new TaiKhoan();
+        tk.setGioiTinh(0);
+        model.addAttribute("khachHang", tk);
         request.setAttribute("lstHoaDon", hoaDonService.find5ByTrangThai(-1));
         request.setAttribute("lstHdct", hoaDonChiTietService.findAll());
         request.setAttribute("lstCtsp", chiTietSanPhamSerivce.fillAllDangHoatDongLonHon0());
@@ -510,6 +512,13 @@ public class BanHangController {
                 }
             }
         }
+
+        if (hd.getVoucher() != null) {
+            Voucher v = hd.getVoucher();
+            v.setSoLuong(v.getSoLuong().add(new BigDecimal(1)));
+            voucherService.save(v);
+        }
+
     }
 
     @PostMapping("/hoa-don/rollback/{id}")
@@ -549,10 +558,10 @@ public class BanHangController {
                 }
 
             }
-
         }
         if (hd.getTrangThai() == 1) {
             updateSoLuongRollBack();
+
         }
         hoaDonService.saveOrUpdate(hd);
         if (hd.getTrangThai() == -1) {
@@ -583,6 +592,7 @@ public class BanHangController {
         }
         hd.setTrangThai(hd.getTrangThai() + 1);
         hd.setNgaySua(new Date());
+        
         addLichSuHoaDon(idHoaDon, ghiChu, hd.getTrangThai());
         hoaDonService.saveOrUpdate(hd);
         System.out.println(ghiChu + "ghiChu");
@@ -938,6 +948,11 @@ public class BanHangController {
                 ctsp.setTrangThai(1);
                 chiTietSanPhamSerivce.update(ctsp);
             }
+        }
+        if (hd.getVoucher() != null) {
+            Voucher v = hd.getVoucher();
+            v.setSoLuong(v.getSoLuong().subtract(new BigDecimal(1)));
+            voucherService.save(v);
         }
     }
 
