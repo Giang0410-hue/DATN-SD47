@@ -41,16 +41,16 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
     @Query(value = "select hoa_don.id from hoa_don where trang_thai = 3", nativeQuery = true)
     List<Long> fillAllIdHoaDonTrangThaiHoanThanh();
 
-    @Query("SELECT COUNT(hd) FROM HoaDon hd WHERE CAST(hd.ngayTao AS DATE) = :ngayTao AND (hd.trangThai = 0 OR hd.trangThai = 1 OR hd.trangThai = 2 OR hd.trangThai = 3 OR hd.trangThai = 5 or hd.trangThai = 6)")
+    @Query("SELECT COUNT(hd) FROM HoaDon hd WHERE CAST(hd.ngayTao AS DATE) = :ngayTao AND (hd.trangThai = 3 or hd.trangThai = 6)")
     Integer countHoaDonNgay(@Param("ngayTao") Date ngayTao);
 
-    @Query("select SUM(hd.tongTienKhiGiam) from HoaDon hd where hd.trangThai =3 and CAST(hd.ngayTao AS DATE) = :ngayTao")
+    @Query("select SUM(hd.tongTienKhiGiam) from HoaDon hd where (hd.trangThai =3 or hd.trangThai = 6) and CAST(hd.ngayTao AS DATE) = :ngayTao")
     Long sumGiaTriHoaDonNgay(@Param("ngayTao") Date ngayTao);
 
-    @Query("SELECT COUNT(hd) FROM HoaDon hd WHERE MONTH(hd.ngayTao) = MONTH(:ngayTao) AND (hd.trangThai = 0 OR hd.trangThai = 1 OR hd.trangThai = 2 OR hd.trangThai = 3 OR hd.trangThai = 5 or hd.trangThai = 6)")
+    @Query("SELECT COUNT(hd) FROM HoaDon hd WHERE MONTH(hd.ngayTao) = MONTH(:ngayTao) AND (hd.trangThai = 3 or hd.trangThai = 6)")
     Integer countHoaDonThang(@Param("ngayTao") Date ngayTao);
 
-    @Query("SELECT SUM(hd.tongTienKhiGiam) FROM HoaDon hd WHERE hd.trangThai = 3 and MONTH(hd.ngayTao) = MONTH(:ngayTao)")
+    @Query("SELECT SUM(hd.tongTienKhiGiam) FROM HoaDon hd WHERE (hd.trangThai = 3 or hd.trangThai = 6) and MONTH(hd.ngayTao) = MONTH(:ngayTao)")
     Long sumGiaTriHoaDonThang(@Param("ngayTao") Date ngayTao);
 
     @Query("select COUNT(hd) from HoaDon hd where hd.trangThai = :trangThai")
@@ -70,11 +70,11 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
             @Param("endDate") Date endDate
     );
 
-    @Query("SELECT COUNT(hd) FROM HoaDon hd WHERE CAST(hd.ngayTao AS DATE) BETWEEN :startDate AND :endDate AND (hd.trangThai = 0 OR hd.trangThai = 1 OR hd.trangThai = 2 OR hd.trangThai = 3 OR hd.trangThai = 5 or hd.trangThai = 6) ")
+    @Query("SELECT COUNT(hd) FROM HoaDon hd WHERE CAST(hd.ngayTao AS DATE) BETWEEN :startDate AND :endDate AND ( hd.trangThai = 3 OR  hd.trangThai = 6) ")
     Integer countHoaDonBetween(@Param("startDate") Date startDate,
                                @Param("endDate") Date endDate);
 
-    @Query("SELECT SUM(hd.tongTienKhiGiam) FROM HoaDon hd WHERE hd.trangThai=3 and CAST(hd.ngayTao AS DATE) BETWEEN :startDate AND :endDate ")
+    @Query("SELECT COALESCE(SUM(hd.tongTienKhiGiam), 0) FROM HoaDon hd WHERE (hd.trangThai=3 or hd.trangThai=6) and CAST(hd.ngayTao AS DATE) BETWEEN :startDate AND :endDate ")
     Long sumGiaTriHoaDonBetween(@Param("startDate") Date startDate,
                                 @Param("endDate") Date endDate);
     @Transactional
@@ -97,10 +97,10 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
     Integer countHoaDonTrangThaiThang(@Param("ngayTao") Date ngayTao,
                                       @Param("trangThai") Integer trangThai);
 
-    @Query("SELECT COUNT(hd) FROM HoaDon hd where hd.trangThai = 0 or hd.trangThai = 1 or hd.trangThai = 2 or hd.trangThai = 3 or hd.trangThai = 5 or hd.trangThai = 6 ")
+    @Query("SELECT COUNT(hd) FROM HoaDon hd where hd.trangThai = 3 or hd.trangThai = 6 ")
     Integer countHoaDonAll();
 
-    @Query("SELECT SUM(hd.tongTienKhiGiam) FROM HoaDon hd WHERE hd.trangThai = 3 ")
+    @Query("SELECT SUM(hd.tongTienKhiGiam) FROM HoaDon hd WHERE hd.trangThai = 3 or hd.trangThai = 6 ")
     Long sumGiaTriHoaDonAll();
 
 
