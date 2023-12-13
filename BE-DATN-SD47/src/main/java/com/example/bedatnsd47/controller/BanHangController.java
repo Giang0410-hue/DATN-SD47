@@ -440,6 +440,7 @@ public class BanHangController {
 
     @GetMapping("/hoa-don/detail/{id}")
     public String detailHoaDon(@PathVariable Long id) {
+        
         lstHoaDonCtDoiTra = new ArrayList<HoaDonChiTiet>();
         request.setAttribute("lstHoaDon", hoaDonService.find5ByTrangThai(-1));
         request.setAttribute("lstHdct", hoaDonChiTietService.findAll());
@@ -592,7 +593,7 @@ public class BanHangController {
         }
         hd.setTrangThai(hd.getTrangThai() + 1);
         hd.setNgaySua(new Date());
-        
+
         addLichSuHoaDon(idHoaDon, ghiChu, hd.getTrangThai());
         hoaDonService.saveOrUpdate(hd);
         System.out.println(ghiChu + "ghiChu");
@@ -662,80 +663,58 @@ public class BanHangController {
         Long tienGiamGia;
         Long tongTienHdcCu;
         Long tienShip;
-        try {
-            addLichSuHoaDon(idhdc, lyDo, 6);
-            System.out.println(idhdc + "-----hdc");
-            HoaDon hdc = hoaDonService.findById(idhdc);
-            System.out.println(hdc.getTrangThai());
-            hdc.setTrangThai(6);
-            System.out.println(hdc.getId());
-            System.out.println(hdc.getTrangThai());
-            HoaDon hdDoiTra = hoaDonService.findByMa(hdc.getMaHoaDon() + "-DOITRA");
-            tongTienHoanTra = hdDoiTra.tongTienHoaDon();
-            tienGiamGia = hdc.getGiamGia();
-            tienShip = hdc.getPhiShip();
-            tongTienHdcCu = hdc.getTongTien() - tienShip;
 
-            for (HoaDonChiTiet hdctChinh : hdc.getLstHoaDonChiTiet()) {
-                for (HoaDonChiTiet hdctDoiTra : hdDoiTra.getLstHoaDonChiTiet()) {
-                    if (hdctChinh.getChiTietSanPham().getId() == hdctDoiTra.getChiTietSanPham().getId()) {
-                        HoaDonChiTiet hdct = new HoaDonChiTiet();
-                        hdct.setDonGia(hdctDoiTra.getDonGia());
-                        hdct.setSoLuong(hdctDoiTra.getSoLuong());
-                        hdct.setTrangThai(2);
-                        hdct.setHoaDon(hdc);
-                        hdct.setChiTietSanPham(hdctChinh.getChiTietSanPham());
-                        hoaDonChiTietService.saveOrUpdate(hdct);// tạo hdct mới dựa trên hd đôi trả
+        addLichSuHoaDon(idhdc, lyDo, 6);
+        System.out.println(idhdc + "-----hdc");
+        HoaDon hdc = hoaDonService.findById(idhdc);
+        System.out.println(hdc.getTrangThai());
+        hdc.setTrangThai(6);
+        System.out.println(hdc.getId());
+        System.out.println(hdc.getTrangThai());
+        HoaDon hdDoiTra = hoaDonService.findByMa(hdc.getMaHoaDon() + "-DOITRA");
+        tongTienHoanTra = hdDoiTra.tongTienHoaDon();
+        tienGiamGia = hdc.getGiamGia();
+        tienShip = hdc.getPhiShip();
+        tongTienHdcCu = hdc.getTongTien() - tienShip;
 
-                        hdctChinh.setSoLuong(hdctChinh.getSoLuong() - hdctDoiTra.getSoLuong());// Trừ số lượng hdct
-                                                                                               // chính
-                                                                                               // dựa trên đổi trả
-                        ChiTietSanPham ctsp = chiTietSanPhamSerivce.getById(hdctDoiTra.getChiTietSanPham().getId());
-                        ctsp.setSoLuong(ctsp.getSoLuong() + hdctDoiTra.getSoLuong());
-                        chiTietSanPhamSerivce.update(ctsp);
-
-                        if (hdctChinh.getSoLuong() == 0) {
-                            hdc.setTongTien(hdc.tongTienHoaDonDaNhan());
-                            hdc.setTongTienKhiGiam(tongTienHdcCu - tongTienHoanTra - tienGiamGia);
-                            System.out.println("tongTienHdcCu-tongTienHoanTra-tienGiamGia " + tongTienHdcCu + "-"
-                                    + tongTienHoanTra + "-" + tienGiamGia);
-                            if (tongTienHdcCu - tongTienHoanTra - tienGiamGia < 0) {
-                                hdc.setTongTienKhiGiam((long) 0);
-                            }
-                            hoaDonService.saveOrUpdate(hdc);
-                            hoaDonChiTietService.deleteById(hdctChinh.getId());// nếu hết( soluong=0) xóa sp hdct chính
-                        } else {
-                            hoaDonChiTietService.saveOrUpdate(hdctChinh); // nếu còn trừ số lượng
-                            hdc.setTongTien(hdc.tongTienHoaDonDaNhan());
-                            hdc.setTongTienKhiGiam(tongTienHdcCu - tongTienHoanTra - tienGiamGia);
-                            System.out.println("tongTienHdcCu-tongTienHoanTra-tienGiamGia " + tongTienHdcCu + "-"
-                                    + tongTienHoanTra + "-" + tienGiamGia);
-                            if (tongTienHdcCu - tongTienHoanTra - tienGiamGia < 0) {
-                                hdc.setTongTienKhiGiam((long) 0);
-                            }
-                            hoaDonService.saveOrUpdate(hdc);
-                        }
-
-                        hoaDonChiTietService.deleteById(hdctDoiTra.getId());// xong thì xóa hdct ở hoaDon đổi trả
-
-                    }
+        for (HoaDonChiTiet hdctChinh : hdc.getLstHoaDonChiTiet()) {
+            for (HoaDonChiTiet hdctDoiTra : hdDoiTra.getLstHoaDonChiTiet()) {
+                if (hdctChinh.getChiTietSanPham().getId() == hdctDoiTra.getChiTietSanPham().getId()) {
+                    hdctChinh.setSoLuong(hdctChinh.getSoLuong() - hdctDoiTra.getSoLuong());
+                    HoaDonChiTiet hdct = new HoaDonChiTiet();
+                    hdct.setChiTietSanPham(hdctDoiTra.getChiTietSanPham());
+                    hdct.setHoaDon(hdc);
+                    hdct.setSoLuong(hdctDoiTra.getSoLuong());
+                    hdct.setTrangThai(2);
+                    hdct.setDonGia(hdctDoiTra.getDonGia());
+                    hoaDonChiTietService.saveOrUpdate(hdct);
+                    hoaDonChiTietService.saveOrUpdate(hdctChinh);
                 }
             }
-
-            hdc.setTongTien(hdc.tongTienHoaDonDaNhan());
-            hdc.setTongTienKhiGiam(tongTienHdcCu - tongTienHoanTra - tienGiamGia);
-            System.out.println("tongTienHdcCu-tongTienHoanTra-tienGiamGia " + tongTienHdcCu + "-" + tongTienHoanTra
-                    + "-" + tienGiamGia);
-            if (tongTienHdcCu - tongTienHoanTra - tienGiamGia < 0) {
-                hdc.setTongTienKhiGiam((long) 0);
-            }
-            hoaDonService.saveOrUpdate(hdc);
-
-            hoaDonService.deleteById(hdDoiTra.getId()); // Xóa luôn hóa đơn đổi trả tạm
-        } catch (Exception e) {
-            // TODO: handle exception
-
         }
+
+        
+
+
+
+        hdc.setTongTien(hdc.tongTienHoaDonDaNhan());
+        hdc.setTongTienKhiGiam(tongTienHdcCu - tongTienHoanTra - tienGiamGia);
+        System.out.println("tongTienHdcCu-tongTienHoanTra-tienGiamGia " + tongTienHdcCu + "-" + tongTienHoanTra
+                + "-" + tienGiamGia);
+        if (tongTienHdcCu - tongTienHoanTra - tienGiamGia < 0) {
+            hdc.setTongTienKhiGiam((long) 0);
+        }
+        hoaDonService.saveOrUpdate(hdc);
+        for(HoaDonChiTiet hdct : hoaDonChiTietService.findByIdHoaDon(idhdc)){ 
+            if(hdct.getSoLuong()==0){
+                System.out.println(hdct.getId());
+                hoaDonChiTietService.deleteById(hdct.getId());
+                
+            }
+        }
+        hoaDonService.deleteHoaDonHoanTra();
+        // hoaDonService.deleteById(hdDoiTra.getId()); // Xóa luôn hóa đơn đổi trả tạm
+
         return "redirect:/ban-hang-tai-quay/hoa-don/detail/" + idhdc;
     }
 

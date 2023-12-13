@@ -139,11 +139,24 @@ public class HoaDon {
 
 
     public Long tongTienHoaDonKhiGiam() {
-
-        return this.tongTienHoaDon() + this.getPhiShip()-this.getGiamGia();
+        
+        return this.tongTienHoaDonDaNhan() + this.getPhiShip()-this.getGiamGia();
     }
 
     public Long getGiamGia() {
+        if (this.voucher != null) {
+            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
+            Long giam = (this.tongTienHoaDonDaNhan() * ptGiam) / 100;
+            Long giamToiDa = Long.valueOf(this.voucher.getGiamToiDa().longValue());
+            if (giam > giamToiDa) {
+                return giamToiDa;
+            }
+            return giam;
+        }
+        return (long) 0;
+    }
+
+    public Long getGiamGiaKhiHoanTra() {
         if (this.voucher != null) {
             Long ptGiam = this.voucher.getPhanTramGiam().longValue();
             Long giam = (this.tongTienHoaDon() * ptGiam) / 100;
