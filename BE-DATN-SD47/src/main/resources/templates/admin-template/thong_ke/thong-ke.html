@@ -63,14 +63,14 @@
             if (thongKeData) {
                 // Chuyển đổi dữ liệu từ Thymeleaf thành mảng JSON
                 formattedThongKeData = thongKeData.map(function (item) {
-                    return [(item[0]), item[1], item[2]];
+                    return [(item[0]), item[1],item[2]];
                 });
-                formattedThongKeData.unshift(['Ngày', 'Số lượng sản phẩm', 'Số hóa đơn hoàn thành']);
+                formattedThongKeData.unshift(['Ngày', 'Số lượng sản phẩm','Số hóa đơn']);
                 // Sử dụng mảng JSON trong JavaScript
                 console.log(formattedThongKeData);
             } else {
                 // Nếu không có dữ liệu, sử dụng mảng mẫu hoặc mảng rỗng
-                formattedThongKeData = [['Ngày', 'Số lượng sản phẩm', 'Số hóa đơn hoàn thành']];
+                formattedThongKeData = [['Ngày', 'Số lượng sản phẩm','Số hóa đơn']];
             }
             /*]]>*/
             var data = google.visualization.arrayToDataTable(formattedThongKeData);
@@ -317,14 +317,15 @@
                                         <label class="form-label">Từ ngày:</label>
                                         <input type="date" name="startDate" class="form-control"
                                                id="startDate"
-                                               th:value="${startDate != null ? #dates.format(startDate, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                                               th:value="${#dates.format(startDate, 'yyyy-MM-dd')}"
                                                required>
                                     </div>
+                                    <!--                                               th:value="${startDate != null ? #dates.format(startDate, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"-->
                                     <div class="col-md-3">
                                         <label class="form-label">Đến ngày:</label>
                                         <input type="date" name="endDate" class="form-control"
                                                id="endDate"
-                                               th:value="${endDate != null ? #dates.format(endDate, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                                               th:value="${#dates.format(endDate, 'yyyy-MM-dd')}"
                                                required>
                                     </div>
                                     <div class="col-md-3">
@@ -575,73 +576,73 @@
                             <hr>
                             <div id="chart_div" style="margin-left: 22%"></div>
                             <hr>
-<!--                            <h2 style="margin-top: 5%">Biểu đồ tình hình kinh doanh</h2>-->
-<!--                            <form th:action="@{/admin/thong-ke/count-range}" th:method="post" id="form2"-->
-<!--                                  class="row g-3" onsubmit="return validateDateRange()">-->
-<!--                                &lt;!&ndash;                                Từ ngày: <input type="date" name="startDateChart"&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                                th:value="${startDateChart != null ? #dates.format(startDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                                id="tuNgay"&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                                required>&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                Đến ngày: <input type="date" name="endDateChart"&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                                 th:value="${endDateChart != null ? #dates.format(endDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                                 id="denNgay"&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                                 required>&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                <button type="submit" class="btn btn-primary">Tìm</button>&ndash;&gt;-->
+                            <h2 style="margin-top: 5%">Biểu đồ tình hình kinh doanh</h2>
+                            <form th:action="@{/admin/thong-ke/count-range}" th:method="post" id="form2"
+                                  class="row g-3" onsubmit="return validateDateRange()">
+                                <!--                                Từ ngày: <input type="date" name="startDateChart"-->
+                                <!--                                                th:value="${startDateChart != null ? #dates.format(startDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"-->
+                                <!--                                                id="tuNgay"-->
+                                <!--                                                required>-->
+                                <!--                                Đến ngày: <input type="date" name="endDateChart"-->
+                                <!--                                                 th:value="${endDateChart != null ? #dates.format(endDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"-->
+                                <!--                                                 id="denNgay"-->
+                                <!--                                                 required>-->
+                                <!--                                <button type="submit" class="btn btn-primary">Tìm</button>-->
 
-<!--                                <div class="col-md-3">-->
-<!--                                    <label class="form-label">Từ ngày:</label>-->
-<!--                                    <input type="date" name="startDateChart" class="form-control"-->
-<!--                                           th:value="${startDateChart != null ? #dates.format(startDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"-->
-<!--                                           id="tuNgay"-->
-<!--                                           required>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-3">-->
-<!--                                    <label class="form-label">Đến ngày:</label>-->
-<!--                                    <input type="date" name="endDateChart" class="form-control"-->
-<!--                                           th:value="${endDateChart != null ? #dates.format(endDateChart, 'yyyy-MM-dd') : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"-->
-<!--                                           id="denNgay"-->
-<!--                                           required>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-3">-->
-<!--                                    <button type="submit" style="margin-top: 11.5%" class="btn btn-primary">Tìm kiếm-->
-<!--                                    </button>-->
-<!--                                </div>-->
-<!--                            </form>-->
-<!--                            <span id="error-message-start"-->
-<!--                                  style="color: red;font-size: 14px;font-weight: bold;"></span>-->
-<!--                            <div id="columnchart_material" style="width: 1100px; height: 500px;"></div>-->
-<!--                            <hr>-->
-                            <h1 style="margin-top: 5%">Danh sách sản phẩm sắp hết hàng</h1>
-                            <table border="1" id="example">
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Sản phẩm</th>
-                                    <th>Kích cỡ</th>
-                                    <th>Màu sắc</th>
-                                    <th>Loại đế</th>
-                                    <th>Số Lượng</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="row,iterStat : ${listSapHetHang}">
-                                    <td th:text="${iterStat.index+1}"></td>
-                                    <td th:text="${row[0]}"></td>
-                                    <td th:text="${row[1]}"></td>
-                                    <td th:text="${row[2]}"></td>
-                                    <td th:text="${row[3]}"></td>
-                                    <td th:text="${row[4]}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                <div class="col-md-3">
+                                    <label class="form-label">Từ ngày:</label>
+                                    <input type="date" name="startDateChart" class="form-control"
+                                           th:value="${#dates.format(startDateChart, 'yyyy-MM-dd') }"
+                                           id="tuNgay"
+                                           required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Đến ngày:</label>
+                                    <input type="date" name="endDateChart" class="form-control"
+                                           th:value="${#dates.format(endDateChart, 'yyyy-MM-dd') }"
+                                           id="denNgay"
+                                           required>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" style="margin-top: 11.5%" class="btn btn-primary">Tìm kiếm
+                                    </button>
+                                </div>
+                            </form>
+                            <span id="error-message-start"
+                                  style="color: red;font-size: 14px;font-weight: bold;"></span>
+                            <div id="columnchart_material" style="width: 1100px; height: 500px;"></div>
                             <hr>
+<!--                            <h1 style="margin-top: 5%">Danh sách sản phẩm sắp hết hàng</h1>-->
+<!--                            <table border="1" id="example">-->
+<!--                                <thead>-->
+<!--                                <tr>-->
+<!--                                    <th>STT</th>-->
+<!--                                    <th>Sản phẩm</th>-->
+<!--                                    <th>Kích cỡ</th>-->
+<!--                                    <th>Màu sắc</th>-->
+<!--                                    <th>Loại đế</th>-->
+<!--                                    <th>Số Lượng</th>-->
+<!--                                </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+<!--                                <tr th:each="row,iterStat : ${listSapHetHang}">-->
+<!--                                    <td th:text="${iterStat.index+1}"></td>-->
+<!--                                    <td th:text="${row[0]}"></td>-->
+<!--                                    <td th:text="${row[1]}"></td>-->
+<!--                                    <td th:text="${row[2]}"></td>-->
+<!--                                    <td th:text="${row[3]}"></td>-->
+<!--                                    <td th:text="${row[4]}"></td>-->
+<!--                                </tr>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                            <hr>-->
                             <h1 style="margin-top: 5%">Danh sách sản phẩm có số lượng </h1>
                             <form th:action="@{/admin/thong-ke/sapHetHang}" th:method="post" class="row g-3"
                                   id="myForm">
                                 <div class="col-md-2">
                                     <label class="form-label"> Nhỏ hơn</label>
 
-                                    <input type="number" class="form-control" th:value="${soLuong}"
+                                    <input type="number" class="form-control" th:value="${soLuong != null ? soLuong : 10}"
                                            name="soLuong" min="1" max="1000000000"
                                            required>
                                 </div>
@@ -789,14 +790,14 @@
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
-        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+        <!-- &copy; Copyright <strong><span>Glacat</span></strong>. All Rights Reserved -->
     </div>
     <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Website bán giày Glacat
     </div>
 </footer><!-- End Footer -->
 
