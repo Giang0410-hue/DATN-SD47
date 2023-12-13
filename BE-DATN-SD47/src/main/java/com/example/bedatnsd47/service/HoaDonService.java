@@ -66,5 +66,7 @@ public interface HoaDonService {
 
     void deleteHoaDonHoanTra();
 
+    void guiHoaDonDienTu();
+
     
 }
