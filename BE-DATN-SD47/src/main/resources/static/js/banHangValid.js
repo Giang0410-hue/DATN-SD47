@@ -35,13 +35,18 @@ function validateAndSubmitTraHang(slg, sl, idCtsp) {
     var soLuong = document.getElementById('soLuongEditTra' + idCtsp).value;
     var soLuongGoc = slg;
     if (isNaN(soLuong) || soLuong < 0) {
-        alert("Vui lòng nhập một số nguyên không âm.");
+        document.getElementById('errorSoLuongEditTra').innerHTML = "Số lượng không hợp lệ!"
+
+        // alert("Vui lòng nhập một số nguyên không âm.");
     } else if (parseInt(soLuong) > parseInt(soLuongGoc)) {
-        alert("Số lượng không được lớn hơn số lượng hiện tại (" + soLuongGoc + ").");
+        document.getElementById('errorSoLuongEditTra').innerHTML = "Số lượng không được lớn hơn số lượng sản phẩm"
+
+        // alert("Số lượng không được lớn hơn số lượng hiện tại (" + soLuongGoc + ").");
     } else if (soLuong === "") {
-        alert("Vui lòng nhập số lượng trả");
+        document.getElementById('errorSoLuongEditTra').innerHTML = "Vui lòng nhập số lượng"
+        // alert("Vui lòng nhập số lượng");
     } else {
-        alert("Số lượng hợp lệ: " + soLuong);
+        // alert("Số lượng hợp lệ: " + soLuong);
 
         // Nếu số lượng hợp lệ, thực hiện submit form
         document.getElementById("myForm" + idCtsp).submit();
@@ -54,12 +59,56 @@ function validGhiChuThanhToan() {
     if (text === '') {
         errorGhiChu.innerHTML = "Vui lòng nhập ghi chú";
 
-        alert('s')
-        return false;
+        
+        return true;
     } else {
-        alert('vd')
+        
     }
 }
+
+function validGhiChuHuy() {
+    var textarea = document.getElementById("ghiChuHuy");
+    var text = textarea.value.trim(); // Lấy giá trị và loại bỏ khoảng trắng
+    var errorGhiChu = document.getElementById("errorGhiChuHuy")
+    if (text === '') {
+        errorGhiChu.innerHTML = "Vui lòng nhập ghi chú";
+        errorGhiChu.style.color = 'red';
+        // alert('s')
+        return false;
+    } else {
+        // alert('vd')
+    }
+}
+
+function validGhiChuRollback() {
+    var textarea = document.getElementById("ghiChuRollback");
+    var text = textarea.value.trim(); // Lấy giá trị và loại bỏ khoảng trắng
+    var errorGhiChu = document.getElementById("errorGhiChuRollback")
+    if (text === '') {
+        errorGhiChu.innerHTML = "Vui lòng nhập ghi chú";
+        errorGhiChu.style.color = 'red';
+        // alert('s')
+        return false;
+    } else {
+        // alert('vd')
+    }
+}
+
+function validGhiChuHoanTra() {
+    var textarea = document.getElementById("ghiChuHoanTra");
+    var text = textarea.value.trim(); // Lấy giá trị và loại bỏ khoảng trắng
+    var errorGhiChu = document.getElementById("errorGhiChuHoanTra")
+    if (text === '') {
+        errorGhiChu.innerHTML = "Vui lòng nhập ghi chú";
+        errorGhiChu.style.color = 'red';
+        // alert('s')
+        return false;
+    } else {
+        // alert('vd')
+    }
+}
+
+
 function validateThanhToan() {
 
     // var inputGhiChuThanhToan = document.getElementById('nhapGhiChu')
