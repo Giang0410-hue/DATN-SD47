@@ -678,7 +678,8 @@ public class CustomersController {
         return "redirect:/chinh-sach";
     }
     @GetMapping("/test")
-    public String test123(){
+    public String test123(
+    ){
         return "/admin-template/in-hoa-don.html";
     }
 }
