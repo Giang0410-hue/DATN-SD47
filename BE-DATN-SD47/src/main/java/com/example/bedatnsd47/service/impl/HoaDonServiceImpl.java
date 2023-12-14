@@ -170,7 +170,7 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     public void guiHoaDonDienTu() {
-        HoaDon hoaDon = this.findById(10321L);
+        HoaDon hoaDon = this.findById(10314L);
 
         String from = "glacatshopshoes@gmail.com";
         String to = "anhntph27418@fpt.edu.vn";
@@ -179,7 +179,13 @@ public class HoaDonServiceImpl implements HoaDonService {
         int index = 0;
         content.append("<p style=\"color: black;\"><b>Xin chào ").append(hoaDon.getNguoiNhan()).append(",</b></p>");
 
-        if(hoaDon.getTrangThai()==0){
+        if (hoaDon.getTrangThai() == 1) {
+            content.append("<p style=\"color: black;\">Chúng tôi cảm ơn vì bạn đã lựa chọn mua sắm tại Glacat.</p>")
+                    .append("<p style=\"color: black;\">Chúng tôi xin thông báo rằng đơn hàng của bạn có mã số " + hoaDon.getMaHoaDon() + " đang được chuẩn bị và sẽ sớm được giao đến địa chỉ bạn đã cung cấp.</p>");
+
+        } else if (hoaDon.getTrangThai() == 2) {
+            content.append("<p style=\"color: black;\"></p>")
+                    .append("<p style=\"color: black;\">.</p>");
 
         }
 
@@ -188,7 +194,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                 .append("<span style=\"color:red\">" + hoaDon.getMaHoaDon() + "</span>")
                 .append(" của bạn đã được giao thành công. Dưới đây là chi tiết về đơn hàng:</p>");
 
-        if(hoaDon.getTrangThai()!=5){
+        if (hoaDon.getTrangThai() != 5) {
             content.append("<section class=\"row\" style=\"margin: auto;background-color: white\">" +
                     "    <div class=\"col-md-12\" style=\"text-align: center\">" +
                     "        <div class=\"mid\">" +
