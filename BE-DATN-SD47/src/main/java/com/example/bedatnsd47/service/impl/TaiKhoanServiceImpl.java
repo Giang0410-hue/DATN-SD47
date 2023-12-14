@@ -64,7 +64,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     //   Cac phương thức để  email xác nhận
     @Override
     public void sendEmail(TaiKhoan taiKhoan, String url) {
-        String from = "daspabitra55@gmail.com";
+        String from = "glacatshopshoes@gmail.com";
         String to = taiKhoan.getEmail();
         String subject = "Khôi Phục Mật Khẩu Tài Khoản Glacat của Bạn";
         String content = "<p class=\"email-content\" style=\"font-family: 'Arial', sans-serif;font-size: 16px;color: #333;line-height: 1.5;\">\n" +
@@ -88,7 +88,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
 
-            helper.setFrom(from, "Becoder");
+            helper.setFrom(from, "Glacat");
             helper.setTo(to);
             helper.setSubject(subject);
 
@@ -111,7 +111,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     @Override
     public void sendEmail1(TaiKhoan taiKhoan, String url, String random) {
-        String from = "daspabitra55@gmail.com";
+        String from = "glacatshopshoes@gmail.com";
         String to = taiKhoan.getEmail();
         String subject = "Chào mừng bạn đến với Glacat - Xác Minh Tài Khoản của Bạn";
         String content =
@@ -135,7 +135,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
 
-            helper.setFrom(from, "Becoder");
+            helper.setFrom(from, "Glacat");
             helper.setTo(to);
             helper.setSubject(subject);
 

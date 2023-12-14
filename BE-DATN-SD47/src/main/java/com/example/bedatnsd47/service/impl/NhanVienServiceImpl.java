@@ -164,7 +164,7 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public void sendEmail(TaiKhoan taiKhoan, String path, String random) {
-        String from = "daspabitra55@gmail.com";
+        String from = "glacatshopshoes@gmail.com";
         String to = taiKhoan.getEmail();
         String subject = "Chào mừng bạn đến với Glacat - Tài khoản Nhân viên mới đã được tạo";
         String content =

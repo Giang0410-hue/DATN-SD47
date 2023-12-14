@@ -146,7 +146,7 @@ public class KhachHangServiceImpl implements KhachHangService {
         return repository.findKhachLe();
     }
     public void sendEmail(TaiKhoan taiKhoan, String path, String random) {
-        String from = "daspabitra55@gmail.com";
+        String from = "glacatshopshoes@gmail.com";
         String to = taiKhoan.getEmail();
         String subject = "Chào mừng bạn đến với Glacat - Tài khoản Khách Hàng mới đã được tạo";
         String content =
@@ -160,7 +160,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
-            helper.setFrom(from, "Becoder");
+            helper.setFrom(from, "Glacat");
             helper.setTo(to);
             helper.setSubject(subject);
             content = content.replace("[[name]]", taiKhoan.getTenTaiKhoan());

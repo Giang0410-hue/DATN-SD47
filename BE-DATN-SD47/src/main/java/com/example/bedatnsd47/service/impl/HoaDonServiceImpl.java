@@ -1,20 +1,29 @@
 package com.example.bedatnsd47.service.impl;
 
 import com.example.bedatnsd47.entity.HoaDon;
+import com.example.bedatnsd47.entity.HoaDonChiTiet;
 import com.example.bedatnsd47.repository.HoaDonRepository;
 import com.example.bedatnsd47.service.HoaDonService;
+import jakarta.activation.DataSource;
 import jakarta.mail.internet.MimeMessage;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+//import org.jsoup.Jsoup;
+//import org.jsoup.nodes.Document;
+//import org.jsoup.nodes.Element;
+//import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamSource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +35,8 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Autowired
     private JavaMailSender javaMailSender;
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @Override
     public List<HoaDon> findAll() {
@@ -68,8 +79,8 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public HoaDon finByHoaDonMaHDSdt(String maDonHang,String sdt) {
-        return hoaDonRepository.finByHoaDonMaHDSdt(maDonHang,sdt);
+    public HoaDon finByHoaDonMaHDSdt(String maDonHang, String sdt) {
+        return hoaDonRepository.finByHoaDonMaHDSdt(maDonHang, sdt);
     }
 
     @Override
@@ -78,9 +89,9 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public List<HoaDon> getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(Long idTaiKhoan,Integer trangThai) {
+    public List<HoaDon> getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(Long idTaiKhoan, Integer trangThai) {
 
-        return hoaDonRepository.findAllHoaDonByTaiKhoanAndTrangThaiOrderByNgaySua(idTaiKhoan,trangThai);
+        return hoaDonRepository.findAllHoaDonByTaiKhoanAndTrangThaiOrderByNgaySua(idTaiKhoan, trangThai);
 
     }
 
@@ -119,12 +130,12 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     public Integer countHoaDonBetween(Date startDate, Date endDate) {
-        return hoaDonRepository.countHoaDonBetween(startDate,endDate);
+        return hoaDonRepository.countHoaDonBetween(startDate, endDate);
     }
 
     @Override
     public Long sumGiaTriHoaDonBetween(Date startDate, Date endDate) {
-        return hoaDonRepository.sumGiaTriHoaDonBetween(startDate,endDate);
+        return hoaDonRepository.sumGiaTriHoaDonBetween(startDate, endDate);
     }
 
     @Override
@@ -159,115 +170,101 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     public void guiHoaDonDienTu() {
-        String from = "daspabitra55@gmail.com";
+        HoaDon hoaDon = this.findById(10321L);
+
+        String from = "glacatshopshoes@gmail.com";
         String to = "anhntph27418@fpt.edu.vn";
-        String url = "daspabitra55@gmail.com";
-        String subject = "Khôi Phục Mật Khẩu Tài Khoản Glacat của Bạn";
-        String content = "templates/admin-template/in-hoa-don.html";
+        String subject = "Đơn hàng " + hoaDon.getMaHoaDon() + " đã giao hàng thành công\n";
+        StringBuilder content = new StringBuilder();
+        int index = 0;
+        content.append("<p style=\"color: black;\"><b>Xin chào ").append(hoaDon.getNguoiNhan()).append(",</b></p>");
 
-        String filePath = "src/main/resources/templates/admin-template/in-hoa-don.html"; // Thay thế đường dẫn với đường dẫn tuyệt đối đến tệp HTML của bạn
+        if(hoaDon.getTrangThai()==0){
 
-        try {
-            // Đọc nội dung từ tệp HTML
-            Document document = Jsoup.parse(new File(filePath), "UTF-8");
-
-            Element cssLink = document.createElement("link")
-                    .attr("rel", "stylesheet")
-                    .attr("href", "../../static/css/bootstrap.min.css");
-                // Nhúng nội dung CSS vào tài liệu HTML
-                document.head().append("<style>.table{\n" +
-                        "        margin-top: 3%;\n" +
-                        "    }\n" +
-                        "    .bottom-hoadon{\n" +
-                        "        text-align: center;\n" +
-                        "    }\n" +
-                        "    .logo-hoa-don {\n" +
-                        "        margin-top: 10%;\n" +
-                        "        display: flex;\n" +
-                        "        align-items: center;\n" +
-                        "        justify-content: center;\n" +
-                        "        text-align: center;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .logo-hoa-don img {\n" +
-                        "        max-width: 100%;\n" +
-                        "        margin-right: 10px;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .logo-hoa-don h1 {\n" +
-                        "        margin-top: 10px;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .info-label {\n" +
-                        "        display: inline-block;\n" +
-                        "        width: 200px;\n" +
-                        "        font-weight: bold;\n" +
-                        "        margin-bottom: 10px;\n" +
-                        "        margin-left: 50%;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .info-value {\n" +
-                        "        white-space: nowrap;\n" +
-                        "        float: right;\n" +
-                        "        font-weight: bold;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .logo-hoa-don2 {\n" +
-                        "        text-align: center;\n" +
-                        "        margin-top: -3%;\n" +
-                        "        margin-bottom: 3%;\n" +
-                        "\n" +
-                        "    }\n" +
-                        "    .logo-hoa-don2 h6{\n" +
-                        "        font-weight: bold;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .mid {\n" +
-                        "        text-align: center;\n" +
-                        "    }\n" +
-                        "    .mid h2{\n" +
-                        "        font-weight: bold;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .border-hoadon {\n" +
-                        "        border-top: 1px solid #000000;\n" +
-                        "        margin-top: 5%;\n" +
-                        "        margin-bottom: 5%;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .border-hoadon-duoi {\n" +
-                        "        border-top: 1px solid #000000;\n" +
-                        "        margin-top: 1%;\n" +
-                        "        margin-bottom: 5%;\n" +
-                        "    }</style>"+cssLink);
-
-
-            // Lấy toàn bộ nội dung HTML và gán vào biến content
-             content = document.outerHtml();
-
-            // Hiển thị nội dung HTML
-            System.out.println(content);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
+        content.append("<p style=\"color: black;\">Chúng tôi xin chân thành cảm ơn bạn đã lựa chọn Glacat là địa chỉ mua sắm của mình.</p>")
+                .append("<p style=\"color: black;\">Đơn hàng ")
+                .append("<span style=\"color:red\">" + hoaDon.getMaHoaDon() + "</span>")
+                .append(" của bạn đã được giao thành công. Dưới đây là chi tiết về đơn hàng:</p>");
+
+        if(hoaDon.getTrangThai()!=5){
+            content.append("<section class=\"row\" style=\"margin: auto;background-color: white\">" +
+                    "    <div class=\"col-md-12\" style=\"text-align: center\">" +
+                    "        <div class=\"mid\">" +
+                    "            <h2>THÔNG TIN ĐƠN HÀNG</h2>" +
+                    "            <h4>Mã đơn hàng: ").append("<span style=\"color:red\">" + hoaDon.getMaHoaDon() + "</span>").append(" </h4>" +
+                    "            <h4>Số điện thoại: ").append("<span style=\"color:red\">" + hoaDon.getSdtNguoiNhan() + "</span>").append(" </h4>" +
+                    "            <h4>Trạng thái: ").append("<span style=\"color:red\">" + hoaDon.getStringTrangThai() + "</span>").append(" </h4>" +
+                    "        </div>" +
+                    "    </div>" +
+                    "        <div style=\"border-bottom: 1px solid black;margin-bottom:2%;\"></div>" +
+                    "    <div class=\"col-md-12\" style=\"text-align: center;margin-bottom: 1rem;\">" +
+                    "        <table class=\"table\" style=\"margin: auto;width: 100%\">" +
+                    "            <thead>" +
+                    "            <tr>" +
+                    "                <th scope=\"col\">STT</th>" +
+                    "                <th scope=\"col\">Tên Sản Phẩm</th>" +
+                    "                <th scope=\"col\">Số Lượng</th>" +
+                    "                <th scope=\"col\">Giá</th>" +
+                    "            </tr>");
+            content
+                    .append("</thead>")
+                    .append("<tbody>");
+            for (HoaDonChiTiet hoaDonChiTiet : hoaDon.getLstHoaDonChiTiet()) {
+                content.append("<tr>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + index++ + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getChiTietSanPham().getSanPham().getTen() + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getSoLuong() + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getDonGia() + " VND" + "</td>")
+                        .append("</tr>");
+            }
+            content.append("</tbody>")
+                    .append("</table>")
+                    .append("</div>");
+
+            content.append(
+                    "    <div class=\"col-md-12\">" +
+                            "        <div style=\"border-bottom: 1px solid black\"></div>" +
+                            "        <div>" +
+                            "            <p>" +
+                            "                <span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tổng tiền hàng:</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">500000 VND</span>" +
+                            "            </p>" +
+                            "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Phí vận chuyển:</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">500000 VND</span>" +
+                            "            </p>" +
+                            "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tiền giảm:</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">500000 VND</span>" +
+                            "            </p>" +
+                            "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tổng tiền thanh toán:</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;color:red;\">500000 VND</span></p>" +
+                            "        </div>" +
+                            "    </div>" + "</section>"
+            );
+        }
+        content.append(
+                "<div class=\"col-md-12\">" +
+                        "<p style=\"color: black;\" class=\"email-content\">\n" +
+                        "Chúc mừng bạn đã nhận được sản phẩm. Chúng tôi hy vọng rằng nó sẽ đáp ứng hoặc vượt quá mong đợi của bạn. Nếu có bất kỳ thắc mắc nào hoặc cần hỗ trợ, hãy liên hệ với chúng tôi qua số 0377463664 để được hỗ trợ.\n" +
+                        "</p>" +
+                        "<p style=\"color: black;\">Trân trọng,</p>" +
+                        "<p style=\"color: black;\">Shop Glacat</p>" +
+                        "</div>"
+
+        );
 
         try {
 
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
 
-            helper.setFrom(from, "Becoder");
+            helper.setFrom(from, "Glacat");
             helper.setTo(to);
             helper.setSubject(subject);
 
-            content = content.replace("[[name]]", "123");
-            String siteUrl = url + "/verify?code=" + "123";
 
-            System.out.println(siteUrl);
-
-//            content = content.replace("[[URL]]", siteUrl);
-
-            helper.setText(content, true);
+            helper.setText(String.valueOf(content), true);
 
             javaMailSender.send(message);
 
