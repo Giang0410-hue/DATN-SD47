@@ -679,7 +679,6 @@ public class CustomersController {
     }
     @GetMapping("/test")
     public String test123(){
-        hoaDonService.guiHoaDonDienTu();
-        return "redirect:/chinh-sach";
+        return "/admin-template/in-hoa-don.html";
     }
 }

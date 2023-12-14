@@ -4,11 +4,17 @@ import com.example.bedatnsd47.entity.HoaDon;
 import com.example.bedatnsd47.repository.HoaDonRepository;
 import com.example.bedatnsd47.service.HoaDonService;
 import jakarta.mail.internet.MimeMessage;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -157,153 +163,94 @@ public class HoaDonServiceImpl implements HoaDonService {
         String to = "anhntph27418@fpt.edu.vn";
         String url = "daspabitra55@gmail.com";
         String subject = "Khôi Phục Mật Khẩu Tài Khoản Glacat của Bạn";
-        String content = "<section class=\"row\" style=\"margin: auto;margin-top:15%;width: 900px;height:1000px;background-color: white\">\n" +
-                "    <div class=\"col-md-12\">\n" +
-                "\n" +
-                "        <div class=\"logo-hoa-don\">\n" +
-                "            <img src=\"../../static/img/logo.png\" alt=\"\">\n" +
-                "            <h1>Glacat</h1>\n" +
-                "        </div>\n" +
-                "        <div class=\"border-hoadon\"></div>\n" +
-                "    </div>\n" +
-                "    <div class=\"col-md-12\">\n" +
-                "        <div class=\"logo-hoa-don2\">\n" +
-                "            <h6>Dị Nậu - Thạch Thất - Hà Nội</h6>\n" +
-                "            <h6>Tel: 0377463664</h6>\n" +
-                "        </div>\n" +
-                "        <div class=\"mid\">\n" +
-                "            <h2>HÓA ĐƠN BÁN HÀNG</h2>\n" +
-                "            <h5>Số HĐ: 123 - 21/01/2003 - 12:00:10</h5>\n" +
-                "        </div>\n" +
-                "    </div>\n" +
-                "    <div class=\"col-md-12\">\n" +
-                "        <table class=\"table\">\n" +
-                "            <thead>\n" +
-                "            <tr>\n" +
-                "                <th scope=\"col\">STT</th>\n" +
-                "                <th scope=\"col\" colspan=\"2\">Tên Hàng</th>\n" +
-                "                <th scope=\"col\">Số Lượng</th>\n" +
-                "                <th scope=\"col\">Giá gồm VAT</th>\n" +
-                "                <th scope=\"col\">Thành Tiền</th>\n" +
-                "            </tr>\n" +
-                "            </thead>\n" +
-                "            <tbody>\n" +
-                "            <tr>\n" +
-                "                <th>1</th>\n" +
-                "                <td colspan=\"2\">Mar1</td>\n" +
-                "                <td>Otto</td>\n" +
-                "                <td>@mdo</td>\n" +
-                "                <td>@mdo</td>\n" +
-                "            </tr>\n" +
-                "            <tr>\n" +
-                "                <th>2</th>\n" +
-                "                <td colspan=\"2\">Jacob</td>\n" +
-                "                <td>Thornton</td>\n" +
-                "                <td>@fat</td>\n" +
-                "                <td>@fat</td>\n" +
-                "            </tr>\n" +
-                "            </tbody>\n" +
-                "        </table>\n" +
-                "    </div>\n" +
-                "\n" +
-                "    <div class=\"col-md-12\">\n" +
-                "        <div class=\"border-hoadon-duoi\"></div>\n" +
-                "        <div>\n" +
-                "            <p><span class=\"info-label\">Tổng tiền:</span> <span class=\"info-value\">500000 VND</span>\n" +
-                "            </p>\n" +
-                "            <p><span class=\"info-label\">Giảm giá:</span> <span class=\"info-value\">500000 VND</span>\n" +
-                "            </p>\n" +
-                "            <p><span class=\"info-label\">Phí vận chuyển:</span> <span class=\"info-value\">500000 VND</span>\n" +
-                "            </p>\n" +
-                "            <p><span class=\"info-label\">Thành tiền:</span> <span class=\"info-value\">500000 VND</span></p>\n" +
-                "        </div>\n" +
-                "    </div>\n" +
-                "    <div class=\"col-md-12\">\n" +
-                "        <div class=\"border-hoadon-duoi\"></div>\n" +
-                "\n" +
-                "        <div class=\"\">\n" +
-                "            <h5>KHÁCH HÀNG:</h5>\n" +
-                "            <h6>Tên Khách hàng: Nguyễn Tuấn Anh</h6>\n" +
-                "            <h6>Số điện thoại: 0377463664</h6>\n" +
-                "            <h6>Địa chỉ: Dị Nậu - Thạch Thất - Hà Nội</h6>\n" +
-                "        </div>\n" +
-                "    </div>\n" +
-                "    <div class=\"col-md-12\">\n" +
-                "        <div class=\"border-hoadon-duoi\"></div>\n" +
-                "\n" +
-                "        <div class=\"bottom-hoadon\">\n" +
-                "            <h3>Xin cảm ơn quý khách !</h3>\n" +
-                "            <h6>Nhân viên: Nguyễn Tuấn Anh</h6>\n" +
-                "        </div>\n" +
-                "    </div>\n" +
-                "</section>\n" +
-                "<style>\n" +
-                "    .inHoaDon .table{\n" +
-                "        margin-top: 3%;\n" +
-                "    }\n" +
-                "    .inHoaDon .bottom-hoadon{\n" +
-                "        text-align: center;\n" +
-                "    }\n" +
-                "    .inHoaDon .logo-hoa-don {\n" +
-                "        margin-top: 10%;\n" +
-                "        display: flex;\n" +
-                "        align-items: center;\n" +
-                "        justify-content: center;\n" +
-                "        text-align: center;\n" +
-                "    }\n" +
-                "\n" +
-                "    .inHoaDon .logo-hoa-don img {\n" +
-                "        max-width: 100%;\n" +
-                "        margin-right: 10px;\n" +
-                "    }\n" +
-                "\n" +
-                "    .inHoaDon .logo-hoa-don h1 {\n" +
-                "        margin-top: 10px;\n" +
-                "    }\n" +
-                "\n" +
-                "    .inHoaDon .info-label {\n" +
-                "        display: inline-block;\n" +
-                "        width: 200px;\n" +
-                "        font-weight: bold;\n" +
-                "        margin-bottom: 10px;\n" +
-                "        margin-left: 50%;\n" +
-                "    }\n" +
-                "\n" +
-                "    .inHoaDon .info-value {\n" +
-                "        white-space: nowrap;\n" +
-                "        float: right;\n" +
-                "        font-weight: bold;\n" +
-                "    }\n" +
-                "\n" +
-                "    .inHoaDon .logo-hoa-don2 {\n" +
-                "        text-align: center;\n" +
-                "        margin-top: -3%;\n" +
-                "        margin-bottom: 3%;\n" +
-                "\n" +
-                "    }\n" +
-                "    .inHoaDon .logo-hoa-don2 h6{\n" +
-                "        font-weight: bold;\n" +
-                "    }\n" +
-                "\n" +
-                "    .inHoaDon .mid {\n" +
-                "        text-align: center;\n" +
-                "    }\n" +
-                "    .inHoaDon .mid h2{\n" +
-                "        font-weight: bold;\n" +
-                "    }\n" +
-                "\n" +
-                "    .inHoaDon .border-hoadon {\n" +
-                "        border-top: 1px solid #000000;\n" +
-                "        margin-top: 5%;\n" +
-                "        margin-bottom: 5%;\n" +
-                "    }\n" +
-                "\n" +
-                "    .inHoaDon .border-hoadon-duoi {\n" +
-                "        border-top: 1px solid #000000;\n" +
-                "        margin-top: 1%;\n" +
-                "        margin-bottom: 5%;\n" +
-                "    }\n" +
-                "</style>";
+        String content = "templates/admin-template/in-hoa-don.html";
+
+        String filePath = "src/main/resources/templates/admin-template/in-hoa-don.html"; // Thay thế đường dẫn với đường dẫn tuyệt đối đến tệp HTML của bạn
+
+        try {
+            // Đọc nội dung từ tệp HTML
+            Document document = Jsoup.parse(new File(filePath), "UTF-8");
+
+            Element cssLink = document.createElement("link")
+                    .attr("rel", "stylesheet")
+                    .attr("href", "../../static/css/bootstrap.min.css");
+                // Nhúng nội dung CSS vào tài liệu HTML
+                document.head().append("<style>.table{\n" +
+                        "        margin-top: 3%;\n" +
+                        "    }\n" +
+                        "    .bottom-hoadon{\n" +
+                        "        text-align: center;\n" +
+                        "    }\n" +
+                        "    .logo-hoa-don {\n" +
+                        "        margin-top: 10%;\n" +
+                        "        display: flex;\n" +
+                        "        align-items: center;\n" +
+                        "        justify-content: center;\n" +
+                        "        text-align: center;\n" +
+                        "    }\n" +
+                        "\n" +
+                        "    .logo-hoa-don img {\n" +
+                        "        max-width: 100%;\n" +
+                        "        margin-right: 10px;\n" +
+                        "    }\n" +
+                        "\n" +
+                        "    .logo-hoa-don h1 {\n" +
+                        "        margin-top: 10px;\n" +
+                        "    }\n" +
+                        "\n" +
+                        "    .info-label {\n" +
+                        "        display: inline-block;\n" +
+                        "        width: 200px;\n" +
+                        "        font-weight: bold;\n" +
+                        "        margin-bottom: 10px;\n" +
+                        "        margin-left: 50%;\n" +
+                        "    }\n" +
+                        "\n" +
+                        "    .info-value {\n" +
+                        "        white-space: nowrap;\n" +
+                        "        float: right;\n" +
+                        "        font-weight: bold;\n" +
+                        "    }\n" +
+                        "\n" +
+                        "    .logo-hoa-don2 {\n" +
+                        "        text-align: center;\n" +
+                        "        margin-top: -3%;\n" +
+                        "        margin-bottom: 3%;\n" +
+                        "\n" +
+                        "    }\n" +
+                        "    .logo-hoa-don2 h6{\n" +
+                        "        font-weight: bold;\n" +
+                        "    }\n" +
+                        "\n" +
+                        "    .mid {\n" +
+                        "        text-align: center;\n" +
+                        "    }\n" +
+                        "    .mid h2{\n" +
+                        "        font-weight: bold;\n" +
+                        "    }\n" +
+                        "\n" +
+                        "    .border-hoadon {\n" +
+                        "        border-top: 1px solid #000000;\n" +
+                        "        margin-top: 5%;\n" +
+                        "        margin-bottom: 5%;\n" +
+                        "    }\n" +
+                        "\n" +
+                        "    .border-hoadon-duoi {\n" +
+                        "        border-top: 1px solid #000000;\n" +
+                        "        margin-top: 1%;\n" +
+                        "        margin-bottom: 5%;\n" +
+                        "    }</style>"+cssLink);
+
+
+            // Lấy toàn bộ nội dung HTML và gán vào biến content
+             content = document.outerHtml();
+
+            // Hiển thị nội dung HTML
+            System.out.println(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try {
 
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -318,7 +265,7 @@ public class HoaDonServiceImpl implements HoaDonService {
 
             System.out.println(siteUrl);
 
-            content = content.replace("[[URL]]", siteUrl);
+//            content = content.replace("[[URL]]", siteUrl);
 
             helper.setText(content, true);
 
