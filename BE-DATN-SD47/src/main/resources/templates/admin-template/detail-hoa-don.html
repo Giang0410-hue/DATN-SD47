@@ -546,8 +546,8 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Save</button>
+                                                            data-bs-dismiss="modal">Đóng</button>
+                                                        <button type="submit" class="btn btn-primary">Xác nhận</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -576,11 +576,11 @@
                                             class="btn btn-primary">Hoàn tác</button>
                                         <button th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}" type="button"
                                             class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#ghiChuHuy">Hủy</button>
+                                            data-bs-target="#ghiChuHuyModal">Hủy</button>
 
 
 
-                                        <form th:action="@{'/ban-hang-tai-quay/hoa-don/rollback/' + ${hoaDon.id}}"
+                                        <form onsubmit="return validGhiChuRollback()" th:action="@{'/ban-hang-tai-quay/hoa-don/rollback/' + ${hoaDon.id}}"
                                             method="post">
                                             <!-- Button trigger modal -->
 
@@ -601,13 +601,10 @@
                                                                 <div class="mb-3">
                                                                     <label for="" class="form-label">Lý
                                                                         do</label>
-                                                                    <textarea class="form-control" name="ghiChu" id=""
+                                                                    <textarea class="form-control" name="ghiChu" id="ghiChuRollback"
                                                                         cols="30" rows="5"></textarea>
 
-                                                                    <small id="helpId" class="form-text text-muted">Viết
-                                                                        rõ
-                                                                        vào
-                                                                        đây</small>
+                                                                    <small id="errorGhiChuRollback" class="form-text text-muted"></small>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -635,13 +632,13 @@
                                             });
                                         </script>
 
-                                        <form th:action="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
+                                        <form onsubmit="return validGhiChuHuy()" th:action="@{'/ban-hang-tai-quay/hoa-don/delete/' + ${hoaDon.id}}"
                                             method="post">
                                             <!-- Button trigger modal -->
 
 
                                             <!-- Modal -->
-                                            <div class="modal fade" id="ghiChuHuy" tabindex="-1" role="dialog"
+                                            <div class="modal fade" id="ghiChuHuyModal" tabindex="-1" role="dialog"
                                                 aria-labelledby="modalTitleId" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -656,13 +653,10 @@
                                                                 <div class="mb-3">
                                                                     <label for="" class="form-label">Lý
                                                                         do</label>
-                                                                    <textarea class="form-control" name="ghiChu" id=""
+                                                                    <textarea class="form-control" name="ghiChu" id="ghiChuHuy"
                                                                         cols="30" rows="5"></textarea>
 
-                                                                    <small id="helpId" class="form-text text-muted">Viết
-                                                                        rõ
-                                                                        vào
-                                                                        đây</small>
+                                                                    <small style="color: red;font-weight: bold;" id="errorGhiChuHuy"></small>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -739,7 +733,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close</button>
+                                                            data-bs-dismiss="modal">Đóng</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -757,7 +751,7 @@
                                                 </div>
                                                 <div class="col-md-6">
 
-                                                    <button th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}"
+                                                    <button th:if="${hoaDon.trangThai==0}"
                                                         type="button" style="float: right;margin-right: 5%"
                                                         data-bs-toggle="modal" data-bs-target="#doiThongTinHD"
                                                         class="btn btn-primary">Thay đổi
@@ -1547,7 +1541,7 @@
                                                 <div class="col-md-12">
                                                     <div class="">
                                                         <h4 style="font-weight: bold;">Thông tin sản phẩm đã mua</h4>
-                                                        <button th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}"
+                                                        <button th:if="${hoaDon.trangThai==0}"
                                                             onclick="handleButtonClick()" type="button"
                                                             class="btn btn-primary" data-bs-toggle="modal"
                                                             th:data-bs-target="${'#addsp'+hoaDon.id}">
@@ -1611,7 +1605,7 @@
                                                                                                             [[${ctsp.MauSac.ten}]]
                                                                                                             -
                                                                                                             [[${ctsp.KichCo.ten}]]
-                                                                                                            ]
+                                                                                                            ] 
                                                                                                         </h6>
                                                                                                         <span>Đơn giá:
                                                                                                             <span
@@ -1674,10 +1668,10 @@
                                                                     <th scope="col">STT</th>
                                                                     <th scope="col">Sản phẩm</th>
                                                                     <th scope="col">Số lượng</th>
-                                                                    <th scope="col">Trạng thái</th>
+                                                                    <th th:if="${hoaDon.trangThai==6}" scope="col">Trạng thái</th>
                                                                     <th scope="col">Thành tiền</th>
                                                                     <th scope="col"
-                                                                        th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}">
+                                                                        th:if="${hoaDon.trangThai==0}">
                                                                         Thao tác</th>
 
                                                                 </tr>
@@ -1706,7 +1700,7 @@
                                                                                             [[${obj.ChiTietSanPham.MauSac.ten}]]
                                                                                             -
                                                                                             [[${obj.ChiTietSanPham.KichCo.ten}]]
-                                                                                            ]
+                                                                                            ]  
                                                                                         </h6>
                                                                                         <span>Đơn giá: <span
                                                                                                 class="gia">
@@ -1715,6 +1709,7 @@
                                                                                         <p>Loại đế:
                                                                                             [[${obj.ChiTietSanPham.LoaiDe.ten}]]
                                                                                         </p>
+                                                                                        <span  th:if="${obj.soLuong>obj.ChiTietSanPham.soLuong&&hoaDon.trangThai==0}" style="color: rgb(255, 255, 255); font-weight: bold;background-color: red; padding: 10px 20px;">Số lượng còn: [[${obj.ChiTietSanPham.soLuong}]]</span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1722,7 +1717,7 @@
                                                                         <td>
                                                                             [[${obj.soLuong}]]
                                                                         </td>
-                                                                        <td>
+                                                                        <td th:if="${hoaDon.trangThai==6}">
                                                                             <span th:if="${obj.trangThai ==0}">Đã
                                                                                 nhận</span>
                                                                             <span th:if="${obj.trangThai ==2}">Hoàn
@@ -1736,7 +1731,7 @@
 
 
                                                                         <td
-                                                                            th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}">
+                                                                            th:if="${hoaDon.trangThai==0}">
                                                                             <div class="button-table">
                                                                                 <!-- delete Hóa đơn chi tiết -->
 
@@ -1746,7 +1741,7 @@
                                                                                     class="btn btn-primary"
                                                                                     th:data-bs-toggle="modal"
                                                                                     th:data-bs-target="${'#modalEditSoLuong'+obj.id}">
-                                                                                    <i class="bi bi-pencil-fill"></i>
+                                                                                    Sửa
                                                                                     <input type="hidden" name="idHdct"
                                                                                         th:value="${obj.id}">
                                                                                 </button>
@@ -1781,16 +1776,16 @@
                                                                                                     name="soLuongEdit"
                                                                                                     th:id="${'soLuongEdit'+obj.id}">
                                                                                             </div>
+                                                                                            <small style="color: red;font-weight: bold;" id="errorSoLuongEdit"></small>
                                                                                             <div class="modal-footer">
                                                                                                 <button type="button"
                                                                                                     class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Close
+                                                                                                    data-bs-dismiss="modal">Đóng
                                                                                                 </button>
                                                                                                 <button
                                                                                                     th:onclick="'validateAndSubmit('+${obj.ChiTietSanPham.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
                                                                                                     type="button"
-                                                                                                    class="btn btn-primary">Save
-                                                                                                    changes
+                                                                                                    class="btn btn-primary">Xác nhận
                                                                                                 </button>
 
                                                                                             </div>
@@ -1801,7 +1796,7 @@
                                                                                     class="btn btn-danger"
                                                                                     th:data-bs-toggle="modal"
                                                                                     th:data-bs-target="${'#modalDeleteHdct'+obj.id}">
-                                                                                    <i class="bi bi-trash-fill"></i></i>
+                                                                                    Xóa
                                                                                 </button>
                                                                                 <div class="modal fade"
                                                                                     th:id="${'modalDeleteHdct'+obj.id}"
@@ -1830,7 +1825,7 @@
                                                                                             <div class="modal-footer">
                                                                                                 <button type="button"
                                                                                                     class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                                    data-bs-dismiss="modal">Đóng</button>
                                                                                                 <a th:href="@{'/ban-hang-tai-quay/hoa-don-chi-tiet/delete/'+${obj.id}}"
                                                                                                     class="btn btn-danger">Xóa
                                                                                                 </a>
@@ -1851,10 +1846,10 @@
                                                                     <th scope="col">STT</th>
                                                                     <th scope="col">Sản phẩm</th>
                                                                     <th scope="col">Số lượng</th>
-                                                                    <th scope="col">Trạng thái</th>
+                                                                    <th th:if="${hoaDon.trangThai==6}" scope="col">Trạng thái</th>
                                                                     <th scope="col">Thành tiền</th>
                                                                     <th scope="col"
-                                                                        th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}">
+                                                                        th:if="${hoaDon.trangThai==0}">
                                                                         Thao tác</th>
                                                                 </tr>
                                                             </tfoot>
@@ -1898,7 +1893,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </div> -->
-                                                                <div th:if="${hoaDon.trangThai==-1||hoaDon.trangThai==0||hoaDon.trangThai==1}" class="row">
+                                                                <div th:if="${hoaDon.trangThai==-1||hoaDon.trangThai==0}" class="row">
                                                                     <div class="col">
                                                                         <h6>Voucher: </h6>
                                                                         <!-- Giảm [[${hoaDon.getPhanTramGiam()}]]% -->
@@ -2016,7 +2011,7 @@
 
                                                                 <div class="row">
                                                                     <div class="col">
-                                                                        <h6>Tổng tiền hàng:</h6>
+                                                                        <h6>Tổng tiền sản phẩm:</h6>
                                                                     </div>
                                                                     <div class="col">
                                                                         <h6 id="totalAmount" class="thong-tin-gia">
@@ -2287,7 +2282,7 @@
                             <th scope="col">Số Lượng</th>
                             <th scope="col">Đơn giá</th>
                             <th scope="col">Thành Tiền</th>
-                            <th scope="col">Trạng thái</th>
+                            <th th:if="${hoaDon.trangThai==6}" scope="col">Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2297,7 +2292,7 @@
                             <td th:text="${obj.soLuong}"></td>
                             <td th:text="${obj.chiTietSanPham.giaHienHanh}"></td>
                             <td th:text="${obj.soLuong*obj.chiTietSanPham.giaHienHanh}"></td>
-                            <td th:text="${obj.trangThai==0?'Đã nhận':'Hoàn trả'}"></td>
+                            <td th:if="${hoaDon.trangThai==6}" th:text="${obj.trangThai==0?'Đã nhận':'Hoàn trả'}"></td>
                         </tr>
 
                     </tbody>
