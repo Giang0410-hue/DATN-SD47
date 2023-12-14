@@ -570,6 +570,7 @@
                                                                                 <p>Loại đế:
                                                                                     [[${obj.ChiTietSanPham.LoaiDe.ten}]]
                                                                                 </p>
+                                                                                <span th:if="${obj.soLuong>obj.ChiTietSanPham.soLuong}" style="color: rgb(208, 255, 0); font-weight: bold;background-color: red;">Số lượng còn: [[${obj.ChiTietSanPham.soLuong}]]</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>

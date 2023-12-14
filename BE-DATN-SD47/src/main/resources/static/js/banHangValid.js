@@ -12,6 +12,7 @@ function validateAndSubmit(slg, sl, idCtsp) {
     var soLuong = document.getElementById('soLuongEdit' + idCtsp).value;
     var soLuongGoc = slg;
     if (isNaN(soLuong) || soLuong < 0) {
+        console.log('eeee')
         document.getElementById('errorSoLuongEdit').innerHTML = "Số lượng không hợp lệ!"
 
         // alert("Vui lòng nhập một số nguyên không âm.");
