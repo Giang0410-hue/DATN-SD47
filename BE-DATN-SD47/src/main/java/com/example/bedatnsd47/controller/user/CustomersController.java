@@ -21,7 +21,6 @@ import com.example.bedatnsd47.service.MauSacService;
 import com.example.bedatnsd47.service.TaiKhoanService;
 import com.example.bedatnsd47.service.ThuongHieuService;
 import com.example.bedatnsd47.service.VoucherService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,7 +35,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
