@@ -44,7 +44,7 @@
                                     var inputValueTimKiemAll = inputElementTimKiemAll.value;
                                     console.log('Giá trị của input:', inputValueTimKiemAll);
 
-                                    var fullUrl = "http://localhost:8080/shop"
+                                    var fullUrl = window.location.origin + "/shop"
 
                                     if (inputValueTimKiemAll !== '') {
                                         fullUrl = updateQueryStringParameterAll('keyword', inputValueTimKiemAll, fullUrl);
@@ -249,9 +249,21 @@
                     <div class="row mb-3">
                         <label for="inputPassword6" class="col-sm-3 col-form-label">Số điện thoại</label>
                         <div class="col-sm-9">
-                            <input type="text" th:field="*{soDienThoai}" class="form-control" id="inputPassword6">
+                            <input type="text" th:field="*{soDienThoai}"  class="form-control" id="inputPassword6">
                             <span class="check-loi" th:errors="*{soDienThoai}"></span>
                         </div>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var sdt = document.getElementById("inputPassword6")
+                                var ngaySinh = document.getElementById("inputPassword4")
+                                if(sdt.value=='0300000000'){
+                                    sdt.value = ''
+                                }
+                                if(ngaySinh.value=='1900-01-01'){
+                                    ngaySinh.value = ''
+                                }
+                            });
+                        </script>
                     </div>
                     <fieldset class="row mb-3">
                         <label class="col-sm-3 col-form-label">Giới tính</label>
