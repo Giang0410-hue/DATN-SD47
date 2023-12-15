@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -234,10 +235,20 @@ public class CustomersController {
     @GetMapping("/user/checkout")
     public String checkout(
             @RequestParam String options,
-            Model model) {
+            Model model,
+            RedirectAttributes redirectAttributes
+            ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         String[] optionArray = options.split(",");
         List<String> listIdString = Arrays.asList(optionArray);
-        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+
+        for (GioHangChiTiet gioHangChiTiet : gioHangChiTietService.findAllById(listIdString, khachHang.getGioHang().getId())) {
+            if (gioHangChiTiet.getSoLuong() > chiTietSanPhamSerivce.getById(gioHangChiTiet.getChiTietSanPham().getId()).getSoLuong()) {
+                redirectAttributes.addFlashAttribute("checkSoLuongDB","true");
+                return "redirect:/user/cart";
+            }
+        }
+
         List<GioHangChiTiet> listGioHangChiTiet = gioHangChiTietService.findAllById(listIdString,
                 khachHang.getGioHang().getId());
         model.addAttribute("listGioHangChiTiet", listGioHangChiTiet);
@@ -277,10 +288,18 @@ public class CustomersController {
             @RequestParam("phuongXaID") String phuongXaID,
             @RequestParam("quanHuyenID") String quanHuyenID,
             @RequestParam("thanhPhoID") String thanhPhoID,
-            @RequestParam("trangThaiLuuDC") String trangThaiLuuDC) {
+            @RequestParam("trangThaiLuuDC") String trangThaiLuuDC,
+            RedirectAttributes redirectAttributes) {
         String[] optionArray = idGioHangChiTiet.split(",");
-        List<String> listIdString = Arrays.asList(optionArray);
+
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        List<String> listIdString = Arrays.asList(optionArray);
+        for (GioHangChiTiet gioHangChiTiet : gioHangChiTietService.findAllById(listIdString, khachHang.getGioHang().getId())) {
+            if (gioHangChiTiet.getSoLuong() > chiTietSanPhamSerivce.getById(gioHangChiTiet.getChiTietSanPham().getId()).getSoLuong()) {
+                redirectAttributes.addFlashAttribute("checkSoLuongDB","true");
+                return "redirect:/user/checkout?options="+idGioHangChiTiet;
+            }
+        }
         if (trangThaiLuuDC.equals("0")) {
             Date date = new Date();
             DiaChi diaChi = new DiaChi();
@@ -673,17 +692,4 @@ public class CustomersController {
         return "/customer-template/detail-tra-cuu-don-hang";
     }
 
-    @GetMapping("/gui-hoa-don-dien-tu")
-    public String test(HttpServletRequest request) {
-        String url = request.getRequestURL().toString();
-        url = url.replace(request.getServletPath(), "");
-        hoaDonService.guiHoaDonDienTu(hoaDonService.findById(10330L), url);
-        return "redirect:/chinh-sach";
-    }
-
-    @GetMapping("/test")
-    public String test123(
-    ) {
-        return "/admin-template/in-hoa-don.html";
-    }
 }
