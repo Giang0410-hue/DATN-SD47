@@ -4,6 +4,8 @@ import com.example.bedatnsd47.entity.HoaDon;
 import com.example.bedatnsd47.entity.HoaDonChiTiet;
 import com.example.bedatnsd47.repository.HoaDonRepository;
 import com.example.bedatnsd47.service.HoaDonService;
+import com.example.bedatnsd47.service.LichSuHoaDonService;
+
 import jakarta.activation.DataSource;
 import jakarta.mail.internet.MimeMessage;
 //import org.jsoup.Jsoup;
@@ -32,6 +34,9 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Autowired
     HoaDonRepository hoaDonRepository;
+
+    @Autowired
+    LichSuHoaDonService lichSuHoaDonService;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -172,7 +177,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     public void guiHoaDonDienTu(HoaDon hoaDon, String url) {
 
         String from = "glacatshopshoes@gmail.com";
-        String to = "anhntph27418@fpt.edu.vn";
+        String to = hoaDon.getTaiKhoan().getEmail();
         String subject = "Thông tin hóa đơn";
         StringBuilder content = new StringBuilder();
         int index = 0;
@@ -198,13 +203,26 @@ public class HoaDonServiceImpl implements HoaDonService {
 
         } else if (hoaDon.getTrangThai() == 3) {
 
-            content.append("<p style=\"color: black;\">Chúng tôi xin thông báo rằng đơn hàng của bạn đã được giao thành công đến địa chỉ của bạn!</p>")
+            if (lichSuHoaDonService.findByIdhdNgaySuaAsc(hoaDon.getId()).size() == 2 && hoaDon.getLoaiHoaDon() == 2) {
+                content.append("<p style=\"color: black;\">Chúng tôi xin thông báo rằng đơn hàng của bạn đã được giao thành công new!</p>")
                     .append("<p style=\"color: black;\">Bạn chỉ có thể yêu cầu hoàn trả trong vòng 7 ngày kể từ ngày nhận hàng. Sau thời gian này, chúng tôi không thể chấp nhận yêu cầu hoàn trả.</p>")
                     .append("<p style=\"color: black;\">Để biết rõ về chính sách hoàn trả bạn có thể liên hệ với chúng tôi hoặc vào trang của chúng tôi để xem.</p>")
                     .append("<p style=\"color: black;\">Để kiểm tra chi tiết đơn hàng, vui lòng <a href=\"[[URL]]\" target=\"_self\">nhấn vào đây</a> và nhập mã đơn hàng cùng với số điện thoại của bạn. Để đảm bảo tính chính xác, hãy sử dụng thông tin mà bạn đã cung cấp khi đặt hàng.</p>")
                     .append("<p style=\"color: black;\">Đây là mã đơn hàng và số điện thoại của bạn dựa trên thông tin bạn cung cấp trong đơn hàng</p>")
                     .append("<p style=\"color: black;\">Mã Đơn Hàng: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getMaHoaDon() + " </span>" + "</p>")
                     .append("<p style=\"color: black;\">Số Điện Thoại: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getSdtNguoiNhan() + " </span>" + "</p>") ;
+
+                
+
+            } else{
+                content.append("<p style=\"color: black;\">Chúng tôi xin thông báo rằng đơn hàng của bạn đã được giao thành công đến địa chỉ của bạn!</p>")
+                    .append("<p style=\"color: black;\">Bạn chỉ có thể yêu cầu hoàn trả trong vòng 7 ngày kể từ ngày nhận hàng. Sau thời gian này, chúng tôi không thể chấp nhận yêu cầu hoàn trả.</p>")
+                    .append("<p style=\"color: black;\">Để biết rõ về chính sách hoàn trả bạn có thể liên hệ với chúng tôi hoặc vào trang của chúng tôi để xem.</p>")
+                    .append("<p style=\"color: black;\">Để kiểm tra chi tiết đơn hàng, vui lòng <a href=\"[[URL]]\" target=\"_self\">nhấn vào đây</a> và nhập mã đơn hàng cùng với số điện thoại của bạn. Để đảm bảo tính chính xác, hãy sử dụng thông tin mà bạn đã cung cấp khi đặt hàng.</p>")
+                    .append("<p style=\"color: black;\">Đây là mã đơn hàng và số điện thoại của bạn dựa trên thông tin bạn cung cấp trong đơn hàng</p>")
+                    .append("<p style=\"color: black;\">Mã Đơn Hàng: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getMaHoaDon() + " </span>" + "</p>")
+                    .append("<p style=\"color: black;\">Số Điện Thoại: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getSdtNguoiNhan() + " </span>" + "</p>") ;
+            }
         } else if (hoaDon.getTrangThai() == 5) {
 
             content.append("<p style=\"color: black;\">Chúng tôi xin chân thành xin lỗi vì sự bất tiện gây ra. Chúng tôi muốn thông báo rằng hóa đơn của bạn có mã " + "<span style=\"color:red\">" + hoaDon.getMaHoaDon() + "</span>" + " đã bị hủy do một số lý do khách quan. Dưới đây là thông tin chi tiết về tình trạng của hóa đơn:</p>")
@@ -281,19 +299,19 @@ public class HoaDonServiceImpl implements HoaDonService {
                             "        <div>" +
                             "            <p>" +
                             "                <span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tổng tiền hàng:</span>" +
-                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getTongTien() + " VND</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.tongTienHoaDon() + " VND</span>" +
                             "            </p>" +
                             "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Phí vận chuyển:</span>" +
                             "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getPhiShip() + " VND</span>" +
                             "            </p>" +
                             "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tiền giảm:</span>" +
-                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getGiamGia() + " VND</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getGiamGiaKhiHoanTra() + " VND</span>" +
                             "            </p>" +
                             "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tổng tiền hoàn trả:</span>" +
-                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;color:red;font-size: 1.1rem\">" + hoaDon.getGiamGiaKhiHoanTra() + " VND</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;color:red;font-size: 1.1rem\">" + (hoaDon.tongTienHoaDonDaNhan()!=0?hoaDon.tongTienHoaDonHoanTra():(hoaDon.tongTienHoaDonHoanTra()-hoaDon.getGiamGiaKhiHoanTra())) + " VND</span>" +
                             "            </p>" +
                             "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tổng tiền thanh toán:</span>" +
-                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;color:red;font-size: 1.1rem\">" + hoaDon.getTongTienKhiGiam() + " VND</span></p>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;color:red;font-size: 1.1rem\">" +(hoaDon.tongTienHoaDonDaNhan()!=0?hoaDon.tongTienHoaDonKhiGiam():0) + " VND</span></p>" +
                             "        </div>" +
                             "    </div>" +
                             "</section>"
@@ -361,7 +379,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                             "        <div>" +
                             "            <p>" +
                             "                <span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tổng tiền hàng:</span>" +
-                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getTongTien() + " VND</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.tongTienHoaDon() + " VND</span>" +
                             "            </p>" +
                             "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Phí vận chuyển:</span>" +
                             "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getPhiShip() + " VND</span>" +

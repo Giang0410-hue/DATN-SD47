@@ -127,6 +127,8 @@ public class HoaDon {
         return total;
     }
 
+    
+
     public Long tongTienHoaDonDaNhan() {
         Long total = (long) 0;
         for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
