@@ -40,7 +40,7 @@ $(document).ready(function () {
 
         // Tiếp tục với cập nhật số lượng
         $.ajax({
-            url: '/cart/update/' + id,
+            url: '/user/cart/update/' + id,
             type: 'GET',
             data: {soLuong: soLuongMoi},
             success: function (data) {
@@ -110,36 +110,36 @@ $(document).ready(function () {
 });
 
 
-var actionExecuted = false;
-
-$(document).ready(function () {
-    if (!actionExecuted) {
-        $('input[id^="soLuong_"]').each(function () {
-            // Lấy giá trị max từ thuộc tính th:max
-            var max = parseInt($(this).attr('id').split('_')[2]);
-
-            // Lấy giá trị hiện tại của input
-            var currentValue = parseInt($(this).val());
-
-            // Kiểm tra nếu giá trị hiện tại lớn hơn giới hạn max
-            if (!isNaN(max) && currentValue > max) {
-                // Đặt giá trị của input thành giới hạn max
-                $(this).val(max);
-
-                // Tự động chọn input
-                $(this).focus();
-
-                // Bỏ chọn input sau 1 giây
-                setTimeout(function () {
-                    $(this).blur();
-                }.bind(this), 1);
-
-                // Bỏ đánh dấu đã thực hiện hành động
-                actionExecuted = true;
-            }
-        });
-    }
-});
+// var actionExecuted = false;
+//
+// $(document).ready(function () {
+//     if (!actionExecuted) {
+//         $('input[id^="soLuong_"]').each(function () {
+//             // Lấy giá trị max từ thuộc tính th:max
+//             var max = parseInt($(this).attr('id').split('_')[2]);
+//
+//             // Lấy giá trị hiện tại của input
+//             var currentValue = parseInt($(this).val());
+//
+//             // Kiểm tra nếu giá trị hiện tại lớn hơn giới hạn max
+//             if (!isNaN(max) && currentValue > max) {
+//                 // Đặt giá trị của input thành giới hạn max
+//                 $(this).val(max);
+//
+//                 // Tự động chọn input
+//                 $(this).focus();
+//
+//                 // Bỏ chọn input sau 1 giây
+//                 setTimeout(function () {
+//                     $(this).blur();
+//                 }.bind(this), 1);
+//
+//                 // Bỏ đánh dấu đã thực hiện hành động
+//                 actionExecuted = true;
+//             }
+//         });
+//     }
+// });
 
 
 

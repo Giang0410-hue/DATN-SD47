@@ -2,6 +2,7 @@ package com.example.bedatnsd47.service;
 
 
 import com.example.bedatnsd47.entity.HoaDonChiTiet;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
@@ -39,4 +40,12 @@ public interface HoaDonChiTietService {
             Date startDateChart,
             Date endDateChart
     );
+
+    Integer sumSanPhamHoaDonAll();
+
+    List<Object[]> findByTongSoLuongAll();
+
+    List<Object[]> thongKeSanPhamTheoNgayMacDinh30Ngay(
+    );
+
 }

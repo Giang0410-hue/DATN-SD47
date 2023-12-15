@@ -54,12 +54,12 @@
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">Nguyễn Tuấn Anh</span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${tenNhanVien}"></span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6>Nguyễn Tuấn Anh</h6>
+                        <h6 th:text="${tenNhanVien}"></h6>
                         <span>Nhân Viên</span>
                     </li>
 
@@ -158,6 +158,13 @@
         </li><!-- End Forms Nav -->
 
         <li class="nav-item">
+            <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
+               <i class="bi bi-truck"></i>
+                <span>Trả hàng</span>
+            </a>
+        </li><!-- End Forms Nav -->
+
+        <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-person-vcard"></i><span>Quản Lý Tài Khoản</span><i
                     class="bi bi-chevron-down ms-auto"></i>
@@ -211,11 +218,13 @@
                                 <form class="row g-3" style="margin-top: 1%;margin-bottom: 5%;"
                                       th:action="@{/admin/voucher/update}" method="post"
                                       enctype="multipart/form-data"
-                                      th:object="${voucher}">
+                                      th:object="${voucher}" id="updateVoucher" onsubmit="return validateTrangThai()">
                                     <input hidden type="text" th:field="*{id}">
                                     <input hidden type="date" th:field="*{ngayTao}">
+
                                     <!--                                    <input hidden type="text" th:field="*{maVoucher}">-->
                                     <!--                                    <input hidden type="text" th:field="*{trangThai}">-->
+
                                     <div class="col-md-6">
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Mã voucher:</label>
@@ -227,7 +236,7 @@
                                     <div class="col-md-6">
                                         <label class="form-label">
                                             <span class="dau-sao">*</span>Giá trị giảm tối đa:</label>
-                                        <input type="text" class="form-control" placeholder="Nhập giá trị giảm tối đa"
+                                        <input type="number" class="form-control" placeholder="Nhập giá trị giảm tối đa"
                                                th:field="*{giamToiDa}">
                                         <span class="check-loi" th:errors="*{giamToiDa}"></span>
                                     </div>
@@ -293,35 +302,43 @@
                                         <input hidden class="form-check-input" type="radio" name="gridRadios"
                                                value="2"
                                                style="margin-left:10%;" checked th:field="*{trangThai}">
-<!--                                        <label class="form-check-label">-->
-<!--                                            Sắp diễn ra-->
-<!--                                        </label>-->
+                                        <!--                                        <label class="form-check-label">-->
+                                        <!--                                            Sắp diễn ra-->
+                                        <!--                                        </label>-->
 
                                         <input class="form-check-input" type="radio" name="gridRadios"
                                                value="0"
-                                               style="margin-left:5%;" th:if="*{trangThai == 2}" disabled th:field="*{trangThai}"
-                                                checked>
-                                        <label class="form-check-label" th:if="*{trangThai == 2}" disabled >
+                                               style="margin-left:5%;" th:if="*{trangThai == 2}" disabled
+                                               th:field="*{trangThai}"
+                                               checked>
+                                        <label class="form-check-label" th:if="*{trangThai == 2}" disabled>
                                             Đang diễn ra
                                         </label>
                                         <input class="form-check-input" type="radio" name="gridRadios"
                                                value="0"
-                                               style="margin-left:5%;" th:if="*{trangThai == 0||trangThai == 1}" th:field="*{trangThai}"
-                                               checked>
-                                        <label class="form-check-label" th:if="*{trangThai == 0||trangThai == 1}" >
+                                               style="margin-left:5%;" th:if="*{trangThai == 0||trangThai == 1}"
+                                               th:field="*{trangThai}"
+                                               checked
+                                               id="dangDienRa"
+                                        >
+                                        <label class="form-check-label" th:if="*{trangThai == 0||trangThai == 1}">
                                             Đang diễn ra
                                         </label>
 
                                         <input class="form-check-input" type="radio" name="gridRadios"
                                                value="1"
-                                               style="margin-left:5%;" checked th:field="*{trangThai}">
+                                               style="margin-left:5%;" checked th:field="*{trangThai}" id="daKetThuc"
+                                        >
                                         <label>
                                             Đã kết thúc
                                         </label>
                                     </div>
+                                    <span id="error-trangthai"
+                                          style="color: red;font-size: 14px;font-weight: bold;margin-left: 42%"></span>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-warning">Update</button>
                                     </div>
+
                                 </form>
 
                                 <!-- form thêm voucher end-->
@@ -380,7 +397,7 @@
     </div>
 </div>
 <!--Thông báo thất bại end-->
-<script>
+<script th:inline="javascript">
     function validateDateStartUpdate() {
         var inputField = document.getElementById('ngayBatDau');
         var errorMessage = document.getElementById('error-message-start-update');
@@ -414,6 +431,27 @@
             inputField.setCustomValidity('');
         }
     }
+
+    function validateTrangThai() {
+        var radio = document.getElementById('dangDienRa')
+        if (radio.checked) {
+            var inputBatDau = new Date(document.getElementById('ngayBatDau').value);
+            var inputKetThuc = new Date(document.getElementById('ngayKetThuc').value);
+            var errorMessage = document.getElementById('error-trangthai');
+            var currentDate = new Date();
+            if (currentDate >= inputBatDau && currentDate <= inputKetThuc) {
+                // Ngày hiện tại nằm trong khoảng, không có lỗi
+                errorMessage.innerHTML = "";
+                return true;
+                // Thực hiện các hành động khác khi "Đang diễn ra" được chọn
+            } else {
+                // Ngày hiện tại không nằm trong khoảng, hiển thị thông báo lỗi
+                errorMessage.innerHTML = "Ngày hiện tại không nằm trong khoảng ngày diễn ra sự kiện.";
+                return false;
+            }
+        }
+    }
+
 </script>
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">

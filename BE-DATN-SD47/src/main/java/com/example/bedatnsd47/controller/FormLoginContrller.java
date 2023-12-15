@@ -1,6 +1,7 @@
-package com.example.bedatnsd47.tesst;
+package com.example.bedatnsd47.controller;
 
 
+import com.example.bedatnsd47.config.PrincipalCustom;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.entity.VaiTro;
 import com.example.bedatnsd47.repository.KhachHangRepository;
@@ -43,18 +44,24 @@ public class FormLoginContrller {
 
     String ranDomMa;
 
+    private PrincipalCustom principalCustom = new PrincipalCustom();
 
     @GetMapping("/login")
     public String formLogin() {
-//        principal.getName();
-        return "dang-nhap";
+        if (principalCustom.getCurrentUserNameAdmin() != null) {
+            return "redirect:/ban-hang-tai-quay/hoa-don";
+        } else if (principalCustom.getCurrentUserNameCustomer() != null) {
+            return "redirect:/home";
+        } else {
+            return "dang-nhap";
+        }
     }
 
-    @GetMapping("/login/erorr")
+    @GetMapping("/login-error")
     public String loginErorr(
             Model model
     ) {
-        model.addAttribute("message","Tài khoản chưa kích hoạt hoặc sai thông tin tài khoản");
+        model.addAttribute("message", "Tài khoản chưa kích hoạt hoặc sai thông tin tài khoản");
         return "dang-nhap";
     }
 

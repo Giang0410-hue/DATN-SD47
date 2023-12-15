@@ -44,7 +44,7 @@
                                     var inputValueTimKiemAll = inputElementTimKiemAll.value;
                                     console.log('Giá trị của input:', inputValueTimKiemAll);
 
-                                    var fullUrl = "http://localhost:8080/shop"
+                                    var fullUrl = window.location.origin + "/shop"
 
                                     if (inputValueTimKiemAll !== '') {
                                         fullUrl = updateQueryStringParameterAll('keyword', inputValueTimKiemAll, fullUrl);
@@ -102,9 +102,9 @@
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                                        role="button" aria-expanded="false"><span class="icon icon-person"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
+                                        <li><a class="dropdown-item" href="/user/thong-tin-khach-hang">Tài Khoản Của Tôi</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="/don-mua">Đơn Mua</a></li>
+                                        <li><a class="dropdown-item" href="/user/don-mua">Đơn Mua</a></li>
                                         <li><a class="dropdown-item" th:href="@{/logout}">Đăng Xuất</a></li>
                                     </ul>
                                 </li>
@@ -113,7 +113,7 @@
 <!--                                    <a class="nav-link" href="#"><span class="icon icon-heart-o"></span></a>-->
 <!--                                </li>-->
                                 <li class="nav-item" style="margin-top: 5%;margin-left: -5%">
-                                    <a class="site-cart" href="/cart">
+                                    <a class="site-cart" href="/user/cart">
                                         <span class="icon icon-shopping_cart"></span>
                                         <span class="count" th:text="${soLuongSPGioHangCT}"></span>
                                     </a>
@@ -155,6 +155,7 @@
                     <li><a href="/about">Về chúng tôi</a></li>
                     <li><a href="/lien-he">Liên hệ</a></li>
                     <li><a href="/chinh-sach">Chính Sách</a></li>
+                    <li><a href="/tra-cuu-don-hang">Tra Cứu Đơn Hàng</a></li>
                 </ul>
             </div>
         </nav>
@@ -184,17 +185,17 @@
                             </a>
                             <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                                 <li>
-                                    <a href="/thong-tin-khach-hang" class="active">
+                                    <a href="/user/thong-tin-khach-hang" class="active">
                                         <i class="bi bi-circle"></i><span>Hồ Sơ</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/dia-chi">
+                                    <a href="/user/dia-chi">
                                         <i class="bi bi-circle"></i><span>Địa Chỉ</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/mat-khau">
+                                    <a href="/user/mat-khau">
                                         <i class="bi bi-circle"></i><span>Đổi Mật Khẩu</span>
                                     </a>
                                 </li>
@@ -202,8 +203,8 @@
                         </li><!-- End Components Nav -->
 
                         <li class="nav-item">
-                            <a class="nav-link collapsed" href="/don-mua">
-                                <i class="bi bi-receipt-cutoff"></i>
+                            <a class="nav-link collapsed" href="/user/don-mua">
+                                <i class="bi bi-truck"></i>
                                 <span>Đơn Mua</span>
                             </a>
                         </li><!-- End Forms Nav -->
@@ -219,7 +220,7 @@
                 <h4 style="margin-top: 2%">Hồ Sơ Của Tôi</h4>
                 <p>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
                 <form class="row g-3" style="width: 80%;margin: auto;margin-top: 5%"
-                      th:action="@{/thong-tin-khach-hang/update}" th:object="${khachHang}" method="post">
+                      th:action="@{/user/thong-tin-khach-hang/update}" th:object="${khachHang}" method="post">
                     <div class="row mb-3">
                         <input type="hidden" th:field="*{id}">
                         <input type="hidden" th:field="*{trangThai}">
@@ -248,9 +249,21 @@
                     <div class="row mb-3">
                         <label for="inputPassword6" class="col-sm-3 col-form-label">Số điện thoại</label>
                         <div class="col-sm-9">
-                            <input type="text" th:field="*{soDienThoai}" class="form-control" id="inputPassword6">
+                            <input type="text" th:field="*{soDienThoai}"  class="form-control" id="inputPassword6">
                             <span class="check-loi" th:errors="*{soDienThoai}"></span>
                         </div>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var sdt = document.getElementById("inputPassword6")
+                                var ngaySinh = document.getElementById("inputPassword4")
+                                if(sdt.value=='0300000000'){
+                                    sdt.value = ''
+                                }
+                                if(ngaySinh.value=='1900-01-01'){
+                                    ngaySinh.value = ''
+                                }
+                            });
+                        </script>
                     </div>
                     <fieldset class="row mb-3">
                         <label class="col-sm-3 col-form-label">Giới tính</label>
@@ -327,58 +340,54 @@
                 <div class="col-lg-6 mb-5 mb-lg-0">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="footer-heading mb-4">Navigations</h3>
+                            <h3 class="footer-heading mb-4">Điều hướng</h3>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <ul class="list-unstyled">
-                                <li><a href="#">Sell online</a></li>
-                                <li><a href="#">Features</a></li>
-                                <li><a href="#">Shopping cart</a></li>
-                                <li><a href="#">Store builder</a></li>
+                                <li><a href="#">Vận chuyển</a></li>
+                                <li><a href="#">Khu vực</a></li>
+                                <li><a href="#">Kênh bán hàng</a></li>
                             </ul>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <ul class="list-unstyled">
-                                <li><a href="#">Mobile commerce</a></li>
-                                <li><a href="#">Dropshipping</a></li>
-                                <li><a href="#">Website development</a></li>
+                                <li><a href="/about">Đội ngũ</a></li>
+                                <li><a href="/chinh-sach">Trả hàng</a></li>
+                                <li><a href="#">Bảo mật</a></li>
                             </ul>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <ul class="list-unstyled">
-                                <li><a href="#">Point of sale</a></li>
-                                <li><a href="#">Hardware</a></li>
-                                <li><a href="#">Software</a></li>
+                                <li><a href="/lien-he">Liên hệ</a></li>
+                                <li><a href="/lien-he">Chăm sóc khách hàng</a></li>
+                                <li><a href="/lien-he">Phản hồi</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
-                    <h3 class="footer-heading mb-4">Promo</h3>
-                    <a href="#" class="block-6">
+                    <h3 class="footer-heading mb-4">Mẫu mã</h3>
+                    <a href="/shop" class="block-6">
                         <img src="../../static/img/hero_1.jpg" alt="Image placeholder"
                              class="img-fluid rounded mb-4"/>
                         <h3 class="font-weight-light mb-0">
-                            Finding Your Perfect Shoes
+                            Tìm đôi giày hoàn hảo của bạn
                         </h3>
-                        <p>Promo from nuary 15 &mdash; 25, 2019</p>
                     </a>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="block-5 mb-5">
-                        <h3 class="footer-heading mb-4">Contact Info</h3>
+                        <h3 class="footer-heading mb-4">Thông tin liên lạc</h3>
                         <ul class="list-unstyled">
                             <li class="address">
-                                203 Fake St. Mountain View, San Francisco, California, USA
+                                13 P. Trịnh Văn Bô, Xuân Phương, Nam Từ Liêm, Hà Nội, Việt Nam
                             </li>
                             <li class="phone">
-                                <a href="tel://23923929210">+2 392 3929 210</a>
+                                <a href="tel://23923929210">+84 377 463 664</a>
                             </li>
-                            <li class="email">emailaddress@domain.com</li>
+                            <li class="email">glacatshopshoes@gmail.com</li>
                         </ul>
                     </div>
-
-
                 </div>
             </div>
 

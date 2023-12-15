@@ -51,6 +51,18 @@ public class ThongKeController {
     public String hienThi(
             Model model) {
         Date ngayTao1 = new Date();
+        Integer sumSanPham = (Integer) model.asMap().get("sumSanPham");
+        Integer countHoaDon = (Integer) model.asMap().get("countHoaDon");
+        Long sumHoaDon = (Long) model.asMap().get("sumHoaDon");
+        Integer countHoaDonChoXacNhan = (Integer) model.asMap().get("countHoaDonChoXacNhanBetween");
+        Integer countHoaDonChoGiao = (Integer) model.asMap().get("countHoaDonChoGiaoBetween");
+        Integer countHoaDonDangGiao = (Integer) model.asMap().get("countHoaDonDangGiaoBetween");
+        Integer countHoaDonHoanThanh = (Integer) model.asMap().get("countHoaDonHoanThanhBetween");
+        Integer countHoaDonDaHuy = (Integer) model.asMap().get("countHoaDonDaHuyBetween");
+        Integer countHoaDonTra = (Integer) model.asMap().get("countHoaDonTraBetween");
+        List<Object[]> thongKeSanPham = (List<Object[]>) model.asMap().get("thongKeBetween");
+        List<Object[]> danhSachSapHetHangAll = (List<Object[]>) model.asMap().get("danhSachSapHetHang");
+        List<Object[]> bieuDoCot = (List<Object[]>) model.asMap().get("thongKeSP");
         Integer countHoaDonDay = hoaDonService.countHoaDonDay(ngayTao1);
         Long sumHoaDonDay = hoaDonService.sumHoaDonDay(ngayTao1);
         Integer countHoaDonMonth = hoaDonService.countHoaDonMonth(ngayTao1);
@@ -62,24 +74,115 @@ public class ThongKeController {
         Integer countHoaDon2 = hoaDonService.countHoaDon(2);
         Integer countHoaDon3 = hoaDonService.countHoaDon(3);
         Integer countHoaDon5 = hoaDonService.countHoaDon(5);
+        Integer countHoaDon6 = hoaDonService.countHoaDon(6);
+        Integer countHoaDonChoXacNhanNgay = hoaDonService.countHoaDonTrangThaiNgay(ngayTao1,0);
+        Integer countHoaDonChoGiaoNgay = hoaDonService.countHoaDonTrangThaiNgay(ngayTao1,1);
+        Integer countHoaDonDangGiaoNgay = hoaDonService.countHoaDonTrangThaiNgay(ngayTao1,2);
+        Integer countHoaDonHoanThanhNgay = hoaDonService.countHoaDonTrangThaiNgay(ngayTao1,3);
+        Integer countHoaDonDaHuyNgay = hoaDonService.countHoaDonTrangThaiNgay(ngayTao1,5);
+        Integer countHoaDonTraNgay = hoaDonService.countHoaDonTrangThaiNgay(ngayTao1,6);
+        Integer countHoaDonChoXacNhanThang = hoaDonService.countHoaDonTrangThaiThang(ngayTao1,0);
+        Integer countHoaDonChoGiaoThang = hoaDonService.countHoaDonTrangThaiThang(ngayTao1,1);
+        Integer countHoaDonDangGiaoThang = hoaDonService.countHoaDonTrangThaiThang(ngayTao1,2);
+        Integer countHoaDonHoanThanhThang = hoaDonService.countHoaDonTrangThaiThang(ngayTao1,3);
+        Integer countHoaDonDaHuyThang = hoaDonService.countHoaDonTrangThaiThang(ngayTao1,5);
+        Integer countHoaDonTraThang = hoaDonService.countHoaDonTrangThaiThang(ngayTao1,6);
+        Integer sumSanPhamAll = hoaDonChiTietService.sumSanPhamHoaDonAll();
+        Integer countHoaDonAll = hoaDonService.countHoaDonAll();
+        Long sumHoaDonAll = hoaDonService.sumGiaTriHoaDonAll();
+        List<Object[]> thongKeSanPhamAll = hoaDonChiTietService.findByTongSoLuongAll();
+        List<Object[]> bieuDoCotTru30 = hoaDonChiTietService.thongKeSanPhamTheoNgayMacDinh30Ngay();
+        Integer soLuong = 10;
+        List<Object[]> danhSachSapHetHang10 = chiTietSanPhamSerivce.danhSachHangSapHet(soLuong);
         model.addAttribute("countHoaDonDay", countHoaDonDay);
         model.addAttribute("sumHoaDonDay", sumHoaDonDay);
         model.addAttribute("countHoaDonMonth", countHoaDonMonth);
         model.addAttribute("sumHoaDonMonth", sumHoaDonMonth);
         model.addAttribute("sumSanPhamHoaDonMonth", sumSanPhamHoaDonMonth);
+        if (sumSanPham == null) {
+            model.addAttribute("sumSanPham", sumSanPhamAll);
+        }else{
+            model.addAttribute("sumSanPham", sumSanPham);
+        }
+        if (countHoaDon == null) {
+            model.addAttribute("countHoaDon", countHoaDonAll);
+        }else{
+            model.addAttribute("countHoaDon", countHoaDon);
+        }
+        if (sumHoaDon == null) {
+            model.addAttribute("sumHoaDon", sumHoaDonAll);
+        }else{
+            model.addAttribute("sumHoaDon", sumHoaDon);
+        }
+        if (countHoaDonChoXacNhan == null) {
+            model.addAttribute("countHoaDonChoXacNhanBetween", countHoaDon0);
+        }else{
+            model.addAttribute("countHoaDonChoXacNhanBetween", countHoaDonChoXacNhan);
+        }
+        if (countHoaDonChoGiao == null) {
+            model.addAttribute("countHoaDonChoGiaoBetween", countHoaDon1);
+        }else{
+            model.addAttribute("countHoaDonChoGiaoBetween", countHoaDonChoGiao);
+        }
+        if (countHoaDonDangGiao == null) {
+            model.addAttribute("countHoaDonDangGiaoBetween", countHoaDon2);
+        }else{
+            model.addAttribute("countHoaDonDangGiaoBetween", countHoaDonDangGiao);
+        }
+        if (countHoaDonHoanThanh == null) {
+            model.addAttribute("countHoaDonHoanThanhBetween", countHoaDon3);
+        }else{
+            model.addAttribute("countHoaDonHoanThanhBetween", countHoaDonHoanThanh);
+        }
+        if (countHoaDonDaHuy == null) {
+            model.addAttribute("countHoaDonDaHuyBetween", countHoaDon5);
+        }else{
+            model.addAttribute("countHoaDonDaHuyBetween", countHoaDonDaHuy);
+        }
+        if (countHoaDonTra == null) {
+            model.addAttribute("countHoaDonTraBetween", countHoaDon6);
+        }else{
+            model.addAttribute("countHoaDonTraBetween", countHoaDonTra);
+        }
+        if (thongKeSanPham == null) {
+            model.addAttribute("thongKeBetween", thongKeSanPhamAll);
+        }else{
+            model.addAttribute("thongKeBetween", thongKeSanPham);
+        }
+        if (danhSachSapHetHangAll == null){
+            model.addAttribute("danhSachSapHetHang",danhSachSapHetHang10);
+        }else{
+            model.addAttribute("danhSachSapHetHang",danhSachSapHetHangAll);
+        }
+        if (bieuDoCot == null){
+            model.addAttribute("thongKeSP",bieuDoCotTru30);
+        }else{
+            model.addAttribute("thongKeSP",bieuDoCot);
+        }
         model.addAttribute("sumSanPhamHoaDonDay", sumSanPhamHoaDonDay);
+        model.addAttribute("countHoaDonChoXacNhanNgay", countHoaDonChoXacNhanNgay);
+        model.addAttribute("countHoaDonChoGiaoNgay", countHoaDonChoGiaoNgay);
+        model.addAttribute("countHoaDonDangGiaoNgay", countHoaDonDangGiaoNgay);
+        model.addAttribute("countHoaDonHoanThanhNgay", countHoaDonHoanThanhNgay);
+        model.addAttribute("countHoaDonDaHuyNgay", countHoaDonDaHuyNgay);
+        model.addAttribute("countHoaDonTraNgay", countHoaDonTraNgay);
+        model.addAttribute("countHoaDonChoXacNhanThang", countHoaDonChoXacNhanThang);
+        model.addAttribute("countHoaDonChoGiaoThang", countHoaDonChoGiaoThang);
+        model.addAttribute("countHoaDonDangGiaoThang", countHoaDonDangGiaoThang);
+        model.addAttribute("countHoaDonHoanThanhThang", countHoaDonHoanThanhThang);
+        model.addAttribute("countHoaDonDaHuyThang", countHoaDonDaHuyThang);
+        model.addAttribute("countHoaDonTraThang", countHoaDonTraThang);
         model.addAttribute("countHoaDon0", countHoaDon0);
         model.addAttribute("countHoaDon1", countHoaDon1);
         model.addAttribute("countHoaDon2", countHoaDon2);
         model.addAttribute("countHoaDon3", countHoaDon3);
         model.addAttribute("countHoaDon5", countHoaDon5);
+        model.addAttribute("countHoaDon6", countHoaDon6);
         List<Object[]> result = hoaDonChiTietService.findByTongSoLuongThang(ngayTao1);
         List<Object[]> top5Ngay = hoaDonChiTietService.findByTongSoLuongNgay(ngayTao1);
         model.addAttribute("top5Thang", result);
         model.addAttribute("top5Ngay", top5Ngay);
-        Integer soLuong = 10;
-        List<Object[]> danhSachSapHetHang = chiTietSanPhamSerivce.danhSachHangSapHet(soLuong);
-        model.addAttribute("listSapHetHang",danhSachSapHetHang);
+        model.addAttribute("listSapHetHang",danhSachSapHetHang10);
         return "/admin-template/thong_ke/thong-ke";
     }
 
@@ -104,11 +207,23 @@ public class ThongKeController {
         Integer sumSanPham = hoaDonChiTietService.sumSanPhamHoaDonBetween(startDate, endDate);
         Integer countHoaDon = hoaDonService.countHoaDonBetween(startDate, endDate);
         Long sumHoaDon = hoaDonService.sumGiaTriHoaDonBetween(startDate, endDate);
+        Integer countHoaDonChoXacNhanBetween = hoaDonService.countHoaDonTrangThaiBetween(startDate,endDate,0);
+        Integer countHoaDonChoGiaoBetween = hoaDonService.countHoaDonTrangThaiBetween(startDate,endDate,1);
+        Integer countHoaDonDangGiaoBetween = hoaDonService.countHoaDonTrangThaiBetween(startDate,endDate,2);
+        Integer countHoaDonHoanThanhBetween = hoaDonService.countHoaDonTrangThaiBetween(startDate,endDate,3);
+        Integer countHoaDonDaHuyBetween = hoaDonService.countHoaDonTrangThaiBetween(startDate,endDate,5);
+        Integer countHoaDonTraBetween = hoaDonService.countHoaDonTrangThaiBetween(startDate,endDate,6);
         redirectAttributes.addFlashAttribute("sumSanPham", sumSanPham);
         redirectAttributes.addFlashAttribute("startDate", startDate);
         redirectAttributes.addFlashAttribute("endDate", endDate);
         redirectAttributes.addFlashAttribute("countHoaDon", countHoaDon);
         redirectAttributes.addFlashAttribute("sumHoaDon", sumHoaDon);
+        redirectAttributes.addFlashAttribute("countHoaDonChoXacNhanBetween", countHoaDonChoXacNhanBetween);
+        redirectAttributes.addFlashAttribute("countHoaDonChoGiaoBetween", countHoaDonChoGiaoBetween);
+        redirectAttributes.addFlashAttribute("countHoaDonDangGiaoBetween", countHoaDonDangGiaoBetween);
+        redirectAttributes.addFlashAttribute("countHoaDonHoanThanhBetween", countHoaDonHoanThanhBetween);
+        redirectAttributes.addFlashAttribute("countHoaDonDaHuyBetween", countHoaDonDaHuyBetween);
+        redirectAttributes.addFlashAttribute("countHoaDonTraBetween", countHoaDonTraBetween);
         List<Object[]> thongKeSanPhamBetween = hoaDonChiTietService.findByTongSoLuongBetween(startDate, endDate);
         redirectAttributes.addFlashAttribute("thongKeBetween", thongKeSanPhamBetween);
         return "redirect:/admin/thong-ke";

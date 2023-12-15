@@ -8,6 +8,7 @@ import com.example.bedatnsd47.service.HoaDonChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 @Service
@@ -85,5 +86,24 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     public List<Object[]> thongKeSanPhamTheoNgay(Date startDateChart, Date endDateChart) {
         return hoaDonChiTietRepository.thongKeSanPhamTheoNgay(startDateChart, endDateChart);
     }
+
+    @Override
+    public Integer sumSanPhamHoaDonAll() {
+        return hoaDonChiTietRepository.sumSanPhamHoaDonAll();
+    }
+
+    @Override
+    public List<Object[]> findByTongSoLuongAll() {
+        return hoaDonChiTietRepository.findByTongSoLuongAll();
+    }
+
+    @Override
+    public List<Object[]> thongKeSanPhamTheoNgayMacDinh30Ngay() {
+        Date ngayHienTai = new Date();
+        Date ngayTru30 = new Date();
+        ngayTru30.setDate(ngayHienTai.getDate()-30);
+        return hoaDonChiTietRepository.thongKeSanPhamTheoNgay(ngayTru30,ngayHienTai);
+    }
+
 
 }

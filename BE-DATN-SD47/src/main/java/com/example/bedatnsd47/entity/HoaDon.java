@@ -117,17 +117,55 @@ public class HoaDon {
         return total;
     }
 
+    public Long tongTienHoaDonHoanTra() {
+        Long total = (long) 0;
+        for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
+            if (hoaDonChiTiet.getTrangThai() == 2) {
+                total += hoaDonChiTiet.tongTien();
+            }
+        }
+        return total;
+    }
+
     
 
-    public Long tongTienHoaDonKhiGiam() {
+    public Long tongTienHoaDonDaNhan() {
+        Long total = (long) 0;
+        for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
+            if (hoaDonChiTiet.getTrangThai() == 0) {
+                total += hoaDonChiTiet.tongTien();
+            }
+        }
+        return total;
+    }
 
-        return this.tongTienHoaDon() + this.getPhiShip();
+
+    public Long tongTienHoaDonKhiGiam() {
+        
+        return this.tongTienHoaDonDaNhan() + this.getPhiShip()-this.getGiamGia();
     }
 
     public Long getGiamGia() {
         if (this.voucher != null) {
             Long ptGiam = this.voucher.getPhanTramGiam().longValue();
+            Long giam = (this.tongTienHoaDonDaNhan() * ptGiam) / 100;
+            Long giamToiDa = Long.valueOf(this.voucher.getGiamToiDa().longValue());
+            if (giam > giamToiDa) {
+                return giamToiDa;
+            }
+            return giam;
+        }
+        return (long) 0;
+    }
+
+    public Long getGiamGiaKhiHoanTra() {
+        if (this.voucher != null) {
+            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
             Long giam = (this.tongTienHoaDon() * ptGiam) / 100;
+            Long giamToiDa = Long.valueOf(this.voucher.getGiamToiDa().longValue());
+            if (giam > giamToiDa) {
+                return giamToiDa;
+            }
             return giam;
         }
         return (long) 0;
@@ -158,9 +196,10 @@ public class HoaDon {
             case 5:
                 return "Đã hủy";
             case 6:
-                return "Xác nhận đổi trả";
-            case 7:
-                return "Hoàn thành đổi trả";
+                return "Hoàn trả";
+
+            case 8:
+                return "Đơn đổi trả tạm";
             default:
                 break;
         }
