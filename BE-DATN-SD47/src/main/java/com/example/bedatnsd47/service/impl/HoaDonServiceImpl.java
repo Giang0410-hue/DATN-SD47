@@ -169,32 +169,150 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public void guiHoaDonDienTu() {
-        HoaDon hoaDon = this.findById(10314L);
+    public void guiHoaDonDienTu(HoaDon hoaDon, String url) {
 
         String from = "glacatshopshoes@gmail.com";
         String to = "anhntph27418@fpt.edu.vn";
-        String subject = "Đơn hàng " + hoaDon.getMaHoaDon() + " đã giao hàng thành công\n";
+        String subject = "Thông tin hóa đơn";
         StringBuilder content = new StringBuilder();
         int index = 0;
         content.append("<p style=\"color: black;\"><b>Xin chào ").append(hoaDon.getNguoiNhan()).append(",</b></p>");
 
         if (hoaDon.getTrangThai() == 1) {
+
             content.append("<p style=\"color: black;\">Chúng tôi cảm ơn vì bạn đã lựa chọn mua sắm tại Glacat.</p>")
-                    .append("<p style=\"color: black;\">Chúng tôi xin thông báo rằng đơn hàng của bạn có mã số " + hoaDon.getMaHoaDon() + " đang được chuẩn bị và sẽ sớm được giao đến địa chỉ bạn đã cung cấp.</p>");
+                    .append("<p style=\"color: black;\">Chúng tôi xin thông báo rằng đơn hàng của bạn đã được xác nhận và chúng tôi đang chuẩn bị hàng. Chúng tôi sẽ gửi cho đơn vị vận chuyển sớm nhất để bạn có thể có một trải nghiệm tốt.</p>")
+                    .append("<p style=\"color: black;\">Để kiểm tra chi tiết đơn hàng, vui lòng <a href=\"[[URL]]\" target=\"_self\">nhấn vào đây</a> và nhập mã đơn hàng cùng với số điện thoại của bạn. Để đảm bảo tính chính xác, hãy sử dụng thông tin mà bạn đã cung cấp khi đặt hàng.</p>")
+                    .append("<p style=\"color: black;\">Đây là mã đơn hàng và số điện thoại của bạn dựa trên thông tin bạn cung cấp trong đơn hàng</p>")
+                    .append("<p style=\"color: black;\">Mã Đơn Hàng: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getMaHoaDon() + " </span>" + "</p>")
+                    .append("<p style=\"color: black;\">Số Điện Thoại: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getSdtNguoiNhan() + " </span>" + "</p>") ;
 
         } else if (hoaDon.getTrangThai() == 2) {
-            content.append("<p style=\"color: black;\"></p>")
-                    .append("<p style=\"color: black;\">.</p>");
 
+            content.append("<p style=\"color: black;\">Chúng tôi xin thông báo rằng đơn hàng của bạn đã được chuyển cho đơn vị vận chuyển và đang trong quá trình vận chuyển đến địa chỉ của bạn.</p>")
+                    .append("<p style=\"color: black;\">Xin cảm ơn vì đã lựa chọn sản phẩm của chúng tôi!</p>")
+                    .append("<p style=\"color: black;\">Để kiểm tra chi tiết đơn hàng, vui lòng <a href=\"[[URL]]\" target=\"_self\">nhấn vào đây</a> và nhập mã đơn hàng cùng với số điện thoại của bạn. Để đảm bảo tính chính xác, hãy sử dụng thông tin mà bạn đã cung cấp khi đặt hàng.</p>")
+                    .append("<p style=\"color: black;\">Đây là mã đơn hàng và số điện thoại của bạn dựa trên thông tin bạn cung cấp trong đơn hàng</p>")
+                    .append("<p style=\"color: black;\">Mã Đơn Hàng: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getMaHoaDon() + " </span>" + "</p>")
+                    .append("<p style=\"color: black;\">Số Điện Thoại: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getSdtNguoiNhan() + " </span>" + "</p>") ;
+
+        } else if (hoaDon.getTrangThai() == 3) {
+
+            content.append("<p style=\"color: black;\">Chúng tôi xin thông báo rằng đơn hàng của bạn đã được giao thành công đến địa chỉ của bạn!</p>")
+                    .append("<p style=\"color: black;\">Bạn chỉ có thể yêu cầu hoàn trả trong vòng 7 ngày kể từ ngày nhận hàng. Sau thời gian này, chúng tôi không thể chấp nhận yêu cầu hoàn trả.</p>")
+                    .append("<p style=\"color: black;\">Để biết rõ về chính sách hoàn trả bạn có thể liên hệ với chúng tôi hoặc vào trang của chúng tôi để xem.</p>")
+                    .append("<p style=\"color: black;\">Để kiểm tra chi tiết đơn hàng, vui lòng <a href=\"[[URL]]\" target=\"_self\">nhấn vào đây</a> và nhập mã đơn hàng cùng với số điện thoại của bạn. Để đảm bảo tính chính xác, hãy sử dụng thông tin mà bạn đã cung cấp khi đặt hàng.</p>")
+                    .append("<p style=\"color: black;\">Đây là mã đơn hàng và số điện thoại của bạn dựa trên thông tin bạn cung cấp trong đơn hàng</p>")
+                    .append("<p style=\"color: black;\">Mã Đơn Hàng: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getMaHoaDon() + " </span>" + "</p>")
+                    .append("<p style=\"color: black;\">Số Điện Thoại: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getSdtNguoiNhan() + " </span>" + "</p>") ;
+        } else if (hoaDon.getTrangThai() == 5) {
+
+            content.append("<p style=\"color: black;\">Chúng tôi xin chân thành xin lỗi vì sự bất tiện gây ra. Chúng tôi muốn thông báo rằng hóa đơn của bạn có mã " + "<span style=\"color:red\">" + hoaDon.getMaHoaDon() + "</span>" + " đã bị hủy do một số lý do khách quan. Dưới đây là thông tin chi tiết về tình trạng của hóa đơn:</p>")
+                    .append("<p style=\"color: black;\">Lý Do Hủy Hóa Đơn: " + "<span style=\"font-weight: bold;color: black;\">" + hoaDon.getGhiChu() + "</span>" + "</p>")
+                    .append("<p style=\"color: black;\">Để kiểm tra chi tiết đơn hàng, vui lòng <a href=\"[[URL]]\" target=\"_self\">nhấn vào đây</a> và nhập mã đơn hàng cùng với số điện thoại của bạn. Để đảm bảo tính chính xác, hãy sử dụng thông tin mà bạn đã cung cấp khi đặt hàng.</p>")
+                    .append("<p style=\"color: black;\">Đây là mã đơn hàng và số điện thoại của bạn dựa trên thông tin bạn cung cấp trong đơn hàng</p>")
+                    .append("<p style=\"color: black;\">Mã Đơn Hàng: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getMaHoaDon() + " </span>" + "</p>")
+                    .append("<p style=\"color: black;\">Số Điện Thoại: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getSdtNguoiNhan() + " </span>" + "</p>")
+                    .append("<p style=\"color: black;\">Nếu có bất kỳ thắc mắc nào hoặc bạn cần hỗ trợ thêm, đừng ngần ngại liên hệ với chúng tôi qua số điện thoại này 0377463664.</p>")
+                    .append("<p style=\"color: black;\">Chúng tôi rất xin lỗi vì mọi phiền phức và hiểu rằng điều này có thể tạo ra sự bất tiện cho bạn. Chúng tôi cam kết tiếp tục nỗ lực để cải thiện dịch vụ và hy vọng được phục vụ bạn tốt hơn trong tương lai.</p>")
+                    .append("<p style=\"color: black;\">Trân trọng,</p>")
+                    .append("<p style=\"color: black;\">Shop Glacat</p>");
+
+        } else if (hoaDon.getTrangThai() == 6) {
+
+            content.append("<p style=\"color: black;\">Chúng tôi xin trân trọng thông báo rằng quá trình hoàn trả của bạn đã được xử lý thành công. Dưới đây là chi tiết về đơn hoàn trả:</p>")
+                    .append("<p style=\"color: black;\">Để kiểm tra chi tiết đơn hàng, vui lòng <a href=\"[[URL]]\" target=\"_self\">nhấn vào đây</a> và nhập mã đơn hàng cùng với số điện thoại của bạn. Để đảm bảo tính chính xác, hãy sử dụng thông tin mà bạn đã cung cấp khi đặt hàng.</p>")
+                    .append("<p style=\"color: black;\">Đây là mã đơn hàng và số điện thoại của bạn dựa trên thông tin bạn cung cấp trong đơn hàng</p>")
+                    .append("<p style=\"color: black;\">Mã Đơn Hàng: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getMaHoaDon() + " </span>" + "</p>")
+                    .append("<p style=\"color: black;\">Số Điện Thoại: " + "<span style=\"font-weight: bold;color: red;\"> " + hoaDon.getSdtNguoiNhan() + " </span>" + "</p>") ;
+            content.append("<section class=\"row\" style=\"margin: auto;background-color: white\">" +
+                    "    <div class=\"col-md-12\" style=\"text-align: center\">" +
+                    "        <div class=\"mid\">" +
+                    "            <h2>THÔNG TIN ĐƠN HÀNG</h2>" +
+                    "            <h4>Mã đơn hàng: ").append("<span style=\"color:red\">" + hoaDon.getMaHoaDon() + "</span>").append(" </h4>" +
+                    "            <h4>Số điện thoại: ").append("<span style=\"color:red\">" + hoaDon.getSdtNguoiNhan() + "</span>").append(" </h4>" +
+                    "            <h4>Trạng thái: ").append("<span style=\"color:red\">" + hoaDon.getStringTrangThai() + "</span>").append(" </h4>" +
+                    "        </div>" +
+                    "    </div>" +
+                    "        <div style=\"border-bottom: 1px solid black;margin-bottom:2%;\"></div>" +
+                    "    <div class=\"col-md-12\" style=\"text-align: center;margin-bottom: 1rem;\">" +
+                    "        <table class=\"table\" style=\"margin: auto;width: 100%\">" +
+                    "            <thead>" +
+                    "            <tr>" +
+                    "                  <th scope=\"col\">STT</th>" +
+                    "                <th scope=\"col\">Tên Sản Phẩm</th>" +
+                    "                <th scope=\"col\">Màu Sắc</th>" +
+                    "                <th scope=\"col\">Kích Cỡ</th>" +
+                    "                <th scope=\"col\">Loại Đế</th>" +
+                    "                <th scope=\"col\">Thương Hiệu</th>" +
+                    "                <th scope=\"col\">Trạng Thái</th>" +
+                    "                <th scope=\"col\">Số Lượng</th>" +
+                    "                <th scope=\"col\">Giá</th>" +
+                    "            </tr>");
+            String trangThai = "";
+            content
+                    .append("</thead>")
+                    .append("<tbody>");
+            for (HoaDonChiTiet hoaDonChiTiet : hoaDon.getLstHoaDonChiTiet()) {
+                if (hoaDonChiTiet.getTrangThai() == 0) {
+                    trangThai = "Đã Nhận";
+                } else {
+                    trangThai = "Hoàn Trả";
+                }
+                content.append("<tr>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + index++ + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getChiTietSanPham().getSanPham().getTen() + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getChiTietSanPham().getMauSac().getTen() + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getChiTietSanPham().getKichCo().getTen() + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getChiTietSanPham().getLoaiDe().getTen() + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getChiTietSanPham().getSanPham().getThuongHieu().getTen() + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + trangThai + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getSoLuong() + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getDonGia() + " VND" + "</td>")
+                        .append("</tr>");
+            }
+            content.append("</tbody>")
+                    .append("</table>")
+                    .append("</div>");
+
+            content.append(
+                    "    <div class=\"col-md-12\">" +
+                            "        <div style=\"border-bottom: 1px solid black\"></div>" +
+                            "        <div>" +
+                            "            <p>" +
+                            "                <span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tổng tiền hàng:</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getTongTien() + " VND</span>" +
+                            "            </p>" +
+                            "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Phí vận chuyển:</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getPhiShip() + " VND</span>" +
+                            "            </p>" +
+                            "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tiền giảm:</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getGiamGia() + " VND</span>" +
+                            "            </p>" +
+                            "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tổng tiền hoàn trả:</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;color:red;font-size: 1.1rem\">" + hoaDon.getGiamGiaKhiHoanTra() + " VND</span>" +
+                            "            </p>" +
+                            "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tổng tiền thanh toán:</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;color:red;font-size: 1.1rem\">" + hoaDon.getTongTienKhiGiam() + " VND</span></p>" +
+                            "        </div>" +
+                            "    </div>" +
+                            "</section>"
+            );
+
+            content.append(
+
+                    "<div class=\"col-md-12\">" +
+                            "<p style=\"color: black;\" class=\"email-content\">\n" +
+                            "Cảm ơn bạn đã chọn Glacat! Nếu có bất kỳ thắc mắc nào hoặc cần hỗ trợ, hãy liên hệ với chúng tôi qua số 0377463664 để được hỗ trợ.\n" +
+                            "</p>" +
+                            "<p style=\"color: black;\">Trân trọng,</p>" +
+                            "<p style=\"color: black;\">Glacat</p>" +
+                            "</div>"
+
+            );
         }
 
-        content.append("<p style=\"color: black;\">Chúng tôi xin chân thành cảm ơn bạn đã lựa chọn Glacat là địa chỉ mua sắm của mình.</p>")
-                .append("<p style=\"color: black;\">Đơn hàng ")
-                .append("<span style=\"color:red\">" + hoaDon.getMaHoaDon() + "</span>")
-                .append(" của bạn đã được giao thành công. Dưới đây là chi tiết về đơn hàng:</p>");
-
-        if (hoaDon.getTrangThai() != 5) {
+        if (hoaDon.getTrangThai() != 5 && hoaDon.getTrangThai() != 6) {
             content.append("<section class=\"row\" style=\"margin: auto;background-color: white\">" +
                     "    <div class=\"col-md-12\" style=\"text-align: center\">" +
                     "        <div class=\"mid\">" +
@@ -211,6 +329,10 @@ public class HoaDonServiceImpl implements HoaDonService {
                     "            <tr>" +
                     "                <th scope=\"col\">STT</th>" +
                     "                <th scope=\"col\">Tên Sản Phẩm</th>" +
+                    "                <th scope=\"col\">Màu Sắc</th>" +
+                    "                <th scope=\"col\">Kích Cỡ</th>" +
+                    "                <th scope=\"col\">Loại Đế</th>" +
+                    "                <th scope=\"col\">Thương Hiệu</th>" +
                     "                <th scope=\"col\">Số Lượng</th>" +
                     "                <th scope=\"col\">Giá</th>" +
                     "            </tr>");
@@ -221,6 +343,10 @@ public class HoaDonServiceImpl implements HoaDonService {
                 content.append("<tr>")
                         .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + index++ + "</td>")
                         .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getChiTietSanPham().getSanPham().getTen() + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getChiTietSanPham().getMauSac().getTen() + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getChiTietSanPham().getKichCo().getTen() + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getChiTietSanPham().getLoaiDe().getTen() + "</td>")
+                        .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getChiTietSanPham().getSanPham().getThuongHieu().getTen() + "</td>")
                         .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getSoLuong() + "</td>")
                         .append("<td style=\"padding: 0.75rem;border-top: 1px solid #dee2e6;\">" + hoaDonChiTiet.getDonGia() + " VND" + "</td>")
                         .append("</tr>");
@@ -235,36 +361,47 @@ public class HoaDonServiceImpl implements HoaDonService {
                             "        <div>" +
                             "            <p>" +
                             "                <span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tổng tiền hàng:</span>" +
-                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">500000 VND</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getTongTien() + " VND</span>" +
                             "            </p>" +
                             "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Phí vận chuyển:</span>" +
-                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">500000 VND</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getPhiShip() + " VND</span>" +
                             "            </p>" +
                             "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tiền giảm:</span>" +
-                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">500000 VND</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getGiamGia() + " VND</span>" +
                             "            </p>" +
                             "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tổng tiền thanh toán:</span>" +
-                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;color:red;\">500000 VND</span></p>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;color:red;font-size: 1.1rem\">" + hoaDon.tongTienHoaDonKhiGiam() + " VND</span></p>" +
                             "        </div>" +
-                            "    </div>" + "</section>"
+                            "    </div>" +
+                            "</section>"
+            );
+
+            content.append(
+
+                    "<div class=\"col-md-12\">" +
+                            "<p style=\"color: black;\" class=\"email-content\">\n" +
+                            "Cảm ơn bạn đã chọn Glacat! Nếu có bất kỳ thắc mắc nào hoặc cần hỗ trợ, hãy liên hệ với chúng tôi qua số 0377463664 để được hỗ trợ.\n" +
+                            "</p>" +
+                            "<p style=\"color: black;\">Trân trọng,</p>" +
+                            "<p style=\"color: black;\">Glacat</p>" +
+                            "</div>"
+
             );
         }
-        content.append(
-                "<div class=\"col-md-12\">" +
-                        "<p style=\"color: black;\" class=\"email-content\">\n" +
-                        "Chúc mừng bạn đã nhận được sản phẩm. Chúng tôi hy vọng rằng nó sẽ đáp ứng hoặc vượt quá mong đợi của bạn. Nếu có bất kỳ thắc mắc nào hoặc cần hỗ trợ, hãy liên hệ với chúng tôi qua số 0377463664 để được hỗ trợ.\n" +
-                        "</p>" +
-                        "<p style=\"color: black;\">Trân trọng,</p>" +
-                        "<p style=\"color: black;\">Shop Glacat</p>" +
-                        "</div>"
 
-        );
 
         try {
 
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
 
+            String siteUrl = url + "/tra-cuu-don-hang";
+            String modifiedContent = content.toString().replace("[[URL]]", siteUrl);
+
+            System.out.println(siteUrl);
+            System.out.println(modifiedContent);
+
+            content = new StringBuilder(modifiedContent);
             helper.setFrom(from, "Glacat");
             helper.setTo(to);
             helper.setSubject(subject);

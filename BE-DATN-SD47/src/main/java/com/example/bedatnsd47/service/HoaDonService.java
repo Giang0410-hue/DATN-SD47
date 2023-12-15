@@ -27,7 +27,7 @@ public interface HoaDonService {
 
     HoaDon findByMa(String ma);
 
-    HoaDon finByHoaDonMaHDSdt(String maDonHang,String sdt);
+    HoaDon finByHoaDonMaHDSdt(String maDonHang, String sdt);
 
     List<HoaDon> findAllOrderByNgaySua();
 
@@ -67,7 +67,7 @@ public interface HoaDonService {
 
     void deleteHoaDonHoanTra();
 
-    void guiHoaDonDienTu() ;
+    void guiHoaDonDienTu(HoaDon hoaDon, String url);
 
-    
+
 }

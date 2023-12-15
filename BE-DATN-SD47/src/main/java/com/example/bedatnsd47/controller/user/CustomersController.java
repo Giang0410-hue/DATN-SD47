@@ -21,6 +21,7 @@ import com.example.bedatnsd47.service.MauSacService;
 import com.example.bedatnsd47.service.TaiKhoanService;
 import com.example.bedatnsd47.service.ThuongHieuService;
 import com.example.bedatnsd47.service.VoucherService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -673,13 +674,16 @@ public class CustomersController {
     }
 
     @GetMapping("/gui-hoa-don-dien-tu")
-    public String test(){
-        hoaDonService.guiHoaDonDienTu();
+    public String test(HttpServletRequest request) {
+        String url = request.getRequestURL().toString();
+        url = url.replace(request.getServletPath(), "");
+        hoaDonService.guiHoaDonDienTu(hoaDonService.findById(10330L), url);
         return "redirect:/chinh-sach";
     }
+
     @GetMapping("/test")
     public String test123(
-    ){
+    ) {
         return "/admin-template/in-hoa-don.html";
     }
 }
