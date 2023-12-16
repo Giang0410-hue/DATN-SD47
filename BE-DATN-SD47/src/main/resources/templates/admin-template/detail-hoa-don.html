@@ -1951,6 +1951,7 @@
                                                                                                                 th:text="${'Giảm '+ voucher.phanTramGiam + '%'}">
                                                                                                             </h5>
                                                                                                             <small
+                                                                                                            id="donToiThieu"
                                                                                                                 class="text-body-secondary"
                                                                                                                 style="display: block"
                                                                                                                 th:text="${'Đơn Tối Thiểu '+voucher.giaTriDonToiThieu + ' VND'}"></small>
@@ -2193,7 +2194,7 @@
             // var tongTien = document.getElementById("tongAll");
             var tongTienHangInt = parseInt(tongTienHang.innerText);
 
-            var tongTienGiamTheoPhanTram = ((tongTienHangInt * phamTramGiam) / 100).toFixed(0)
+            var tongTienGiamTheoPhanTram = ((tongTienHangInt * phamTramGiam) / 100)
             if (tongTienGiamTheoPhanTram > giaTriGiam) {
                 tongTienGiamTheoPhanTram = giaTriGiam
             }
@@ -2217,7 +2218,7 @@
 
             // Lặp qua danh sách voucher và kiểm tra điều kiện
             document.querySelectorAll('.card.mb-3').forEach(function (card) {
-                var voucherGiaTriDonToiThieu = parseFloat(card.querySelector('.text-body-secondary').innerText.replace('Đơn Tối Thiểu ', '').replace(' VND', '').trim());
+                var voucherGiaTriDonToiThieu = parseFloat(card.querySelector('#donToiThieu').innerText.replace('Đơn Tối Thiểu ', '').replace(' VND', '').trim());
                 var radio = card.querySelector('input[name="voucherRadio"]');
                 var thongBao = card.querySelector('#thongBaoThieuTien');
 

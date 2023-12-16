@@ -858,6 +858,10 @@ public class BanHangController {
                     hd.setNgaySua(new Date());
                     hd.setTongTien(hd.tongTienHoaDon());
                     hd.setTongTienKhiGiam(hd.tongTienHoaDon() - giamGia);
+                    hd.setPhiShip((long)0);
+                    hd.setQuanHuyen(null);
+                    hd.setThanhPho(null);
+                    hd.setPhuongXa(null);
                     sendMail(hd);
                     if (hd.getNguoiNhan() == null) {
                         hd.setNguoiNhan("Khách lẻ");
