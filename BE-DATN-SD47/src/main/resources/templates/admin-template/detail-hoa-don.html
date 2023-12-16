@@ -524,6 +524,7 @@
                                         <input value="" name="voucherID" type="hidden" id="voucherID">
                                         <input type="hidden" value="ok" name="detail">
                                         <input th:value="${hoaDon.phiShip}" name="phiShip2" type="hidden" id="phiShip2">
+                                        <input type="hidden" th:value="${hoaDon.id}" name="idhdc">
                                         <!-- Modal -->
                                         <div class="modal fade" id="ghiChuChuyenNhanhModal" tabindex="-1" role="dialog"
                                             aria-labelledby="modalTitleId" aria-hidden="true">
@@ -583,7 +584,7 @@
                                         <form onsubmit="return validGhiChuRollback()" th:action="@{'/ban-hang-tai-quay/hoa-don/rollback/' + ${hoaDon.id}}"
                                             method="post">
                                             <!-- Button trigger modal -->
-
+                                            <input type="hidden" th:value="${hoaDon.id}" name="idhdc">
 
                                             <!-- Modal -->
                                             <div class="modal fade" id="rollback" tabindex="-1" role="dialog"
@@ -636,7 +637,7 @@
                                             method="post">
                                             <!-- Button trigger modal -->
 
-
+                                            <input type="hidden" th:value="${hoaDon.id}" name="idhdc">
                                             <!-- Modal -->
                                             <div class="modal fade" id="ghiChuHuyModal" tabindex="-1" role="dialog"
                                                 aria-labelledby="modalTitleId" aria-hidden="true">
@@ -775,6 +776,9 @@
                                                                         <input th:value="${hoaDon.phiShip}"
                                                                             name="phiShip" type="hidden"
                                                                             id="shippingFeeResult">
+                                                                            <input th:value="${hoaDon.id}"
+                                                                            name="idhdc" type="text"
+                                                                            >
 
 
                                                                         <div class="col-md-6">
@@ -1277,6 +1281,7 @@
                                                                                         <td><input type="hidden"
                                                                                                 name="idDiaChi"
                                                                                                 th:value="${dc.id}">
+                                                                                                <input type="hidden" th:value="${hoaDon.id}" name="idhdc">
                                                                                         </td>
                                                                                     </form>
                                                                                 </tr>
@@ -1583,6 +1588,7 @@
                                                                                         <input th:value="${hoaDon.id}"
                                                                                             type="hidden"
                                                                                             name="idHoaDon">
+                                                                                            <input type="hidden" th:value="${hoaDon.id}" name="idhdc">
                                                                                         <input th:value="${ctsp.id}"
                                                                                             type="hidden" name="idCtsp">
 
@@ -1744,6 +1750,7 @@
                                                                                     Sửa
                                                                                     <input type="hidden" name="idHdct"
                                                                                         th:value="${obj.id}">
+                                                                                        <input type="hidden" th:value="${hoaDon.id}" name="idhdc">
                                                                                 </button>
 
 
@@ -1951,6 +1958,7 @@
                                                                                                                 th:text="${'Giảm '+ voucher.phanTramGiam + '%'}">
                                                                                                             </h5>
                                                                                                             <small
+                                                                                                            id="donToiThieu"
                                                                                                                 class="text-body-secondary"
                                                                                                                 style="display: block"
                                                                                                                 th:text="${'Đơn Tối Thiểu '+voucher.giaTriDonToiThieu + ' VND'}"></small>
@@ -2193,7 +2201,7 @@
             // var tongTien = document.getElementById("tongAll");
             var tongTienHangInt = parseInt(tongTienHang.innerText);
 
-            var tongTienGiamTheoPhanTram = ((tongTienHangInt * phamTramGiam) / 100).toFixed(0)
+            var tongTienGiamTheoPhanTram = ((tongTienHangInt * phamTramGiam) / 100)
             if (tongTienGiamTheoPhanTram > giaTriGiam) {
                 tongTienGiamTheoPhanTram = giaTriGiam
             }
@@ -2217,7 +2225,7 @@
 
             // Lặp qua danh sách voucher và kiểm tra điều kiện
             document.querySelectorAll('.card.mb-3').forEach(function (card) {
-                var voucherGiaTriDonToiThieu = parseFloat(card.querySelector('.text-body-secondary').innerText.replace('Đơn Tối Thiểu ', '').replace(' VND', '').trim());
+                var voucherGiaTriDonToiThieu = parseFloat(card.querySelector('#donToiThieu').innerText.replace('Đơn Tối Thiểu ', '').replace(' VND', '').trim());
                 var radio = card.querySelector('input[name="voucherRadio"]');
                 var thongBao = card.querySelector('#thongBaoThieuTien');
 

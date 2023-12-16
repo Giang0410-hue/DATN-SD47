@@ -246,11 +246,17 @@
                                     </h5>
                                 </div>
                                 <div class="col-md-6">
-                                    <button type="button" th:disabled="${checkButtonAdd=='true'}"
+                                    <button type="button" th:if="${checkButtonAdd!='true'}"
                                             class="btn btn-primary" style="float: right;margin-bottom: 2%"
                                             data-bs-toggle="modal" data-bs-target="#addDiaChi">
                                         Thêm địa chỉ
                                     </button>
+                                    <button type="button" th:if="${checkButtonAdd=='true'}" disabled
+                                            class="btn btn-primary" style="float: right;margin-bottom: 2%"
+                                            data-bs-toggle="modal" data-bs-target="#addDiaChi" title="Chỉ được thêm tối đa 5 địa chỉ">
+                                        Thêm địa chỉ
+                                    </button>
+
                                     <!-- Modal -->
                                     <div class="modal fade" id="addDiaChi" tabindex="-1"
                                          aria-labelledby="addDiaChiLabel" aria-hidden="true">
@@ -1514,6 +1520,7 @@
                                                                                th:text="${'Giảm tối đa ' + #strings.substringBefore(voucher.giamToiDa, '.') + ' VND'}"></small>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
+                                                                               id="donToiThieu"
                                                                                th:text="${'Đơn Tối Thiểu '+ #strings.substringBefore(voucher.giaTriDonToiThieu, '.') + ' VND'}"></small>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
@@ -1589,7 +1596,7 @@
                                                                 var tongTienHangInt = parseInt(tongTienHang.innerText);
 
                                                                 var tongTienGiamTheoPhanTram = ((tongTienHangInt * phamTramGiam) / 100).toFixed(0)
-                                                                if (tongTienGiamTheoPhanTram > giaTriGiam){
+                                                                if (tongTienGiamTheoPhanTram > giaTriGiam) {
                                                                     tongTienGiamTheoPhanTram = giaTriGiam
                                                                 }
                                                                 console.log("số tiền được giảm là: " + tongTienGiamTheoPhanTram)
@@ -1612,7 +1619,7 @@
 
                                                                 // Lặp qua danh sách voucher và kiểm tra điều kiện
                                                                 document.querySelectorAll('.card.mb-3').forEach(function (card) {
-                                                                    var voucherGiaTriDonToiThieu = parseFloat(card.querySelector('.text-body-secondary').innerText.replace('Đơn Tối Thiểu ', '').replace(' VND', '').trim());
+                                                                    var voucherGiaTriDonToiThieu = parseFloat(card.querySelector('#donToiThieu').innerText.replace('Đơn Tối Thiểu ', '').replace(' VND', '').trim());
                                                                     var radio = card.querySelector('input[name="voucherRadio"]');
                                                                     var thongBao = card.querySelector('#thongBaoThieuTien');
 
