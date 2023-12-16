@@ -455,6 +455,7 @@
                                                                                 Trả hàng
                                                                                 <input type="hidden" name="idHdct"
                                                                                     th:value="${obj.id}">
+                                                                                    <input type="hidden" th:value="${hoaDon.id}" name="idhdc">
                                                                             </button>
 
                                                                             <!-- Modal update sl tra -->
@@ -556,7 +557,7 @@
                                                                 <form th:id="${'myForm'+obj.id}"
                                                                     action="/ban-hang-tai-quay/hoa-don-chi-tiet/tra-hang"
                                                                     method="post">
-
+                                                                    <input type="hidden" th:value="${hoaDon.id}" name="idhdc">
                                                                     <th scope="row" th:text="${state.index+1}"></th>
                                                                     <td>
                                                                         <div class="row">
@@ -788,6 +789,7 @@
                                                                                     <textarea class="form-control"
                                                                                         name="lyDo" id="ghiChuHoanTra"
                                                                                         rows="3"></textarea>
+                                                                                        <input type="hidden" th:value="${hoaDon.id}" name="idhdc">
                                                                                 </div>
                                                                                 <small style="font-weight: bold;"
                                                                                     id="errorGhiChuHoanTra"></small>

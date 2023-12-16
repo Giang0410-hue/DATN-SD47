@@ -788,6 +788,7 @@
                                                                                             <form
                                                                                                 action="/ban-hang-tai-quay/hoa-don/add-khach-hang"
                                                                                                 method="post">
+                                                                                                
                                                                                                 <td
                                                                                                     th:text="${state.index+1}">
                                                                                                 </td>
@@ -800,17 +801,19 @@
                                                                                                 <td
                                                                                                     th:text="${taiKhoan.email}">
                                                                                                 </td>
+                                                                                                
                                                                                                 <td>
                                                                                                     <input type="hidden"
                                                                                                         th:value="${taiKhoan.id}"
                                                                                                         name="idTaiKhoan">
-
+                                                                                                        <input name="idhdc" type="hidden" th:value="${hoaDon.id}">
                                                                                                     <button
                                                                                                         type="submit"
                                                                                                         class="btn btn-success">
-                                                                                                        Chọn
+                                                                                                        Chọn2
                                                                                                     </button>
                                                                                                 </td>
+                                                                                                
                                                                                             </form>
                                                                                         </tr>
 
@@ -837,6 +840,7 @@
                                                                                 method="post">
                                                                                 <input type="hidden" name="idTaiKhoan"
                                                                                     value="-1">
+                                                                                    <input name="idhdc" type="hidden" th:value="${hoaDon.id}">
                                                                                 <button type="submit"
                                                                                     class="btn btn-danger">Bỏ chọn
                                                                                 </button>
@@ -881,6 +885,7 @@
                                                                             method="post" enctype="multipart/form-data"
                                                                             th:action="@{/ban-hang-tai-quay/khach-hang/them-nhanh}"
                                                                             th:object="${khachHang}">
+                                                                            <input type="hidden" th:value="${hoaDon.id}" name="idhdc">
                                                                             <div class="col-md-6">
                                                                                 <label class="form-label">
                                                                                     <span class="dau-sao">*</span>Tên
@@ -1102,6 +1107,9 @@
                                                                                             <td><input type="hidden"
                                                                                                     name="idDiaChi"
                                                                                                     th:value="${dc.id}">
+                                                                                                    <input type="text"
+                                                                                                    name="idhdc"
+                                                                                                    th:value="${hoaDon.id}">
                                                                                             </td>
                                                                                         </form>
                                                                                     </tr>
@@ -1243,6 +1251,7 @@
                                                     <form onsubmit="return validateThanhToan()"
                                                         action="/ban-hang-tai-quay/hoa-don/thanh-toan" class="row g-3"
                                                         method="post">
+                                                        <input type="hidden" th:value="${hoaDon.id}" name="idhdc">
                                                         <div class="col">
                                                             <div id="checkGiaoHang" class="thong-tin-kh ">
                                                                 <div class="row g-3">
@@ -1822,7 +1831,7 @@
 
 
                                                                             <input th:value="${hoaDon.phiShip}"
-                                                                                name="phiShip" type="text"
+                                                                                name="phiShip" type="hidden"
                                                                                 id="shippingFeeResult">
                                                                         </div>
                                                                     </div>
@@ -2028,124 +2037,7 @@
                                                     <script>
                                                         calculateShippingFee();
                                                     </script>
-                                                    <!-- Modal voucher -->
-                                                    <div class="modal fade" id="voucher" tabindex="-1"
-                                                        aria-labelledby="voucherLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="voucherLabel">
-                                                                        Voucher</h1>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="row mb-3">
-                                                                        <form action="" method="post">
-                                                                            <label class="col-sm-4 col-form-label">Nhập
-                                                                                mã,
-                                                                                tên voucher:</label>
-                                                                            <div class="row mb-3">
-                                                                                <div class="col-sm-10">
-                                                                                    <div class="input-group">
-                                                                                        <input type="text"
-                                                                                            class="form-control"
-                                                                                            placeholder="Tìm kiếm voucher theo mã, tên">
-                                                                                        <button type="submit"
-                                                                                            class="btn btn-primary"><i
-                                                                                                class="bi bi-arrow-clockwise"></i>
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-2">
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-primary"
-                                                                                        style="float: right;">Tìm
-                                                                                        kiếm
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-
-                                                                    <table class="sanpham-table">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>STT</th>
-                                                                                <th>Mã Voucher</th>
-                                                                                <th>Tên Voucher</th>
-                                                                                <th>Giá Trị Giảm</th>
-                                                                                <th>Giá Trị Giảm Tối Đa</th>
-                                                                                <th>Số Lượng</th>
-                                                                                <th>Thời Gian</th>
-                                                                                <th>Hành Động</th>
-                                                                            </tr>
-                                                                            <thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td>1</td>
-                                                                                    <td>aaaaaa</td>
-                                                                                    <td>aaaaaa</td>
-                                                                                    <td>123</td>
-                                                                                    <td>123</td>
-                                                                                    <td>123</td>
-                                                                                    <td>
-                                                                                        11/01/2003
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <button type="button"
-                                                                                            class="btn btn-success">
-                                                                                            <i
-                                                                                                class="bi bi-check2-circle"></i>
-                                                                                        </button>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>1</td>
-                                                                                    <td>aaaaaa</td>
-                                                                                    <td>aaaaaa</td>
-                                                                                    <td>123</td>
-                                                                                    <td>123</td>
-                                                                                    <td>123</td>
-                                                                                    <td>
-                                                                                        11/01/2003
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <button type="button"
-                                                                                            class="btn btn-success">
-                                                                                            <i
-                                                                                                class="bi bi-check2-circle"></i>
-                                                                                        </button>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>1</td>
-                                                                                    <td>aaaaaa</td>
-                                                                                    <td>aaaaaa</td>
-                                                                                    <td>123</td>
-                                                                                    <td>123</td>
-                                                                                    <td>123</td>
-                                                                                    <td>
-                                                                                        11/01/2003
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <button type="button"
-                                                                                            class="btn btn-success">
-                                                                                            <i
-                                                                                                class="bi bi-check2-circle"></i>
-                                                                                        </button>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Đóng
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Modal voucher end -->
+                                                    
 
                                                     <script th:if="${batModal=='ok'}">
                                                         window.addEventListener('DOMContentLoaded', (event) => {
