@@ -45,7 +45,7 @@
                                     var inputValueTimKiemAll = inputElementTimKiemAll.value;
                                     console.log('Giá trị của input:', inputValueTimKiemAll);
 
-                                    var fullUrl = "http://localhost:8080/shop"
+                                    var fullUrl = window.location.origin + "/shop"
 
                                     if (inputValueTimKiemAll !== '') {
                                         fullUrl = updateQueryStringParameterAll('keyword', inputValueTimKiemAll, fullUrl);
@@ -202,6 +202,10 @@
                                 </td>
                                 <td class="product-name">
                                     <h2 class="h5 text-black" th:text="${gioHangCT.chiTietSanPham.sanPham.ten}"></h2>
+                                    <span th:if="${gioHangCT.soLuong>gioHangCT.ChiTietSanPham.soLuong}"
+                                          th:text="${'Số lượng còn: '+ gioHangCT.ChiTietSanPham.soLuong}"
+                                          id="checkSoLuongVuotQua"
+                                          style="color: rgb(255, 255, 255); font-weight: bold;background-color: red; padding: 10px 20px;"></span>
                                 </td>
                                 <td class="product-name">
                                     <p>Kích Thước:
@@ -1153,6 +1157,11 @@
                                     </label>
                                     <input type="text" class="form-control" id="c_companyname" name="soDienThoai"
                                            placeholder="Số điện thoại"
+                                           th:if="${khachHang.soDienThoai eq '0300000000'}"
+                                    />
+                                    <input type="text" class="form-control" id="c_companyname" name="soDienThoai"
+                                           placeholder="Số điện thoại"
+                                           th:if="${khachHang.soDienThoai ne '0300000000'}"
                                            th:value="${khachHang.soDienThoai}"/>
 
                                     <span class="check-loi" id="checkLoiSDT" style="display: none"></span>
@@ -1196,6 +1205,11 @@
                                     </label>
                                     <input type="text" class="form-control" id="c_companyname" name="soDienThoai"
                                            placeholder="Số điện thoại"
+                                           th:if="${khachHang.soDienThoai eq '0300000000'}"
+                                    />
+                                    <input type="text" class="form-control" id="c_companyname" name="soDienThoai"
+                                           placeholder="Số điện thoại"
+                                           th:if="${khachHang.soDienThoai ne '0300000000'}"
                                            th:value="${khachHang.soDienThoai}"/>
                                     <span class="check-loi" id="checkLoiSDT" style="display: none"></span>
                                 </div>
@@ -1777,7 +1791,34 @@
                                         </div>
                                     </div>
                                     <!-- Modal thông báo xác nhận đặt hàng end-->
+                                    <!-- Modal thông báo check check số lượng-->
+                                    <script th:if="${checkSoLuongDB=='true'}">
+                                        window.addEventListener('DOMContentLoaded', (event) => {
+                                            // Hiển thị modal
+                                            var myModal = new bootstrap.Modal(document.getElementById('checkSoLuongDB'));
+                                            myModal.show();
+                                        });
 
+                                    </script>
+                                    <div class="modal fade" id="checkSoLuongDB" style="margin-top: 8%"
+                                         tabindex="-1"
+                                         aria-labelledby="checkSoLuongDBLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body" style="text-align: center;margin-top: 3%">
+                                                    <p>Có sản phẩm vượt quá số lượng vui lòng kiểm tra lại!
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Ok
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal thông báo check check số lượng end-->
                                     <script>
                                         function trangThaiLuuDiaChi() {
                                             var checkbox = document.getElementById('defaultCheckLuuDiaChi');
@@ -2017,7 +2058,7 @@
 <script src="../../static/js/jquery-3.3.1.min.js"></script>
 <script src="../../static/js/jquery-ui.js"></script>
 <script src="../../static/js/popper.min.js"></script>
-<script src="../../static/js/bootstrap.min.js"></script>
+<!--<script src="../../static/js/bootstrap.min.js"></script>-->
 <script src="../../static/js/owl.carousel.min.js"></script>
 <script src="../../static/js/jquery.magnific-popup.min.js"></script>
 <script src="../../static/js/aos.js"></script>
