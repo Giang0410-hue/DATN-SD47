@@ -15,14 +15,19 @@ import java.util.stream.Collectors;
 public class UserInfoUserDetails implements UserDetails {
 
 
-
+    private Long id;
     private String ten_tai_khoan;
     private String matKhau;
+    private String hoVaTen;
+    private String email;
     private List<GrantedAuthority> authorities;
 
     public UserInfoUserDetails(TaiKhoan userInfo) {
+        id = userInfo.getId();
         ten_tai_khoan = userInfo.getTenTaiKhoan();
         matKhau = userInfo.getMatKhau();
+        hoVaTen = userInfo.getHoVaTen();
+        email = userInfo.getEmail();
         authorities = Arrays.stream(userInfo.getVaiTro().getTen().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
@@ -33,14 +38,26 @@ public class UserInfoUserDetails implements UserDetails {
         return authorities;
     }
 
-    @Override
-    public String getPassword() {
-        return matKhau;
+    public Long id() {
+        return id;
+    }
+
+    public String getHoVaTen() {
+        return hoVaTen;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
     public String getUsername() {
         return ten_tai_khoan;
+    }
+
+    @Override
+    public String getPassword() {
+        return matKhau;
     }
 
     @Override

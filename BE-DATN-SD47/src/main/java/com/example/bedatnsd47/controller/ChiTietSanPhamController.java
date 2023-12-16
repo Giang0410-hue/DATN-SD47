@@ -194,17 +194,17 @@ public class ChiTietSanPhamController {
 
     ) throws IOException {
         if (!file.isEmpty()) {
-            String directory = "D:\\DATN-SD47\\BE-DATN-SD47";
-            String fileName = file.getOriginalFilename();
-            String filePath = directory + "\\" + fileName;
+//            String directory = "D:\\DATN-SD47\\BE-DATN-SD47";
+//            String fileName = file.getOriginalFilename();
+//            String filePath = directory + "\\" + fileName;
             ImportFileExcelCTSP importFileExcelCTSP = new ImportFileExcelCTSP();
             try {
-                importFileExcelCTSP.ImportFile(filePath, sanPhamRepository, mauSacRepository, kichThuocRepository,
+                importFileExcelCTSP.ImportFile(file, sanPhamRepository, mauSacRepository, kichThuocRepository,
                         deGiayRepository, chiTietSanPhamRepository, chiTietSanPhamSerivce);
                 if (importFileExcelCTSP.checkLoi() > 0) {
                     attributes.addFlashAttribute("checkTab", "true");
                     attributes.addFlashAttribute("checkThongBao", "thanhCong");
-                    attributes.addFlashAttribute("thongBaoLoiImport", "Đã thêm sản phẩm thành công nhưng có một số sản phẩm lỗi, mời bạn check lại trên file excel");
+                    attributes.addFlashAttribute("thongBaoLoiImport", "Đã thêm sản phẩm thành công nhưng có một số sản phẩm lỗi.");
                     return "redirect:/admin/san-pham-chi-tiet";
                 }
             } catch (Exception e) {
