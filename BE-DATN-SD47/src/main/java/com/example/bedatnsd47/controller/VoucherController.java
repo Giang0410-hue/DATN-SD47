@@ -26,7 +26,6 @@ public class VoucherController {
     @Autowired
     TaiKhoanService taiKhoanService;
 
-    private Date currentDate = new Date();
 
     private PrincipalCustom principalCustom = new PrincipalCustom();
 
@@ -138,7 +137,7 @@ public class VoucherController {
         else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             Voucher ms = voucherService.getById(voucher.getId());
-            voucher.setNgaySua(currentDate);
+            voucher.setNgaySua(new Date());
             voucherService.update(voucher);
             return "redirect:/admin/voucher";
         }
@@ -174,7 +173,8 @@ public class VoucherController {
             return "/admin-template/voucher/voucher";
         } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            voucher.setNgayTao(currentDate);
+            voucher.setNgayTao(new Date());
+            voucher.setNgaySua(new Date());
             voucher.setTrangThai(2);
             voucherService.update(voucher);
             return "redirect:/admin/voucher";
