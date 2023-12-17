@@ -48,6 +48,9 @@ public class HoaDon {
     @Column(name = "phi_ship")
     private Long phiShip;
 
+    @Column(name = "tien_giam")
+    private Long tienGiam;
+
     @Column(name = "tong_tien")
     private Long tongTien;
 

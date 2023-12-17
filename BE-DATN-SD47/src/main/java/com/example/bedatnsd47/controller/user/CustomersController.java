@@ -275,6 +275,7 @@ public class CustomersController {
     public String addHoaDon(
             @RequestParam("idGioHangChiTiet") String idGioHangChiTiet,
             @RequestParam("tongTien") String tongTien,
+            @RequestParam("tienGiam") String tienGiam,
             @RequestParam("tongTienAndSale") String tongTienAndSale,
             @RequestParam("hoVaTen") String hoVaTen,
             @RequestParam("soDienThoai") String soDienThoai,
@@ -312,7 +313,7 @@ public class CustomersController {
             diaChiService.save(diaChi);
         }
         gioHangChiTietService.addHoaDon(listIdString, Long.valueOf(tongTien), Long.valueOf(tongTienAndSale), hoVaTen,
-                soDienThoai, tienShip, email, voucher, diaChiCuThe, ghiChu, khachHang, phuongXaID, quanHuyenID,
+                soDienThoai, tienShip,tienGiam, email, voucher, diaChiCuThe, ghiChu, khachHang, phuongXaID, quanHuyenID,
                 thanhPhoID, khachHang.getGioHang().getId());
         return "redirect:/user/thankyou";
     }
@@ -688,6 +689,20 @@ public class CustomersController {
             model.addAttribute("listLichSuHoaDon", lichSuHoaDonService.findByIdhdNgaySuaAsc(hoaDon.getId()));
         }
         return "/customer-template/detail-tra-cuu-don-hang";
+    }
+
+    @GetMapping("/lien-he/add")
+    public String lienHeAdd(
+            @RequestParam("hoTen")String hoTen,
+            @RequestParam("email")String email,
+            @RequestParam("chuDe")String chuDe,
+            @RequestParam("tinNhan")String tinNhan,
+            RedirectAttributes redirectAttributes
+
+    ) {
+        khachHangService.guiLieuHe(hoTen,email,chuDe,tinNhan);
+        redirectAttributes.addFlashAttribute("checkTBLienHe","true");
+        return "redirect:/lien-he";
     }
 
 }

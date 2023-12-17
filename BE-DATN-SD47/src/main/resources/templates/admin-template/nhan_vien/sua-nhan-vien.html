@@ -291,10 +291,82 @@
                             </div>
                             <div class="modal-footer">
                                 </button>
+                                <button data-bs-toggle="modal" type="button" data-bs-target="#modalDoiMatKhau" class="btn btn-primary" style="margin-right: 5%">Đổi mật khẩu</button>
+
                                 <button type="submit" class="btn btn-warning">Cập nhật</button>
                             </div>
                         </form>
                         <!-- form sửa khách hàng end-->
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalDoiMatKhau" tabindex="-1" aria-labelledby="modalDoiMatKhauLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="width: 100%;margin: auto">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="modalDoiMatKhauLabel">Đổi mật khẩu</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="formDoiMauKhau" th:action="@{/admin/nhan-vien/doi-mat-khau}" method="get">
+                                            <div class="mb-3">
+                                                <label for="matKhauCu" class="form-label">Mật khẩu cũ</label>
+                                                <input type="text" class="form-control" id="matKhauCu" placeholder="Nhập mật khẩu cữ">
+                                                <div class="check-loi" style="display: none" id="idmatKhauCu"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="matKhauMoi" class="form-label">Mật khẩu mới</label>
+                                                <input type="text" class="form-control" id="matKhauMoi" placeholder="Nhập mật khẩu mới">
+                                                <div class="check-loi" style="display: none" id="idmatKhauMoi"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="nhapLaiMatKhauMoi" class="form-label">Nhập lại mật khẩu mới</label>
+                                                <input type="text" class="form-control" id="nhapLaiMatKhauMoi" placeholder="Nhập lại mật khẩu mới">
+                                                <div class="check-loi" style="display: none" id="idnhapLaiMatKhauMoi"></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                        <button type="submit" form="formDoiMauKhau" onclick="return checkDoiMatKhauFormNhanVien()" class="btn btn-primary">Xác nhận</button>
+                                    </div>
+                                    <script>
+                                        function checkDoiMatKhauFormNhanVien() {
+                                            var check = true
+                                            var matKhauCu = document.getElementById("matKhauCu")
+                                            var matKhauMoi = document.getElementById("matKhauMoi")
+                                            var nhapLaiMatKhauMoi = document.getElementById("nhapLaiMatKhauMoi")
+                                            var idmatKhauCu = document.getElementById("idmatKhauCu")
+                                            var idmatKhauMoi = document.getElementById("idmatKhauMoi")
+                                            var idnhapLaiMatKhauMoi = document.getElementById("idnhapLaiMatKhauMoi")
+                                            idmatKhauCu.style.display = 'none'
+                                            idmatKhauMoi.style.display = 'none'
+                                            idnhapLaiMatKhauMoi.style.display = 'none'
+                                            if (matKhauCu.value.trim()==''){
+                                                idmatKhauCu.style.display = 'block'
+                                                idmatKhauCu.innerText = 'Không được để trống mật khẩu mới'
+                                                check = false
+                                            }
+                                            if (matKhauMoi.value.trim()==''){
+                                                idmatKhauMoi.style.display = 'block'
+                                                idmatKhauMoi.innerText = 'Không được để trống mật khẩu mới'
+                                                check = false
+                                            }
+                                            if (nhapLaiMatKhauMoi.value.trim()==''){
+                                                idnhapLaiMatKhauMoi.style.display = 'block'
+                                                idnhapLaiMatKhauMoi.innerText = 'Không được để trống mật khẩu mới'
+                                                check = false
+                                            }
+                                            if (nhapLaiMatKhauMoi.value!=matKhauMoi.value){
+                                                idnhapLaiMatKhauMoi.style.display = 'block'
+                                                idnhapLaiMatKhauMoi.innerText = 'Mật khẩu mới không trùng nhau'
+                                                check = false
+                                            }
+                                            return check
+
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
