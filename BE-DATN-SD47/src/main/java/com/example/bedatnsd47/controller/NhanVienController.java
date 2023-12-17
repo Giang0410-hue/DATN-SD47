@@ -106,15 +106,26 @@ public class NhanVienController {
 
     }
 
-    @GetMapping("/update-mat-khau/{id}")
+    @GetMapping("/update-mat-khau")
     public String updateMatKhau(
             Model model,
-            @PathVariable("id") Long id,
+            @RequestParam("idNhanVien") String idNhanVien,
+            @RequestParam("matKhauCu") String matKhauCu,
+            @RequestParam("nhapLaiMatKhauMoi") String nhapLaiMatKhauMoi,
             RedirectAttributes redirectAttributes
     ) {
-
-        redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-        return "redirect:/admin/nhan-vien/view-update-nhan-vien/" + id;
+        TaiKhoan nhanVien = taiKhoanService.getById(Long.valueOf(idNhanVien));
+        if (!passwordEncoder.matches(matKhauCu, nhanVien.getMatKhau())) {
+            redirectAttributes.addFlashAttribute("checkThongBao", "thaiBaiTrue");
+            redirectAttributes.addFlashAttribute("checkModalLoi", "true");
+        } else {
+            nhanVien.setNgaySua(new Date());
+            nhanVien.setMatKhau(passwordEncoder.encode(nhapLaiMatKhauMoi));
+            taiKhoanService.update(nhanVien);
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+            return "redirect:/admin/nhan-vien/view-update-nhan-vien/" + idNhanVien;
+        }
+        return "redirect:/admin/nhan-vien/view-update-nhan-vien/" + idNhanVien;
 
     }
 
