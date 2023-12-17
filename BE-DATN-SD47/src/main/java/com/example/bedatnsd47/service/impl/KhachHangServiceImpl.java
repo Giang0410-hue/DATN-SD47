@@ -145,6 +145,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     public TaiKhoan findKhachLe() {
         return repository.findKhachLe();
     }
+
     public void sendEmail(TaiKhoan taiKhoan, String path, String random) {
         String from = "glacatshopshoes@gmail.com";
         String to = taiKhoan.getEmail();
@@ -178,6 +179,29 @@ public class KhachHangServiceImpl implements KhachHangService {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void guiLieuHe(String hoTen, String email, String chuDe, String tinNhan) {
+        String from = email;
+        String to = "glacatshopshoes@gmail.com";
+        String subject = chuDe;
+        String content = tinNhan;
+        try {
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            helper.setFrom(from, hoTen);
+            helper.setTo(to);
+            helper.setSubject(subject);
+
+            helper.setText(content, true);
+
+            javaMailSender.send(message);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

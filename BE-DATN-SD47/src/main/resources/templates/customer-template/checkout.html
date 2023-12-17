@@ -1007,8 +1007,8 @@
                                         var tongTien = document.getElementById("tongTien");
                                         var tongTienHangInt = parseInt(tongTienHang.innerText);
 
-                                        tongTien.value = `${data.data.total + tongTienHangInt}`;
-                                        tongTienAndSale.value = `${data.data.total + tongTienHangInt - tienVoucher}`;
+                                        // tongTien.value = `${data.data.total + tongTienHangInt}`;
+                                        tongTienAndSale.value = tongTienHangInt - tienVoucher;
                                         totalElementSale.innerHTML = `${data.data.total + tongTienHangInt - tienVoucher + ' VND'}`;
 
                                         console.log(data)
@@ -1131,6 +1131,7 @@
                             <input type="hidden" name="idGioHangChiTiet" id="idGioHangChiTiet">
                             <input type="hidden" name="tongTien" id="tongTien">
                             <input type="hidden" name="tienShip" id="tienShip">
+                            <input type="hidden" name="tienGiam" id="tienGiam" value="0">
                             <input type="hidden" name="tongTienAndSale" id="tongTienAndSale">
                             <input type="hidden" th:value="${khachHang.email}" name="email">
                             <input type="hidden" name="voucher" id="voucherID">
@@ -1188,6 +1189,7 @@
                             <input type="hidden" name="idGioHangChiTiet" id="idGioHangChiTiet">
                             <input type="hidden" name="tongTien" id="tongTien">
                             <input type="hidden" name="tienShip" id="tienShip">
+                            <input type="hidden" name="tienGiam" id="tienGiam" value="0">
                             <input type="hidden" name="tongTienAndSale" id="tongTienAndSale">
                             <input type="hidden" th:value="${khachHang.email}" name="email">
                             <input type="hidden" name="voucher" id="voucherID">
@@ -1429,8 +1431,8 @@
                                                 var tongTien = document.getElementById("tongTien");
                                                 var tongTienHangInt = parseInt(tongTienHang.innerText);
 
-                                                tongTien.value = `${data.data.total + tongTienHangInt}`;
-                                                tongTienAndSale.value = `${data.data.total + tongTienHangInt - tienVoucher}`;
+                                                // tongTien.value = `${data.data.total + tongTienHangInt}`;
+                                                tongTienAndSale.value = tongTienHangInt - tienVoucher;
                                                 totalElementSale.innerHTML = `${data.data.total + tongTienHangInt - tienVoucher + ' VND'}`;
 
                                                 console.log(data)
@@ -1517,17 +1519,17 @@
                                                                             th:text="${'Giảm '+ voucher.phanTramGiam + '%'}"></h5>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
-                                                                               th:text="${'Giảm tối đa ' + #strings.substringBefore(voucher.giamToiDa, '.') + ' VND'}"></small>
+                                                                               th:text="${'Giảm tối đa ' + voucher.giamToiDa + ' VND'}"></small>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
                                                                                id="donToiThieu"
-                                                                               th:text="${'Đơn Tối Thiểu '+ #strings.substringBefore(voucher.giaTriDonToiThieu, '.') + ' VND'}"></small>
+                                                                               th:text="${'Đơn Tối Thiểu '+ voucher.giaTriDonToiThieu + ' VND'}"></small>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
                                                                                th:text="${'Số Lượng '+voucher.soLuong}"></small>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
-                                                                               th:text="${'Hạn Sử Dụng '+#temporals.format(voucher.ngayKetThuc, 'dd/MM/yyyy')}"></small>
+                                                                               th:text="${'Hạn Sử Dụng '+#temporals.format(voucher.ngayKetThuc, 'hh:mm dd/MM/yyyy')}"></small>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-2">
@@ -1590,6 +1592,8 @@
 
                                                                 var detailVoucher = document.getElementById("c_code");
 
+                                                                var tienGiam = document.getElementById("tienGiam");
+
 
                                                                 var shippingFeeResultInt = parseInt(shippingFeeResult.innerText);
                                                                 var tongTien = document.getElementById("tongTien");
@@ -1603,8 +1607,8 @@
                                                                 detailVoucher.value = -tongTienGiamTheoPhanTram + ' VND';
                                                                 moneyVoucher.innerText = tongTienGiamTheoPhanTram + ' VND';
 
-                                                                tongTien.value = shippingFeeResultInt + tongTienHangInt;
-                                                                tongTienAndSale.value = shippingFeeResultInt + tongTienHangInt - tongTienGiamTheoPhanTram;
+                                                                tienGiam.value = tongTienGiamTheoPhanTram;
+                                                                tongTienAndSale.value =  tongTienHangInt - tongTienGiamTheoPhanTram;
                                                                 totalElementSale.innerHTML = shippingFeeResultInt + tongTienHangInt - tongTienGiamTheoPhanTram + ' VND';
 
                                                                 $('#voucher').modal('hide')

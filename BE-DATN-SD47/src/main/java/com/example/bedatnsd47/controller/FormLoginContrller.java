@@ -80,7 +80,8 @@ public class FormLoginContrller {
     @PostMapping("/xac-minh/check")
     public String checkRanDOm1(
             @RequestParam("ranDom") String ranDom1,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     ) {
 
         if (ranDom1.isEmpty()) {
@@ -88,6 +89,7 @@ public class FormLoginContrller {
             return "xac-minh";
         } else if (ranDom1.equalsIgnoreCase(ranDomMa)) {
             service.addUser(userInfoStorage);
+            redirectAttributes.addFlashAttribute("checkThongBao","dangKy");
             System.out.println("thêm tài khoản thành công form check");
             return "redirect:/login";
         } else {
@@ -106,7 +108,8 @@ public class FormLoginContrller {
             @RequestParam("password") String password,
             HttpSession session,
             Model model,
-            HttpServletRequest request) {
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes) {
         TaiKhoan taiKhoanDk = taiKhoanRepository.findByTenTaiKhoan(username).orElse(null);
         TaiKhoan emailDk = khachHangRepository.findByEmail(email).orElse(null);
         if (emailDk != null) {
@@ -176,7 +179,7 @@ public class FormLoginContrller {
                 taiKhoan.setMatKhau(matKhauMoi);
                 service.updateUser(taiKhoan);
                 System.out.println("Thay đổi mk thành công ");
-                redirectAttributes.addFlashAttribute("thongBao", "Thay đổi mật khẩu thành công.");
+                redirectAttributes.addFlashAttribute("checkThongBao","quenMK");
                 redirectAttributes.addFlashAttribute("tenTaiKhoan", taiKhoan.getTenTaiKhoan());
                 redirectAttributes.addFlashAttribute("matKhauMoi", matKhauMoi);
                 return "redirect:/login";

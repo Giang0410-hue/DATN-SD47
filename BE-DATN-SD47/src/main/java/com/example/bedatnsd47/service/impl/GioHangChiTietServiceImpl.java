@@ -91,13 +91,14 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
 
     @Override
     public HoaDonChiTiet addHoaDon(List<String> listStringIdGioHangCT, Long tongTien, Long tongTienSale,
-                                   String hoVaTen, String soDienThoai, String tienShip, String email,
+                                   String hoVaTen, String soDienThoai, String tienShip,String tienGiam, String email,
                                    String voucher, String diaChiCuThe, String ghiChu, TaiKhoan taiKhoan,
                                    String phuongXaID, String quanHuyenID, String thanhPhoID, Long idGioHang) {
         HoaDon hoaDon = new HoaDon();
         hoaDon.setMaHoaDon("HD" + hoaDon.getId());
         hoaDon.setLoaiHoaDon(1);
         hoaDon.setPhiShip(Long.valueOf(tienShip));
+        hoaDon.setTienGiam(Long.valueOf(tienGiam));
         hoaDon.setTongTien(tongTien);
         hoaDon.setTongTienKhiGiam(tongTienSale);
         hoaDon.setGhiChu(ghiChu);
