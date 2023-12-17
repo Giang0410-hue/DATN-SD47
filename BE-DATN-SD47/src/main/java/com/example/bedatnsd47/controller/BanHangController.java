@@ -200,6 +200,7 @@ public class BanHangController {
             hd.setLoaiHoaDon(2);
             hd.setTongTien((long) 0);
             hd.setTongTienKhiGiam((long) 0);
+            hd.setTienGiam((long)0);
             hoaDonService.saveOrUpdate(hd);
             hd.setMaHoaDon("HD" + hd.getId());
             hoaDonService.saveOrUpdate(hd);
@@ -488,6 +489,7 @@ public class BanHangController {
         if (hd.getVoucher() != null && hd.getTrangThai() != 6) {
             if (hd.tongTienHoaDonDaNhan() < hd.getVoucher().getGiaTriDonToiThieu().longValue()) {
                 hd.setVoucher(null);
+                hd.setTienGiam((long)0);
                 hd.setTongTien(hd.tongTienHoaDonDaNhan());
                 hd.setTongTienKhiGiam(hd.tongTienHoaDonDaNhan());
                 hoaDonService.saveOrUpdate(hd);
@@ -783,6 +785,11 @@ public class BanHangController {
         if (tongTienHdcCu - tongTienHoanTra - hdc.getTienGiam() < 0) {
             hdc.setTongTienKhiGiam((long) 0);
             hdc.setTongTien((long)0);
+        }else{
+            hdc.setTongTienKhiGiam(hdc.tongTienHoaDonDaNhan()+hdc.getPhiShip());
+            hdc.setTongTien(hdc.tongTienHoaDonDaNhan());
+            // hdc.setTienGiam((long)0);
+            hdc.setVoucher(null);
         }
         
                 
@@ -1006,8 +1013,8 @@ public class BanHangController {
                 break;
 
         }
-        hd.setTongTien(hd.tongTienHoaDon() + phiShip);
-        hd.setTongTienKhiGiam(hd.tongTienHoaDon() + phiShip - giamGia);
+        hd.setTongTien(hd.tongTienHoaDon() );
+        hd.setTongTienKhiGiam(hd.tongTienHoaDon()  - giamGia);
 
         hoaDonService.saveOrUpdate(hd);
         updateSl(hd);

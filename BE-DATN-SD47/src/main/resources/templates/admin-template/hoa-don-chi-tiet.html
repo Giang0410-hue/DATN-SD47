@@ -1697,7 +1697,7 @@
                                                                                     aria-label="Coupon Code"
                                                                                     aria-describedby="button-addon2" />
                                                                                 <button
-                                                                                    th:if="${hoaDon.trangThai==4||hoaDon.trangThai==-1||hoaDon.taiKhoan.tenTaiKhoan!=null}"
+                                                                                    th:if="${hoaDon.taiKhoan.tenTaiKhoan!=null}"
                                                                                     class="btn btn-primary btn-sm"
                                                                                     type="button"
                                                                                     onclick="checkAndDisplayVouchers()"
@@ -1747,12 +1747,12 @@
                                                                                                                 <small
                                                                                                                     class="text-body-secondary"
                                                                                                                     style="display: block"
-                                                                                                                    th:text="${'Giảm tối đa '+#strings.substringBefore(voucher.giamToiDa, '.') + ' VND'}"></small>
+                                                                                                                    th:text="${'Giảm tối đa '+voucher.giamToiDa+ ' VND'}"></small>
                                                                                                                 <small
                                                                                                                     id="donToiThieu"
                                                                                                                     class="text-body-secondary"
                                                                                                                     style="display: block"
-                                                                                                                    th:text="${'Đơn Tối Thiểu '+#strings.substringBefore(voucher.giaTriDonToiThieu, '.')+ ' VND'}"></small>
+                                                                                                                    th:text="${'Đơn Tối Thiểu '+voucher.giaTriDonToiThieu+ ' VND'}"></small>
                                                                                                                 <small
                                                                                                                     class="text-body-secondary"
                                                                                                                     style="display: block"
