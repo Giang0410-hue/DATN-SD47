@@ -57,6 +57,10 @@ public class HoaDon {
     @Column(name = "tong_tien_khi_giam")
     private Long tongTienKhiGiam;
 
+    @Column(name = "tien_giam")
+    private Long tienGiam;
+
+
     @Column(name = "ghi_chu", length = 255)
     private String ghiChu;
 
@@ -149,16 +153,7 @@ public class HoaDon {
     }
 
     public Long getGiamGia() {
-        if (this.voucher != null) {
-            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
-            Long giam = (this.tongTienHoaDonDaNhan() * ptGiam) / 100;
-            Long giamToiDa = Long.valueOf(this.voucher.getGiamToiDa().longValue());
-            if (giam > giamToiDa) {
-                return giamToiDa;
-            }
-            return giam;
-        }
-        return (long) 0;
+        return this.tienGiam!=null?this.tienGiam:0;
     }
 
     public Long getGiamGiaKhiHoanTra() {

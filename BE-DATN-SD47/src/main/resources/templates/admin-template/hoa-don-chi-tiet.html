@@ -272,7 +272,7 @@
                                     </div>
 
                                     <div th:if="${hoaDon.trangThai !=-1}">
-                                        <h1 style="text-align: center;">#[[${hoaDon.maHoaDon}]]</h1>
+                                        <h1 style="text-align: center;">[[${hoaDon.maHoaDon}]] - Chờ thanh toán</h1>
                                         <a class="btn btn-link" style="float: left;margin-top: 1%;"
                                             href="/ban-hang-tai-quay/hoa-don/quan-ly">
                                             <i class=" bi bi-arrow-left-circle-fill"></i>
@@ -810,7 +810,7 @@
                                                                                                     <button
                                                                                                         type="submit"
                                                                                                         class="btn btn-success">
-                                                                                                        Chọn2
+                                                                                                        Chọn
                                                                                                     </button>
                                                                                                 </td>
                                                                                                 
@@ -1107,7 +1107,7 @@
                                                                                             <td><input type="hidden"
                                                                                                     name="idDiaChi"
                                                                                                     th:value="${dc.id}">
-                                                                                                    <input type="text"
+                                                                                                    <input type="hidden"
                                                                                                     name="idhdc"
                                                                                                     th:value="${hoaDon.id}">
                                                                                             </td>
@@ -1697,7 +1697,7 @@
                                                                                     aria-label="Coupon Code"
                                                                                     aria-describedby="button-addon2" />
                                                                                 <button
-                                                                                    th:if="${hoaDon.trangThai==-1&&hoaDon.taiKhoan.tenTaiKhoan!=null}"
+                                                                                    th:if="${hoaDon.trangThai==4||hoaDon.trangThai==-1||hoaDon.taiKhoan.tenTaiKhoan!=null}"
                                                                                     class="btn btn-primary btn-sm"
                                                                                     type="button"
                                                                                     onclick="checkAndDisplayVouchers()"

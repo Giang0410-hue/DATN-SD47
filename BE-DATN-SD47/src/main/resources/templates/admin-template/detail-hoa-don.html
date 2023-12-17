@@ -571,9 +571,9 @@
                                         <!-- [[${checkRollback}]] -->
                                         <button id="btnInHoaDon" class="btn btn-primary">In hóa đơn</button>
 
-                                        <button th:if="${hoaDon.trangThai!=0&&hoaDon.trangThai>0&&hoaDon.trangThai!=6&&checkRollback!=8}"
+                                        <!-- <button th:if="${hoaDon.trangThai!=0&&hoaDon.trangThai>0&&hoaDon.trangThai!=6&&checkRollback!=8}"
                                             data-bs-toggle="modal" data-bs-target="#rollback" type="button"
-                                            class="btn btn-primary">Hoàn tác</button>
+                                            class="btn btn-primary">Hoàn tác</button> -->
                                         <button th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}" type="button"
                                             class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#ghiChuHuyModal">Hủy</button>
@@ -2059,7 +2059,7 @@
                                                                         </h6>
                                                                         <h6 th:if="${hoaDon.trangThai==6}"
                                                                             class="thong-tin-gia">
-                                                                            [[${hoaDon.getGiamGiaKhiHoanTra()}]]
+                                                                            [[${hoaDon.tienGiam}]]
                                                                             VND
                                                                             <!-- hoantra -->
                                                                         </h6>
@@ -2079,7 +2079,7 @@
                                                                         </h6>
                                                                         <h6 th:if="${hoaDon.tongTienHoaDonDaNhan()==0}"
                                                                             class="thong-tin-gia">
-                                                                            [[${hoaDon.tongTienHoaDonHoanTra()-hoaDon.getGiamGiaKhiHoanTra()}]]
+                                                                            [[${(hoaDon.tongTienHoaDonHoanTra-hoaDon.tienGiam)}]]
                                                                             VND
                                                                         </h6>
                                                                     </div>
@@ -2321,13 +2321,13 @@
                                 th:if="${hoaDon.trangThai!=6}" id="giamGiaIn">
                                 [[${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}]]
                             </span>
-                            <span th:if="${hoaDon.trangThai==6}">[[${hoaDon.getGiamGiaKhiHoanTra()}]]
+                            <span th:if="${hoaDon.trangThai==6}">[[${hoaDon.tongTienKhiGiam - hoaDon.tongTien}]]
                             </span>
                             VND</span>
                     </p>
                     <p th:if="${hoaDon.trangThai==6}"><span class="info-label">Tổng tiền hoàn trả:</span> <span class="info-value">
                             <span th:if="${hoaDon.tongTienHoaDonDaNhan()!=0}" >[[${hoaDon.tongTienHoaDonHoanTra()}]]</span>
-                            <span th:if="${hoaDon.tongTienHoaDonDaNhan()==0}">[[${hoaDon.tongTienHoaDonHoanTra()-hoaDon.getGiamGiaKhiHoanTra()}]]</span>
+                            <span th:if="${hoaDon.tongTienHoaDonDaNhan()==0}">[[${hoaDon.tongTienHoaDonHoanTra()-(hoaDon.tongTienKhiGiam - hoaDon.tongTien)}]]</span>
                             VND</span></p>
 
                             <p><span class="info-label">Tổng tiền thanh toán:</span> <span class="info-value">

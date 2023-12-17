@@ -145,7 +145,7 @@ public class BanHangController {
     }
 
     @GetMapping("/hoa-don/{id}")
-    public String hoaDon(@PathVariable Long id, Model model) {
+    public String hoaDon(@PathVariable Long id, Model model,RedirectAttributes redirectAttributes) {
         chiTietSanPhamSerivce.checkSoLuongBang0();
         // request.setAttribute("hoaDonTra");
         TaiKhoan tk = new TaiKhoan();
@@ -160,16 +160,27 @@ public class BanHangController {
         request.setAttribute("listVoucher", voucherService.fillAllDangDienRa());
         
         request.setAttribute("lstLshd", lichSuHoaDonService.findByIdhd(id));
-
+        // request.setAttribute("checkThongBao", "thatBai");
         HoaDon hd = hoaDonService.findById(id);
+        
+        Boolean ctb = false;
+        
         if (hd.getVoucher() != null && hd.getTrangThai() != 6) {
             if (hd.tongTienHoaDonDaNhan() < hd.getVoucher().getGiaTriDonToiThieu().longValue()) {
+                
                 hd.setVoucher(null);
                 hd.setTongTien(hd.tongTienHoaDonDaNhan());
                 hd.setTongTienKhiGiam(hd.tongTienHoaDonDaNhan());
                 hoaDonService.saveOrUpdate(hd);
+                ctb=true;
+                // thongBao(redirectAttributes, "Đã xóa mã giảm giá vì chưa đạt giá trị đơn tối thiếu", 0);
             }
         }
+        if(ctb){
+            request.setAttribute("thongBao", "Đã xóa mã giảm giá vì chưa đạt giá trị đơn tối thiếu");
+                request.setAttribute("checkThongBao", "thatBai");
+        }
+        
         request.setAttribute("hoaDon", hd);
 
         return "/admin-template/hoa-don-chi-tiet";
@@ -222,8 +233,14 @@ public class BanHangController {
     @PostMapping("/hoa-don/delete/{id}")
     public String delete(RedirectAttributes redirectAttributes, @PathVariable Long id, @RequestParam String ghiChu) {
         HoaDon hd = hoaDonService.findById(id);
+        if(hd.getTrangThai()==1){
+            updateSoLuongRollBack(id);
+            
+        }
         hd.setTrangThai(5);
         sendMail(hd);
+
+        
         hoaDonService.saveOrUpdate(hd);
         addLichSuHoaDon(id, ghiChu, 5);
         thongBao(redirectAttributes, "Thành công", 1);
@@ -550,7 +567,9 @@ public class BanHangController {
         HoaDon hd = hoaDonService.findById(id);
 
         hd.setNgaySua(new Date());
-
+        if(lichSuHoaDonService.findByIdhdNgaySuaAsc(id).size()==3){
+            updateSl(hd);
+        }
         for (LichSuHoaDon lichSuHoaDon : lichSuHoaDonService.findByIdhd(id)) {
             if (lichSuHoaDon.getTrangThai() == hd.getTrangThai()) {
                 lichSuHoaDon.setTrangThai(lichSuHoaDon.getTrangThai() + 20);
@@ -560,20 +579,24 @@ public class BanHangController {
         }
 
         if (hd.getTrangThai() == 1 && hd.getLoaiHoaDon() == 2) {
-            hd.setTrangThai(hd.getTrangThai() - 2);
+            hd.setTrangThai(4);
             updateSoLuongRollBack(hd.getId());
 
         } else {
             if (hd.getTrangThai() == 5) {
-                Integer tt = lichSuHoaDonService.findByIdhdNgaySuaAsc(hd.getId()).size() - 1;
+                if(lichSuHoaDonService.findByIdhdNgaySuaAsc(id).size()==1){
+                    hd.setTrangThai(4);
+                }else{
+                    Integer tt = lichSuHoaDonService.findByIdhdNgaySuaAsc(hd.getId()).size() - 1;
                 hd.setTrangThai(tt);
+                }
             } else {
                 // System.out.println("sizee------" +
                 // lichSuHoaDonService.findByIdhdNgaySuaAsc(idhdc).size());
                 if (lichSuHoaDonService.findByIdhdNgaySuaAsc(hd.getId()).size() == 1 && hd.getLoaiHoaDon() == 2) {
                     updateSoLuongRollBack(hd.getId());
 
-                    hd.setTrangThai(-1);
+                    hd.setTrangThai(4);
 
                 } else if (lichSuHoaDonService.findByIdhdNgaySuaAsc(hd.getId()).size() == 1 && hd.getLoaiHoaDon() == 1) {
                     updateSoLuongRollBack(hd.getId());
@@ -638,8 +661,13 @@ public class BanHangController {
             thongBao(redirectAttributes, "Có sản phẩm vượt quá số lượng vui lòng kiểm tra lại", 0);
             return "redirect:/ban-hang-tai-quay/hoa-don/detail/" + hd.getId();
         }
+        if(hd.getTrangThai()==5){
+            thongBao(redirectAttributes, "Khách hàng đã hủy đơn", 0);
+            return "redirect:/ban-hang-tai-quay/hoa-don/detail/" + hd.getId();
+        }
         if (voucherID != "") {
             hd.setVoucher(voucherService.findById(Long.parseLong(voucherID)));
+            hd.setTienGiam(giamGia);
         }
         if (hd.getTrangThai() == 0 && hd.getLoaiHoaDon() == 1) {
             updateSl(hd);
@@ -653,8 +681,8 @@ public class BanHangController {
         System.out.println(ghiChu + "ghiChu");
         sendMail(hd);
         if (detail.equals("ok")) {
-            hd.setTongTien(hd.tongTienHoaDon() + phiShip2);
-            hd.setTongTienKhiGiam(hd.tongTienHoaDon() + phiShip2 - giamGia);
+            hd.setTongTien(hd.tongTienHoaDon() );
+            hd.setTongTienKhiGiam(hd.tongTienHoaDon()- giamGia);
             hoaDonService.saveOrUpdate(hd);
             thongBao(redirectAttributes, "Thành công", 1);
             return "redirect:/ban-hang-tai-quay/hoa-don/detail/" + hd.getId();
@@ -724,12 +752,12 @@ public class BanHangController {
         HoaDon hdc = hoaDonService.findById(idhdc);
         System.out.println(hdc.getTrangThai());
         hdc.setTrangThai(6);
-        
+        // hdc.setTienGiam(hdc.getGiamGia());
         System.out.println(hdc.getId());
         System.out.println(hdc.getTrangThai());
         HoaDon hdDoiTra = hoaDonService.findByMa(hdc.getMaHoaDon() + "-DOITRA");
         tongTienHoanTra = hdDoiTra.tongTienHoaDon();
-        tienGiamGia = hdc.getGiamGia();
+        // tienGiamGia = hdc.getGiamGia();
         tienShip = hdc.getPhiShip();
         tongTienHdcCu = hdc.getTongTien() - tienShip;
 
@@ -749,12 +777,12 @@ public class BanHangController {
             }
         }
 
-        hdc.setTongTien(hdc.tongTienHoaDonDaNhan());
-        hdc.setTongTienKhiGiam(hdc.tongTienHoaDonDaNhan() - hdc.getGiamGia() + hdc.getPhiShip());
-        System.out.println("tongTienHdcCu-tongTienHoanTra-tienGiamGia " + tongTienHdcCu + "-" + tongTienHoanTra
-                + "-" + tienGiamGia);
-        if (tongTienHdcCu - tongTienHoanTra - tienGiamGia < 0) {
+        
+        // System.out.println("tongTienHdcCu-tongTienHoanTra-tienGiamGia " + tongTienHdcCu + "-" + tongTienHoanTra
+        //         + "-" + tienGiamGia);
+        if (tongTienHdcCu - tongTienHoanTra - hdc.getTienGiam() < 0) {
             hdc.setTongTienKhiGiam((long) 0);
+            hdc.setTongTien((long)0);
         }
         
                 
@@ -817,6 +845,7 @@ public class BanHangController {
         System.out.println("ttttttttt" + thanhPho + quanHuyen + phuongXa);
         if (voucherID != "") {
             hd.setVoucher(voucherService.findById(Long.parseLong(voucherID)));
+            hd.setTienGiam(giamGia);
         }
 
         switch (hd.getTrangThai()) {
