@@ -77,6 +77,8 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
                 "</p>\n" +
 
                 "<p class=\"email-content\">\n" +
+                "<p>Tên tài khoản của bạn: " + taiKhoan.getTenTaiKhoan() + "</p>" +
+                "<p>Email của bạn: " + taiKhoan.getEmail() + "</p>" +
                 "Nếu bạn không yêu cầu hướng dẫn khôi phục mật khẩu hoặc không nhớ việc này, hãy bỏ qua email này. Liên kết xác nhận sẽ hết hạn sau 24 giờ.\n" +
                 "<br>\n" +
                 "Chân thành cảm ơn,\n" +

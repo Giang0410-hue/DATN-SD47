@@ -1,5 +1,7 @@
 package com.example.bedatnsd47.controller;
 
+import com.example.bedatnsd47.config.PrincipalCustom;
+import com.example.bedatnsd47.config.UserInfoUserDetails;
 import com.example.bedatnsd47.entity.HoaDon;
 import com.example.bedatnsd47.entity.Voucher;
 import com.example.bedatnsd47.repository.ChiTietSanPhamRepository;
@@ -47,9 +49,17 @@ public class ThongKeController {
     @Autowired
     ChiTietSanPhamSerivce chiTietSanPhamSerivce;
 
+    private PrincipalCustom principalCustom = new PrincipalCustom();
+
     @GetMapping()
     public String hienThi(
             Model model) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         Date ngayTao1 = new Date();
         Integer sumSanPham = (Integer) model.asMap().get("sumSanPham");
         Integer countHoaDon = (Integer) model.asMap().get("countHoaDon");
