@@ -152,27 +152,9 @@ public class HoaDon {
         return this.tienGiam!=null?this.tienGiam:0;
     }
 
-    public Long getGiamGiaKhiHoanTra() {
-        if (this.voucher != null) {
-            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
-            Long giam = (this.tongTienHoaDon() * ptGiam) / 100;
-            Long giamToiDa = Long.valueOf(this.voucher.getGiamToiDa().longValue());
-            if (giam > giamToiDa) {
-                return giamToiDa;
-            }
-            return giam;
-        }
-        return (long) 0;
-    }
+    
 
-    public Long getPhanTramGiam() {
-        if (this.voucher != null) {
-            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
-
-            return ptGiam;
-        }
-        return (long) 0;
-    }
+   
 
     public String getStringTrangThai() {
         switch (this.trangThai) {
