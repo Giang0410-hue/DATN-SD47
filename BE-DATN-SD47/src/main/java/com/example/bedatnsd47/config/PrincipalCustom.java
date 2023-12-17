@@ -4,7 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class PrincipalCustom {
-    public String getCurrentUserNameAdmin() {
+    public UserInfoUserDetails getCurrentUserNameAdmin() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // Kiểm tra xem người dùng đã đăng nhập chưa
@@ -19,8 +19,8 @@ public class PrincipalCustom {
                 // Kiểm tra xem người dùng có vai trò "ADMIN" không
                 if (userDetails.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))) {
                     // Nếu không có vai trò "ADMIN", trả về tên người dùng
-                    System.out.println("*******: "+ userDetails.getUsername());
-                    return userDetails.getUsername();
+                    System.out.println("*******: "+ userDetails.getHoVaTen());
+                    return userDetails;
                 }
             }
         }
