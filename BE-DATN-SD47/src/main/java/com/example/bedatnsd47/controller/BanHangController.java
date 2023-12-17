@@ -200,6 +200,7 @@ public class BanHangController {
             hd.setLoaiHoaDon(2);
             hd.setTongTien((long) 0);
             hd.setTongTienKhiGiam((long) 0);
+            hd.setTienGiam((long)0);
             hoaDonService.saveOrUpdate(hd);
             hd.setMaHoaDon("HD" + hd.getId());
             hoaDonService.saveOrUpdate(hd);
@@ -785,8 +786,10 @@ public class BanHangController {
             hdc.setTongTienKhiGiam((long) 0);
             hdc.setTongTien((long)0);
         }else{
-            hdc.setTongTienKhiGiam(hdc.tongTienHoaDonDaNhan()+hdc.getPhiShip()-hdc.getTienGiam());
+            hdc.setTongTienKhiGiam(hdc.tongTienHoaDonDaNhan()+hdc.getPhiShip());
             hdc.setTongTien(hdc.tongTienHoaDonDaNhan());
+            // hdc.setTienGiam((long)0);
+            hdc.setVoucher(null);
         }
         
                 

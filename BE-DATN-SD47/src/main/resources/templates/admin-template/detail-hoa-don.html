@@ -2054,18 +2054,32 @@
                                                                     <div class="col">
                                                                         <h6 th:if="${hoaDon.trangThai!=6}"
                                                                             id="moneyVoucher" class="thong-tin-gia">
-                                                                            [[${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}]]
+                                                                            [[${hoaDon.tienGiam}]]
                                                                             VND
                                                                             <!-- binh thuong -->
                                                                         </h6>
                                                                         <h6 th:if="${hoaDon.trangThai==6}"
                                                                             class="thong-tin-gia">
-                                                                            h[[${hoaDon.tongTienKhiGiam - hoaDon.tongTien}]]
+                                                                            [[${hoaDon.tienGiam}]]
                                                                             VND
                                                                             <!-- hoantra -->
                                                                         </h6>
                                                                     </div>
 
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <h6>Khách đã thanh toán:</h6>
+    
+                                                                        
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <h6 id="moneyVoucher" class="thong-tin-gia">
+                                                                            [[${hoaDon.tongTienHoaDon()+hoaDon.phiShip-hoaDon.tienGiam}]]
+                                                                            VND
+                                                                        </h6>
+                                                                    </div>
                                                                 </div>
 
                                                                 <div  th:if="${hoaDon.trangThai==6}" class="row">
@@ -2075,7 +2089,7 @@
                                                                     <div class="col">
                                                                         <h6 th:if="${hoaDon.tongTienHoaDonDaNhan()!=0}"
                                                                             class="thong-tin-gia">
-                                                                            [[${hoaDon.tongTienHoaDonHoanTra()}]]
+                                                                            [[${hoaDon.tongTienHoaDonHoanTra()-hoaDon.tienGiam}]]
                                                                             VND
                                                                         </h6>
                                                                         <h6 th:if="${hoaDon.tongTienHoaDonDaNhan()==0}"
@@ -2095,7 +2109,7 @@
                                                                         <h6 class="thong-tin-gia" id="tongGiaH6">
                                                                             <span
                                                                                 th:if="${hoaDon.tongTienHoaDonDaNhan()!=0}"
-                                                                                id="tongGiaValue">[[${hoaDon.tongTienHoaDonKhiGiam()}]]</span>
+                                                                                id="tongGiaValue">[[${hoaDon.tongTienKhiGiam}]]</span>
 
                                                                             <span
                                                                                 th:if="${hoaDon.tongTienHoaDonDaNhan()==0}">0</span>
@@ -2320,19 +2334,26 @@
                     </p>
                     <p><span class="info-label">Tiền giảm:</span> <span class="info-value"><span
                                 th:if="${hoaDon.trangThai!=6}" id="giamGiaIn">
-                                [[${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}]]
+                                [[${hoaDon.tienGiam}]]
                             </span>
-                            <span th:if="${hoaDon.trangThai==6}">[[${hoaDon.tongTienKhiGiam - hoaDon.tongTien}]]
+                            <span th:if="${hoaDon.trangThai==6}">[[${hoaDon.tienGiam}]]
                             </span>
                             VND</span>
                     </p>
+
+                    <p><span class="info-label">Khách đã thanh toán:</span> <span class="info-value">
+                    <span>[[${hoaDon.tongTienHoaDon()+hoaDon.phiShip-hoaDon.tienGiam}]]
+                        
+                    </span>
+                    VND</span>
+            </p>
                     <p th:if="${hoaDon.trangThai==6}"><span class="info-label">Tổng tiền hoàn trả:</span> <span class="info-value">
-                            <span th:if="${hoaDon.tongTienHoaDonDaNhan()!=0}" >[[${hoaDon.tongTienHoaDonHoanTra()}]]</span>
-                            <span th:if="${hoaDon.tongTienHoaDonDaNhan()==0}">[[${hoaDon.tongTienHoaDonHoanTra()-(hoaDon.tongTienKhiGiam - hoaDon.tongTien)}]]</span>
+                            <span th:if="${hoaDon.tongTienHoaDonDaNhan()!=0}" >[[${hoaDon.tongTienHoaDonHoanTra()-hoaDon.tienGiam}]]</span>
+                            <span th:if="${hoaDon.tongTienHoaDonDaNhan()==0}">[[${hoaDon.tongTienHoaDonHoanTra()-hoaDon.tienGiam}]]</span>
                             VND</span></p>
 
                             <p><span class="info-label">Tổng tiền thanh toán:</span> <span class="info-value">
-                                <span th:if="${hoaDon.tongTienHoaDonDaNhan()!=0}" id="thanhTienIn">[[${hoaDon.tongTienHoaDonKhiGiam()}]]</span>
+                                <span th:if="${hoaDon.tongTienHoaDonDaNhan()!=0}" id="thanhTienIn">[[${hoaDon.tongTien+hoaDon.phiShip}]]</span>
                                 <span th:if="${hoaDon.tongTienHoaDonDaNhan()==0}">0</span>
                                 VND</span></p>
                 </div>
