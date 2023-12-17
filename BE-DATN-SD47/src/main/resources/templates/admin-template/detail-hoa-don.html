@@ -777,7 +777,7 @@
                                                                             name="phiShip" type="hidden"
                                                                             id="shippingFeeResult">
                                                                             <input th:value="${hoaDon.id}"
-                                                                            name="idhdc" type="text"
+                                                                            name="idhdc" type="hidden"
                                                                             >
 
 
@@ -1952,7 +1952,7 @@
                                                                                                     <div
                                                                                                         class="col-md-7">
                                                                                                         <div
-                                                                                                            class="card-body">
+                                                                                                            class="card-body">  
                                                                                                             <h5 class="card-title"
                                                                                                                 style="margin-bottom: -3px"
                                                                                                                 th:text="${'Giảm '+ voucher.phanTramGiam + '%'}">
@@ -2060,7 +2060,7 @@
                                                                         </h6>
                                                                         <h6 th:if="${hoaDon.trangThai==6}"
                                                                             class="thong-tin-gia">
-                                                                            [[${hoaDon.tienGiam}]]
+                                                                            h[[${hoaDon.tongTienKhiGiam - hoaDon.tongTien}]]
                                                                             VND
                                                                             <!-- hoantra -->
                                                                         </h6>
