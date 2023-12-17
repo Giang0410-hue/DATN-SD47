@@ -732,7 +732,7 @@
                                                                 </div>
                                                                 <div class="col">
                                                                     <h6 th:if="${hdHangTra.tongTienHoaDon()!=hoaDon.tongTienHoaDon()}" class="thong-tin-gia" ><span
-                                                                            >[[${hdHangTra.tongTienHoaDon()}]]</span>
+                                                                            >[[${hdHangTra.tongTienHoaDon()-hoaDon.tienGiam}]]</span>
                                                                         VND</h6>
                                                                     <h6 th:if="${hdHangTra.tongTienHoaDon()==hoaDon.tongTienHoaDon()}" class="thong-tin-gia" ><span
                                                                             >[[${hoaDon.tongTienKhiGiam+hoaDon.phiShip}]]</span>
@@ -749,7 +749,7 @@
                                                                 </div>
                                                                 <div  th:if="${check!=0}"  class="col">
                                                                     <h6  th:if="${hdHangTra.tongTienHoaDon()!=hoaDon.tongTienHoaDon()}"  class="thong-tin-gia" id="tongGiaH6"><span
-                                                                            id="tongGiaValue">[[${hoaDon.tongTienHoaDonKhiGiam()-hdHangTra.tongTienHoaDon()}]]</span>
+                                                                            id="tongGiaValue">[[${hoaDon.tongTienHoaDonDaNhan()-hdHangTra.tongTienHoaDon()+hoaDon.phiShip}]]</span>
                                                                         VND</h6>
                                                                         <h6 th:if="${hdHangTra.tongTienHoaDon()==hoaDon.tongTienHoaDon()}"  class="thong-tin-gia" id="tongGiaH6"><span
                                                                             id="tongGiaValue">0</span>
