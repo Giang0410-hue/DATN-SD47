@@ -57,10 +57,6 @@ public class HoaDon {
     @Column(name = "tong_tien_khi_giam")
     private Long tongTienKhiGiam;
 
-    @Column(name = "tien_giam")
-    private Long tienGiam;
-
-
     @Column(name = "ghi_chu", length = 255)
     private String ghiChu;
 
