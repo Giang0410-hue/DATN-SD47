@@ -640,11 +640,14 @@ public class BanHangController {
         return true;
     }
 
-    void sendMail(HoaDon hd) {
+    void sendMail(HoaDon hd
+    ) {
         if (hd.getNguoiNhan() != null) {
             if (hd.getTrangThai() == 1 || hd.getTrangThai() == 2 || hd.getTrangThai() == 3 || hd.getTrangThai() == 5
                     || hd.getTrangThai() == 6) {
-                hoaDonService.guiHoaDonDienTu(hd, "");
+                String url = request.getRequestURL().toString();
+                url = url.replace(request.getServletPath(), "");
+                hoaDonService.guiHoaDonDienTu(hd, url);
             }
         }
     }
