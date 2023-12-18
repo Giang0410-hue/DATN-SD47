@@ -262,7 +262,6 @@ public class ChiTietSanPhamController {
     ) throws IOException {
         ExportFileCTSP exportFileCTSP = new ExportFileCTSP();
         exportFileCTSP.ExportFileExcel(chiTietSanPhamSerivce);
-        attributes.addFlashAttribute("checkTab", "true");
         attributes.addFlashAttribute("checkThongBao", "thanhCong");
         return "redirect:/admin/san-pham-chi-tiet";
     }

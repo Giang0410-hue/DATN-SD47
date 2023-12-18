@@ -66,7 +66,7 @@ public class ExportFileCTSP {
 
             }
             try {
-                FileOutputStream outputStream = new FileOutputStream("FileMauSanPham" + Calendar.getInstance().getTimeInMillis() + ".xlsx");
+                FileOutputStream outputStream = new FileOutputStream("ExportFileSanPham" + Calendar.getInstance().getTimeInMillis() + ".xlsx");
                 workbook.write(outputStream);
                 workbook.close();
             } catch (FileNotFoundException e) {
