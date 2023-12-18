@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Glacat</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="../../static/img/favicon.png" rel="icon">
+    <link href="../../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../../static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../../static/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="../../static/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="../../static/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="../../static/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="../../static/css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+
+            <a href="/ban-hang-tai-quay/hoa-don" class="logo d-flex align-items-center">
+                <img src="../../static/img/logo.png" alt="">
+                <span class="d-none d-lg-block">Glacat</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+
+        </div><!-- End Logo -->
+
+
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+            <li class="nav-item dropdown pe-3">
+
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${tenNhanVien}"></span>
+                </a><!-- End Profile Iamge Icon -->
+
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                    <li class="dropdown-header">
+                        <h6 th:text="${tenNhanVien}"></h6>
+                        <span>Nhân Viên</span>
+                    </li>
+
+                      <!--                    <li>-->
+<!--                        <hr class="dropdown-divider">-->
+<!--                    </li>-->
+
+<!--                    <li>-->
+<!--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">-->
+<!--                            <i class="bi bi-person"></i>-->
+<!--                            <span>Thông tin của tôi</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" th:href="@{/logout}">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Đăng Xuất</span>
+                        </a>
+                    </li>
+
+                </ul><!-- End Profile Dropdown Items -->
+            </li><!-- End Profile Nav -->
+
+        </ul>
+    </nav><!-- End Icons Navigation -->
+
+</header><!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/thong-ke">
+                <i class="bi bi-graph-up-arrow"></i>
+                <span>Thống Kê</span>
+            </a>
+        </li>
+
+            <li class="nav-item">
+                <a class="nav-link " href="/ban-hang-tai-quay/hoa-don">
+                    <i class="bi bi-shop"></i>
+                    <span>Bán Hàng</span>
+                </a>
+            </li><!-- End Bán Hàng Tại Quầy Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-menu-button-wide"></i><span>Quản Lý Sản Phẩm</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="/admin/san-pham-chi-tiet">
+                            <i class="bi bi-circle"></i><span>Sản Phẩm Chi Tiết</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/san-pham">
+                            <i class="bi bi-circle"></i><span>Sản Phẩm</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/thuong-hieu">
+                            <i class="bi bi-circle"></i><span>Thương Hiệu</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/loai-de">
+                            <i class="bi bi-circle"></i><span>Loại Đế</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/mau-sac">
+                            <i class="bi bi-circle"></i><span>Màu Sắc</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/kich-co">
+                            <i class="bi bi-circle"></i><span>Kích Cỡ</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Components Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
+                    <i class="bi bi-receipt-cutoff"></i>
+                    <span>Quản Lý Hóa Đơn</span>
+                </a>
+            </li>
+            <!-- End Forms Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
+                   <i class="bi bi-truck"></i>
+                    <span>Trả hàng</span>
+                </a>
+            </li><!-- End Forms Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-person-vcard"></i><span>Quản Lý Tài Khoản</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="/admin/nhan-vien">
+                            <i class="bi bi-circle"></i><span>Quản lý nhân viên</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/khach-hang">
+                            <i class="bi bi-circle"></i><span>Quản lý khách hàng</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/admin/voucher">
+                    <i class="bi bi-ticket-perforated-fill"></i>
+                    <span>Quản Lý Voucher</span>
+                </a>
+            </li>
+            <!-- End Charts Nav -->
+        </ul>
+
+    </aside><!-- End Sidebar-->
+
+    <main id="main" class="main">
+
+        <section class="section">
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-tao-moi">
+                                <div class="tao-hd">
+                                    <!-- <button type="button" class="btn btn-success">Tạo hóa đơn</button> -->
+
+                                    <a id="postLink" class="btn btn-success">Tạo Hóa đơn</a>
+
+                                    <script>
+                                        document.getElementById("postLink").addEventListener("click", function (event) {
+                                            event.preventDefault(); // Ngăn chặn thực hiện mặc định của thẻ <a>
+
+                                            var form = document.createElement("form");
+                                            form.method = "POST";
+                                            form.action = "/ban-hang-tai-quay/create"; // Đặt URL mà bạn muốn gửi yêu cầu POST đến
+
+                                            var input = document.createElement("input");
+                                            input.type = "hidden";
+                                            input.name = "key";
+                                            input.value = "value"; // Dữ liệu bạn muốn gửi
+
+                                            form.appendChild(input);
+
+                                            document.body.appendChild(form);
+                                            form.submit();
+                                        });
+                                    </script>
+
+
+                                </div>
+                                <!-- tao moi va danh sach hoa don tabs -->
+
+                                <div class="tab-content pt-2" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="tao-moi" role="tabpanel"
+                                        aria-labelledby="tao-moi-tab">
+                                        <!-- Default Tabs -->
+                                        <div class="hoa-don">
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li th:each=" hoaDon : ${lstHoaDon}" class="nav-item"
+                                                    role="presentation">
+                                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                                        th:data-bs-target="${'#'+hoaDon.maHoaDon}"
+                                                        th:text="${hoaDon.maHoaDon}" type="button" role="tab"
+                                                        aria-controls="profile-tab-pane"
+                                                        aria-selected="false">Profile</button>
+                                                </li>
+                                                
+                                            </ul>
+                                            <div class="tab-content" id="myTabContent">
+                                                <div th:each=" hoaDon : ${lstHoaDon}" class="tab-pane fade"
+                                                    th:id="${hoaDon.maHoaDon}" role="tabpanel"
+                                                    aria-labelledby="profile-tab" tabindex="0">[[${hoaDon.maHoaDon}]]
+
+                                                    </ul>
+                                                    <div class="tab-content pt-2" id="myTabContentt">
+                                                        <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                                            aria-labelledby="home-tab">
+                                                            <div class="them-moi-sp">
+                                                                <a class="btn btn-danger"
+                                                                    th:href="@{'/ban-hang-tai-quay/delete/' + ${hoaDon.id}}"
+                                                                    role="button">Xóa hóa đơn</a>
+
+                                                                <!-- Button trigger modal -->
+                                                                <button type="button" class="btn btn-primary"
+                                                                    data-bs-toggle="modal"
+                                                                    th:data-bs-target="${'#addsp'+hoaDon.id}">
+                                                                    Thêm sản phẩm
+                                                                </button>
+                                                                <!-- Modal -->
+
+
+
+                                                                <div class="modal fade" th:id="${'addsp'+hoaDon.id}"
+                                                                    tabindex="-1" aria-labelledby="themSanPhamLabel"
+                                                                    aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-body">
+                                                                                <!-- form search -->
+                                                                                <form action="" class="ctsp-bh">
+                                                                                    <label
+                                                                                        class="col-sm-2 col-form-label">Nhập
+                                                                                        tên
+                                                                                        sản phẩm:</label>
+                                                                                    <div class="row mb-3">
+                                                                                        <div class="col-sm-10">
+                                                                                            <div class="input-group">
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    placeholder="Tìm kiếm theo tên sản phẩm">
+                                                                                                <button type="submit"
+                                                                                                    class="btn btn-primary"><i
+                                                                                                        class="bi bi-arrow-clockwise"></i>
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-2">
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-primary"
+                                                                                                data-bs-toggle="modal"
+                                                                                                style="float: right;">
+                                                                                                Tìm kiếm
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div>
+
+                                                                                        <div class="row mb-3"
+                                                                                            style="margin-top: 4%;">
+                                                                                            <div class="col-md-3">
+                                                                                                <label
+                                                                                                    class="form-label">Thương
+                                                                                                    hiệu:</label>
+                                                                                                <select
+                                                                                                    class="form-select"
+                                                                                                    aria-label="Default select example">
+                                                                                                    <option value="1">
+                                                                                                        One</option>
+                                                                                                    <option value="2">
+                                                                                                        Two</option>
+                                                                                                    <option value="3">
+                                                                                                        Three</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="col-md-3">
+                                                                                                <label
+                                                                                                    class="form-label">Kích
+                                                                                                    cỡ:</label>
+                                                                                                <select
+                                                                                                    class="form-select"
+                                                                                                    aria-label="Default select example">
+                                                                                                    <option value="1">
+                                                                                                        One</option>
+                                                                                                    <option value="2">
+                                                                                                        Two</option>
+                                                                                                    <option value="3">
+                                                                                                        Three</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="col-md-3">
+                                                                                                <label
+                                                                                                    class="form-label">Màu
+                                                                                                    Sắc:</label>
+                                                                                                <select
+                                                                                                    class="form-select"
+                                                                                                    aria-label="Default select example">
+                                                                                                    <option value="1">
+                                                                                                        One</option>
+                                                                                                    <option value="2">
+                                                                                                        Two</option>
+                                                                                                    <option value="3">
+                                                                                                        Three</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="col-md-3">
+                                                                                                <label
+                                                                                                    class="form-label">Loại
+                                                                                                    đế:</label>
+                                                                                                <select
+                                                                                                    class="form-select"
+                                                                                                    aria-label="Default select example">
+                                                                                                    <option value="1">
+                                                                                                        One</option>
+                                                                                                    <option value="2">
+                                                                                                        Two</option>
+                                                                                                    <option value="3">
+                                                                                                        Three</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </form>
+
+                                                                                <br>
+                                                                                <table class="sanpham-table">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>STT</th>
+                                                                                            <th>Sản Phẩm</th>
+                                                                                            <th>Số Lượng</th>
+                                                                                            <th>Giá Bán</th>
+                                                                                            <th>Hành Động</th>
+                                                                                        </tr>
+                                                                                        <thead>
+                                                                                        <tbody>
+                                                                                            <tr
+                                                                                                th:each=" ctsp, state: ${lstCtsp}">
+                                                                                                <form
+                                                                                                    action="/ban-hang-tai-quay/hdct/add" method="post">
+                                                                                                    <!-- input hidden -->
+                                                                                                    <input
+                                                                                                        th:value="${hoaDon.id}"
+                                                                                                        type="hidden"
+                                                                                                        name="idHoaDon">
+                                                                                                    <input th:value="${ctsp.id}" type="hidden"
+                                                                                                        name="idCtsp">
+                                                                                                    <td>[[${state.index+1}]]
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <div
+                                                                                                            class="row">
+                                                                                                            <div
+                                                                                                                class="col-4">
+                                                                                                                <img src="../../static/img/card.jpg"
+                                                                                                                    class="fixed-image">
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                class="col-8">
+                                                                                                                <div
+                                                                                                                    class="info-price-sp">
+                                                                                                                    <h6
+                                                                                                                        th:text="${ctsp.sanPham.ten}">
+                                                                                                                    </h6>
+                                                                                                                    <span>Màu:
+                                                                                                                        [[${ctsp.MauSac.ten}]]
+                                                                                                                        -
+                                                                                                                        Kích
+                                                                                                                        cỡ:
+                                                                                                                        [[${ctsp.KichCo.ten}]]</span>
+                                                                                                                    <p>Loại
+                                                                                                                        đế
+                                                                                                                        :
+                                                                                                                        [[${ctsp.LoaiDe.ten}]]
+                                                                                                                    </p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            </divF>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        [[${ctsp.soLuong}]]
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        [[${ctsp.giaHienHanh}]]VND
+                                                                                                    </td>
+                                                                                                    <td>
+
+                                                                                                        <button
+                                                                                                            type="submit"
+                                                                                                            class="btn btn-success">Thêm</button>
+                                                                                                    </td>
+                                                                                                </form>
+                                                                                            </tr>
+
+                                                                                        </tbody>
+                                                                                </table>
+                                                                                <nav
+                                                                                    aria-label="Page navigation example">
+                                                                                    <ul class="pagination">
+                                                                                        <li class="page-item">
+                                                                                            <a class="page-link"
+                                                                                                href="#">
+                                                                                                <i
+                                                                                                    class="bi bi-chevron-left"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li class="page-item"><a
+                                                                                                class="page-link"
+                                                                                                href="#">1</a></li>
+                                                                                        <li class="page-item"><a
+                                                                                                class="page-link"
+                                                                                                href="#">2</a></li>
+                                                                                        <li class="page-item"><a
+                                                                                                class="page-link"
+                                                                                                href="#">3</a></li>
+                                                                                        <li class="page-item">
+                                                                                            <a class="page-link"
+                                                                                                href="#">
+                                                                                                <i
+                                                                                                    class="bi bi-chevron-right"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </nav>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Đóng
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <!-- giỏ hàng trống -->
+                                                            <!-- <div class="cart-no-product">
+                                                    <img src="/../static/img/user/cart.png" alt="">
+                                                    <span>Không có sản phẩm nào trong giỏ</span>
+                                                  </div> -->
+                                                            <!-- bảng sản phẩm -->
+
+                                                            <div class="table-ban-hang">
+                                                                <table class="sanpham-table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">STT</th>
+                                                                            <th scope="col">Sản phẩm</th>
+                                                                            <th scope="col">Số lượng</th>
+                                                                            <th scope="col">Tổng tiền</th>
+                                                                            <th scope="col">Thao tác</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+
+                                                                        <tr th:each="obj, state:${hoaDon.lstHoaDonChiTiet}">
+                                                                            <th scope="row" th:text="${state.index+1}"></th>
+                                                                            <td>
+                                                                                <div class="row">
+                                                                                    <div class="col-4">
+                                                                                        <img src="../../static/img/card.jpg"
+                                                                                            class="fixed-image">
+                                                                                    </div>
+
+                                                                                    <div class="col-8">
+                                                                                        <div class="info-price">
+                                                                                            <h6>[[${obj.ChiTietSanPham.SanPham.ten}]]
+                                                                                            </h6>
+                                                                                            <span>Đơn giá: <span
+                                                                                                    class="gia">
+                                                                                                    [[${obj.donGia}]]
+                                                                                                    VND</span></span>
+                                                                                            <p>Loại đế:
+                                                                                                [[${obj.ChiTietSanPham.LoaiDe.ten}]]
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                [[${obj.soLuong}]]
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="price-table">
+                                                                                    [[${obj.tongTien()}]] VND
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="button-table">
+                                                                                    <!-- delete Hóa đơn chi tiết -->
+                                                                                    <button type="submit" class="btn btn-primary">...</button>
+                                                                                    <a th:href="@{'/ban-hang-tai-quay/hdct/delete/'+${obj.id}}"
+                                                                                        class="btn btn-danger">
+                                                                                        <i
+                                                                                            class="bi bi-trash-fill"></i></i>
+                                                                                </a>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="line"></div>
+
+                                                            <div class="tai-khoan-ban-hang">
+                                                                <div class="row mb-3">
+                                                                    <h4 class="col-sm-2" style="font-family: Arial, sans-serif;font-size: 20px;
+                                font-weight: bold;
+                                color: black;">Tài khoản</h4>
+
+                                                                    <!-- Button trigger modal -->
+                                                                    <div class="col-sm-10">
+                                                                        <button type="button" class="btn btn-primary"
+                                                                            data-bs-toggle="modal" style="float: right;"
+                                                                            data-bs-target="#chonKhachHangModal">
+                                                                            Chọn tài khoản
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="chonKhachHangModal"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="chonKhachHangModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h1 class="modal-title fs-5"
+                                                                                        id="chonKhachHangModalLabel">
+                                                                                        Danh sách khách
+                                                                                        hàng
+                                                                                    </h1>
+                                                                                </div>
+                                                                                <div class="modal-body">
+
+                                                                                    <!-- form tìm kiếm khách hàng -->
+                                                                                    <form action="">
+                                                                                        <label
+                                                                                            class="col-sm-5 col-form-label">Nhập
+                                                                                            tên, số điện
+                                                                                            thoại, email</label>
+                                                                                        <div class="row mb-3">
+                                                                                            <div class="col-sm-8">
+                                                                                                <div
+                                                                                                    class="input-group">
+                                                                                                    <input type="text"
+                                                                                                        class="form-control"
+                                                                                                        placeholder="Tìm kiếm khách hàng theo tên, số điện thoại, email">
+                                                                                                    <button
+                                                                                                        type="submit"
+                                                                                                        class="btn btn-primary">
+                                                                                                        <i
+                                                                                                            class="bi bi-arrow-clockwise"></i>
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-sm-2">
+                                                                                                <button type="submit"
+                                                                                                    class="btn btn-primary"
+                                                                                                    style="margin-left:30%;">Tìm
+                                                                                                    kiếm
+                                                                                                </button>
+                                                                                            </div>
+                                                                                            <div class="col-sm-2">
+                                                                                                <button type="button"
+                                                                                                    class="btn btn-primary"
+                                                                                                    data-bs-toggle="modal"
+                                                                                                    style="float: right;"
+                                                                                                    data-bs-target="#khachhang">
+                                                                                                    Thêm mới
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+
+                                                                                    <!-- table khách hàng -->
+                                                                                    <table>
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th>STT</th>
+                                                                                                <th>Tên Khách Hàng</th>
+                                                                                                <th>Số Điện Thoại</th>
+                                                                                                <th>Email</th>
+                                                                                                <th>Hành Động</th>
+                                                                                            </tr>
+                                                                                            <thead>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td>1</td>
+                                                                                                    <td>SP01</td>
+                                                                                                    <td>Nike</td>
+                                                                                                    <td>aaaa</td>
+                                                                                                    <td>
+                                                                                                        <button
+                                                                                                            class="btn btn-success">
+                                                                                                            <i
+                                                                                                                class="bi bi-check2-circle"></i>
+                                                                                                        </button>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>1</td>
+                                                                                                    <td>SP01</td>
+                                                                                                    <td>Nike</td>
+                                                                                                    <td>aaaa</td>
+                                                                                                    <td>
+                                                                                                        <button
+                                                                                                            class="btn btn-success">
+                                                                                                            <i
+                                                                                                                class="bi bi-check2-circle"></i>
+                                                                                                        </button>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>1</td>
+                                                                                                    <td>SP01</td>
+                                                                                                    <td>Nike</td>
+                                                                                                    <td>aaaa</td>
+                                                                                                    <td>
+                                                                                                        <button
+                                                                                                            class="btn btn-success">
+                                                                                                            <i
+                                                                                                                class="bi bi-check2-circle"></i>
+                                                                                                        </button>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                    </table>
+                                                                                    <nav
+                                                                                        aria-label="Page navigation example">
+                                                                                        <ul class="pagination">
+                                                                                            <li class="page-item">
+                                                                                                <a class="page-link"
+                                                                                                    href="#">
+                                                                                                    <i
+                                                                                                        class="bi bi-chevron-left"></i>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="page-item"><a
+                                                                                                    class="page-link"
+                                                                                                    href="#">1</a>
+                                                                                            </li>
+                                                                                            <li class="page-item"><a
+                                                                                                    class="page-link"
+                                                                                                    href="#">2</a>
+                                                                                            </li>
+                                                                                            <li class="page-item"><a
+                                                                                                    class="page-link"
+                                                                                                    href="#">3</a>
+                                                                                            </li>
+                                                                                            <li class="page-item">
+                                                                                                <a class="page-link"
+                                                                                                    href="#">
+                                                                                                    <i
+                                                                                                        class="bi bi-chevron-right"></i>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </nav>
+
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">Đóng
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Modal thêm mới khách hàng -->
+                                                                    <div class="modal fade" id="khachhang" tabindex="-1"
+                                                                        aria-labelledby="khachhangLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="them-kh-tabs">
+                                                                                <div class="modal-content"
+                                                                                    style="width: 150%;">
+
+                                                                                    <!-- form thêm mới khách hàng nhanh -->
+                                                                                    <form action="">
+                                                                                        <div class="modal-header">
+                                                                                            <h1 class="modal-title fs-5"
+                                                                                                style="margin: auto;"
+                                                                                                id="khachhangLabel">
+                                                                                                Thêm mới khách hàng</h1>
+                                                                                        </div>
+                                                                                        <div class="modal-body">
+                                                                                            <div class="mb-3">
+                                                                                                <label
+                                                                                                    class="col-form-label">
+                                                                                                    <span
+                                                                                                        style="color: red;">*</span>
+                                                                                                    Tên khách hàng:
+                                                                                                </label>
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    placeholder="Nhập tên khách hàng">
+                                                                                            </div>
+                                                                                            <div class="mb-3">
+                                                                                                <label
+                                                                                                    class="col-form-label">
+                                                                                                    <span
+                                                                                                        style="color: red;">*</span>
+                                                                                                    Số điện thoại:
+                                                                                                </label>
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    placeholder="Nhập tên khách hàng">
+                                                                                            </div>
+                                                                                            <div class="mb-3">
+                                                                                                <label
+                                                                                                    class="col-form-label">
+                                                                                                    <span
+                                                                                                        style="color: red;">*</span>
+                                                                                                    Email:
+                                                                                                </label>
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    placeholder="Nhập tên khách hàng">
+                                                                                            </div>
+                                                                                            <div class="row mb-3">
+                                                                                                <label
+                                                                                                    class="col-sm-2 col-form-label"><span
+                                                                                                        style="color: red;">*</span>Giới
+                                                                                                    tính</label>
+                                                                                                <div class="col-sm-10"
+                                                                                                    style="margin-top: 1%;">
+                                                                                                    <input
+                                                                                                        class="form-check-input"
+                                                                                                        type="radio"
+                                                                                                        name="gridRadios"
+                                                                                                        value="Nam">
+                                                                                                    <label
+                                                                                                        class="form-check-label"
+                                                                                                        style="margin-right: 4%;">
+                                                                                                        Nam
+                                                                                                    </label>
+                                                                                                    <input
+                                                                                                        class="form-check-input"
+                                                                                                        type="radio"
+                                                                                                        name="gridRadios"
+                                                                                                        value="Nữ">
+                                                                                                    <label
+                                                                                                        class="form-check-label">
+                                                                                                        Nữ
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="button"
+                                                                                                class="btn btn-secondary"
+                                                                                                data-bs-dismiss="modal">Đóng
+                                                                                            </button>
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-success">Thêm
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                    <!-- form thêm mới khách hàng nhanh end -->
+
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <!-- Thông tin khách hàng -->
+                                                                <div class="row mb-3">
+                                                                    <label class="col-sm-2 ">Tên khách
+                                                                        hàng:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <label class="thong-tin-tai-khoan">Khách
+                                                                            lẻ</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mb-3">
+                                                                    <label class="col-sm-2">Số điện thoại:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <label
+                                                                            class="thong-tin-tai-khoan">0377463664</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mb-3">
+                                                                    <label class="col-sm-2">Email:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <label
+                                                                            class="thong-tin-tai-khoan">anhntph27418@fpt.edu.vn</label>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="line"></div>
+
+                                                            <!------------------ model chọn địa chỉ ------------------>
+                                                            <div class="row g-3" style=" margin-bottom: 2%;">
+
+                                                                <!-- Button trigger modal -->
+                                                                <div class="col-sm-12">
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        data-bs-toggle="modal" style="float: right;"
+                                                                        data-bs-target="#chonDiaChiModal">
+                                                                        Chọn địa chỉ
+                                                                    </button>
+                                                                </div>
+
+                                                                <!-- Modal -->
+                                                                <div class="modal fade" id="chonDiaChiModal"
+                                                                    tabindex="-1" aria-labelledby="chonDiaChiModalLabel"
+                                                                    aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h1 class="modal-title fs-5"
+                                                                                    id="chonDiaChiModalLabel">Danh sách
+                                                                                    địa chỉ
+                                                                                </h1>
+                                                                            </div>
+                                                                            <div class="modal-body">
+
+                                                                                <!-- form tìm kiếm khách hàng -->
+                                                                                <form action="">
+                                                                                    <label
+                                                                                        class="col-sm-2 col-form-label">Nhập
+                                                                                        địa
+                                                                                        chỉ:</label>
+                                                                                    <div class="row mb-3">
+                                                                                        <div class="col-sm-10">
+                                                                                            <div class="input-group">
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    placeholder="Tìm kiếm theo địa chỉ">
+                                                                                                <button type="submit"
+                                                                                                    class="btn btn-primary"><i
+                                                                                                        class="bi bi-arrow-clockwise"></i>
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-2">
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-primary"
+                                                                                                style="float: right;">Tìm
+                                                                                                kiếm
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
+
+
+                                                                                <!-- table khách hàng -->
+                                                                                <table>
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>STT</th>
+                                                                                            <th>Họ Tên</th>
+                                                                                            <th>Số Điện Thoại</th>
+                                                                                            <th>Địa Chỉ</th>
+                                                                                            <th>Trạng Thái</th>
+                                                                                            <th>Hành Động</th>
+                                                                                        </tr>
+                                                                                        <thead>
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td>1</td>
+                                                                                                <td>SP01</td>
+                                                                                                <td>Nike</td>
+                                                                                                <td>aaaa</td>
+                                                                                                <td
+                                                                                                    class="trangthaidkd">
+                                                                                                    Mặc định</td>
+                                                                                                <!-- <td class="trangthainkd">Phụ</td> -->
+                                                                                                <td>
+                                                                                                    <button
+                                                                                                        class="btn btn-success">
+                                                                                                        <i
+                                                                                                            class="bi bi-check2-circle"></i>
+                                                                                                    </button>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                </table>
+                                                                                <nav
+                                                                                    aria-label="Page navigation example">
+                                                                                    <ul class="pagination">
+                                                                                        <li class="page-item">
+                                                                                            <a class="page-link"
+                                                                                                href="#">
+                                                                                                <i
+                                                                                                    class="bi bi-chevron-left"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li class="page-item"><a
+                                                                                                class="page-link"
+                                                                                                href="#">1</a></li>
+                                                                                        <li class="page-item"><a
+                                                                                                class="page-link"
+                                                                                                href="#">2</a></li>
+                                                                                        <li class="page-item"><a
+                                                                                                class="page-link"
+                                                                                                href="#">3</a></li>
+                                                                                        <li class="page-item">
+                                                                                            <a class="page-link"
+                                                                                                href="#">
+                                                                                                <i
+                                                                                                    class="bi bi-chevron-right"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </nav>
+
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Đóng
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <form action="" class="row g-3">
+                                                                <div class="col">
+                                                                    <div class="thong-tin-kh">
+                                                                        <div class="row g-3">
+                                                                            <h4 style="font-family: Arial, sans-serif;font-size: 15px;
+                                  font-weight: bold;
+                                  color: black;">Thông tin khách hàng</h4>
+
+                                                                            <div class="col-md-6">
+                                                                                <label for="inputEmail2"
+                                                                                    class="form-label">
+                                                                                    <span class="dau-sao">*</span>
+                                                                                    Tên khác hàng:
+                                                                                </label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="inputEmail2">
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <label for="inputPassword3"
+                                                                                    class="form-label">
+                                                                                    <span class="dau-sao">*</span>
+                                                                                    Số điện thoại:
+                                                                                </label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="inputPassword3">
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <label class="form-label">
+                                                                                    <span class="dau-sao">*</span>
+                                                                                    Địa chỉ:
+                                                                                </label>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="Tỉnh / Thành Phố">
+                                                                                <br>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="Quận / Huyện">
+                                                                                <br>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="Xã / Phường">
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <label class="form-label">
+                                                                                    <span class="dau-sao">*</span>
+                                                                                    Địa chỉ cụ thể:
+                                                                                </label>
+                                                                                <textarea class="form-control"
+                                                                                    rows="6"></textarea>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <label class="form-label">
+                                                                                    <span class="dau-sao">*</span>
+                                                                                    Ghi chú:
+                                                                                </label>
+                                                                                <textarea class="form-control"
+                                                                                    rows="3"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col">
+                                                                    <div class="thong-tin-tt">
+                                                                        <h4 style="font-family: Arial, sans-serif;font-size: 15px;
+                                font-weight: bold;
+                                color: black;">Thông tin thanh toán</h4>
+                                                                        <div class="thong-tin-tt-2">
+                                                                            <div class="row">
+                                                                                <div class="col">
+                                                                                    <h6>Giao hàng:</h6>
+                                                                                </div>
+                                                                                <div class="col"
+                                                                                    style="margin-top: 3%;">
+                                                                                    <div class="form-check form-switch">
+                                                                                        <input class="form-check-input"
+                                                                                            type="checkbox"
+                                                                                            role="switch"
+                                                                                            id="flexSwitchCheckChecked"
+                                                                                            checked>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col">
+                                                                                    <h6>Phương thức thanh toán:</h6>
+                                                                                </div>
+                                                                                <div class="col" style="margin-top: 1%">
+                                                                                    <select name="ptht"
+                                                                                        class="form-control">
+                                                                                        <option value="Tiền mặt">Tiền
+                                                                                            mặt</option>
+                                                                                        <option value="Online">Online
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col">
+                                                                                    <h6>Voucher:</h6>
+                                                                                </div>
+                                                                                <div class="col" style="margin-top: 1%">
+                                                                                    <div
+                                                                                        class="input-group flex-nowrap">
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            placeholder="Nhập têm voucher"
+                                                                                            aria-label="Username"
+                                                                                            aria-describedby="addon-wrapping">
+                                                                                        <!-- Button trigger modal -->
+                                                                                        <button type="button"
+                                                                                            class="btn btn-primary"
+                                                                                            data-bs-toggle="modal"
+                                                                                            data-bs-target="#voucher">+
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col">
+                                                                                    <h6>Tổng tiền sản phẩm:</h6>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <h6 class="thong-tin-gia">60.000.000
+                                                                                        VND</h6>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col">
+                                                                                    <h6>Phí vận chuyển:</h6>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <h6 class="thong-tin-gia">0 VND</h6>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col">
+                                                                                    <h6>Giảm giá:</h6>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <h6 class="thong-tin-gia">0 VND</h6>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col">
+                                                                                    <h3>Tổng tiền:</h3>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <h6 class="tong-gia">60.000.000 VND
+                                                                                    </h6>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <button type="submit" style="float: right;"
+                                                                        class="btn btn-success">Xác nhận đặt
+                                                                        hàng
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                            <!-- Modal voucher -->
+                                                            <div class="modal fade" id="voucher" tabindex="-1"
+                                                                aria-labelledby="voucherLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h1 class="modal-title fs-5"
+                                                                                id="voucherLabel">
+                                                                                Voucher</h1>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row mb-3">
+                                                                                <form action="" method="post">
+                                                                                    <label
+                                                                                        class="col-sm-4 col-form-label">Nhập
+                                                                                        mã,
+                                                                                        tên voucher:</label>
+                                                                                    <div class="row mb-3">
+                                                                                        <div class="col-sm-10">
+                                                                                            <div class="input-group">
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    placeholder="Tìm kiếm voucher theo mã, tên">
+                                                                                                <button type="submit"
+                                                                                                    class="btn btn-primary"><i
+                                                                                                        class="bi bi-arrow-clockwise"></i>
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-2">
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-primary"
+                                                                                                style="float: right;">Tìm
+                                                                                                kiếm
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+
+                                                                            <table class="sanpham-table">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>STT</th>
+                                                                                        <th>Mã Voucher</th>
+                                                                                        <th>Tên Voucher</th>
+                                                                                        <th>Giá Trị Giảm</th>
+                                                                                        <th>Giá Trị Giảm Tối Đa</th>
+                                                                                        <th>Số Lượng</th>
+                                                                                        <th>Thời Gian</th>
+                                                                                        <th>Hành Động</th>
+                                                                                    </tr>
+                                                                                    <thead>
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>1</td>
+                                                                                            <td>aaaaaa</td>
+                                                                                            <td>aaaaaa</td>
+                                                                                            <td>123</td>
+                                                                                            <td>123</td>
+                                                                                            <td>123</td>
+                                                                                            <td>
+                                                                                                11/01/2003
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <button type="button"
+                                                                                                    class="btn btn-success">
+                                                                                                    <i
+                                                                                                        class="bi bi-check2-circle"></i>
+                                                                                                </button>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>1</td>
+                                                                                            <td>aaaaaa</td>
+                                                                                            <td>aaaaaa</td>
+                                                                                            <td>123</td>
+                                                                                            <td>123</td>
+                                                                                            <td>123</td>
+                                                                                            <td>
+                                                                                                11/01/2003
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <button type="button"
+                                                                                                    class="btn btn-success">
+                                                                                                    <i
+                                                                                                        class="bi bi-check2-circle"></i>
+                                                                                                </button>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>1</td>
+                                                                                            <td>aaaaaa</td>
+                                                                                            <td>aaaaaa</td>
+                                                                                            <td>123</td>
+                                                                                            <td>123</td>
+                                                                                            <td>123</td>
+                                                                                            <td>
+                                                                                                11/01/2003
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <button type="button"
+                                                                                                    class="btn btn-success">
+                                                                                                    <i
+                                                                                                        class="bi bi-check2-circle"></i>
+                                                                                                </button>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Đóng
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Modal voucher end -->
+
+
+                                                        </div>
+
+                                                        <div class="tab-pane fade" id="profile" role="tabpanel"
+                                                            aria-labelledby="profile-tab">
+                                                            Hóa đơn2
+                                                        </div>
+                                                        <div class="tab-pane fade" id="contact" role="tabpanel"
+                                                            aria-labelledby="contact-tab">
+                                                            Hóa đơn 3
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Default Tabs -->
+
+                                            </div>
+                                            <div class="tab-pane fade" id="ds-hoadon" role="tabpanel"
+                                                aria-labelledby="ds-hoadon-tab">
+                                                danh sách hóa đơn
+                                            </div>
+                                        </div><!-- End Default Tabs -->
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </section>
+
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            <!-- &copy; Copyright <strong><span>Glacat</span></strong>. All Rights Reserved -->
+        </div>
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+            Website bán giày Glacat
+        </div>
+    </footer><!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="../../static/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../static/vendor/chart.js/chart.umd.js"></script>
+    <script src="../../static/vendor/echarts/echarts.min.js"></script>
+    <script src="../../static/vendor/quill/quill.min.js"></script>
+    <script src="../../static/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="../../static/vendor/tinymce/tinymce.min.js"></script>
+    <script src="../../static/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+<script src="../../../static/js/main-off.js"></script>
+</body>
+
+</html>
