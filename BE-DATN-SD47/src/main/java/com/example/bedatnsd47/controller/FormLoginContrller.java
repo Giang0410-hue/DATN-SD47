@@ -1,6 +1,7 @@
-package com.example.bedatnsd47.tesst;
+package com.example.bedatnsd47.controller;
 
 
+import com.example.bedatnsd47.config.PrincipalCustom;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.entity.VaiTro;
 import com.example.bedatnsd47.repository.KhachHangRepository;
@@ -43,18 +44,24 @@ public class FormLoginContrller {
 
     String ranDomMa;
 
+    private PrincipalCustom principalCustom = new PrincipalCustom();
 
     @GetMapping("/login")
     public String formLogin() {
-//        principal.getName();
-        return "dang-nhap";
+        if (principalCustom.getCurrentUserNameAdmin() != null) {
+            return "redirect:/ban-hang-tai-quay/hoa-don";
+        } else if (principalCustom.getCurrentUserNameCustomer() != null) {
+            return "redirect:/home";
+        } else {
+            return "dang-nhap";
+        }
     }
 
     @GetMapping("/login-error")
     public String loginErorr(
             Model model
     ) {
-        model.addAttribute("message","Tài khoản chưa kích hoạt hoặc sai thông tin tài khoản");
+        model.addAttribute("message", "Tài khoản chưa kích hoạt hoặc sai thông tin tài khoản");
         return "dang-nhap";
     }
 
@@ -73,7 +80,8 @@ public class FormLoginContrller {
     @PostMapping("/xac-minh/check")
     public String checkRanDOm1(
             @RequestParam("ranDom") String ranDom1,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     ) {
 
         if (ranDom1.isEmpty()) {
@@ -81,6 +89,7 @@ public class FormLoginContrller {
             return "xac-minh";
         } else if (ranDom1.equalsIgnoreCase(ranDomMa)) {
             service.addUser(userInfoStorage);
+            redirectAttributes.addFlashAttribute("checkThongBao","dangKy");
             System.out.println("thêm tài khoản thành công form check");
             return "redirect:/login";
         } else {
@@ -99,7 +108,8 @@ public class FormLoginContrller {
             @RequestParam("password") String password,
             HttpSession session,
             Model model,
-            HttpServletRequest request) {
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes) {
         TaiKhoan taiKhoanDk = taiKhoanRepository.findByTenTaiKhoan(username).orElse(null);
         TaiKhoan emailDk = khachHangRepository.findByEmail(email).orElse(null);
         if (emailDk != null) {
@@ -169,7 +179,7 @@ public class FormLoginContrller {
                 taiKhoan.setMatKhau(matKhauMoi);
                 service.updateUser(taiKhoan);
                 System.out.println("Thay đổi mk thành công ");
-                redirectAttributes.addFlashAttribute("thongBao", "Thay đổi mật khẩu thành công.");
+                redirectAttributes.addFlashAttribute("checkThongBao","quenMK");
                 redirectAttributes.addFlashAttribute("tenTaiKhoan", taiKhoan.getTenTaiKhoan());
                 redirectAttributes.addFlashAttribute("matKhauMoi", matKhauMoi);
                 return "redirect:/login";

@@ -34,12 +34,12 @@
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">Nguyễn Tuấn Anh</span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${tenNhanVien}"></span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6>Nguyễn Tuấn Anh</h6>
+                        <h6 th:text="${tenNhanVien}"></h6>
                         <span>Nhân Viên</span>
                     </li>
 
@@ -123,7 +123,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="kich-co.html">
+                     <a href="/admin/kich-co">
                         <i class="bi bi-circle"></i><span>Kích Cỡ</span>
                     </a>
                 </li>
@@ -132,14 +132,14 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/hoa-don/quan-ly">
-               <i class="bi bi-receipt-cutoff"></i>
+                <i class="bi bi-receipt-cutoff"></i>
                 <span>Quản Lý Hóa Đơn</span>
             </a>
         </li><!-- End Forms Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/ban-hang-tai-quay/doi-tra">
-               <i class="bi bi-receipt-cutoff"></i>
+               <i class="bi bi-truck"></i>
                 <span>Trả hàng</span>
             </a>
         </li><!-- End Forms Nav -->

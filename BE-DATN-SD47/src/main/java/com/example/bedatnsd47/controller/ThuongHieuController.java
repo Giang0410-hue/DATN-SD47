@@ -1,5 +1,7 @@
 package com.example.bedatnsd47.controller;
 
+import com.example.bedatnsd47.config.PrincipalCustom;
+import com.example.bedatnsd47.config.UserInfoUserDetails;
 import com.example.bedatnsd47.entity.ThuongHieu;
 import com.example.bedatnsd47.service.ThuongHieuService;
 import jakarta.validation.Valid;
@@ -24,10 +26,18 @@ public class ThuongHieuController {
     @Autowired
     private ThuongHieuService thuongHieuService;
 
+    private PrincipalCustom principalCustom = new PrincipalCustom();
+
     @GetMapping("")
     public String hienThi(
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listThuongHieu", thuongHieuService.findAll());
         model.addAttribute("thuongHieu", new ThuongHieu());
         return "/admin-template/thuong_hieu/thuong-hieu";
@@ -37,6 +47,12 @@ public class ThuongHieuController {
     public String hienThiDangHoatDong(
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listThuongHieu", thuongHieuService.getAllDangHoatDong());
         model.addAttribute("thuongHieu", new ThuongHieu());
         return "/admin-template/thuong_hieu/thuong-hieu";
@@ -46,6 +62,12 @@ public class ThuongHieuController {
     public String hienThiNgungHoatDong(
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listThuongHieu", thuongHieuService.getAllNgungHoatDong());
         model.addAttribute("thuongHieu", new ThuongHieu());
         return "/admin-template/thuong_hieu/thuong-hieu";
@@ -56,6 +78,12 @@ public class ThuongHieuController {
             Model model,
             @PathVariable("id") Long id
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         ThuongHieu thuongHieu = thuongHieuService.getById(id);
         model.addAttribute("listThuongHieu", thuongHieuService.findAll());
         model.addAttribute("thuongHieu", thuongHieu);
@@ -104,8 +132,7 @@ public class ThuongHieuController {
             model.addAttribute("checkTenTrung", "Thương hiệu đã tồn tại");
             model.addAttribute("listThuongHieu", thuongHieuService.findAll());
             return "/admin-template/thuong_hieu/thuong-hieu";
-        }
-        else {
+        } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             thuongHieu.setNgayTao(new Date());
             thuongHieu.setNgaySua(new Date());

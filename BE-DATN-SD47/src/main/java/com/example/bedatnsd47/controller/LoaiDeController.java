@@ -1,5 +1,7 @@
 package com.example.bedatnsd47.controller;
 
+import com.example.bedatnsd47.config.PrincipalCustom;
+import com.example.bedatnsd47.config.UserInfoUserDetails;
 import com.example.bedatnsd47.entity.LoaiDe;
 import com.example.bedatnsd47.service.LoaiDeService;
 import jakarta.validation.Valid;
@@ -23,10 +25,18 @@ public class LoaiDeController {
     @Autowired
     LoaiDeService loaiDeService;
 
+    private PrincipalCustom principalCustom = new PrincipalCustom();
+
     @GetMapping("")
     public String hienThi(
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listLoaiDe", loaiDeService.findAll());
         model.addAttribute("loaiDe", new LoaiDe());
         return "/admin-template/loai_de/loai-de";
@@ -36,6 +46,12 @@ public class LoaiDeController {
     public String hienThiDangHoatDong(
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listLoaiDe", loaiDeService.getAllDangHoatDong());
         model.addAttribute("loaiDe", new LoaiDe());
         return "/admin-template/loai_de/loai-de";
@@ -45,6 +61,12 @@ public class LoaiDeController {
     public String hienThiNgungHoatDong(
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listLoaiDe", loaiDeService.getAllNgungHoatDong());
         model.addAttribute("loaiDe", new LoaiDe());
         return "/admin-template/loai_de/loai-de";
@@ -55,6 +77,12 @@ public class LoaiDeController {
             Model model,
             @PathVariable("id") Long id
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         LoaiDe loaiDe = loaiDeService.getById(id);
         model.addAttribute("loaiDe", loaiDe);
         return "/admin-template/loai_de/sua-loai-de";

@@ -11,6 +11,7 @@ import com.example.bedatnsd47.repository.LoaiDeRepository;
 import com.example.bedatnsd47.repository.MauSacRepository;
 import com.example.bedatnsd47.repository.SanPhamRepository;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
+import org.apache.batik.apps.svgpp.Main;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -19,12 +20,18 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -36,82 +43,88 @@ public class ImportFileExcelCTSP {
     Integer indexLoi = 0;
 
     public void ImportFile(
-            String path, SanPhamRepository sanPhamRepository, MauSacRepository mauSacRepository,
+            MultipartFile file, SanPhamRepository sanPhamRepository, MauSacRepository mauSacRepository,
             KichCoRepository kichThuocRepository, LoaiDeRepository deGiayRepository,
             ChiTietSanPhamRepository chiTietSanPhamRepository, ChiTietSanPhamSerivce chiTietSanPhamService) throws Exception {
 
-        FileInputStream fileExcel = new FileInputStream(new File(path));
-        Workbook workbook = new XSSFWorkbook(fileExcel);
-        Sheet sheet = workbook.getSheetAt(0);
-        Iterator<Row> iterator = sheet.iterator();
-        Row firtRow = iterator.next();
-        Cell firtCell = firtRow.getCell(0);
-        List<Integer> listIndex = new ArrayList<>();
-        int index = 0;
-        while (iterator.hasNext()) {
-            index++;
-            try {
-                Row row = iterator.next();
-                String sanPhamStr = String.valueOf(getCellValue(row.getCell(0))).trim();
-                String mauSacStr = String.valueOf(getCellValue(row.getCell(1))).trim();
-                String kichThuocStr = String.valueOf((int) row.getCell(2).getNumericCellValue()).trim();
-                String deGiayStr = String.valueOf(getCellValue(row.getCell(3))).trim();
-                String soLuongTon = String.valueOf((int) row.getCell(4).getNumericCellValue()).trim();
-                String giaBan = String.valueOf((int) row.getCell(5).getNumericCellValue()).trim();
+//        FileInputStream fileExcel = new FileInputStream(new File(path));
+        try (InputStream inputStream = file.getInputStream()) {
+            Workbook workbook = new XSSFWorkbook(inputStream);
+            Sheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = sheet.iterator();
+            Row firtRow = iterator.next();
+            Cell firtCell = firtRow.getCell(0);
+            List<Integer> listIndex = new ArrayList<>();
+            int index = 0;
+            while (iterator.hasNext()) {
+                index++;
+                try {
+                    Row row = iterator.next();
+                    String sanPhamStr = String.valueOf(getCellValue(row.getCell(0))).trim();
+                    String mauSacStr = String.valueOf(getCellValue(row.getCell(1))).trim();
+                    String kichThuocStr = String.valueOf((int) row.getCell(2).getNumericCellValue()).trim();
+                    String deGiayStr = String.valueOf(getCellValue(row.getCell(3))).trim();
+                    String soLuongTon = String.valueOf((int) row.getCell(4).getNumericCellValue()).trim();
+                    String giaBan = String.valueOf((int) row.getCell(5).getNumericCellValue()).trim();
 
-                if (mauSacStr.isEmpty() && sanPhamStr.isEmpty() && kichThuocStr.isEmpty() && deGiayStr.isEmpty()
-                        && soLuongTon.isEmpty() && giaBan.isEmpty()) {
+                    if (mauSacStr.isEmpty() && sanPhamStr.isEmpty() && kichThuocStr.isEmpty() && deGiayStr.isEmpty()
+                            && soLuongTon.isEmpty() && giaBan.isEmpty()) {
+                        listIndex.add(index);
+                        continue;
+                    }
+
+                    SanPham sanPham = sanPhamRepository.findSanPhamByTen(sanPhamStr);
+                    MauSac mauSac = mauSacRepository.findMauSacByTen(mauSacStr);
+                    KichCo kichThuoc = kichThuocRepository.findKichCoByTen(Integer.parseInt(kichThuocStr));
+
+                    LoaiDe deGiay = deGiayRepository.findDeGiayByTen(deGiayStr);
+                    if (sanPham == null || mauSac == null || kichThuoc == null || deGiay == null) {
+                        listIndex.add(index);
+                        continue;
+                    }
+                    if (Integer.parseInt(soLuongTon) <= 0 || Integer.parseInt(soLuongTon) > 99999 ||
+                            Integer.parseInt(giaBan) <= 0 || Integer.parseInt(giaBan) > 1000000000) {
+                        listIndex.add(index);
+                        continue;
+                    }
+
+                    ChiTietSanPham chiTietSanPham = new ChiTietSanPham();
+                    ChiTietSanPham chiTietSanPhamCheck =
+                            chiTietSanPhamRepository.findChiTietSanPham(
+                                    sanPham.getId(),
+                                    mauSac.getId(),
+                                    deGiay.getId(),
+                                    kichThuoc.getId());
+                    if (chiTietSanPhamCheck == null) {
+                        chiTietSanPham.setSanPham(sanPham);
+                        chiTietSanPham.setMauSac(mauSac);
+                        chiTietSanPham.setKichCo(kichThuoc);
+                        chiTietSanPham.setLoaiDe(deGiay);
+                        chiTietSanPham.setSoLuong(Integer.parseInt(soLuongTon));
+                        chiTietSanPham.setGiaHienHanh(Long.valueOf(giaBan));
+                        chiTietSanPham.setTrangThai(0);
+                        chiTietSanPham.setNgayTao(new Date());
+                        chiTietSanPham.setNgaySua(new Date());
+                        chiTietSanPhamService.saveExcel(chiTietSanPham);
+                    } else {
+                        chiTietSanPhamCheck.setSoLuong(chiTietSanPhamCheck.getSoLuong() + Integer.parseInt(soLuongTon));
+                        chiTietSanPhamCheck.setGiaHienHanh(Long.valueOf(giaBan));
+                        chiTietSanPhamService.saveExcel(chiTietSanPhamCheck);
+                    }
+                    workbook.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                     listIndex.add(index);
                     continue;
                 }
-
-                SanPham sanPham = sanPhamRepository.findSanPhamByTen(sanPhamStr);
-                MauSac mauSac = mauSacRepository.findMauSacByTen(mauSacStr);
-                KichCo kichThuoc = kichThuocRepository.findKichCoByTen(Integer.parseInt(kichThuocStr));
-
-                LoaiDe deGiay = deGiayRepository.findDeGiayByTen(deGiayStr);
-                if (sanPham == null || mauSac == null || kichThuoc == null || deGiay == null) {
-                    listIndex.add(index);
-                    continue;
-                }
-                if (Integer.parseInt(soLuongTon) <= 0||Integer.parseInt(giaBan) <= 0) {
-                    listIndex.add(index);
-                    continue;
-                }
-
-                ChiTietSanPham chiTietSanPham = new ChiTietSanPham();
-                ChiTietSanPham chiTietSanPhamCheck =
-                        chiTietSanPhamRepository.findChiTietSanPham(
-                                sanPham.getId(),
-                                mauSac.getId(),
-                                deGiay.getId(),
-                                kichThuoc.getId());
-                if (chiTietSanPhamCheck == null) {
-                    chiTietSanPham.setSanPham(sanPham);
-                    chiTietSanPham.setMauSac(mauSac);
-                    chiTietSanPham.setKichCo(kichThuoc);
-                    chiTietSanPham.setLoaiDe(deGiay);
-                    chiTietSanPham.setSoLuong(Integer.parseInt(soLuongTon));
-                    chiTietSanPham.setGiaHienHanh(Long.valueOf(giaBan));
-                    chiTietSanPham.setTrangThai(0);
-                    chiTietSanPham.setNgayTao(new Date());
-                    chiTietSanPham.setNgaySua(new Date());
-                    chiTietSanPhamService.saveExcel(chiTietSanPham);
-                } else {
-                    chiTietSanPhamCheck.setSoLuong(chiTietSanPhamCheck.getSoLuong() + Integer.parseInt(soLuongTon));
-                    chiTietSanPhamCheck.setGiaHienHanh(Long.valueOf(giaBan));
-                    chiTietSanPhamService.saveExcel(chiTietSanPhamCheck);
-                }
-                workbook.close();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                listIndex.add(index);
-                continue;
             }
+            this.SaveFileError(file, listIndex);
+            indexLoi = listIndex.size();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        this.SaveFileError(path, listIndex);
-        indexLoi = listIndex.size();
+
 
     }
 
@@ -139,9 +152,10 @@ public class ImportFileExcelCTSP {
         }
     }
 
-    public void SaveFileError(String path, List<Integer> listIndex) {
-        try (FileInputStream fileExcel = new FileInputStream(new File(path))) {
-            Workbook workbook = new XSSFWorkbook(fileExcel);
+    public void SaveFileError(MultipartFile file , List<Integer> listIndex) {
+
+        try  (InputStream inputStream = file.getInputStream()){
+            Workbook workbook = new XSSFWorkbook(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
             Iterator<Row> iterator = sheet.iterator();
 
@@ -157,10 +171,14 @@ public class ImportFileExcelCTSP {
                 rowIndex++;
             }
 
-            try (FileOutputStream fileOut = new FileOutputStream(path)) {
-                workbook.write(fileOut);
-            }
+            String currentWorkingDirectory = System.getProperty("user.dir");
 
+            String beDatnSd47Path =  Paths.get(currentWorkingDirectory, file.getOriginalFilename()).toString();
+            System.out.println(beDatnSd47Path);
+
+            try (OutputStream outputStream = new FileOutputStream(beDatnSd47Path)) {
+                workbook.write(outputStream);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

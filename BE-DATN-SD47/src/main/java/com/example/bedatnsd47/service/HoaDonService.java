@@ -2,6 +2,7 @@ package com.example.bedatnsd47.service;
 
 import com.example.bedatnsd47.entity.HoaDon;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,8 @@ public interface HoaDonService {
     List<HoaDon> find5ByTrangThai(Integer trangThai);
 
     HoaDon findByMa(String ma);
+
+    HoaDon finByHoaDonMaHDSdt(String maDonHang, String sdt);
 
     List<HoaDon> findAllOrderByNgaySua();
 
@@ -64,5 +67,7 @@ public interface HoaDonService {
 
     void deleteHoaDonHoanTra();
 
-    
+    void guiHoaDonDienTu(HoaDon hoaDon, String url);
+
+
 }

@@ -2,6 +2,8 @@ package com.example.bedatnsd47.controller;
 
 import com.example.bedatnsd47.config.ExportFileCTSP;
 import com.example.bedatnsd47.config.ImportFileExcelCTSP;
+import com.example.bedatnsd47.config.PrincipalCustom;
+import com.example.bedatnsd47.config.UserInfoUserDetails;
 import com.example.bedatnsd47.entity.ChiTietSanPham;
 import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.repository.ChiTietSanPhamRepository;
@@ -74,6 +76,7 @@ public class ChiTietSanPhamController {
     @Autowired
     private LoaiDeRepository deGiayRepository;
 
+    private PrincipalCustom principalCustom = new PrincipalCustom();
 
     private Model getString(Model model) {
         model.addAttribute("listSanPham", sanPhamSerivce.getAllDangHoatDong());
@@ -87,6 +90,12 @@ public class ChiTietSanPhamController {
     @GetMapping()
     public String hienThi(
             Model model) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllCtspOneSanPham());
         getString(model);
         model.addAttribute("sanPham", new SanPham());
@@ -96,6 +105,12 @@ public class ChiTietSanPhamController {
     @GetMapping("/ngung-hoat-dong")
     public String hienThiNgungHoatDong(
             Model model) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listChiTietSP", chiTietSanPhamSerivce.getAllNgungHoatDong());
         getString(model);
         model.addAttribute("sanPham", new SanPham());
@@ -107,6 +122,12 @@ public class ChiTietSanPhamController {
             @PathVariable("id") Long id,
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         SanPham sanPham = sanPhamSerivce.getById(id);
         List<ChiTietSanPham> listChiTietSP = chiTietSanPhamSerivce.getAllCtspByIdSanPham(id);
         model.addAttribute("sanPhamDetail", sanPham);
@@ -123,6 +144,12 @@ public class ChiTietSanPhamController {
                              @RequestParam("fileImage") List<MultipartFile> multipartFiles,
                              RedirectAttributes redirectAttributes
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         if (result.hasErrors()) {
             model.addAttribute("checkTab", "true");
             model.addAttribute("checkThongBao", "thaiBai");
@@ -190,21 +217,28 @@ public class ChiTietSanPhamController {
     @PostMapping("import-excel")
     public String importExcel(
             @RequestParam("file") MultipartFile file,
-            RedirectAttributes attributes
+            RedirectAttributes attributes,
+            Model model
 
     ) throws IOException {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         if (!file.isEmpty()) {
-            String directory = "D:\\DATN-SD47\\BE-DATN-SD47";
-            String fileName = file.getOriginalFilename();
-            String filePath = directory + "\\" + fileName;
+//            String directory = "D:\\DATN-SD47\\BE-DATN-SD47";
+//            String fileName = file.getOriginalFilename();
+//            String filePath = directory + "\\" + fileName;
             ImportFileExcelCTSP importFileExcelCTSP = new ImportFileExcelCTSP();
             try {
-                importFileExcelCTSP.ImportFile(filePath, sanPhamRepository, mauSacRepository, kichThuocRepository,
+                importFileExcelCTSP.ImportFile(file, sanPhamRepository, mauSacRepository, kichThuocRepository,
                         deGiayRepository, chiTietSanPhamRepository, chiTietSanPhamSerivce);
                 if (importFileExcelCTSP.checkLoi() > 0) {
                     attributes.addFlashAttribute("checkTab", "true");
                     attributes.addFlashAttribute("checkThongBao", "thanhCong");
-                    attributes.addFlashAttribute("thongBaoLoiImport", "Đã thêm sản phẩm thành công nhưng có một số sản phẩm lỗi, mời bạn check lại trên file excel");
+                    attributes.addFlashAttribute("thongBaoLoiImport", "Đã thêm sản phẩm thành công nhưng có một số sản phẩm lỗi.");
                     return "redirect:/admin/san-pham-chi-tiet";
                 }
             } catch (Exception e) {

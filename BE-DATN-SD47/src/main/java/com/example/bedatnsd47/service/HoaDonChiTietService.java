@@ -44,4 +44,8 @@ public interface HoaDonChiTietService {
     Integer sumSanPhamHoaDonAll();
 
     List<Object[]> findByTongSoLuongAll();
+
+    List<Object[]> thongKeSanPhamTheoNgayMacDinh30Ngay(
+    );
+
 }

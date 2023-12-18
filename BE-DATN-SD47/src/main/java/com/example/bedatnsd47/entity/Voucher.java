@@ -51,7 +51,7 @@ public class Voucher {
 
     @Column(name = "so_luong")
     @NotNull(message = "Số lượng không để trống")
-    @DecimalMin(value = "1", inclusive = true,message = "Số lượng  không nhỏ hơn 1")
+    @DecimalMin(value = "0", inclusive = true,message = "Số lượng  không nhỏ hơn 0")
     @DecimalMax(value = "100000", inclusive = true,message = "Số lượng  không lớn hơn 100,000")
     private BigDecimal soLuong;
 
@@ -65,13 +65,13 @@ public class Voucher {
     @NotNull(message = " Giá trị giảm tối đa không để trống")
     @DecimalMin(value = "0.0", inclusive = false, message = "Giá trị giảm tối đa phải lớn hơn 0")
     @DecimalMax(value = "100000000", inclusive = true, message = "Giá trị giảm tối đa không được vượt quá 100,000,000")
-    private BigDecimal giamToiDa;
+    private Long giamToiDa;
 
     @Column(name = "gia_tri_don_toi_thieu")
     @NotNull(message = "Giá trị tối thiểu không để trống")
     @DecimalMin(value = "10000", inclusive = true,message = "Giá trị tối thiểu không nhỏ hơn 10,000")
     @DecimalMax(value = "100000000", inclusive = true,message = "Giá trị tối thiểu không lớn hơn 100,000,000")
-    private BigDecimal giaTriDonToiThieu;
+    private Long giaTriDonToiThieu;
 
     @Column(name = "trang_thai")
     private Integer trangThai;

@@ -4,10 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HoaDonCtrl {
-    @GetMapping("/index1")
-    public String index(){
-        System.out.println("23");
-        return "ban-hang-customer.html";
+public class ErrorController {
+
+    @GetMapping("/error/403")
+    public String accessDenied() {
+
+        return "/admin-template/pages-error-404";
+
     }
+
 }

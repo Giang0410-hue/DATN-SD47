@@ -1,5 +1,7 @@
 package com.example.bedatnsd47.controller;
 
+import com.example.bedatnsd47.config.PrincipalCustom;
+import com.example.bedatnsd47.config.UserInfoUserDetails;
 import com.example.bedatnsd47.entity.DiaChi;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.entity.VaiTro;
@@ -38,18 +40,35 @@ public class NhanVienController {
 
     TaiKhoan userInfo = new TaiKhoan();
 
+    private PrincipalCustom principalCustom = new PrincipalCustom();
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @GetMapping()
     public String hienThi(Model model) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
         model.addAttribute("nhanVien", new TaiKhoan());
         return "/admin-template/nhan_vien/nhan-vien";
     }
 
     @GetMapping("/dang-hoat-dong")
-    public String hienThiDangHoatDong(Model model) {
+    public String hienThiDangHoatDong(
+            Model model
+    ) {
+
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listTaiKhoan", taiKhoanService.getAllDangHoatDong());
         model.addAttribute("nhanVien", new TaiKhoan());
         return "/admin-template/nhan_vien/nhan-vien";
@@ -57,6 +76,12 @@ public class NhanVienController {
 
     @GetMapping("/ngung-hoat-dong")
     public String hienThiNgungHoatDong(Model model) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listTaiKhoan", taiKhoanService.getAllNgungHoatDong());
         model.addAttribute("nhanVien", new TaiKhoan());
         return "/admin-template/nhan_vien/nhan-vien";
@@ -68,10 +93,39 @@ public class NhanVienController {
             Model model,
             @PathVariable("id") Long id
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
 
         TaiKhoan taiKhoan = taiKhoanService.getById(id);
         model.addAttribute("nhanVien", taiKhoan);
         return "/admin-template/nhan_vien/sua-nhan-vien";
+
+    }
+
+    @GetMapping("/update-mat-khau")
+    public String updateMatKhau(
+            Model model,
+            @RequestParam("idNhanVien") String idNhanVien,
+            @RequestParam("matKhauCu") String matKhauCu,
+            @RequestParam("nhapLaiMatKhauMoi") String nhapLaiMatKhauMoi,
+            RedirectAttributes redirectAttributes
+    ) {
+        TaiKhoan nhanVien = taiKhoanService.getById(Long.valueOf(idNhanVien));
+        if (!passwordEncoder.matches(matKhauCu, nhanVien.getMatKhau())) {
+            redirectAttributes.addFlashAttribute("checkThongBao", "thaiBaiTrue");
+            redirectAttributes.addFlashAttribute("checkModalLoi", "true");
+        } else {
+            nhanVien.setNgaySua(new Date());
+            nhanVien.setMatKhau(passwordEncoder.encode(nhapLaiMatKhauMoi));
+            taiKhoanService.update(nhanVien);
+            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
+            return "redirect:/admin/nhan-vien/view-update-nhan-vien/" + idNhanVien;
+        }
+        return "redirect:/admin/nhan-vien/view-update-nhan-vien/" + idNhanVien;
 
     }
 
@@ -140,23 +194,20 @@ public class NhanVienController {
             model.addAttribute("checkNgaySinh", "ngaySinh");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/nhan-vien";
-        }
-        else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTenTaiKhoan())) {
+        } else if (!taiKhoanService.checkTenTaiKhoanTrung(taiKhoan.getTenTaiKhoan())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Tên tài khoản đã tồn tại");
             model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/nhan-vien";
-        }
-        else if (!taiKhoanService.checkEmail(taiKhoan.getEmail())) {
+        } else if (!taiKhoanService.checkEmail(taiKhoan.getEmail())) {
             model.addAttribute("checkModal", "modal");
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkEmailTrung", "Email đã tồn tại");
             model.addAttribute("listTaiKhoan", taiKhoanService.getAll());
             return "/admin-template/nhan_vien/nhan-vien";
-        }
-        else {
+        } else {
             redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
             String url = request.getRequestURL().toString();
             System.out.println(url);

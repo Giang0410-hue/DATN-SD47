@@ -1,5 +1,6 @@
 package com.example.bedatnsd47.controller.user;
 
+import com.example.bedatnsd47.config.PrincipalCustom;
 import com.example.bedatnsd47.entity.ChiTietSanPham;
 import com.example.bedatnsd47.entity.DiaChi;
 import com.example.bedatnsd47.entity.GioHangChiTiet;
@@ -7,8 +8,6 @@ import com.example.bedatnsd47.entity.HoaDon;
 import com.example.bedatnsd47.entity.LichSuHoaDon;
 import com.example.bedatnsd47.entity.TaiKhoan;
 import com.example.bedatnsd47.entity.VaiTro;
-import com.example.bedatnsd47.entity.Voucher;
-import com.example.bedatnsd47.repository.ChiTietSanPhamRepository;
 import com.example.bedatnsd47.service.ChiTietSanPhamSerivce;
 import com.example.bedatnsd47.service.DiaChiService;
 import com.example.bedatnsd47.service.GioHangChiTietService;
@@ -24,9 +23,6 @@ import com.example.bedatnsd47.service.ThuongHieuService;
 import com.example.bedatnsd47.service.VoucherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,15 +35,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.awt.print.Pageable;
-import java.security.Principal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 @Controller
-// @RequestMapping("/home")
-public class HomeController {
+public class CustomersController {
 
     // private Long idTaiKhoan = Long.valueOf(8);
     private Long idTaiKhoan;
@@ -94,7 +87,9 @@ public class HomeController {
     @Autowired
     private LichSuHoaDonService lichSuHoaDonService;
 
-    @GetMapping("/logout=true")
+    private PrincipalCustom principalCustom = new PrincipalCustom();
+
+    @GetMapping("/logout/true")
     public String logout() {
         idTaiKhoan = null;
         return "dang-nhap";
@@ -102,17 +97,16 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(
-            Principal principal,
             Model model) {
-        if (principal != null) {
-            TaiKhoan taiKhoan = taiKhoanService.getTaiKhoanByName(principal.getName());
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
+            TaiKhoan taiKhoan = taiKhoanService.getTaiKhoanByName(principalCustom.getCurrentUserNameCustomer());
             idTaiKhoan = taiKhoan.getId();
         } else {
             idTaiKhoan = null;
         }
 
         model.addAttribute("listTop5HDCT", hoaDonChiTietService.finTop5HDCT());
-        if (idTaiKhoan != null) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
             TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
             model.addAttribute("checkDangNhap", "true");
             model.addAttribute("soLuongSPGioHangCT",
@@ -124,18 +118,6 @@ public class HomeController {
         return "/customer-template/ban-hang-customer";
 
     }
-    //
-    // @GetMapping("/dang-nhap")
-    // public String dangNhap() {
-    //
-    // return "/customer-template/dang-nhap";
-    // }
-    //
-    // @GetMapping("/dang-ky")
-    // public String dangKy() {
-    //
-    // return "/customer-template/dang-ky";
-    // }
 
     @GetMapping("/user/cart")
     public String cart(
@@ -251,10 +233,20 @@ public class HomeController {
     @GetMapping("/user/checkout")
     public String checkout(
             @RequestParam String options,
-            Model model) {
+            Model model,
+            RedirectAttributes redirectAttributes
+            ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         String[] optionArray = options.split(",");
         List<String> listIdString = Arrays.asList(optionArray);
-        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+
+        for (GioHangChiTiet gioHangChiTiet : gioHangChiTietService.findAllById(listIdString, khachHang.getGioHang().getId())) {
+            if (gioHangChiTiet.getSoLuong() > chiTietSanPhamSerivce.getById(gioHangChiTiet.getChiTietSanPham().getId()).getSoLuong()) {
+                redirectAttributes.addFlashAttribute("checkSoLuongDB","true");
+                return "redirect:/user/cart";
+            }
+        }
+
         List<GioHangChiTiet> listGioHangChiTiet = gioHangChiTietService.findAllById(listIdString,
                 khachHang.getGioHang().getId());
         model.addAttribute("listGioHangChiTiet", listGioHangChiTiet);
@@ -283,6 +275,7 @@ public class HomeController {
     public String addHoaDon(
             @RequestParam("idGioHangChiTiet") String idGioHangChiTiet,
             @RequestParam("tongTien") String tongTien,
+            @RequestParam("tienGiam") String tienGiam,
             @RequestParam("tongTienAndSale") String tongTienAndSale,
             @RequestParam("hoVaTen") String hoVaTen,
             @RequestParam("soDienThoai") String soDienThoai,
@@ -294,10 +287,18 @@ public class HomeController {
             @RequestParam("phuongXaID") String phuongXaID,
             @RequestParam("quanHuyenID") String quanHuyenID,
             @RequestParam("thanhPhoID") String thanhPhoID,
-            @RequestParam("trangThaiLuuDC") String trangThaiLuuDC) {
+            @RequestParam("trangThaiLuuDC") String trangThaiLuuDC,
+            RedirectAttributes redirectAttributes) {
         String[] optionArray = idGioHangChiTiet.split(",");
-        List<String> listIdString = Arrays.asList(optionArray);
+
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        List<String> listIdString = Arrays.asList(optionArray);
+        for (GioHangChiTiet gioHangChiTiet : gioHangChiTietService.findAllById(listIdString, khachHang.getGioHang().getId())) {
+            if (gioHangChiTiet.getSoLuong() > chiTietSanPhamSerivce.getById(gioHangChiTiet.getChiTietSanPham().getId()).getSoLuong()) {
+                redirectAttributes.addFlashAttribute("checkSoLuongDB","true");
+                return "redirect:/user/checkout?options="+idGioHangChiTiet;
+            }
+        }
         if (trangThaiLuuDC.equals("0")) {
             Date date = new Date();
             DiaChi diaChi = new DiaChi();
@@ -312,7 +313,7 @@ public class HomeController {
             diaChiService.save(diaChi);
         }
         gioHangChiTietService.addHoaDon(listIdString, Long.valueOf(tongTien), Long.valueOf(tongTienAndSale), hoVaTen,
-                soDienThoai, tienShip, email, voucher, diaChiCuThe, ghiChu, khachHang, phuongXaID, quanHuyenID,
+                soDienThoai, tienShip,tienGiam, email, voucher, diaChiCuThe, ghiChu, khachHang, phuongXaID, quanHuyenID,
                 thanhPhoID, khachHang.getGioHang().getId());
         return "redirect:/user/thankyou";
     }
@@ -364,7 +365,7 @@ public class HomeController {
             maxPrice = chiTietSanPhamSerivce.getAllMaxGiaCTSP();
         }
 
-        if (idTaiKhoan != null) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
             TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
             model.addAttribute("checkDangNhap", "true");
             model.addAttribute("soLuongSPGioHangCT",
@@ -442,7 +443,7 @@ public class HomeController {
     @GetMapping("/about")
     public String about(
             Model model) {
-        if (idTaiKhoan != null) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
             TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
             model.addAttribute("checkDangNhap", "true");
             model.addAttribute("soLuongSPGioHangCT",
@@ -456,7 +457,7 @@ public class HomeController {
     @GetMapping("/chinh-sach")
     public String chinhSach(
             Model model) {
-        if (idTaiKhoan != null) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
             TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
             model.addAttribute("checkDangNhap", "true");
             model.addAttribute("soLuongSPGioHangCT",
@@ -568,12 +569,10 @@ public class HomeController {
         model.addAttribute("soLuongSPGioHangCT",
                 gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
         model.addAttribute("listAllHoaDon", hoaDonService.getAllHoaDonByTaiKhoanOrderByNgaySua(idTaiKhoan));
-        model.addAttribute("listHDChoXacNhan",
-                hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 0));
+        model.addAttribute("listHDChoXacNhan", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 0));
         model.addAttribute("listHDChoGiao", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 1));
         model.addAttribute("listHDDangGiao", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 2));
-        model.addAttribute("listHDHoanThanh",
-                hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 3));
+        model.addAttribute("listHDHoanThanh", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 3));
         model.addAttribute("listHDDaHuy", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 5));
         model.addAttribute("listHDTraHang", hoaDonService.getHoaDonByTaiKhoanByTrangThaiOrderByNgaySua(idTaiKhoan, 6));
         return "/customer-template/don-mua";
@@ -639,7 +638,7 @@ public class HomeController {
     @GetMapping("/lien-he")
     public String lienHe(
             Model model) {
-        if (idTaiKhoan != null) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
             TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
             model.addAttribute("checkDangNhap", "true");
             model.addAttribute("soLuongSPGioHangCT",
@@ -648,6 +647,62 @@ public class HomeController {
             model.addAttribute("checkDangNhap", "false");
         }
         return "/customer-template/contact";
+    }
+
+    @GetMapping("/tra-cuu-don-hang")
+    public String traCuuHoaDon(
+            Model model) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
+            TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+            model.addAttribute("checkDangNhap", "true");
+            model.addAttribute("soLuongSPGioHangCT",
+                    gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+        } else {
+            model.addAttribute("checkDangNhap", "false");
+        }
+        return "/customer-template/tra-cuu-don-hang";
+    }
+
+    @GetMapping("/tra-cuu-don-hang/{idHoaDon}/{email}")
+    public String detailTraCuuHoaDon(
+            @RequestParam("maDonHang") String maDonHang,
+            @RequestParam("sdt") String sdt,
+            Model model,
+            RedirectAttributes attributes
+    ) {
+        if (principalCustom.getCurrentUserNameCustomer() != null) {
+            TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+            model.addAttribute("checkDangNhap", "true");
+            model.addAttribute("soLuongSPGioHangCT",
+                    gioHangChiTietService.soLuongSPGioHangCT(khachHang.getGioHang().getId()));
+        } else {
+            model.addAttribute("checkDangNhap", "false");
+        }
+
+        HoaDon hoaDon = hoaDonService.finByHoaDonMaHDSdt(maDonHang, sdt);
+        if (hoaDon == null) {
+            attributes.addFlashAttribute("checkLoiTraCuuHoaDon",
+                    "Không tìm thấy đơn hàng. Vui lòng kiểm tra lại mã đơn hàng và số điện thoại.");
+            return "redirect:/tra-cuu-don-hang";
+        } else {
+            model.addAttribute("byHoaDon", hoaDonService.findById(hoaDon.getId()));
+            model.addAttribute("listLichSuHoaDon", lichSuHoaDonService.findByIdhdNgaySuaAsc(hoaDon.getId()));
+        }
+        return "/customer-template/detail-tra-cuu-don-hang";
+    }
+
+    @GetMapping("/lien-he/add")
+    public String lienHeAdd(
+            @RequestParam("hoTen")String hoTen,
+            @RequestParam("email")String email,
+            @RequestParam("chuDe")String chuDe,
+            @RequestParam("tinNhan")String tinNhan,
+            RedirectAttributes redirectAttributes
+
+    ) {
+        khachHangService.guiLieuHe(hoTen,email,chuDe,tinNhan);
+        redirectAttributes.addFlashAttribute("checkTBLienHe","true");
+        return "redirect:/lien-he";
     }
 
 }

@@ -44,7 +44,7 @@
                                     var inputValueTimKiemAll = inputElementTimKiemAll.value;
                                     console.log('Giá trị của input:', inputValueTimKiemAll);
 
-                                    var fullUrl = "http://localhost:8080/shop"
+                                    var fullUrl = window.location.origin + "/shop"
 
                                     if (inputValueTimKiemAll !== '') {
                                         fullUrl = updateQueryStringParameterAll('keyword', inputValueTimKiemAll, fullUrl);
@@ -155,21 +155,22 @@
                     <li><a href="/about">Về chúng tôi</a></li>
                     <li><a href="/lien-he">Liên hệ</a></li>
                     <li><a href="/chinh-sach">Chính Sách</a></li>
+                    <li><a href="/tra-cuu-don-hang">Tra Cứu Đơn Hàng</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
-    <div class="bg-light py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mb-0">
-                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>
-                    <strong class="text-black">Contact</strong>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--    <div class="bg-light py-3">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-12 mb-0">-->
+<!--                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>-->
+<!--                    <strong class="text-black">Contact</strong>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="container" style="max-width: 90%">
         <div class="row">
             <div class="col-md-2">
@@ -203,7 +204,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="/user/don-mua">
-                                <i class="bi bi-receipt-cutoff"></i>
+                                <i class="bi bi-truck"></i>
                                 <span>Đơn Mua</span>
                             </a>
                         </li><!-- End Forms Nav -->
@@ -248,9 +249,21 @@
                     <div class="row mb-3">
                         <label for="inputPassword6" class="col-sm-3 col-form-label">Số điện thoại</label>
                         <div class="col-sm-9">
-                            <input type="text" th:field="*{soDienThoai}" class="form-control" id="inputPassword6">
+                            <input type="text" th:field="*{soDienThoai}"  class="form-control" id="inputPassword6">
                             <span class="check-loi" th:errors="*{soDienThoai}"></span>
                         </div>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var sdt = document.getElementById("inputPassword6")
+                                var ngaySinh = document.getElementById("inputPassword4")
+                                if(sdt.value=='0300000000'){
+                                    sdt.value = ''
+                                }
+                                if(ngaySinh.value=='1900-01-01'){
+                                    ngaySinh.value = ''
+                                }
+                            });
+                        </script>
                     </div>
                     <fieldset class="row mb-3">
                         <label class="col-sm-3 col-form-label">Giới tính</label>

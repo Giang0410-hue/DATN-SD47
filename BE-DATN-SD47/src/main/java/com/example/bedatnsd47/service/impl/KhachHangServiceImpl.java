@@ -145,8 +145,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     public TaiKhoan findKhachLe() {
         return repository.findKhachLe();
     }
+
     public void sendEmail(TaiKhoan taiKhoan, String path, String random) {
-        String from = "daspabitra55@gmail.com";
+        String from = "glacatshopshoes@gmail.com";
         String to = taiKhoan.getEmail();
         String subject = "Chào mừng bạn đến với Glacat - Tài khoản Khách Hàng mới đã được tạo";
         String content =
@@ -160,7 +161,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
-            helper.setFrom(from, "Becoder");
+            helper.setFrom(from, "Glacat");
             helper.setTo(to);
             helper.setSubject(subject);
             content = content.replace("[[name]]", taiKhoan.getTenTaiKhoan());
@@ -178,6 +179,29 @@ public class KhachHangServiceImpl implements KhachHangService {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void guiLieuHe(String hoTen, String email, String chuDe, String tinNhan) {
+        String from = email;
+        String to = "glacatshopshoes@gmail.com";
+        String subject = chuDe;
+        String content = tinNhan;
+        try {
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            helper.setFrom(from, hoTen);
+            helper.setTo(to);
+            helper.setSubject(subject);
+
+            helper.setText(content, true);
+
+            javaMailSender.send(message);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

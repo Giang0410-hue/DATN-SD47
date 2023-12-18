@@ -48,6 +48,9 @@ public class HoaDon {
     @Column(name = "phi_ship")
     private Long phiShip;
 
+    @Column(name = "tien_giam")
+    private Long tienGiam;
+
     @Column(name = "tong_tien")
     private Long tongTien;
 
@@ -120,17 +123,7 @@ public class HoaDon {
     public Long tongTienHoaDonHoanTra() {
         Long total = (long) 0;
         for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
-            if(hoaDonChiTiet.getTrangThai()==2){
-                total += hoaDonChiTiet.tongTien();
-            }
-        }
-        return total;
-    }
-
-    public Long tongTienHoaDonDaNhan() {
-        Long total = (long) 0;
-        for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
-            if(hoaDonChiTiet.getTrangThai()==0){
+            if (hoaDonChiTiet.getTrangThai() == 2) {
                 total += hoaDonChiTiet.tongTien();
             }
         }
@@ -139,28 +132,29 @@ public class HoaDon {
 
     
 
-    public Long tongTienHoaDonKhiGiam() {
+    public Long tongTienHoaDonDaNhan() {
+        Long total = (long) 0;
+        for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
+            if (hoaDonChiTiet.getTrangThai() == 0) {
+                total += hoaDonChiTiet.tongTien();
+            }
+        }
+        return total;
+    }
 
-        return this.tongTienHoaDon() + this.getPhiShip();
+
+    public Long tongTienHoaDonKhiGiam() {
+        
+        return this.tongTienHoaDonDaNhan() + this.getPhiShip()-this.getGiamGia();
     }
 
     public Long getGiamGia() {
-        if (this.voucher != null) {
-            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
-            Long giam = (this.tongTienHoaDon() * ptGiam) / 100;
-            return giam;
-        }
-        return (long) 0;
+        return this.tienGiam!=null?this.tienGiam:0;
     }
 
-    public Long getPhanTramGiam() {
-        if (this.voucher != null) {
-            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
+    
 
-            return ptGiam;
-        }
-        return (long) 0;
-    }
+   
 
     public String getStringTrangThai() {
         switch (this.trangThai) {
@@ -179,7 +173,7 @@ public class HoaDon {
                 return "Đã hủy";
             case 6:
                 return "Hoàn trả";
-            
+
             case 8:
                 return "Đơn đổi trả tạm";
             default:

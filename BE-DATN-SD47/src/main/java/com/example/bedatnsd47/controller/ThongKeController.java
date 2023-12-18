@@ -1,5 +1,7 @@
 package com.example.bedatnsd47.controller;
 
+import com.example.bedatnsd47.config.PrincipalCustom;
+import com.example.bedatnsd47.config.UserInfoUserDetails;
 import com.example.bedatnsd47.entity.HoaDon;
 import com.example.bedatnsd47.entity.Voucher;
 import com.example.bedatnsd47.repository.ChiTietSanPhamRepository;
@@ -47,9 +49,17 @@ public class ThongKeController {
     @Autowired
     ChiTietSanPhamSerivce chiTietSanPhamSerivce;
 
+    private PrincipalCustom principalCustom = new PrincipalCustom();
+
     @GetMapping()
     public String hienThi(
             Model model) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         Date ngayTao1 = new Date();
         Integer sumSanPham = (Integer) model.asMap().get("sumSanPham");
         Integer countHoaDon = (Integer) model.asMap().get("countHoaDon");
@@ -61,7 +71,8 @@ public class ThongKeController {
         Integer countHoaDonDaHuy = (Integer) model.asMap().get("countHoaDonDaHuyBetween");
         Integer countHoaDonTra = (Integer) model.asMap().get("countHoaDonTraBetween");
         List<Object[]> thongKeSanPham = (List<Object[]>) model.asMap().get("thongKeBetween");
-
+        List<Object[]> danhSachSapHetHangAll = (List<Object[]>) model.asMap().get("danhSachSapHetHang");
+        List<Object[]> bieuDoCot = (List<Object[]>) model.asMap().get("thongKeSP");
         Integer countHoaDonDay = hoaDonService.countHoaDonDay(ngayTao1);
         Long sumHoaDonDay = hoaDonService.sumHoaDonDay(ngayTao1);
         Integer countHoaDonMonth = hoaDonService.countHoaDonMonth(ngayTao1);
@@ -90,6 +101,9 @@ public class ThongKeController {
         Integer countHoaDonAll = hoaDonService.countHoaDonAll();
         Long sumHoaDonAll = hoaDonService.sumGiaTriHoaDonAll();
         List<Object[]> thongKeSanPhamAll = hoaDonChiTietService.findByTongSoLuongAll();
+        List<Object[]> bieuDoCotTru30 = hoaDonChiTietService.thongKeSanPhamTheoNgayMacDinh30Ngay();
+        Integer soLuong = 10;
+        List<Object[]> danhSachSapHetHang10 = chiTietSanPhamSerivce.danhSachHangSapHet(soLuong);
         model.addAttribute("countHoaDonDay", countHoaDonDay);
         model.addAttribute("sumHoaDonDay", sumHoaDonDay);
         model.addAttribute("countHoaDonMonth", countHoaDonMonth);
@@ -145,6 +159,16 @@ public class ThongKeController {
         }else{
             model.addAttribute("thongKeBetween", thongKeSanPham);
         }
+        if (danhSachSapHetHangAll == null){
+            model.addAttribute("danhSachSapHetHang",danhSachSapHetHang10);
+        }else{
+            model.addAttribute("danhSachSapHetHang",danhSachSapHetHangAll);
+        }
+        if (bieuDoCot == null){
+            model.addAttribute("thongKeSP",bieuDoCotTru30);
+        }else{
+            model.addAttribute("thongKeSP",bieuDoCot);
+        }
         model.addAttribute("sumSanPhamHoaDonDay", sumSanPhamHoaDonDay);
         model.addAttribute("countHoaDonChoXacNhanNgay", countHoaDonChoXacNhanNgay);
         model.addAttribute("countHoaDonChoGiaoNgay", countHoaDonChoGiaoNgay);
@@ -168,9 +192,7 @@ public class ThongKeController {
         List<Object[]> top5Ngay = hoaDonChiTietService.findByTongSoLuongNgay(ngayTao1);
         model.addAttribute("top5Thang", result);
         model.addAttribute("top5Ngay", top5Ngay);
-        Integer soLuong = 10;
-        List<Object[]> danhSachSapHetHang = chiTietSanPhamSerivce.danhSachHangSapHet(soLuong);
-        model.addAttribute("listSapHetHang",danhSachSapHetHang);
+        model.addAttribute("listSapHetHang",danhSachSapHetHang10);
         return "/admin-template/thong_ke/thong-ke";
     }
 
