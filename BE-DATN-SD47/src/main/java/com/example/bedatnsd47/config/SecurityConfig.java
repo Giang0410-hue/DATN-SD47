@@ -88,7 +88,7 @@ public class SecurityConfig {
                         "/them-tai-khoan", "/verify","/error/403","/reset-mat-khau", "/xac-minh", "/xac-minh/check").permitAll()
                 .requestMatchers("/style/", "/static/css/**", "/static/fonts/**", "/static/img/**",
                         "/static/js/**", "/static/scss/**", "/static/vendor/**").permitAll()
-                .requestMatchers("/**").permitAll()
+//                .requestMatchers("/**").permitAll()
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/ban-hang-tai-quay/**").hasAnyAuthority("ROLE_ADMIN")
