@@ -751,11 +751,11 @@
                                                 </div>
                                                 <div class="col-md-6">
 
-                                                    <button th:if="${hoaDon.trangThai==0}"
+                                                    <!-- <button th:if="${hoaDon.trangThai==0}"
                                                         type="button" style="float: right;margin-right: 5%"
                                                         data-bs-toggle="modal" data-bs-target="#doiThongTinHD"
                                                         class="btn btn-primary">Thay đổi
-                                                    </button>
+                                                    </button> -->
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="doiThongTinHD" tabindex="-1"
                                                         aria-labelledby="doiThongTinHDLabel" aria-hidden="true">
@@ -1545,12 +1545,12 @@
                                                 <div class="col-md-12">
                                                     <div class="">
                                                         <h4 style="font-weight: bold;">Thông tin sản phẩm đã mua</h4>
-                                                        <button th:if="${hoaDon.trangThai==0}"
+                                                        <!-- <button th:if="${hoaDon.trangThai==0}"
                                                             onclick="handleButtonClick()" type="button"
                                                             class="btn btn-primary" data-bs-toggle="modal"
                                                             th:data-bs-target="${'#addsp'+hoaDon.id}">
                                                             Thêm sản phẩm
-                                                        </button>
+                                                        </button> -->
                                                     </div>
 
                                                     <!-- Modal -->
@@ -1675,9 +1675,9 @@
                                                                     <th scope="col">Số lượng</th>
                                                                     <th th:if="${hoaDon.trangThai==6}" scope="col">Trạng thái</th>
                                                                     <th scope="col">Thành tiền</th>
-                                                                    <th scope="col"
+                                                                    <!-- <th scope="col"
                                                                         th:if="${hoaDon.trangThai==0}">
-                                                                        Thao tác</th>
+                                                                        Thao tác</th> -->
 
                                                                 </tr>
                                                             </thead>
@@ -1735,113 +1735,7 @@
                                                                         </td>
 
 
-                                                                        <td
-                                                                            th:if="${hoaDon.trangThai==0}">
-                                                                            <div class="button-table">
-                                                                                <!-- delete Hóa đơn chi tiết -->
-
-                                                                                <!-- Button trigger modal -->
-
-                                                                                <button type="button"
-                                                                                    class="btn btn-primary"
-                                                                                    th:data-bs-toggle="modal"
-                                                                                    th:data-bs-target="${'#modalEditSoLuong'+obj.id}">
-                                                                                    Sửa
-                                                                                    <input type="hidden" name="idHdct"
-                                                                                        th:value="${obj.id}">
-                                                                                        <input type="hidden" th:value="${hoaDon.id}" name="idhdc">
-                                                                                </button>
-
-
-
-
-
-
-
-                                                                                <!-- Modal update sl-->
-                                                                                <div class="modal fade"
-                                                                                    th:id="${'modalEditSoLuong'+obj.id}"
-                                                                                    tabindex="-1"
-                                                                                    aria-labelledby="exampleModalLabel"
-                                                                                    aria-hidden="true">
-                                                                                    <div class="modal-dialog">
-                                                                                        <div class="modal-content">
-                                                                                            <div class="modal-header">
-                                                                                                <h1 class="modal-title fs-5"
-                                                                                                    id="exampleModalLabel">
-                                                                                                    Nhập
-                                                                                                    số lượng</h1>
-
-
-                                                                                            </div>
-                                                                                            <div class="modal-body">
-                                                                                                <p>(Sẵn
-                                                                                                    [[${obj.ChiTietSanPham.soLuong}]]
-                                                                                                    sản phẩm )</p>
-                                                                                                <input type="number"
-                                                                                                    name="soLuongEdit"
-                                                                                                    th:id="${'soLuongEdit'+obj.id}">
-                                                                                            </div>
-                                                                                            <small style="color: red;font-weight: bold;" id="errorSoLuongEdit"></small>
-                                                                                            <div class="modal-footer">
-                                                                                                <button type="button"
-                                                                                                    class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Đóng
-                                                                                                </button>
-                                                                                                <button
-                                                                                                    th:onclick="'validateAndSubmit('+${obj.ChiTietSanPham.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
-                                                                                                    type="button"
-                                                                                                    class="btn btn-primary">Xác nhận
-                                                                                                </button>
-
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <button type="button"
-                                                                                    class="btn btn-danger"
-                                                                                    th:data-bs-toggle="modal"
-                                                                                    th:data-bs-target="${'#modalDeleteHdct'+obj.id}">
-                                                                                    Xóa
-                                                                                </button>
-                                                                                <div class="modal fade"
-                                                                                    th:id="${'modalDeleteHdct'+obj.id}"
-                                                                                    tabindex="-1" role="dialog"
-                                                                                    aria-labelledby="modalTitleId"
-                                                                                    aria-hidden="true">
-                                                                                    <div class="modal-dialog"
-                                                                                        role="document">
-                                                                                        <div class="modal-content">
-                                                                                            <div class="modal-header">
-                                                                                                <h5 class="modal-title"
-                                                                                                    id="modalTitleId">
-                                                                                                    Xác
-                                                                                                    nhận
-                                                                                                </h5>
-
-                                                                                            </div>
-                                                                                            <div class="modal-body">
-                                                                                                <div
-                                                                                                    class="container-fluid">
-                                                                                                    Xóa
-                                                                                                    [[${obj.ChiTietSanPham.SanPham.ten}]]
-                                                                                                    ?
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="modal-footer">
-                                                                                                <button type="button"
-                                                                                                    class="btn btn-secondary"
-                                                                                                    data-bs-dismiss="modal">Đóng</button>
-                                                                                                <a th:href="@{'/ban-hang-tai-quay/hoa-don-chi-tiet/delete/'+${obj.id}}"
-                                                                                                    class="btn btn-danger">Xóa
-                                                                                                </a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </td>
+                                                                       
                                                                     </form>
                                                                 </tr>
 
@@ -1854,9 +1748,9 @@
                                                                     <th scope="col">Số lượng</th>
                                                                     <th th:if="${hoaDon.trangThai==6}" scope="col">Trạng thái</th>
                                                                     <th scope="col">Thành tiền</th>
-                                                                    <th scope="col"
+                                                                    <!-- <th scope="col"
                                                                         th:if="${hoaDon.trangThai==0}">
-                                                                        Thao tác</th>
+                                                                        Thao tác</th> -->
                                                                 </tr>
                                                             </tfoot>
 
@@ -1899,121 +1793,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </div> -->
-                                                                <div th:if="${hoaDon.trangThai==-1||hoaDon.trangThai==0}" class="row">
-                                                                    <div class="col">
-                                                                        <h6>Voucher: </h6>
-                                                                    </div>
-                                                                    <div class="col" style="margin-top: 1%">
-                                                                        <div class="input-group flex-nowrap">
-                                                                            <input type="text" class="form-control"
-                                                                                id="c_code" disabled
-                                                                                aria-label="Coupon Code"
-                                                                                aria-describedby="button-addon2" />
-                                                                            <button
-                                                                                th:if="${hoaDon.trangThai==0||hoaDon.trangThai==1}"
-                                                                                class="btn btn-primary btn-sm"
-                                                                                type="button"
-                                                                                onclick="checkAndDisplayVouchers()"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#voucher">
-                                                                                Chọn voucher
-                                                                            </button>
-                                                                            <!-- Modal -->
-                                                                            <div class="modal fade" id="voucher"
-                                                                                tabindex="-1"
-                                                                                aria-labelledby="voucherLabel"
-                                                                                aria-hidden="true">
-                                                                                <div class="modal-dialog">
-                                                                                    <div class="modal-content">
-                                                                                        <div class="modal-header">
-                                                                                            <h3 class="modal-title fs-5"
-                                                                                                style="margin: auto"
-                                                                                                id="voucherLabel">Chọn
-                                                                                                Voucher
-                                                                                            </h3>
-                                                                                        </div>
-                                                                                        <div class="modal-body">
-                                                                                            <div class="card mb-3"
-                                                                                                style="height: 10%"
-                                                                                                th:each="voucher : ${listVoucher}">
-                                                                                                <div class="row g-0">
-                                                                                                    <div
-                                                                                                        class="col-md-3">
-                                                                                                        <div class="card-body"
-                                                                                                            style="margin-left: 5px;margin-top: 15px">
-                                                                                                            <img th:src="@{../../../static/img/logo.png}"
-                                                                                                                style="margin-left: 15px"
-                                                                                                                class="img-fluid rounded-start"
-                                                                                                                alt="...">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div
-                                                                                                        class="col-md-7">
-                                                                                                        <div
-                                                                                                            class="card-body">  
-                                                                                                            <h5 class="card-title"
-                                                                                                                style="margin-bottom: -3px"
-                                                                                                                th:text="${'Giảm '+ voucher.phanTramGiam + '%'}">
-                                                                                                            </h5>
-                                                                                                            <small
-                                                                                                            id="donToiThieu"
-                                                                                                                class="text-body-secondary"
-                                                                                                                style="display: block"
-                                                                                                                th:text="${'Đơn Tối Thiểu '+voucher.giaTriDonToiThieu + ' VND'}"></small>
-                                                                                                            <small
-                                                                                                                class="text-body-secondary"
-                                                                                                                style="display: block"
-                                                                                                                th:text="${'Số Lượng '+voucher.soLuong}"></small>
-                                                                                                            <small
-                                                                                                                class="text-body-secondary"
-                                                                                                                style="display: block"
-                                                                                                                th:text="${'Hạn Sử Dụng '+voucher.ngayKetThuc}"></small>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div
-                                                                                                        class="col-md-2">
-                                                                                                        <div
-                                                                                                            class="card-body">
-                                                                                                            <input
-                                                                                                                type="radio"
-                                                                                                                style="margin-top: 35px"
-                                                                                                                name="voucherRadio"
-                                                                                                                th:data-index="${voucher.id + ' ' +voucher.phanTramGiam+ ' ' +voucher.giamToiDa}"
-                                                                                                                onchange="handleRadioVoucher(this)">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div
-                                                                                                        class="col-md-12">
-                                                                                                        <small
-                                                                                                            class="text-body-secondary"
-                                                                                                            style=" display: none;margin-left: 50px;color: red"
-                                                                                                            id="thongBaoThieuTien"></small>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
 
-
-                                                                                        </div>
-                                                                                        <div class="modal-footer">
-                                                                                            <button type="button"
-                                                                                                onclick="boChonVoucher()"
-                                                                                                class="btn btn-secondary"
-                                                                                                data-bs-dismiss="modal">Bỏ
-                                                                                                chọn
-                                                                                            </button>
-                                                                                            <button type="button"
-                                                                                                class="btn btn-secondary"
-                                                                                                data-bs-dismiss="modal">Quay
-                                                                                                lại
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
 
                                                                 <div class="row">
                                                                     <div class="col">
@@ -2058,8 +1838,8 @@
                                                                         </h6>
                                                                         <h6 th:if="${hoaDon.trangThai==6}"
                                                                             class="thong-tin-gia">
-                                                                            [[${hoaDon.tienGiam}]]
-                                                                            VND
+                                                                            <del>[[${hoaDon.tienGiam}]]
+                                                                                VND</del>
                                                                             <!-- hoantra -->
                                                                         </h6>
                                                                     </div>
@@ -2106,7 +1886,10 @@
                                                                     <div class="col">
                                                                         <h6 class="thong-tin-gia" id="tongGiaH6">
                                                                             <span
-                                                                                th:if="${hoaDon.tongTienHoaDonDaNhan()!=0}"
+                                                                                th:if="${hoaDon.tongTienHoaDonDaNhan()!=0&&hoaDon.trangThai!=6}"
+                                                                                id="tongGiaValue">[[${hoaDon.tongTienKhiGiam+hoaDon.phiShip}]]</span>
+                                                                            <span
+                                                                                th:if="${hoaDon.tongTienHoaDonDaNhan()!=0&&hoaDon.trangThai==6}"     
                                                                                 id="tongGiaValue">[[${hoaDon.tongTienKhiGiam}]]</span>
 
                                                                             <span
@@ -2334,7 +2117,7 @@
                                 th:if="${hoaDon.trangThai!=6}" id="giamGiaIn">
                                 [[${hoaDon.tienGiam}]]
                             </span>
-                            <span th:if="${hoaDon.trangThai==6}">[[${hoaDon.tienGiam}]]
+                            <span th:if="${hoaDon.trangThai==6}"><del>[[${hoaDon.tienGiam}]]</del>
                             </span>
                             VND</span>
                     </p>
