@@ -1,6 +1,8 @@
 package com.example.bedatnsd47.controller;
 
 import com.example.bedatnsd47.config.ExportPdf;
+import com.example.bedatnsd47.config.PrincipalCustom;
+import com.example.bedatnsd47.config.UserInfoUserDetails;
 import com.example.bedatnsd47.entity.ChiTietSanPham;
 import com.example.bedatnsd47.entity.DiaChi;
 import com.example.bedatnsd47.entity.GioHang;
@@ -79,8 +81,15 @@ public class BanHangController {
     @Autowired
     HttpServletRequest request;
 
+    private PrincipalCustom principalCustom = new PrincipalCustom();
     @GetMapping("/hoa-don")
     public String home() {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            request.setAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         request.setAttribute("lstHoaDon", hoaDonService.find5ByTrangThai(-1));
         return "/admin-template/ban-hang-admin-v2";
     }
@@ -97,12 +106,37 @@ public class BanHangController {
 
     @GetMapping("/doi-tra")
     public String doiTra() {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            request.setAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         hoaDonService.deleteHoaDonHoanTra();
+        
         return "/admin-template/doi-tra";
     }
-
+    public static boolean checkDate(Date dateToCheck) {
+        // Lấy ngày hiện tại
+        Date currentDate = new Date();
+        
+        // Lấy số milliseconds từ ngày hiện tại và ngày cần kiểm tra
+        long millisecondsDifference = dateToCheck.getTime() - currentDate.getTime();
+        
+        // Chuyển số milliseconds thành số ngày
+        long daysDifference = millisecondsDifference / (1000 * 60 * 60 * 24);
+        
+        // Kiểm tra xem chênh lệch có lớn hơn 7 ngày không
+        return daysDifference <= 7;
+    }
     @GetMapping("/doi-tra/{maHoaDon}")
     public String detailHoaDonDoiTra(@PathVariable String maHoaDon, RedirectAttributes redirectAttributes) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            request.setAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         HoaDon hd = hoaDonService.findByMa(maHoaDon);
         
             if(hd==null){
@@ -111,7 +145,7 @@ public class BanHangController {
             return "redirect:/ban-hang-tai-quay/doi-tra";
             }
         
-        if (hd.getTrangThai() != 3) {
+        if (hd.getTrangThai() != 3||!checkDate(hd.getNgaySua())) {
             thongBao(redirectAttributes, "Không có kết quả phù hợp", 0);
             return "redirect:/ban-hang-tai-quay/doi-tra";
         }
@@ -146,6 +180,12 @@ public class BanHangController {
 
     @GetMapping("/hoa-don/{id}")
     public String hoaDon(@PathVariable Long id, Model model,RedirectAttributes redirectAttributes) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            request.setAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         chiTietSanPhamSerivce.checkSoLuongBang0();
         // request.setAttribute("hoaDonTra");
         TaiKhoan tk = new TaiKhoan();
@@ -467,7 +507,12 @@ public class BanHangController {
 
     @GetMapping("/hoa-don/detail/{id}")
     public String detailHoaDon(@PathVariable Long id) {
-
+UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            request.setAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         lstHoaDonCtDoiTra = new ArrayList<HoaDonChiTiet>();
         request.setAttribute("lstHoaDon", hoaDonService.find5ByTrangThai(-1));
         request.setAttribute("lstHdct", hoaDonChiTietService.findAll());
@@ -1048,6 +1093,12 @@ public class BanHangController {
 
     @GetMapping("/hoa-don/quan-ly")
     public String quanLyHoaDon() {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            request.setAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         request.setAttribute("lstHdctAll", hoaDonService.findAllOrderByNgaySua());
         request.setAttribute("lstHdChoXacNhan", hoaDonService.find5ByTrangThai(0));
         request.setAttribute("lstHdChoGiao", hoaDonService.find5ByTrangThai(1));
