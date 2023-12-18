@@ -488,13 +488,12 @@
                                                                                         <div class="modal-footer">
                                                                                             <button type="button"
                                                                                                 class="btn btn-secondary"
-                                                                                                data-bs-dismiss="modal">Close
+                                                                                                data-bs-dismiss="modal">Đóng
                                                                                             </button>
                                                                                             <button
                                                                                                 th:onclick="'validateAndSubmitTraHang('+${obj.soLuong}+','+${obj.ChiTietSanPham.soLuong}+','+${obj.id}+')'"
                                                                                                 type="button"
-                                                                                                class="btn btn-primary">Save
-                                                                                                changes
+                                                                                                class="btn btn-primary">Xác nhận
                                                                                             </button>
 
 
@@ -678,12 +677,12 @@
                                                                 </div>
                                                                 <div class="col">
                                                                     <h6 id="moneyVoucher" class="thong-tin-gia">
-                                                                        [[${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}]]
-                                                                        VND
+                                                                        <del>[[${hoaDon.tongTien}-${hoaDon.tongTienKhiGiam}]]
+                                                                            VND</del>
                                                                     </h6>
                                                                 </div>
                                                             </div>
-                                                            <div th:if="${hoaDon.trangThai==6}" class="row">
+                                                            <div class="row">
                                                                 <div class="col">
                                                                     <h6>Khách đã thanh toán:</h6>
 
@@ -790,7 +789,7 @@
                                                                                 <h5 class="modal-title"
                                                                                     id="modalTitleId">
                                                                                     Bạn chắc chắn muốn trả hàng?
-                                                                                    (Không thể hoàn tác)
+                                                                                    
                                                                                 </h5>
 
                                                                             </div>

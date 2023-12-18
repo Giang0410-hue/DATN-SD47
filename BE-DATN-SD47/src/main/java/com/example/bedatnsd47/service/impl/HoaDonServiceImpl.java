@@ -305,7 +305,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                             "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getPhiShip() + " VND</span>" +
                             "            </p>" +
                             "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tiền giảm:</span>" +
-                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\">" + hoaDon.getTienGiam() + " VND</span>" +
+                            "                <span style=\"white-space: nowrap;float: right;font-weight: bold;\"><del>" + hoaDon.getTienGiam() + " VND</del></span>" +
                             "            </p>" +
                             "            <p><span style=\"display: inline-block;width: 200px;font-weight: bold;margin-bottom: 10px;margin-left: 50%;\">Tổng tiền hoàn trả:</span>" +
                             "                <span style=\"white-space: nowrap;float: right;font-weight: bold;color:red;font-size: 1.1rem\">" + (hoaDon.tongTienHoaDonDaNhan()!=0?hoaDon.tongTienHoaDonHoanTra()-hoaDon.getTienGiam():(hoaDon.tongTienHoaDonHoanTra()-hoaDon.getTienGiam())) + " VND</span>" +
