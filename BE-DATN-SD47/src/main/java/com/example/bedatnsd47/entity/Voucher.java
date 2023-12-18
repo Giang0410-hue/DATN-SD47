@@ -51,7 +51,7 @@ public class Voucher {
 
     @Column(name = "so_luong")
     @NotNull(message = "Số lượng không để trống")
-    @DecimalMin(value = "1", inclusive = true,message = "Số lượng  không nhỏ hơn 1")
+    @DecimalMin(value = "0", inclusive = true,message = "Số lượng  không nhỏ hơn 0")
     @DecimalMax(value = "100000", inclusive = true,message = "Số lượng  không lớn hơn 100,000")
     private BigDecimal soLuong;
 
