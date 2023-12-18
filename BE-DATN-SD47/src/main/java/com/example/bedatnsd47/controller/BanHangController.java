@@ -100,7 +100,19 @@ public class BanHangController {
         hoaDonService.deleteHoaDonHoanTra();
         return "/admin-template/doi-tra";
     }
-
+    public static boolean checkDate(Date dateToCheck) {
+        // Lấy ngày hiện tại
+        Date currentDate = new Date();
+        
+        // Lấy số milliseconds từ ngày hiện tại và ngày cần kiểm tra
+        long millisecondsDifference = dateToCheck.getTime() - currentDate.getTime();
+        
+        // Chuyển số milliseconds thành số ngày
+        long daysDifference = millisecondsDifference / (1000 * 60 * 60 * 24);
+        
+        // Kiểm tra xem chênh lệch có lớn hơn 7 ngày không
+        return daysDifference <= 7;
+    }
     @GetMapping("/doi-tra/{maHoaDon}")
     public String detailHoaDonDoiTra(@PathVariable String maHoaDon, RedirectAttributes redirectAttributes) {
         HoaDon hd = hoaDonService.findByMa(maHoaDon);
@@ -111,7 +123,7 @@ public class BanHangController {
             return "redirect:/ban-hang-tai-quay/doi-tra";
             }
         
-        if (hd.getTrangThai() != 3) {
+        if (hd.getTrangThai() != 3||!checkDate(hd.getNgaySua())) {
             thongBao(redirectAttributes, "Không có kết quả phù hợp", 0);
             return "redirect:/ban-hang-tai-quay/doi-tra";
         }
