@@ -291,10 +291,101 @@
                             </div>
                             <div class="modal-footer">
                                 </button>
+                                <button data-bs-toggle="modal" type="button" data-bs-target="#modalDoiMatKhau" class="btn btn-primary" style="margin-right: 5%">Đổi mật khẩu</button>
+
                                 <button type="submit" class="btn btn-warning">Cập nhật</button>
                             </div>
                         </form>
                         <!-- form sửa khách hàng end-->
+                        <!-- Modal -->
+                        <script th:if="${checkModalLoi=='true'}">
+                            // <script>
+                            //     function showToast() {
+                            //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+                            //         liveToast.show();
+                            //     }
+                            //     // Show the toast when the page loads
+                            //     document.addEventListener('DOMContentLoaded', showToast);
+                            //
+                            window.addEventListener('DOMContentLoaded', (event) => {
+                                // Hiển thị modal
+                                var liveToast = new bootstrap.Modal(document.getElementById('modalDoiMatKhau'));
+                                liveToast.show();
+                            });
+                        </script>
+                        <div class="modal fade" id="modalDoiMatKhau" tabindex="-1" aria-labelledby="modalDoiMatKhauLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="width: 100%;margin: auto">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="modalDoiMatKhauLabel">Đổi mật khẩu</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="formDoiMauKhau" th:action="@{/admin/nhan-vien/update-mat-khau}" method="get">
+                                            <div class="mb-3">
+                                                <input type="hidden" th:value="${id}" name="idNhanVien">
+                                                <label for="matKhauCu" class="form-label">Mật khẩu cũ</label>
+                                                <input type="password" class="form-control" id="matKhauCu" name="matKhauCu" placeholder="Nhập mật khẩu cũ">
+                                                <div class="check-loi" style="display: none" id="idmatKhauCu"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="matKhauMoi" class="form-label">Mật khẩu mới</label>
+                                                <input type="password" class="form-control" id="matKhauMoi" placeholder="Nhập mật khẩu mới">
+                                                <div class="check-loi" style="display: none" id="idmatKhauMoi" name="matKhauMoi"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="nhapLaiMatKhauMoi" class="form-label">Nhập lại mật khẩu mới</label>
+                                                <input type="password" class="form-control" id="nhapLaiMatKhauMoi" name="nhapLaiMatKhauMoi" placeholder="Nhập lại mật khẩu mới">
+                                                <div class="check-loi" style="display: none" id="idnhapLaiMatKhauMoi" ></div>
+                                                <div class="check-loi" id="messages" th:text="${messages}"></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                        <button type="submit" form="formDoiMauKhau" onclick="return checkDoiMatKhauFormNhanVien()" class="btn btn-primary">Xác nhận</button>
+                                    </div>
+                                    <script>
+                                        function checkDoiMatKhauFormNhanVien() {
+                                            var check = true
+                                            var matKhauCu = document.getElementById("matKhauCu")
+                                            var matKhauMoi = document.getElementById("matKhauMoi")
+                                            var nhapLaiMatKhauMoi = document.getElementById("nhapLaiMatKhauMoi")
+                                            var idmatKhauCu = document.getElementById("idmatKhauCu")
+                                            var idmatKhauMoi = document.getElementById("idmatKhauMoi")
+                                            var idnhapLaiMatKhauMoi = document.getElementById("idnhapLaiMatKhauMoi")
+                                            var messages = document.getElementById("messages")
+                                            idmatKhauCu.style.display = 'none'
+                                            idmatKhauMoi.style.display = 'none'
+                                            idnhapLaiMatKhauMoi.style.display = 'none'
+                                            messages.style.display = 'none'
+                                            if (matKhauCu.value.trim()==''){
+                                                idmatKhauCu.style.display = 'block'
+                                                idmatKhauCu.innerText = 'Không được để trống mật khẩu mới'
+                                                check = false
+                                            }
+                                            if (matKhauMoi.value.trim()==''){
+                                                idmatKhauMoi.style.display = 'block'
+                                                idmatKhauMoi.innerText = 'Không được để trống mật khẩu mới'
+                                                check = false
+                                            }
+                                            if (nhapLaiMatKhauMoi.value.trim()==''){
+                                                idnhapLaiMatKhauMoi.style.display = 'block'
+                                                idnhapLaiMatKhauMoi.innerText = 'Không được để trống mật khẩu mới'
+                                                check = false
+                                            }
+                                            if (nhapLaiMatKhauMoi.value!=matKhauMoi.value){
+                                                idnhapLaiMatKhauMoi.style.display = 'block'
+                                                idnhapLaiMatKhauMoi.innerText = 'Mật khẩu mới không trùng nhau'
+                                                check = false
+                                            }
+                                            return check
+
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -398,6 +489,48 @@
                     font-weight: bold; /* Độ đậm của chữ */
                     color: white;">
                         Lỗi</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"
+                            style="font-size: 1.5rem;margin: auto"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Thông báo thất bại end-->
+<!--Thông báo thất bại-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <script th:if="${checkThongBao=='thaiBaiTrue'}">
+        // <script>
+        //     function showToast() {
+        //         var liveToast = new bootstrap.Toast(document.getElementById('liveToastWarning'));
+        //         liveToast.show();
+        //     }
+        //     // Show the toast when the page loads
+        //     document.addEventListener('DOMContentLoaded', showToast);
+        //
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Hiển thị modal
+            var liveToast = new bootstrap.Toast(document.getElementById('thaiBaiTrue'));
+            liveToast.show();
+        });
+    </script>
+    <div id="thaiBaiTrue" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         style="background-color: rgb(252,134,134);border:2px solid #ff2020;border-radius:1rem;">
+        <div class="toast-body">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <img src="../../../static/img/successful_danger.png" alt="" style="margin: auto">
+                </div>
+                <div class="col-md-8" style=" margin-top:6.3%">
+                    <span style="
+                    text-align: center;
+                    font-size: 1rem; /* Kích thước phông chữ */
+                    font-weight: bold; /* Độ đậm của chữ */
+                    color: white;">
+                        Mật khẩu cũ không đúng</span>
                 </div>
                 <div class="col-md-2">
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"

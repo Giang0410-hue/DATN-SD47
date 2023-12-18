@@ -48,6 +48,9 @@ public class HoaDon {
     @Column(name = "phi_ship")
     private Long phiShip;
 
+    @Column(name = "tien_giam")
+    private Long tienGiam;
+
     @Column(name = "tong_tien")
     private Long tongTien;
 
@@ -127,6 +130,8 @@ public class HoaDon {
         return total;
     }
 
+    
+
     public Long tongTienHoaDonDaNhan() {
         Long total = (long) 0;
         for (HoaDonChiTiet hoaDonChiTiet : lstHoaDonChiTiet) {
@@ -144,39 +149,12 @@ public class HoaDon {
     }
 
     public Long getGiamGia() {
-        if (this.voucher != null) {
-            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
-            Long giam = (this.tongTienHoaDonDaNhan() * ptGiam) / 100;
-            Long giamToiDa = Long.valueOf(this.voucher.getGiamToiDa().longValue());
-            if (giam > giamToiDa) {
-                return giamToiDa;
-            }
-            return giam;
-        }
-        return (long) 0;
+        return this.tienGiam!=null?this.tienGiam:0;
     }
 
-    public Long getGiamGiaKhiHoanTra() {
-        if (this.voucher != null) {
-            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
-            Long giam = (this.tongTienHoaDon() * ptGiam) / 100;
-            Long giamToiDa = Long.valueOf(this.voucher.getGiamToiDa().longValue());
-            if (giam > giamToiDa) {
-                return giamToiDa;
-            }
-            return giam;
-        }
-        return (long) 0;
-    }
+    
 
-    public Long getPhanTramGiam() {
-        if (this.voucher != null) {
-            Long ptGiam = this.voucher.getPhanTramGiam().longValue();
-
-            return ptGiam;
-        }
-        return (long) 0;
-    }
+   
 
     public String getStringTrangThai() {
         switch (this.trangThai) {

@@ -50,7 +50,7 @@
                                     var inputValueTimKiemAll = inputElementTimKiemAll.value;
                                     console.log('Giá trị của input:', inputValueTimKiemAll);
 
-                                    var fullUrl = "http://localhost:8080/shop"
+                                    var fullUrl = window.location.origin + "/shop"
 
                                     if (inputValueTimKiemAll !== '') {
                                         fullUrl = updateQueryStringParameterAll('keyword', inputValueTimKiemAll, fullUrl);
@@ -169,16 +169,16 @@
         </nav>
     </header>
 
-    <div class="bg-light py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mb-0">
-                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>
-                    <strong class="text-black">Contact</strong>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--    <div class="bg-light py-3">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-12 mb-0">-->
+<!--                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>-->
+<!--                    <strong class="text-black">Contact</strong>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="container" style="max-width: 90%">
         <div class="row">
             <div class="col-md-2">
@@ -365,7 +365,8 @@
                                                 <div class="col-md-12">
                                                     <div class="divider-line">
                                                         <h6>Thành tiền:</h6>
-                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
+                                                        <h5 th:if="${allHoaDon.trangThai!=6}" th:text="${ allHoaDon.tongTienHoaDonDaNhan() + allHoaDon.phiShip - allHoaDon.tienGiam + ' VND'}"></h5>
+                                                        <h5 th:if="${allHoaDon.trangThai==6}" th:text="${allHoaDon.tongTienHoaDon() + allHoaDon.phiShip + ' VND'}"></h5>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -738,7 +739,8 @@
                                                 <div class="col-md-12">
                                                     <div class="divider-line">
                                                         <h6>Thành tiền:</h6>
-                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
+                                                        <h5 th:if="${allHoaDon.trangThai!=6}" th:text="${ allHoaDon.tongTienHoaDonDaNhan() + allHoaDon.phiShip - allHoaDon.tienGiam + ' VND'}"></h5>
+                                                        <h5 th:if="${allHoaDon.trangThai==6}" th:text="${allHoaDon.tongTienHoaDon() + allHoaDon.phiShip + ' VND'}"></h5>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -903,8 +905,8 @@
                                                 <div class="col-md-12">
                                                     <div class="divider-line">
                                                         <h6>Thành tiền:</h6>
-                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
-                                                    </div>
+                                                        <h5 th:if="${allHoaDon.trangThai!=6}" th:text="${ allHoaDon.tongTienHoaDonDaNhan() + allHoaDon.phiShip - allHoaDon.tienGiam + ' VND'}"></h5>
+                                                        <h5 th:if="${allHoaDon.trangThai==6}" th:text="${allHoaDon.tongTienHoaDon() + allHoaDon.phiShip + ' VND'}"></h5>                                                    </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
@@ -1068,8 +1070,8 @@
                                                 <div class="col-md-12">
                                                     <div class="divider-line">
                                                         <h6>Thành tiền:</h6>
-                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
-                                                    </div>
+                                                        <h5 th:if="${allHoaDon.trangThai!=6}" th:text="${ allHoaDon.tongTienHoaDonDaNhan() + allHoaDon.phiShip - allHoaDon.tienGiam + ' VND'}"></h5>
+                                                        <h5 th:if="${allHoaDon.trangThai==6}" th:text="${allHoaDon.tongTienHoaDon() + allHoaDon.phiShip + ' VND'}"></h5>                                                    </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
@@ -1162,8 +1164,8 @@
                                                 <div class="col-md-12">
                                                     <div class="divider-line">
                                                         <h6>Thành tiền:</h6>
-                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
-                                                    </div>
+                                                        <h5 th:if="${allHoaDon.trangThai!=6}" th:text="${ allHoaDon.tongTienHoaDonDaNhan() + allHoaDon.phiShip - allHoaDon.tienGiam + ' VND'}"></h5>
+                                                        <h5 th:if="${allHoaDon.trangThai==6}" th:text="${allHoaDon.tongTienHoaDon() + allHoaDon.phiShip + ' VND'}"></h5>                                                    </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
@@ -1369,8 +1371,8 @@
                                                 <div class="col-md-12">
                                                     <div class="divider-line">
                                                         <h6>Thành tiền:</h6>
-                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
-                                                    </div>
+                                                        <h5 th:if="${allHoaDon.trangThai!=6}" th:text="${ allHoaDon.tongTienHoaDonDaNhan() + allHoaDon.phiShip - allHoaDon.tienGiam + ' VND'}"></h5>
+                                                        <h5 th:if="${allHoaDon.trangThai==6}" th:text="${allHoaDon.tongTienHoaDon() + allHoaDon.phiShip + ' VND'}"></h5>                                                    </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="divider-line1">
@@ -1579,7 +1581,8 @@
                                                 <div class="col-md-12">
                                                     <div class="divider-line">
                                                         <h6>Thành tiền:</h6>
-                                                        <h5 th:text="${allHoaDon.tongTienKhiGiam + ' VND'}"></h5>
+                                                        <h5 th:if="${allHoaDon.trangThai!=6}" th:text="${ allHoaDon.tongTienHoaDonDaNhan() + allHoaDon.phiShip - allHoaDon.tienGiam + ' VND'}"></h5>
+                                                        <h5 th:if="${allHoaDon.trangThai==6}" th:text="${allHoaDon.tongTienHoaDon() + allHoaDon.phiShip + ' VND'}"></h5>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">

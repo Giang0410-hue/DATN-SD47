@@ -233,10 +233,20 @@ public class CustomersController {
     @GetMapping("/user/checkout")
     public String checkout(
             @RequestParam String options,
-            Model model) {
+            Model model,
+            RedirectAttributes redirectAttributes
+            ) {
+        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
         String[] optionArray = options.split(",");
         List<String> listIdString = Arrays.asList(optionArray);
-        TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+
+        for (GioHangChiTiet gioHangChiTiet : gioHangChiTietService.findAllById(listIdString, khachHang.getGioHang().getId())) {
+            if (gioHangChiTiet.getSoLuong() > chiTietSanPhamSerivce.getById(gioHangChiTiet.getChiTietSanPham().getId()).getSoLuong()) {
+                redirectAttributes.addFlashAttribute("checkSoLuongDB","true");
+                return "redirect:/user/cart";
+            }
+        }
+
         List<GioHangChiTiet> listGioHangChiTiet = gioHangChiTietService.findAllById(listIdString,
                 khachHang.getGioHang().getId());
         model.addAttribute("listGioHangChiTiet", listGioHangChiTiet);
@@ -265,6 +275,7 @@ public class CustomersController {
     public String addHoaDon(
             @RequestParam("idGioHangChiTiet") String idGioHangChiTiet,
             @RequestParam("tongTien") String tongTien,
+            @RequestParam("tienGiam") String tienGiam,
             @RequestParam("tongTienAndSale") String tongTienAndSale,
             @RequestParam("hoVaTen") String hoVaTen,
             @RequestParam("soDienThoai") String soDienThoai,
@@ -276,10 +287,18 @@ public class CustomersController {
             @RequestParam("phuongXaID") String phuongXaID,
             @RequestParam("quanHuyenID") String quanHuyenID,
             @RequestParam("thanhPhoID") String thanhPhoID,
-            @RequestParam("trangThaiLuuDC") String trangThaiLuuDC) {
+            @RequestParam("trangThaiLuuDC") String trangThaiLuuDC,
+            RedirectAttributes redirectAttributes) {
         String[] optionArray = idGioHangChiTiet.split(",");
-        List<String> listIdString = Arrays.asList(optionArray);
+
         TaiKhoan khachHang = khachHangService.getById(idTaiKhoan);
+        List<String> listIdString = Arrays.asList(optionArray);
+        for (GioHangChiTiet gioHangChiTiet : gioHangChiTietService.findAllById(listIdString, khachHang.getGioHang().getId())) {
+            if (gioHangChiTiet.getSoLuong() > chiTietSanPhamSerivce.getById(gioHangChiTiet.getChiTietSanPham().getId()).getSoLuong()) {
+                redirectAttributes.addFlashAttribute("checkSoLuongDB","true");
+                return "redirect:/user/checkout?options="+idGioHangChiTiet;
+            }
+        }
         if (trangThaiLuuDC.equals("0")) {
             Date date = new Date();
             DiaChi diaChi = new DiaChi();
@@ -294,7 +313,7 @@ public class CustomersController {
             diaChiService.save(diaChi);
         }
         gioHangChiTietService.addHoaDon(listIdString, Long.valueOf(tongTien), Long.valueOf(tongTienAndSale), hoVaTen,
-                soDienThoai, tienShip, email, voucher, diaChiCuThe, ghiChu, khachHang, phuongXaID, quanHuyenID,
+                soDienThoai, tienShip,tienGiam, email, voucher, diaChiCuThe, ghiChu, khachHang, phuongXaID, quanHuyenID,
                 thanhPhoID, khachHang.getGioHang().getId());
         return "redirect:/user/thankyou";
     }
@@ -672,14 +691,18 @@ public class CustomersController {
         return "/customer-template/detail-tra-cuu-don-hang";
     }
 
-    @GetMapping("/gui-hoa-don-dien-tu")
-    public String test(){
-        hoaDonService.guiHoaDonDienTu();
-        return "redirect:/chinh-sach";
+    @GetMapping("/lien-he/add")
+    public String lienHeAdd(
+            @RequestParam("hoTen")String hoTen,
+            @RequestParam("email")String email,
+            @RequestParam("chuDe")String chuDe,
+            @RequestParam("tinNhan")String tinNhan,
+            RedirectAttributes redirectAttributes
+
+    ) {
+        khachHangService.guiLieuHe(hoTen,email,chuDe,tinNhan);
+        redirectAttributes.addFlashAttribute("checkTBLienHe","true");
+        return "redirect:/lien-he";
     }
-    @GetMapping("/test")
-    public String test123(
-    ){
-        return "/admin-template/in-hoa-don.html";
-    }
+
 }

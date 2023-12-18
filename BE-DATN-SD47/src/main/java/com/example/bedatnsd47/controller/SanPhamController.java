@@ -1,5 +1,7 @@
 package com.example.bedatnsd47.controller;
 
+import com.example.bedatnsd47.config.PrincipalCustom;
+import com.example.bedatnsd47.config.UserInfoUserDetails;
 import com.example.bedatnsd47.entity.HinhAnhSanPham;
 import com.example.bedatnsd47.entity.SanPham;
 import com.example.bedatnsd47.repository.HinhAnhSanPhamRepository;
@@ -39,11 +41,18 @@ public class SanPhamController {
     @Autowired
     private HinhAnhSanPhamSerivce hinhAnhSanPhamSerivce;
 
+    private PrincipalCustom principalCustom = new PrincipalCustom();
 
     @GetMapping()
     public String hienThi(
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listSanPham", sanPhamSerivce.getAll());
         model.addAttribute("listThuongHieu", thuongHieuService.findAll());
         model.addAttribute("sanPham", new SanPham());
@@ -54,6 +63,12 @@ public class SanPhamController {
     public String hienThiAll(
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listSanPham", sanPhamSerivce.getAllDangHoatDong());
         model.addAttribute("listThuongHieu", thuongHieuService.findAll());
         model.addAttribute("sanPham", new SanPham());
@@ -64,6 +79,12 @@ public class SanPhamController {
     public String hienThiNgungHoatDong(
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listSanPham", sanPhamSerivce.getAllNgungHoatDong());
         model.addAttribute("listThuongHieu", thuongHieuService.findAll());
         model.addAttribute("sanPham", new SanPham());
@@ -75,6 +96,12 @@ public class SanPhamController {
             Model model,
             @PathVariable("id") Long id
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         SanPham sanPham = sanPhamSerivce.getById(id);
         model.addAttribute("listThuongHieu", thuongHieuService.findAll());
         model.addAttribute("listHinhAnh", hinhAnhSanPhamSerivce.listHinhAnh(id));

@@ -38,7 +38,7 @@ public class ExportFileCTSP {
             firstCell7.setCellValue("Giá");
             firstCell8.setCellValue("Trạng Thái");
             int index = 1;
-            for (ChiTietSanPham chiTietSanPham : chiTietSanPhamSerivce.getAllDangHoatDong()) {
+            for (ChiTietSanPham chiTietSanPham : chiTietSanPhamSerivce.getAll()) {
                 Row row = sheet.createRow(rowNum++);
                 Cell cell1 = row.createCell(0);
                 cell1.setCellValue(index++);
@@ -66,7 +66,7 @@ public class ExportFileCTSP {
 
             }
             try {
-                FileOutputStream outputStream = new FileOutputStream("ChiTietSanPham" + Calendar.getInstance().getTimeInMillis() + ".xlsx");
+                FileOutputStream outputStream = new FileOutputStream("FileMauSanPham" + Calendar.getInstance().getTimeInMillis() + ".xlsx");
                 workbook.write(outputStream);
                 workbook.close();
             } catch (FileNotFoundException e) {

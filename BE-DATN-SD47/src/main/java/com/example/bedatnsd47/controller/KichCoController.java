@@ -1,5 +1,7 @@
 package com.example.bedatnsd47.controller;
 
+import com.example.bedatnsd47.config.PrincipalCustom;
+import com.example.bedatnsd47.config.UserInfoUserDetails;
 import com.example.bedatnsd47.entity.KichCo;
 import com.example.bedatnsd47.service.KichCoService;
 import jakarta.validation.Valid;
@@ -19,13 +21,22 @@ import java.util.Date;
 @Controller
 @RequestMapping("/admin/kich-co")
 public class KichCoController {
+
     @Autowired
     private KichCoService kichCoService;
+
+    private PrincipalCustom principalCustom = new PrincipalCustom();
 
     @GetMapping()
     public String hienThi(
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listKichCo", kichCoService.findAll());
         model.addAttribute("kichCo", new KichCo());
         return "/admin-template/kich_co/kich-co";
@@ -35,6 +46,12 @@ public class KichCoController {
     public String hienThiDangHoatDong(
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listKichCo", kichCoService.getAllDangHoatDong());
         model.addAttribute("kichCo", new KichCo());
         return "/admin-template/kich_co/kich-co";
@@ -44,6 +61,12 @@ public class KichCoController {
     public String hienThiNgungHoatDong(
             Model model
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         model.addAttribute("listKichCo", kichCoService.getAllNgungHoatDong());
         model.addAttribute("kichCo", new KichCo());
         return "/admin-template/kich_co/kich-co";
@@ -54,6 +77,12 @@ public class KichCoController {
             Model model,
             @PathVariable("id") Long id
     ) {
+        UserInfoUserDetails name = principalCustom.getCurrentUserNameAdmin();
+        if (name != null) {
+            model.addAttribute("tenNhanVien", principalCustom.getCurrentUserNameAdmin().getHoVaTen());
+        } else {
+            return "redirect:/login";
+        }
         KichCo kichCo = kichCoService.getById(id);
         model.addAttribute("listKichCo", kichCoService.findAll());
         model.addAttribute("kichCo", kichCo);
@@ -71,7 +100,7 @@ public class KichCoController {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("listKichCo", kichCoService.findAll());
             return "/admin-template/kich_co/sua-kich-co";
-        } else if (!kichCoService.checkTenTrungSua(kichCo.getId(), kichCo.getTen()) ) {
+        } else if (!kichCoService.checkTenTrungSua(kichCo.getId(), kichCo.getTen())) {
             model.addAttribute("checkThongBao", "thaiBai");
             model.addAttribute("checkTenTrung", "Kích cỡ đã tồn tại");
             model.addAttribute("listKichCo", kichCoService.findAll());

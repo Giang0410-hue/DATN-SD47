@@ -49,7 +49,7 @@
                                     var inputValueTimKiemAll = inputElementTimKiemAll.value;
                                     console.log('Giá trị của input:', inputValueTimKiemAll);
 
-                                    var fullUrl = "http://localhost:8080/shop"
+                                    var fullUrl = window.location.origin + "/shop"
 
                                     if (inputValueTimKiemAll !== '') {
                                         fullUrl = updateQueryStringParameterAll('keyword', inputValueTimKiemAll, fullUrl);
@@ -168,16 +168,16 @@
         </nav>
     </header>
 
-    <div class="bg-light py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mb-0">
-                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>
-                    <strong class="text-black">Contact</strong>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--    <div class="bg-light py-3">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-12 mb-0">-->
+<!--                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>-->
+<!--                    <strong class="text-black">Contact</strong>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="container" style="max-width: 90%">
         <div class="row">
             <div class="col-md-2">
@@ -524,7 +524,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <h5>Địa Chỉ Nhận Hàng</h5>
-                                    <span style="display: block" th:text="${'Tên Khách Hàng: '+ byHoaDon.nguoiNhan}">Nguyễn Tuấn Anh</span>
+                                    <span style="display: block;" th:text="${'Tên Khách Hàng: '+ byHoaDon.nguoiNhan}">Nguyễn Tuấn Anh</span>
                                     <span style="display: block" th:text="${'Số điện thoại: '+ byHoaDon.sdtNguoiNhan}">0377463664</span>
                                     <span th:text="${'Địa Chỉ: ' + byHoaDon.diaChiNguoiNhan}+','"></span>
                                     <span id="phuongXaColumn"></span>
@@ -731,7 +731,7 @@
                                 <tbody th:if="${byHoaDon.trangThai!=6}">
                                 <tr>
                                     <td colspan="2">Tổng tiền hàng</td>
-                                    <td class="tien-table" th:text="${byHoaDon.tongTienHoaDon()+ ' VND'}">
+                                    <td class="tien-table" th:text="${byHoaDon.tongTien+ ' VND'}">
                                         30000VND
                                     </td>
                                 </tr>
@@ -742,13 +742,14 @@
                                 <tr>
                                     <td colspan="2">Tiền giảm</td>
                                     <td class="tien-table"
-                                        th:text="${byHoaDon.getGiamGia()+ ' VND'}">
+                                        th:text="${byHoaDon.tienGiam+ ' VND'}">
                                         30000VND
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">Thành tiền</td>
-                                    <td class="tong-tien-table" th:text="${byHoaDon.tongTienKhiGiam+ ' VND'}">30000VND
+                                    <td class="tong-tien-table"
+                                        th:text="${byHoaDon.tongTienKhiGiam + byHoaDon.phiShip + ' VND'}">30000VND
                                     </td>
                                 </tr>
                                 <tr>
@@ -766,26 +767,40 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">Phí vận chuyển</td>
-                                    <td class="tien-table" th:text="${byHoaDon.phiShip+ ' VND'}">30000VND</td>
+                                    <td class="tien-table" th:text="${byHoaDon.phiShip+ ' VND'}"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">Tiền giảm</td>
-                                    <td class="tien-table"
-                                        th:text="${byHoaDon.getGiamGia()+ ' VND'}">
-                                        30000VND
+                                    <td class="tien-table">
+                                        <del
+                                             th:text="${byHoaDon.tienGiam+ ' VND'}">
+                                        </del>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Tổng hoàn trả</td>
-                                    <td class="tong-tien-table" th:text="${byHoaDon.tongTienHoaDonHoanTra()+ ' VND'}">
-                                        30000VND
+                                    <td colspan="2">Tiền khách thanh toán</td>
+                                    <td class="tien-table"
+                                        th:text="${byHoaDon.tongTienHoaDon() + byHoaDon.phiShip + ' VND'}">
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Tổng tiền hoàn trả</td>
+                                    <td class="tong-tien-table" th:text="${byHoaDon.tongTienHoaDonHoanTra()+ ' VND'}">
+                                    </td>
+
                                 </tr>
                                 <tr>
                                     <td colspan="2">Tổng tiền thanh toán</td>
-                                    <td class="tong-tien-table" th:text="${byHoaDon.tongTienKhiGiam+ ' VND'}">30000VND
+                                    <td class="tong-tien-table"
+                                        th:if="${byHoaDon.tongTienHoaDonDaNhan()==0}"
+                                        th:text="${'0 VND'}">30000VND
+                                    </td>
+                                    <td class="tong-tien-table"
+                                        th:if="${byHoaDon.tongTienHoaDonDaNhan()!=0}"
+                                        th:text="${byHoaDon.tongTienHoaDon() + byHoaDon.phiShip - byHoaDon.tienGiam + ' VND'}">30000VND
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <td colspan="2">Phương thức Thanh toán</td>
                                     <td class="tien-table">Thanh toán khi nhận hàng</td>

@@ -39,7 +39,7 @@
                                     var inputValueTimKiemAll = inputElementTimKiemAll.value;
                                     console.log('Giá trị của input:', inputValueTimKiemAll);
 
-                                    var fullUrl = "http://localhost:8080/shop"
+                                    var fullUrl = window.location.origin + "/shop"
 
                                     if (inputValueTimKiemAll !== '') {
                                         fullUrl = updateQueryStringParameterAll('keyword', inputValueTimKiemAll, fullUrl);
@@ -156,16 +156,16 @@
         </nav>
     </header>
 
-    <div class="bg-light py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mb-0">
-                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>
-                    <strong class="text-black">Contact</strong>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--    <div class="bg-light py-3">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-12 mb-0">-->
+<!--                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>-->
+<!--                    <strong class="text-black">Contact</strong>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div class="site-section">
         <div class="container">

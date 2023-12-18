@@ -45,7 +45,7 @@
                                     var inputValueTimKiemAll = inputElementTimKiemAll.value;
                                     console.log('Giá trị của input:', inputValueTimKiemAll);
 
-                                    var fullUrl = "http://localhost:8080/shop"
+                                    var fullUrl = window.location.origin + "/shop"
 
                                     if (inputValueTimKiemAll !== '') {
                                         fullUrl = updateQueryStringParameterAll('keyword', inputValueTimKiemAll, fullUrl);
@@ -164,17 +164,17 @@
         </nav>
     </header>
 
-    <div class="bg-light py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mb-0">
-                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>
-                    <a href="/user/cart">Cart</a> <span class="mx-2 mb-0">/</span>
-                    <strong class="text-black">Checkout</strong>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--    <div class="bg-light py-3">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-12 mb-0">-->
+<!--                    <a href="/home">Home</a> <span class="mx-2 mb-0">/</span>-->
+<!--                    <a href="/user/cart">Cart</a> <span class="mx-2 mb-0">/</span>-->
+<!--                    <strong class="text-black">Checkout</strong>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div class="site-section">
         <div class="container" style="max-width: 90%">
@@ -202,6 +202,10 @@
                                 </td>
                                 <td class="product-name">
                                     <h2 class="h5 text-black" th:text="${gioHangCT.chiTietSanPham.sanPham.ten}"></h2>
+                                    <span th:if="${gioHangCT.soLuong>gioHangCT.ChiTietSanPham.soLuong}"
+                                          th:text="${'Số lượng còn: '+ gioHangCT.ChiTietSanPham.soLuong}"
+                                          id="checkSoLuongVuotQua"
+                                          style="color: rgb(255, 255, 255); font-weight: bold;background-color: red; padding: 10px 20px;"></span>
                                 </td>
                                 <td class="product-name">
                                     <p>Kích Thước:
@@ -242,11 +246,17 @@
                                     </h5>
                                 </div>
                                 <div class="col-md-6">
-                                    <button type="button" th:disabled="${checkButtonAdd=='true'}"
+                                    <button type="button" th:if="${checkButtonAdd!='true'}"
                                             class="btn btn-primary" style="float: right;margin-bottom: 2%"
                                             data-bs-toggle="modal" data-bs-target="#addDiaChi">
                                         Thêm địa chỉ
                                     </button>
+                                    <button type="button" th:if="${checkButtonAdd=='true'}" disabled
+                                            class="btn btn-primary" style="float: right;margin-bottom: 2%"
+                                            data-bs-toggle="modal" data-bs-target="#addDiaChi" title="Chỉ được thêm tối đa 5 địa chỉ">
+                                        Thêm địa chỉ
+                                    </button>
+
                                     <!-- Modal -->
                                     <div class="modal fade" id="addDiaChi" tabindex="-1"
                                          aria-labelledby="addDiaChiLabel" aria-hidden="true">
@@ -997,8 +1007,8 @@
                                         var tongTien = document.getElementById("tongTien");
                                         var tongTienHangInt = parseInt(tongTienHang.innerText);
 
-                                        tongTien.value = `${data.data.total + tongTienHangInt}`;
-                                        tongTienAndSale.value = `${data.data.total + tongTienHangInt - tienVoucher}`;
+                                        // tongTien.value = `${data.data.total + tongTienHangInt}`;
+                                        tongTienAndSale.value = tongTienHangInt - tienVoucher;
                                         totalElementSale.innerHTML = `${data.data.total + tongTienHangInt - tienVoucher + ' VND'}`;
 
                                         console.log(data)
@@ -1121,6 +1131,7 @@
                             <input type="hidden" name="idGioHangChiTiet" id="idGioHangChiTiet">
                             <input type="hidden" name="tongTien" id="tongTien">
                             <input type="hidden" name="tienShip" id="tienShip">
+                            <input type="hidden" name="tienGiam" id="tienGiam" value="0">
                             <input type="hidden" name="tongTienAndSale" id="tongTienAndSale">
                             <input type="hidden" th:value="${khachHang.email}" name="email">
                             <input type="hidden" name="voucher" id="voucherID">
@@ -1153,7 +1164,13 @@
                                     </label>
                                     <input type="text" class="form-control" id="c_companyname" name="soDienThoai"
                                            placeholder="Số điện thoại"
+                                           th:if="${khachHang.soDienThoai eq '0300000000'}"
+                                    />
+                                    <input type="text" class="form-control" id="c_companyname" name="soDienThoai"
+                                           placeholder="Số điện thoại"
+                                           th:if="${khachHang.soDienThoai ne '0300000000'}"
                                            th:value="${khachHang.soDienThoai}"/>
+
                                     <span class="check-loi" id="checkLoiSDT" style="display: none"></span>
                                 </div>
 
@@ -1172,6 +1189,7 @@
                             <input type="hidden" name="idGioHangChiTiet" id="idGioHangChiTiet">
                             <input type="hidden" name="tongTien" id="tongTien">
                             <input type="hidden" name="tienShip" id="tienShip">
+                            <input type="hidden" name="tienGiam" id="tienGiam" value="0">
                             <input type="hidden" name="tongTienAndSale" id="tongTienAndSale">
                             <input type="hidden" th:value="${khachHang.email}" name="email">
                             <input type="hidden" name="voucher" id="voucherID">
@@ -1195,6 +1213,11 @@
                                     </label>
                                     <input type="text" class="form-control" id="c_companyname" name="soDienThoai"
                                            placeholder="Số điện thoại"
+                                           th:if="${khachHang.soDienThoai eq '0300000000'}"
+                                    />
+                                    <input type="text" class="form-control" id="c_companyname" name="soDienThoai"
+                                           placeholder="Số điện thoại"
+                                           th:if="${khachHang.soDienThoai ne '0300000000'}"
                                            th:value="${khachHang.soDienThoai}"/>
                                     <span class="check-loi" id="checkLoiSDT" style="display: none"></span>
                                 </div>
@@ -1408,8 +1431,8 @@
                                                 var tongTien = document.getElementById("tongTien");
                                                 var tongTienHangInt = parseInt(tongTienHang.innerText);
 
-                                                tongTien.value = `${data.data.total + tongTienHangInt}`;
-                                                tongTienAndSale.value = `${data.data.total + tongTienHangInt - tienVoucher}`;
+                                                // tongTien.value = `${data.data.total + tongTienHangInt}`;
+                                                tongTienAndSale.value = tongTienHangInt - tienVoucher;
                                                 totalElementSale.innerHTML = `${data.data.total + tongTienHangInt - tienVoucher + ' VND'}`;
 
                                                 console.log(data)
@@ -1496,16 +1519,17 @@
                                                                             th:text="${'Giảm '+ voucher.phanTramGiam + '%'}"></h5>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
-                                                                               th:text="${'Giảm tối đa ' + #strings.substringBefore(voucher.giamToiDa, '.') + ' VND'}"></small>
+                                                                               th:text="${'Giảm tối đa ' + voucher.giamToiDa + ' VND'}"></small>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
-                                                                               th:text="${'Đơn Tối Thiểu '+ #strings.substringBefore(voucher.giaTriDonToiThieu, '.') + ' VND'}"></small>
+                                                                               id="donToiThieu"
+                                                                               th:text="${'Đơn Tối Thiểu '+ voucher.giaTriDonToiThieu + ' VND'}"></small>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
                                                                                th:text="${'Số Lượng '+voucher.soLuong}"></small>
                                                                         <small class="text-body-secondary"
                                                                                style="display: block"
-                                                                               th:text="${'Hạn Sử Dụng '+#temporals.format(voucher.ngayKetThuc, 'dd/MM/yyyy')}"></small>
+                                                                               th:text="${'Hạn Sử Dụng '+#temporals.format(voucher.ngayKetThuc, 'hh:mm dd/MM/yyyy')}"></small>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-2">
@@ -1568,21 +1592,23 @@
 
                                                                 var detailVoucher = document.getElementById("c_code");
 
+                                                                var tienGiam = document.getElementById("tienGiam");
+
 
                                                                 var shippingFeeResultInt = parseInt(shippingFeeResult.innerText);
                                                                 var tongTien = document.getElementById("tongTien");
                                                                 var tongTienHangInt = parseInt(tongTienHang.innerText);
 
                                                                 var tongTienGiamTheoPhanTram = ((tongTienHangInt * phamTramGiam) / 100).toFixed(0)
-                                                                if (tongTienGiamTheoPhanTram > giaTriGiam){
+                                                                if (tongTienGiamTheoPhanTram > giaTriGiam) {
                                                                     tongTienGiamTheoPhanTram = giaTriGiam
                                                                 }
                                                                 console.log("số tiền được giảm là: " + tongTienGiamTheoPhanTram)
                                                                 detailVoucher.value = -tongTienGiamTheoPhanTram + ' VND';
                                                                 moneyVoucher.innerText = tongTienGiamTheoPhanTram + ' VND';
 
-                                                                tongTien.value = shippingFeeResultInt + tongTienHangInt;
-                                                                tongTienAndSale.value = shippingFeeResultInt + tongTienHangInt - tongTienGiamTheoPhanTram;
+                                                                tienGiam.value = tongTienGiamTheoPhanTram;
+                                                                tongTienAndSale.value =  tongTienHangInt - tongTienGiamTheoPhanTram;
                                                                 totalElementSale.innerHTML = shippingFeeResultInt + tongTienHangInt - tongTienGiamTheoPhanTram + ' VND';
 
                                                                 $('#voucher').modal('hide')
@@ -1597,7 +1623,7 @@
 
                                                                 // Lặp qua danh sách voucher và kiểm tra điều kiện
                                                                 document.querySelectorAll('.card.mb-3').forEach(function (card) {
-                                                                    var voucherGiaTriDonToiThieu = parseFloat(card.querySelector('.text-body-secondary').innerText.replace('Đơn Tối Thiểu ', '').replace(' VND', '').trim());
+                                                                    var voucherGiaTriDonToiThieu = parseFloat(card.querySelector('#donToiThieu').innerText.replace('Đơn Tối Thiểu ', '').replace(' VND', '').trim());
                                                                     var radio = card.querySelector('input[name="voucherRadio"]');
                                                                     var thongBao = card.querySelector('#thongBaoThieuTien');
 
@@ -1776,7 +1802,34 @@
                                         </div>
                                     </div>
                                     <!-- Modal thông báo xác nhận đặt hàng end-->
+                                    <!-- Modal thông báo check check số lượng-->
+                                    <script th:if="${checkSoLuongDB=='true'}">
+                                        window.addEventListener('DOMContentLoaded', (event) => {
+                                            // Hiển thị modal
+                                            var myModal = new bootstrap.Modal(document.getElementById('checkSoLuongDB'));
+                                            myModal.show();
+                                        });
 
+                                    </script>
+                                    <div class="modal fade" id="checkSoLuongDB" style="margin-top: 8%"
+                                         tabindex="-1"
+                                         aria-labelledby="checkSoLuongDBLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body" style="text-align: center;margin-top: 3%">
+                                                    <p>Có sản phẩm vượt quá số lượng vui lòng kiểm tra lại!
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Ok
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal thông báo check check số lượng end-->
                                     <script>
                                         function trangThaiLuuDiaChi() {
                                             var checkbox = document.getElementById('defaultCheckLuuDiaChi');
@@ -2016,7 +2069,7 @@
 <script src="../../static/js/jquery-3.3.1.min.js"></script>
 <script src="../../static/js/jquery-ui.js"></script>
 <script src="../../static/js/popper.min.js"></script>
-<script src="../../static/js/bootstrap.min.js"></script>
+<!--<script src="../../static/js/bootstrap.min.js"></script>-->
 <script src="../../static/js/owl.carousel.min.js"></script>
 <script src="../../static/js/jquery.magnific-popup.min.js"></script>
 <script src="../../static/js/aos.js"></script>
